@@ -35,9 +35,9 @@ def chat():
         tarot_response = oracle.tarot_response(user_message)  # Assuming you have a separate tarot response method
         return jsonify({'response': tarot_response, 'terminate': False})
 
-    # General response
-    response = oracle.respond(user_message)
-    return jsonify({'response': response, 'terminate': False})
+    else:# General response
+        response = oracle.respond(user_message)
+        eturn jsonify({'response': response, 'terminate': False})
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5001))
