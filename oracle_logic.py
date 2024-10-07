@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 # from IPython.display import display, Markdown
+from tarot import TarotDeck
 
 import requests
 import json
@@ -21,16 +22,23 @@ class GeminiOracle:
             "temperature": 1.8
         }
         genai.configure(api_key=GOOGLE_API_KEY)
-        self.model = genai.GenerativeModel(model_name="gemini-1.5-flash-exp-0827", safety_settings={HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT:HarmBlockThreshold.BLOCK_NONE}, generation_config=self.generation_config )
+        self.deck=TarotDeck()
+        self.model = genai.GenerativeModel(
+            model_name="gemini-1.5-flash-exp-0827", 
+            safety_settings={HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT:HarmBlockThreshold.BLOCK_NONE}, 
+            generation_config=self.generation_config,
+            )
         self.chat = self.model.start_chat(history=[])
         self.initialize_assistant()
+        
 
     def initialize_assistant(self):
         system_prompt = """
         You are an oracle and a soothsayer. You provide mystical predictions of the future. 
-        Every request you are given will come with a magic number. You will interpret that number as a sign to make your reading.
-        You will use your knowledge from numerology, astrology and numbers in spiritual traditions to interpret the number's meaning.
-        You will begin by telling the user what number you see, by saying "I see the number ..." 
+        You are also an expert on tarot. If you are given tarot cards with a question, you will use a three card spread, representing past, present and future to answer the questions. 
+        Some requests you are given will come with a magic number. You will interpret that number as a sign to make your reading.
+        For number readings you will use your knowledge from numerology, astrology and numbers in spiritual traditions to interpret the number's meaning.
+        You will begin by telling the user what number you see, by telling the user the number or cards you were given, by saying "Your cards are " or "Your number is"
         You will then offer your divination to the user. 
         Speak like a goddess.
         
@@ -44,6 +52,13 @@ class GeminiOracle:
         quantum_data=q_response.json()
         random_number=quantum_data['number']
         new_prompt=f"The user supplies this number {random_number}  And this request + {user_input}"
+        response = self.chat.send_message(new_prompt)
+        return response.text
+    
+    def tarot_response(self, user_input):
+        self.deck.quantum_shuffle()
+        spread=self.deck.reading(3)
+        new_prompt=f"These are the cards you've drawn {spread}, to answer this request: {user_input}"
         response = self.chat.send_message(new_prompt)
         return response.text
 
@@ -62,7 +77,7 @@ class GeminiOracle:
                 print(f"{self.name}: Blessings")
                 break
            
-            response = self.respond(user_input)
+            response = self.tarot_response(user_input)
             print(f"{self.name}: {response}")
 
 
