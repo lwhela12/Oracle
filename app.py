@@ -15,7 +15,7 @@ def index():
 @app.route('/init', methods=['GET'])
 def init():
     return jsonify({
-        'response': f"Welcome! I'm {oracle.name}. I am here to provide whatever solutions you may need. What do you desire?",
+        'response': f"Welcome! I'm {oracle.name}. What do you seek?",
         'terminate': False
     })
 
