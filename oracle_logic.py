@@ -36,7 +36,7 @@ class GeminiOracle:
         self.iching = IChing()
         self.runes = RuneCast()
         self.model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash-exp-0827",
+            model_name="gemini-2.0-flash-exp",
             safety_settings={HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT:HarmBlockThreshold.BLOCK_NONE},
             generation_config=self.generation_config,
             )
