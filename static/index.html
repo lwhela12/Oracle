@@ -5,25 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quantum Oracle</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: rgba(20, 20, 20, 0.9);
+            --bg-card: #2f2f2f;
+            --bg-bot: #444;
+            --text-primary: #e6f3ff;
+            --text-secondary: #d1d1d1;
+            --accent-primary: #9b59b6;
+            --accent-secondary: #8e44ad;
+            --border-color: #555;
+            --card-back: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-front: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f5f5f5;
+            --bg-secondary: rgba(255, 255, 255, 0.95);
+            --bg-card: #e8e8e8;
+            --bg-bot: #d8d8d8;
+            --text-primary: #2c3e50;
+            --text-secondary: #34495e;
+            --border-color: #bbb;
+            --shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Cormorant Garamond', serif;
-            background-color: #1a1a1a;
+            background-color: var(--bg-primary);
             background-image: url('https://www.toptal.com/designers/subtlepatterns/patterns/dark-marble.png');
             background-size: cover;
-            color: #e6f3ff;
+            background-attachment: fixed;
+            color: var(--text-primary);
             margin: 0;
             font-size: 18px;
             line-height: 1.6;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        .image-container {
+        .header-container {
+            position: relative;
             width: 100%;
             height: 0;
             padding-bottom: 30%;
@@ -32,201 +66,629 @@
             background-repeat: no-repeat;
             background-size: cover;
             margin-bottom: -5px;
+            min-height: 200px;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 24px;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(155, 89, 182, 0.5);
+        }
+
+        .main-container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 50px auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .card-spread-area {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            min-height: 600px;
+        }
+
+        .spread-title {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--accent-primary);
+            text-shadow: 0 0 10px rgba(155, 89, 182, 0.3);
+        }
+
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            flex: 1;
+            padding: 20px;
+        }
+
+        .tarot-card-wrapper {
+            perspective: 1000px;
+            width: 180px;
+            height: 300px;
+        }
+
+        .tarot-card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .tarot-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 3px solid var(--accent-primary);
+        }
+
+        .card-back {
+            background: var(--card-back);
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.05) 10px, rgba(255,255,255,.05) 20px),
+                repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(255,255,255,.05) 10px, rgba(255,255,255,.05) 20px);
+        }
+
+        .card-back::before {
+            content: "✦";
+            font-size: 80px;
+            color: rgba(255,255,255,0.3);
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        .card-front {
+            background: var(--card-front);
+            transform: rotateY(180deg);
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .card-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .card-name {
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .card-position {
+            font-size: 14px;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        .card-suit {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #95a5a6;
+        }
+
+        .reading-templates {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(155, 89, 182, 0.1);
+            border-radius: 10px;
+            border: 1px solid var(--accent-primary);
+        }
+
+        .template-title {
+            font-family: 'Cinzel', serif;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--accent-primary);
+        }
+
+        .template-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .template-btn {
+            padding: 8px 16px;
+            background: var(--accent-secondary);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .template-btn:hover {
+            background: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.3);
         }
 
         .chat-container {
-            position: relative;
-            top: 50px;
-            width: 90%;
-            max-width: 1200px;
-            background-color: rgba(20, 20, 20, 0.9);
-            box-shadow: 0 0 20px #555;
+            background: var(--bg-secondary);
+            box-shadow: var(--shadow);
             padding: 30px;
             display: flex;
             flex-direction: column;
-            align-items: stretch;
             border-radius: 15px;
+            min-height: 600px;
         }
 
         .chat-messages {
-            height: 600px;
+            flex: 1;
             overflow-y: auto;
             padding: 20px;
-            margin-bottom: 30px;
-            position: relative;
+            margin-bottom: 20px;
             display: flex;
             flex-direction: column;
+            gap: 15px;
         }
-        .messages-content {
-            flex-grow: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
+
+        .chat-messages::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 10px;
         }
 
         .user-message, .bot-message {
-            padding: 10px 15px;
+            padding: 15px 20px;
             border-radius: 15px;
-            margin-bottom: 15px;
             max-width: 80%;
             word-wrap: break-word;
+            animation: messageSlide 0.3s ease-out;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .user-message {
-            background-color: #2f2f2f;
+            background: var(--bg-card);
             align-self: flex-end;
             border-bottom-right-radius: 0;
-            color: #d1d1d1;
+            color: var(--text-secondary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
+
         .bot-message {
-            background-color: #444;
+            background: var(--bg-bot);
             align-self: flex-start;
             border-bottom-left-radius: 0;
-            color: #d1d1d1;
-            margin-right: auto;
+            color: var(--text-secondary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .chat-input-area {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .chat-input {
             display: flex;
-            width: 100%;
+            gap: 10px;
         }
 
         #user-input {
-            flex-grow: 1;
+            flex: 1;
             padding: 15px;
-            border: 1px solid #555;
+            border: 2px solid var(--border-color);
             border-radius: 10px;
-            background-color: #1a1a1a;
-            color: #e6f3ff;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             font-size: 18px;
+            font-family: 'Cormorant Garamond', serif;
+            transition: border-color 0.3s;
         }
 
-        #send-button {
+        #user-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 10px rgba(155, 89, 182, 0.3);
+        }
+
+        #send-button, .action-button {
             padding: 15px 30px;
-            background-color: #3a3a3a;
-            color: #ffffff;
-            border: 1px solid #555;
+            background: var(--accent-secondary);
+            color: white;
+            border: none;
             border-radius: 10px;
-            margin-left: 15px;
             cursor: pointer;
             font-size: 18px;
-            transition: background-color 0.3s, color 0.3s;
+            font-family: 'Cinzel', serif;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        #send-button:hover {
-            background-color: #555;
-            color: #e6f3ff;
+        #send-button:hover, .action-button:hover {
+            background: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(155, 89, 182, 0.4);
+        }
+
+        #send-button:active, .action-button:active {
+            transform: translateY(0);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .thinking {
-            width: 60px;
-            height: 60px;
             align-self: center;
-            margin-top: 10px;
             display: none;
+            margin: 20px 0;
         }
 
-        .potion {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #333, #555, #999);
-            border-radius: 50%;
-            animation: swirl 3s linear infinite, glow 2s ease-in-out infinite alternate;
-            box-shadow: 0 0 10px #444;
+        .shuffle-animation {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
         }
 
-        .bubble {
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            animation: rise 3s infinite ease-in-out;
-            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        .shuffle-card {
+            width: 40px;
+            height: 60px;
+            background: var(--card-back);
+            border-radius: 5px;
+            animation: shuffle 1s ease-in-out infinite;
+            border: 2px solid var(--accent-primary);
         }
 
-        .bubble:nth-child(1) {
-            width: 10px;
-            height: 10px;
-            left: 20%;
-            animation-delay: 0s;
+        .shuffle-card:nth-child(1) { animation-delay: 0s; }
+        .shuffle-card:nth-child(2) { animation-delay: 0.2s; }
+        .shuffle-card:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes shuffle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
-        .bubble:nth-child(2) {
-            width: 8px;
-            height: 8px;
-            left: 50%;
-            animation-delay: 0.5s;
+        .export-button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            transition: all 0.3s;
+            margin-top: 15px;
         }
 
-        .bubble:nth-child(3) {
-            width: 12px;
-            height: 12px;
-            left: 80%;
-            animation-delay: 1s;
+        .export-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(155, 89, 182, 0.5);
         }
 
-        @keyframes swirl {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .keyboard-shortcuts {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--bg-secondary);
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            opacity: 0.7;
+            transition: opacity 0.3s;
         }
 
-        @keyframes glow {
-            0% { box-shadow: 0 0 5px #555, 0 0 10px #999; }
-            100% { box-shadow: 0 0 20px #999, 0 0 30px #ccc, 0 0 40px #fff; }
+        .keyboard-shortcuts:hover {
+            opacity: 1;
         }
 
-        @keyframes rise {
-            0% { bottom: -10px; opacity: 0; }
-            50% { opacity: 1; }
-            100% { bottom: 60px; opacity: 0; }
+        .shortcut {
+            display: flex;
+            gap: 10px;
+            margin: 5px 0;
         }
 
+        .key {
+            background: var(--accent-primary);
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            color: white;
+        }
+
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .header-container {
+                padding-bottom: 40%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tarot-card-wrapper {
+                width: 120px;
+                height: 200px;
+            }
+
+            .card-icon {
+                font-size: 40px;
+            }
+
+            .card-name {
+                font-size: 13px;
+            }
+
+            .spread-title {
+                font-size: 22px;
+            }
+
+            .keyboard-shortcuts {
+                display: none;
+            }
+
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 8px 15px;
+                font-size: 20px;
+            }
+        }
+
+        .empty-spread {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-secondary);
+            opacity: 0.6;
+            padding: 40px;
+        }
+
+        .empty-spread-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
     </style>
 </head>
 <body>
-    <!-- Image Section -->
-    <div class="image-container"></div>
+    <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">🌙</div>
 
-    <!-- Chat Section -->
-    <div class="chat-container">
-        <div class="chat-messages" id="chat-messages">
-            <div class="messages-content" id="messages-content"></div>
+    <div class="header-container"></div>
+
+    <div class="main-container">
+        <div class="card-spread-area">
+            <h2 class="spread-title">✦ Tarot Spread ✦</h2>
+            <div class="cards-container" id="cards-container">
+                <div class="empty-spread">
+                    <div class="empty-spread-icon">🔮</div>
+                    <p>Ask for a tarot reading to see your cards appear here...</p>
+                </div>
+            </div>
+            <button class="export-button" id="export-button" style="display: none;" onclick="exportReading()">
+                📥 Export Reading
+            </button>
+        </div>
+
+        <div class="chat-container">
+            <div class="reading-templates">
+                <div class="template-title">✨ Quick Reading Templates</div>
+                <div class="template-buttons">
+                    <button class="template-btn" onclick="useTemplate('Give me a tarot reading about my love life')">💕 Love</button>
+                    <button class="template-btn" onclick="useTemplate('Give me a tarot reading about my career')">💼 Career</button>
+                    <button class="template-btn" onclick="useTemplate('Give me a tarot reading for general guidance')">🌟 General</button>
+                    <button class="template-btn" onclick="useTemplate('Give me a tarot reading about my spiritual path')">🙏 Spiritual</button>
+                    <button class="template-btn" onclick="useTemplate('What do I need to know today?')">📅 Daily</button>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chat-messages"></div>
+
             <div class="thinking" id="thinking-animation">
-                <div class="potion">
-                    <div class="bubble"></div>
-                    <div class="bubble"></div>
-                    <div class="bubble"></div>
+                <div class="shuffle-animation">
+                    <div class="shuffle-card"></div>
+                    <div class="shuffle-card"></div>
+                    <div class="shuffle-card"></div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <div class="action-buttons">
+                    <button class="action-button" onclick="clearChat()">🗑️ Clear</button>
+                    <button class="action-button" onclick="shareReading()">🔗 Share</button>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="user-input" placeholder="Ask the Oracle...">
+                    <button id="send-button">Send ✨</button>
                 </div>
             </div>
         </div>
-        <div class="chat-input">
-            <input type="text" id="user-input" placeholder="Cast your message...">
-            <button id="send-button">Send</button>
-        </div>
+    </div>
+
+    <div class="keyboard-shortcuts">
+        <div class="shortcut"><span class="key">T</span> <span>Quick Tarot Reading</span></div>
+        <div class="shortcut"><span class="key">N</span> <span>Number Reading</span></div>
+        <div class="shortcut"><span class="key">Enter</span> <span>Send Message</span></div>
     </div>
 
     <script>
-        const chatMessages = document.getElementById('messages-content');
+        const chatMessages = document.getElementById('chat-messages');
         const userInput = document.getElementById('user-input');
         const sendButton = document.getElementById('send-button');
-        const thinkingAnimation = document.querySelector('.thinking');
+        const thinkingAnimation = document.getElementById('thinking-animation');
+        const cardsContainer = document.getElementById('cards-container');
+        const exportButton = document.getElementById('export-button');
+        const themeToggle = document.querySelector('.theme-toggle');
+
+        let currentCards = null;
+        let currentReading = null;
+
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'light' ? '☀️' : '🌙';
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.setAttribute('data-theme', 'light');
+            themeToggle.textContent = '☀️';
+        }
+
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.target !== userInput) {
+                if (e.key === 't' || e.key === 'T') {
+                    useTemplate('Give me a tarot reading for general guidance');
+                } else if (e.key === 'n' || e.key === 'N') {
+                    useTemplate('Give me a number reading');
+                }
+            }
+        });
+
+        // Card Icons based on suit and arcana
+        function getCardIcon(card) {
+            if (card.arcana === 'major') {
+                const majorIcons = {
+                    'The Fool': '🃏', 'The Magician': '🎩', 'The High Priestess': '👸',
+                    'The Empress': '👑', 'The Emperor': '🤴', 'The Hierophant': '⛪',
+                    'The Lovers': '💑', 'The Chariot': '🏇', 'Strength': '🦁',
+                    'The Hermit': '🏮', 'Wheel of Fortune': '☸️', 'Justice': '⚖️',
+                    'The Hanged Man': '🙃', 'Death': '💀', 'Temperance': '🍷',
+                    'The Devil': '😈', 'The Tower': '🗼', 'The Star': '⭐',
+                    'The Moon': '🌙', 'The Sun': '☀️', 'Judgement': '📯', 'The World': '🌍'
+                };
+                return majorIcons[card.name] || '✦';
+            } else {
+                const suitIcons = {
+                    'Wands': '🔥',
+                    'Cups': '🏆',
+                    'Swords': '⚔️',
+                    'Pentacles': '⭐'
+                };
+                return suitIcons[card.suit] || '✦';
+            }
+        }
+
+        function displayTarotCards(cards, positions) {
+            cardsContainer.innerHTML = '';
+            exportButton.style.display = 'block';
+            currentCards = cards;
+
+            cards.forEach((card, index) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'tarot-card-wrapper';
+
+                const cardElement = document.createElement('div');
+                cardElement.className = 'tarot-card';
+                cardElement.innerHTML = `
+                    <div class="card-face card-back"></div>
+                    <div class="card-face card-front">
+                        <div class="card-icon">${getCardIcon(card)}</div>
+                        <div class="card-name">${card.name}</div>
+                        <div class="card-position">${positions[index]}</div>
+                        ${card.suit ? `<div class="card-suit">${card.suit}</div>` : ''}
+                    </div>
+                `;
+
+                wrapper.appendChild(cardElement);
+                cardsContainer.appendChild(wrapper);
+
+                // Auto-flip cards with delay
+                setTimeout(() => {
+                    cardElement.classList.add('flipped');
+                }, 500 + (index * 300));
+
+                // Click to flip
+                cardElement.addEventListener('click', () => {
+                    cardElement.classList.toggle('flipped');
+                });
+            });
+        }
 
         function addMessage(message, isUser) {
             const messageElement = document.createElement('div');
             messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
-            
+
             if (isUser) {
                 messageElement.textContent = message;
             } else {
                 messageElement.innerHTML = marked.parse(message);
             }
-            
+
             chatMessages.appendChild(messageElement);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
         function showThinkingAnimation() {
-            thinkingAnimation.style.display = 'block';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            thinkingAnimation.style.display = 'flex';
         }
 
         function hideThinkingAnimation() {
@@ -239,39 +701,46 @@
                 const response = await fetch('/init');
                 const data = await response.json();
                 hideThinkingAnimation();
-
-                // Ensure styles are applied before adding the message
                 addMessage(data.response, false);
-               
-
-            }   catch (error) {
+            } catch (error) {
                 console.error('Initialization Error:', error);
                 hideThinkingAnimation();
                 addMessage('Failed to initialize chat. Please refresh the page.', false);
             }
         }
 
-        async function sendMessage() {
-            const message = userInput.value.trim();
-            if (message) {
-                addMessage(message, true);
-                userInput.value = '';
+        async function sendMessage(message = null) {
+            const messageText = message || userInput.value.trim();
+            if (messageText) {
+                addMessage(messageText, true);
+                if (!message) userInput.value = '';
                 showThinkingAnimation();
+
                 try {
                     const response = await fetch('/chat', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ message }),
+                        body: JSON.stringify({ message: messageText }),
                     });
+
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
+
                     const data = await response.json();
                     hideThinkingAnimation();
+
+                    currentReading = data;
+
+                    // Display cards if it's a tarot reading
+                    if (data.type === 'tarot' && data.cards) {
+                        displayTarotCards(data.cards, data.positions);
+                    }
+
                     addMessage(data.response, false);
-                    
+
                     if (data.terminate) {
                         userInput.disabled = true;
                         sendButton.disabled = true;
@@ -284,14 +753,71 @@
             }
         }
 
-        sendButton.addEventListener('click', sendMessage);
+        function useTemplate(template) {
+            userInput.value = template;
+            sendMessage();
+        }
+
+        function clearChat() {
+            if (confirm('Clear chat history?')) {
+                chatMessages.innerHTML = '';
+                cardsContainer.innerHTML = `
+                    <div class="empty-spread">
+                        <div class="empty-spread-icon">🔮</div>
+                        <p>Ask for a tarot reading to see your cards appear here...</p>
+                    </div>
+                `;
+                exportButton.style.display = 'none';
+                currentCards = null;
+                currentReading = null;
+                initializeChat();
+            }
+        }
+
+        function shareReading() {
+            if (currentReading && currentReading.type === 'tarot') {
+                const shareText = `Quantum Oracle Reading:\n\n${currentReading.cards.map((c, i) =>
+                    `${currentReading.positions[i]}: ${c.name}`
+                ).join('\n')}\n\n${currentReading.response.substring(0, 200)}...`;
+
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'My Quantum Oracle Reading',
+                        text: shareText,
+                        url: window.location.href
+                    });
+                } else {
+                    // Fallback: copy to clipboard
+                    navigator.clipboard.writeText(shareText);
+                    alert('Reading copied to clipboard!');
+                }
+            } else {
+                alert('No tarot reading to share yet! Ask for a reading first.');
+            }
+        }
+
+        async function exportReading() {
+            if (!currentCards) return;
+
+            try {
+                const canvas = await html2canvas(cardsContainer);
+                const link = document.createElement('a');
+                link.download = 'oracle-reading.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            } catch (error) {
+                console.error('Export error:', error);
+                alert('Export failed. Please try again.');
+            }
+        }
+
+        sendButton.addEventListener('click', () => sendMessage());
         userInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 sendMessage();
             }
         });
 
-        // Initialize chat when the page loads
         window.addEventListener('load', initializeChat);
     </script>
 </body>

@@ -62,6 +62,19 @@ class GeminiOracle:
         response = self.chat.send_message(new_prompt)
         return response.text
 
+    def tarot_response_structured(self, user_input):
+        """Returns both the reading text and card data for visual display."""
+        self.deck.quantum_shuffle()
+        spread = self.deck.reading(3)
+        card_data = [self.deck.get_card_info(card) for card in spread]
+        new_prompt = f"These are the cards you've drawn {spread}, to answer this request: {user_input}"
+        response = self.chat.send_message(new_prompt)
+        return {
+            'text': response.text,
+            'cards': card_data,
+            'positions': ['Past', 'Present', 'Future']
+        }
+
     def clear_history(self):
         """Clears the chat history."""
         self.chat = self.model.start_chat(history=[])  # Start a new chat with empty history
