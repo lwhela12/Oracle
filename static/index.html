@@ -1436,7 +1436,26 @@
             const messageText = userInput.value.trim();
             if (!messageText) return;
 
-            addMessage(messageText, true);
+            // Ensure the message includes the divination type keyword for backend routing
+            let enhancedMessage = messageText;
+
+            // Check if message already contains divination keywords
+            const hasTarotKeyword = /tarot/i.test(messageText);
+            const hasIChingKeyword = /(i ching|iching|hexagram)/i.test(messageText);
+            const hasRunesKeyword = /(rune|runes|futhark|norse)/i.test(messageText);
+
+            // If no divination keyword is present, prepend the selected type
+            if (!hasTarotKeyword && !hasIChingKeyword && !hasRunesKeyword) {
+                if (currentDivinationType === 'tarot') {
+                    enhancedMessage = `Give me a tarot reading: ${messageText}`;
+                } else if (currentDivinationType === 'iching') {
+                    enhancedMessage = `Give me an I Ching reading: ${messageText}`;
+                } else if (currentDivinationType === 'runes') {
+                    enhancedMessage = `Give me a runes reading: ${messageText}`;
+                }
+            }
+
+            addMessage(messageText, true); // Show user's original message
             sounds.messageSend();
             userInput.value = '';
             showThinkingAnimation();
@@ -1448,7 +1467,7 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        message: messageText,
+                        message: enhancedMessage, // Send enhanced message with divination type
                         spread_type: currentSpreadType
                     }),
                 });
