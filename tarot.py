@@ -82,6 +82,19 @@ class TarotDeck:
             return "Not enough cards in the deck."
         reading_cards = [self.draw_card() for _ in range(num_cards)]
         return reading_cards
+
+    def get_spread_positions(self, spread_type):
+        """Returns position labels for different spread types."""
+        spreads = {
+            '3-card': ['Past', 'Present', 'Future'],
+            'yes-no': ['Answer'],
+            '5-card': ['Present Situation', 'Challenge', 'Past', 'Future', 'Outcome'],
+            'celtic': [
+                'Present', 'Challenge', 'Past', 'Future', 'Above',
+                'Below', 'Advice', 'External', 'Hopes/Fears', 'Outcome'
+            ]
+        }
+        return spreads.get(spread_type, ['Card'])
     
 
 

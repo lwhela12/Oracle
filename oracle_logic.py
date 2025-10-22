@@ -62,17 +62,36 @@ class GeminiOracle:
         response = self.chat.send_message(new_prompt)
         return response.text
 
-    def tarot_response_structured(self, user_input):
+    def tarot_response_structured(self, user_input, spread_type='3-card'):
         """Returns both the reading text and card data for visual display."""
         self.deck.quantum_shuffle()
-        spread = self.deck.reading(3)
+
+        # Determine number of cards based on spread type
+        num_cards = {
+            '3-card': 3,
+            'yes-no': 1,
+            '5-card': 5,
+            'celtic': 10
+        }.get(spread_type, 3)
+
+        spread = self.deck.reading(num_cards)
         card_data = [self.deck.get_card_info(card) for card in spread]
-        new_prompt = f"These are the cards you've drawn {spread}, to answer this request: {user_input}"
+        positions = self.deck.get_spread_positions(spread_type)
+
+        # Customize prompt based on spread type
+        if spread_type == 'yes-no':
+            new_prompt = f"You drew the card {spread[0]}. Using this card, provide a clear Yes or No answer to: {user_input}. Explain your reasoning based on the card's meaning."
+        elif spread_type == 'celtic':
+            new_prompt = f"You've drawn a Celtic Cross spread with these 10 cards: {spread}. Provide a comprehensive reading for: {user_input}"
+        else:
+            new_prompt = f"These are the cards you've drawn {spread}, representing {', '.join(positions)}. Answer this request: {user_input}"
+
         response = self.chat.send_message(new_prompt)
         return {
             'text': response.text,
             'cards': card_data,
-            'positions': ['Past', 'Present', 'Future']
+            'positions': positions,
+            'spread_type': spread_type
         }
 
     def clear_history(self):

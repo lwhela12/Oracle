@@ -69,11 +69,16 @@
             min-height: 200px;
         }
 
-        .theme-toggle {
+        .controls-container {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .theme-toggle, .sound-toggle, .music-toggle {
             background: var(--bg-secondary);
             border: 2px solid var(--border-color);
             border-radius: 50px;
@@ -84,9 +89,13 @@
             box-shadow: var(--shadow);
         }
 
-        .theme-toggle:hover {
+        .theme-toggle:hover, .sound-toggle:hover, .music-toggle:hover {
             transform: scale(1.1);
             box-shadow: 0 0 30px rgba(155, 89, 182, 0.5);
+        }
+
+        .sound-toggle.muted, .music-toggle.muted {
+            opacity: 0.5;
         }
 
         .main-container {
@@ -109,13 +118,51 @@
             min-height: 600px;
         }
 
+        .spread-header {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
         .spread-title {
             font-family: 'Cinzel', serif;
             font-size: 28px;
             text-align: center;
-            margin-bottom: 30px;
             color: var(--accent-primary);
             text-shadow: 0 0 10px rgba(155, 89, 182, 0.3);
+        }
+
+        .spread-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .spread-option {
+            padding: 8px 16px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .spread-option:hover {
+            background: var(--accent-secondary);
+            color: white;
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .spread-option.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
         }
 
         .cards-container {
@@ -514,13 +561,33 @@
     </style>
 </head>
 <body>
-    <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">🌙</div>
+    <div class="controls-container">
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">🌙</div>
+        <div class="sound-toggle" onclick="toggleSound()" title="Toggle Sound Effects">🔊</div>
+        <div class="music-toggle muted" onclick="toggleMusic()" title="Toggle Ambient Music">🎵</div>
+    </div>
 
     <div class="header-container"></div>
 
     <div class="main-container">
         <div class="card-spread-area">
-            <h2 class="spread-title">✦ Tarot Spread ✦</h2>
+            <div class="spread-header">
+                <h2 class="spread-title">✦ Tarot Spread ✦</h2>
+                <div class="spread-selector">
+                    <div class="spread-option active" data-spread="3-card" onclick="selectSpread('3-card')">
+                        🔮 3-Card Spread
+                    </div>
+                    <div class="spread-option" data-spread="yes-no" onclick="selectSpread('yes-no')">
+                        ❓ Yes/No
+                    </div>
+                    <div class="spread-option" data-spread="5-card" onclick="selectSpread('5-card')">
+                        ⭐ 5-Card Cross
+                    </div>
+                    <div class="spread-option" data-spread="celtic" onclick="selectSpread('celtic')">
+                        ✨ Celtic Cross
+                    </div>
+                </div>
+            </div>
             <div class="cards-container" id="cards-container">
                 <div class="empty-spread">
                     <div class="empty-spread-icon">🔮</div>
@@ -581,9 +648,184 @@
         const cardsContainer = document.getElementById('cards-container');
         const exportButton = document.getElementById('export-button');
         const themeToggle = document.querySelector('.theme-toggle');
+        const soundToggle = document.querySelector('.sound-toggle');
+        const musicToggle = document.querySelector('.music-toggle');
 
         let currentCards = null;
         let currentReading = null;
+        let currentSpreadType = '3-card';
+        let soundEnabled = true;
+        let musicEnabled = false;
+        let audioContext = null;
+        let ambientOscillator = null;
+
+        // Initialize Audio Context
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // Sound Effects using Web Audio API
+        const sounds = {
+            cardFlip: () => {
+                if (!soundEnabled) return;
+                initAudio();
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                osc.frequency.value = 400;
+                osc.type = 'sine';
+                gain.gain.setValueAtTime(0.15, audioContext.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                osc.start();
+                osc.stop(audioContext.currentTime + 0.2);
+            },
+
+            cardShuffle: () => {
+                if (!soundEnabled) return;
+                initAudio();
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        const osc = audioContext.createOscillator();
+                        const gain = audioContext.createGain();
+                        osc.connect(gain);
+                        gain.connect(audioContext.destination);
+                        osc.frequency.value = 200 + Math.random() * 100;
+                        osc.type = 'square';
+                        gain.gain.setValueAtTime(0.08, audioContext.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                        osc.start();
+                        osc.stop(audioContext.currentTime + 0.1);
+                    }, i * 50);
+                }
+            },
+
+            messageSend: () => {
+                if (!soundEnabled) return;
+                initAudio();
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                osc.frequency.value = 600;
+                osc.type = 'sine';
+                gain.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+                osc.start();
+                osc.stop(audioContext.currentTime + 0.15);
+            },
+
+            chime: () => {
+                if (!soundEnabled) return;
+                initAudio();
+                [523.25, 659.25, 783.99].forEach((freq, i) => {
+                    setTimeout(() => {
+                        const osc = audioContext.createOscillator();
+                        const gain = audioContext.createGain();
+                        osc.connect(gain);
+                        gain.connect(audioContext.destination);
+                        osc.frequency.value = freq;
+                        osc.type = 'sine';
+                        gain.gain.setValueAtTime(0.12, audioContext.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.8);
+                        osc.start();
+                        osc.stop(audioContext.currentTime + 0.8);
+                    }, i * 100);
+                });
+            }
+        };
+
+        // Ambient Music
+        function startAmbientMusic() {
+            if (!musicEnabled || ambientOscillator) return;
+            initAudio();
+
+            ambientOscillator = {
+                osc1: audioContext.createOscillator(),
+                osc2: audioContext.createOscillator(),
+                gain: audioContext.createGain()
+            };
+
+            ambientOscillator.osc1.frequency.value = 110; // A2
+            ambientOscillator.osc2.frequency.value = 165; // E3
+            ambientOscillator.osc1.type = 'sine';
+            ambientOscillator.osc2.type = 'sine';
+
+            ambientOscillator.gain.gain.value = 0.03;
+
+            ambientOscillator.osc1.connect(ambientOscillator.gain);
+            ambientOscillator.osc2.connect(ambientOscillator.gain);
+            ambientOscillator.gain.connect(audioContext.destination);
+
+            ambientOscillator.osc1.start();
+            ambientOscillator.osc2.start();
+
+            // Slowly modulate frequencies for ambient effect
+            setInterval(() => {
+                if (ambientOscillator && musicEnabled) {
+                    ambientOscillator.osc1.frequency.value = 110 + Math.sin(Date.now() / 3000) * 5;
+                    ambientOscillator.osc2.frequency.value = 165 + Math.cos(Date.now() / 4000) * 7;
+                }
+            }, 100);
+        }
+
+        function stopAmbientMusic() {
+            if (ambientOscillator) {
+                ambientOscillator.osc1.stop();
+                ambientOscillator.osc2.stop();
+                ambientOscillator = null;
+            }
+        }
+
+        // Toggle Functions
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            soundToggle.classList.toggle('muted');
+            soundToggle.textContent = soundEnabled ? '🔊' : '🔇';
+            localStorage.setItem('soundEnabled', soundEnabled);
+            if (soundEnabled) sounds.chime();
+        }
+
+        function toggleMusic() {
+            musicEnabled = !musicEnabled;
+            musicToggle.classList.toggle('muted');
+            musicToggle.textContent = musicEnabled ? '🎵' : '🎶';
+            localStorage.setItem('musicEnabled', musicEnabled);
+
+            if (musicEnabled) {
+                startAmbientMusic();
+            } else {
+                stopAmbientMusic();
+            }
+        }
+
+        function selectSpread(spreadType) {
+            currentSpreadType = spreadType;
+            document.querySelectorAll('.spread-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            document.querySelector(`[data-spread="${spreadType}"]`).classList.add('active');
+            sounds.chime();
+        }
+
+        // Load saved preferences
+        const savedSound = localStorage.getItem('soundEnabled');
+        if (savedSound !== null) {
+            soundEnabled = savedSound === 'true';
+            if (!soundEnabled) {
+                soundToggle.classList.add('muted');
+                soundToggle.textContent = '🔇';
+            }
+        }
+
+        const savedMusic = localStorage.getItem('musicEnabled');
+        if (savedMusic === 'true') {
+            musicEnabled = true;
+            musicToggle.classList.remove('muted');
+            musicToggle.textContent = '🎵';
+        }
 
         // Theme Toggle
         function toggleTheme() {
@@ -642,6 +884,9 @@
             exportButton.style.display = 'block';
             currentCards = cards;
 
+            // Play shuffle sound
+            sounds.cardShuffle();
+
             cards.forEach((card, index) => {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'tarot-card-wrapper';
@@ -661,14 +906,16 @@
                 wrapper.appendChild(cardElement);
                 cardsContainer.appendChild(wrapper);
 
-                // Auto-flip cards with delay
+                // Auto-flip cards with delay and sound
                 setTimeout(() => {
                     cardElement.classList.add('flipped');
+                    sounds.cardFlip();
                 }, 500 + (index * 300));
 
-                // Click to flip
+                // Click to flip with sound
                 cardElement.addEventListener('click', () => {
                     cardElement.classList.toggle('flipped');
+                    sounds.cardFlip();
                 });
             });
         }
@@ -713,6 +960,7 @@
             const messageText = message || userInput.value.trim();
             if (messageText) {
                 addMessage(messageText, true);
+                sounds.messageSend();
                 if (!message) userInput.value = '';
                 showThinkingAnimation();
 
@@ -722,7 +970,10 @@
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ message: messageText }),
+                        body: JSON.stringify({
+                            message: messageText,
+                            spread_type: currentSpreadType
+                        }),
                     });
 
                     if (!response.ok) {

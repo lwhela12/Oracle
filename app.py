@@ -23,24 +23,26 @@ def init():
 def chat():
     data = request.json
     user_message = data['message']
-    
+    spread_type = data.get('spread_type', '3-card')
+
     # Check for exit keywords
     if user_message.lower() in ['quit', 'exit', 'bye']:
         oracle.clear_history()
         return jsonify({'response': f"{oracle.name}: Blessings", 'terminate': True})
-    
+
     # Check if the message contains the word "tarot" or similar
     elif 'tarot' in user_message.lower():
         # Customize response if tarot-related
-        tarot_data = oracle.tarot_response_structured(user_message)
+        tarot_data = oracle.tarot_response_structured(user_message, spread_type)
         return jsonify({
             'response': tarot_data['text'],
             'cards': tarot_data['cards'],
             'positions': tarot_data['positions'],
+            'spread_type': tarot_data['spread_type'],
             'type': 'tarot',
             'terminate': False
         })
-        
+
 
     else:# General response
         response = oracle.respond(user_message)
