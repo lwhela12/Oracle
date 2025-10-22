@@ -6,32 +6,42 @@
     <title>Quantum Oracle</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #1a1a1a;
-            --bg-secondary: rgba(20, 20, 20, 0.9);
-            --bg-card: #2f2f2f;
-            --bg-bot: #444;
-            --text-primary: #e6f3ff;
-            --text-secondary: #d1d1d1;
-            --accent-primary: #9b59b6;
-            --accent-secondary: #8e44ad;
-            --border-color: #555;
-            --card-back: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --card-front: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --shadow: 0 0 20px rgba(0,0,0,0.5);
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #13131a;
+            --bg-tertiary: #1a1a24;
+            --accent-primary: #8b5cf6;
+            --accent-secondary: #a78bfa;
+            --accent-glow: rgba(139, 92, 246, 0.3);
+            --text-primary: #e9edef;
+            --text-secondary: #a0a8b0;
+            --text-muted: #6b7280;
+            --border-color: rgba(139, 92, 246, 0.2);
+            --glass-bg: rgba(26, 26, 36, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow-glow: 0 0 30px rgba(139, 92, 246, 0.15);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --sidebar-width: 280px;
+            --header-height: 80px;
         }
 
         [data-theme="light"] {
-            --bg-primary: #f5f5f5;
-            --bg-secondary: rgba(255, 255, 255, 0.95);
-            --bg-card: #e8e8e8;
-            --bg-bot: #d8d8d8;
-            --text-primary: #2c3e50;
-            --text-secondary: #34495e;
-            --border-color: #bbb;
-            --shadow: 0 0 20px rgba(0,0,0,0.1);
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f1f3f5;
+            --accent-primary: #7c3aed;
+            --accent-secondary: #8b5cf6;
+            --accent-glow: rgba(124, 58, 237, 0.2);
+            --text-primary: #1a1a24;
+            --text-secondary: #4b5563;
+            --text-muted: #9ca3af;
+            --border-color: rgba(124, 58, 237, 0.2);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(124, 58, 237, 0.2);
+            --shadow-glow: 0 0 30px rgba(124, 58, 237, 0.1);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
 
         * {
@@ -41,144 +51,518 @@
         }
 
         body {
-            font-family: 'Cormorant Garamond', serif;
-            background-color: var(--bg-primary);
-            background-image: url('https://www.toptal.com/designers/subtlepatterns/patterns/dark-marble.png');
-            background-size: cover;
-            background-attachment: fixed;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
             color: var(--text-primary);
-            margin: 0;
-            font-size: 18px;
-            line-height: 1.6;
-            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Header */
+        .header {
+            height: var(--header-height);
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
-            flex-direction: column;
-            transition: background-color 0.3s, color 0.3s;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .header-container {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 30%;
-            background-image: url('static/header.png');
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            margin-bottom: -5px;
-            min-height: 200px;
-        }
-
-        .controls-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
+        .header-logo {
             display: flex;
-            gap: 10px;
+            align-items: center;
+            gap: 1rem;
         }
 
-        .theme-toggle, .sound-toggle, .music-toggle {
-            background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
-            border-radius: 50px;
-            padding: 10px 20px;
+        .header-logo h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-logo-icon {
+            font-size: 2rem;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .header-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
             cursor: pointer;
-            font-size: 24px;
-            transition: all 0.3s;
-            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
         }
 
-        .theme-toggle:hover, .sound-toggle:hover, .music-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 30px rgba(155, 89, 182, 0.5);
+        .header-btn:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
         }
 
-        .sound-toggle.muted, .music-toggle.muted {
+        .header-btn.muted {
             opacity: 0.5;
         }
 
-        .main-container {
-            width: 90%;
-            max-width: 1400px;
-            margin: 50px auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            padding: 0 20px;
+        .hamburger {
+            display: none;
         }
 
-        .card-spread-area {
+        /* Main Layout */
+        .main-layout {
+            display: flex;
+            height: calc(100vh - var(--header-height));
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
             background: var(--bg-secondary);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            display: flex;
-            flex-direction: column;
-            min-height: 600px;
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+            transition: transform 0.3s ease;
         }
 
-        .spread-header {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 30px;
+        .sidebar-section {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .spread-title {
+        .sidebar-section-title {
             font-family: 'Cinzel', serif;
-            font-size: 28px;
-            text-align: center;
-            color: var(--accent-primary);
-            text-shadow: 0 0 10px rgba(155, 89, 182, 0.3);
-        }
-
-        .spread-selector {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .spread-option {
-            padding: 8px 16px;
-            background: var(--bg-card);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             color: var(--text-secondary);
-            border: 2px solid var(--border-color);
-            border-radius: 20px;
+            margin-bottom: 1rem;
+        }
+
+        .divination-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .divination-btn {
+            padding: 0.875rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
             cursor: pointer;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 14px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9375rem;
+            color: var(--text-primary);
         }
 
-        .spread-option:hover {
-            background: var(--accent-secondary);
-            color: white;
+        .divination-btn:hover {
+            background: var(--glass-bg);
             border-color: var(--accent-primary);
-            transform: translateY(-2px);
+            transform: translateX(4px);
         }
 
-        .spread-option.active {
+        .divination-btn.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .divination-icon {
+            font-size: 1.5rem;
+        }
+
+        .spread-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .spread-btn {
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            text-align: left;
+        }
+
+        .spread-btn:hover {
+            background: var(--glass-bg);
+            border-color: var(--accent-secondary);
+        }
+
+        .spread-btn.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-color: var(--accent-primary);
+            color: white;
+        }
+
+        .template-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .template-btn {
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .template-btn:hover {
+            background: var(--glass-bg);
+            border-color: var(--accent-secondary);
+            color: var(--text-primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chat-message {
+            max-width: 80%;
+            padding: 1rem 1.25rem;
+            border-radius: 16px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-message {
+            align-self: flex-end;
             background: var(--accent-primary);
             color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: 4px;
+        }
+
+        .thinking-animation {
+            display: none;
+            align-self: flex-start;
+            padding: 1rem 1.25rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            border-bottom-left-radius: 4px;
+        }
+
+        .thinking-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .thinking-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .thinking-dot:nth-child(1) { animation-delay: -0.32s; }
+        .thinking-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* Input Area */
+        .input-area {
+            padding: 1.5rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+
+        .input-container {
+            flex: 1;
+            position: relative;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .selection-pills {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+
+        .selection-pill {
+            padding: 0.375rem 0.75rem;
+            background: var(--accent-primary);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8125rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .selection-pill-remove {
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .selection-pill-remove:hover {
+            opacity: 1;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 60px;
+            max-height: 150px;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .generate-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        .generate-btn:active {
+            transform: translateY(0);
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Card Viewer Panel */
+        .card-viewer-panel {
+            width: 400px;
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .card-viewer-panel.minimized {
+            transform: translateX(100%);
+        }
+
+        .card-viewer-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-viewer-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .minimize-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .minimize-btn:hover {
+            background: var(--accent-primary);
             border-color: var(--accent-primary);
         }
 
-        .cards-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
+        .card-viewer-content {
             flex: 1;
-            padding: 20px;
+            overflow-y: auto;
+            padding: 1.5rem;
         }
 
+        .cards-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Floating Expand Button */
+        .expand-btn {
+            position: fixed;
+            right: 2rem;
+            bottom: 2rem;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px var(--accent-glow);
+            transition: all 0.3s ease;
+            z-index: 50;
+        }
+
+        .expand-btn.visible {
+            display: flex;
+        }
+
+        .expand-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px var(--accent-glow);
+        }
+
+        .expand-btn-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ef4444;
+            color: white;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Tarot Card Styling */
         .tarot-card-wrapper {
             perspective: 1000px;
-            width: 180px;
-            height: 300px;
+            width: 140px;
+            height: 240px;
         }
 
         .tarot-card {
@@ -198,567 +582,417 @@
             position: absolute;
             width: 100%;
             height: 100%;
+            border-radius: 12px;
             backface-visibility: hidden;
-            border-radius: 10px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border: 3px solid var(--accent-primary);
+            justify-content: center;
+            padding: 1rem;
+            box-shadow: var(--shadow-sm);
         }
 
         .card-back {
-            background: var(--card-back);
-            background-image:
-                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.05) 10px, rgba(255,255,255,.05) 20px),
-                repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(255,255,255,.05) 10px, rgba(255,255,255,.05) 20px);
-        }
-
-        .card-back::before {
-            content: "✦";
-            font-size: 80px;
-            color: rgba(255,255,255,0.3);
-            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         .card-front {
-            background: var(--card-front);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             transform: rotateY(180deg);
-            color: #2c3e50;
-            text-align: center;
         }
 
         .card-icon {
-            font-size: 60px;
-            margin-bottom: 15px;
+            font-size: 3rem;
+            margin-bottom: 0.75rem;
         }
 
         .card-name {
             font-family: 'Cinzel', serif;
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            line-height: 1.3;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 0.5rem;
         }
 
         .card-position {
-            font-size: 14px;
+            font-size: 0.75rem;
             color: #7f8c8d;
+            text-align: center;
             font-style: italic;
         }
 
         .card-suit {
-            font-size: 12px;
-            margin-top: 5px;
-            color: #95a5a6;
+            font-size: 0.75rem;
+            color: #7f8c8d;
+            margin-top: 0.25rem;
         }
 
-        .reading-templates {
-            margin-bottom: 20px;
-            padding: 20px;
-            background: rgba(155, 89, 182, 0.1);
-            border-radius: 10px;
-            border: 1px solid var(--accent-primary);
-        }
-
-        .template-title {
-            font-family: 'Cinzel', serif;
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: var(--accent-primary);
-        }
-
-        .template-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .template-btn {
-            padding: 8px 16px;
-            background: var(--accent-secondary);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .template-btn:hover {
-            background: var(--accent-primary);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.3);
-        }
-
-        .chat-container {
-            background: var(--bg-secondary);
-            box-shadow: var(--shadow);
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            border-radius: 15px;
-            min-height: 600px;
-        }
-
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .chat-messages::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        .chat-messages::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.1);
-            border-radius: 10px;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: var(--accent-primary);
-            border-radius: 10px;
-        }
-
-        .user-message, .bot-message {
-            padding: 15px 20px;
-            border-radius: 15px;
-            max-width: 80%;
-            word-wrap: break-word;
-            animation: messageSlide 0.3s ease-out;
-        }
-
-        @keyframes messageSlide {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .user-message {
-            background: var(--bg-card);
-            align-self: flex-end;
-            border-bottom-right-radius: 0;
-            color: var(--text-secondary);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .bot-message {
-            background: var(--bg-bot);
-            align-self: flex-start;
-            border-bottom-left-radius: 0;
-            color: var(--text-secondary);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .chat-input-area {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .chat-input {
-            display: flex;
-            gap: 10px;
-        }
-
-        #user-input {
-            flex: 1;
-            padding: 15px;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-size: 18px;
-            font-family: 'Cormorant Garamond', serif;
-            transition: border-color 0.3s;
-        }
-
-        #user-input:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 10px rgba(155, 89, 182, 0.3);
-        }
-
-        #send-button, .action-button {
-            padding: 15px 30px;
-            background: var(--accent-secondary);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 18px;
-            font-family: 'Cinzel', serif;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        #send-button:hover, .action-button:hover {
-            background: var(--accent-primary);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(155, 89, 182, 0.4);
-        }
-
-        #send-button:active, .action-button:active {
-            transform: translateY(0);
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .thinking {
-            align-self: center;
-            display: none;
-            margin: 20px 0;
-        }
-
-        .shuffle-animation {
-            display: flex;
-            gap: 10px;
-            align-items: flex-end;
-        }
-
-        .shuffle-card {
-            width: 40px;
-            height: 60px;
-            background: var(--card-back);
-            border-radius: 5px;
-            animation: shuffle 1s ease-in-out infinite;
-            border: 2px solid var(--accent-primary);
-        }
-
-        .shuffle-card:nth-child(1) { animation-delay: 0s; }
-        .shuffle-card:nth-child(2) { animation-delay: 0.2s; }
-        .shuffle-card:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes shuffle {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .export-button {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'Cinzel', serif;
-            font-size: 16px;
-            transition: all 0.3s;
-            margin-top: 15px;
-        }
-
-        .export-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(155, 89, 182, 0.5);
-        }
-
-        .keyboard-shortcuts {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: var(--bg-secondary);
-            padding: 15px 20px;
-            border-radius: 10px;
-            font-size: 14px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-
-        .keyboard-shortcuts:hover {
-            opacity: 1;
-        }
-
-        .shortcut {
-            display: flex;
-            gap: 10px;
-            margin: 5px 0;
-        }
-
-        .key {
-            background: var(--accent-primary);
-            padding: 2px 8px;
-            border-radius: 5px;
-            font-family: 'Cinzel', serif;
-            font-size: 12px;
-            color: white;
-        }
-
-        @media (max-width: 1200px) {
-            .main-container {
-                grid-template-columns: 1fr;
-            }
-
-            .header-container {
-                padding-bottom: 40%;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .tarot-card-wrapper {
-                width: 120px;
-                height: 200px;
-            }
-
-            .card-icon {
-                font-size: 40px;
-            }
-
-            .card-name {
-                font-size: 13px;
-            }
-
-            .spread-title {
-                font-size: 22px;
-            }
-
-            .keyboard-shortcuts {
-                display: none;
-            }
-
-            .theme-toggle {
-                top: 10px;
-                right: 10px;
-                padding: 8px 15px;
-                font-size: 20px;
-            }
-        }
-
-        .empty-spread {
+        /* Hexagram Display */
+        .hexagram-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: var(--text-secondary);
-            opacity: 0.6;
-            padding: 40px;
+            gap: 1rem;
         }
 
-        .empty-spread-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-            opacity: 0.3;
-        }
-
-        .hexagram-display {
+        .hexagram-lines {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            padding: 30px;
+            gap: 8px;
         }
 
-        .hexagram-symbol {
-            font-size: 120px;
-            line-height: 1;
-            text-shadow: 0 0 20px rgba(155, 89, 182, 0.5);
+        .hexagram-line {
+            width: 160px;
+            height: 12px;
+            background: var(--accent-primary);
+            border-radius: 6px;
+        }
+
+        .hexagram-line.broken {
+            background: linear-gradient(to right, var(--accent-primary) 0%, var(--accent-primary) 40%, transparent 40%, transparent 60%, var(--accent-primary) 60%, var(--accent-primary) 100%);
         }
 
         .hexagram-info {
             text-align: center;
         }
 
-        .hexagram-name {
-            font-family: 'Cinzel', serif;
-            font-size: 24px;
-            color: var(--accent-primary);
-            margin-bottom: 10px;
-        }
-
         .hexagram-number {
-            font-size: 16px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .hexagram-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .hexagram-chinese {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hexagram-translation {
+            font-size: 0.875rem;
             color: var(--text-secondary);
-            margin-bottom: 15px;
         }
 
-        .hexagram-meaning {
-            font-size: 18px;
-            font-style: italic;
-        }
-
-        .runes-display {
+        /* Runes Display */
+        .runes-container {
             display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            padding: 30px;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .rune-stone {
-            background: linear-gradient(135deg, #6e7f80 0%, #4a5859 100%);
-            border-radius: 15px;
-            padding: 30px 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
-            min-width: 120px;
-            border: 3px solid #3a4546;
-            transition: transform 0.3s;
-        }
-
-        .rune-stone:hover {
-            transform: translateY(-5px);
+            gap: 0.5rem;
         }
 
         .rune-symbol {
-            font-size: 60px;
-            color: #e6f3ff;
-            text-shadow: 0 0 10px rgba(230, 243, 255, 0.5);
+            font-size: 2.5rem;
         }
 
         .rune-name {
             font-family: 'Cinzel', serif;
-            font-size: 16px;
-            color: #d1d1d1;
-            font-weight: bold;
+            font-size: 1rem;
+            font-weight: 600;
         }
 
         .rune-position {
-            font-size: 14px;
-            color: #a0a0a0;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
             font-style: italic;
         }
 
         .rune-meaning {
-            font-size: 12px;
-            color: #b0b0b0;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
             text-align: center;
+        }
+
+        /* Export Button */
+        .export-btn {
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .export-btn:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .card-viewer-panel {
+                position: fixed;
+                right: 0;
+                top: var(--header-height);
+                height: calc(100vh - var(--header-height));
+                z-index: 90;
+                box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 1rem;
+            }
+
+            .header-logo h1 {
+                font-size: 1.25rem;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: var(--header-height);
+                height: calc(100vh - var(--header-height));
+                z-index: 95;
+                transform: translateX(-100%);
+                box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .chat-area {
+                padding: 1rem;
+            }
+
+            .chat-message {
+                max-width: 90%;
+            }
+
+            .input-area {
+                padding: 1rem;
+            }
+
+            .input-wrapper {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .generate-btn {
+                width: 100%;
+            }
+
+            .card-viewer-panel {
+                width: 100%;
+            }
+
+            .expand-btn {
+                right: 1rem;
+                bottom: 1rem;
+            }
+
+            .tarot-card-wrapper {
+                width: 120px;
+                height: 200px;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-secondary);
         }
     </style>
 </head>
 <body>
-    <div class="controls-container">
-        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">🌙</div>
-        <div class="sound-toggle" onclick="toggleSound()" title="Toggle Sound Effects">🔊</div>
-        <div class="music-toggle muted" onclick="toggleMusic()" title="Toggle Ambient Music">🎵</div>
-    </div>
-
-    <div class="header-container"></div>
-
-    <div class="main-container">
-        <div class="card-spread-area">
-            <div class="spread-header">
-                <h2 class="spread-title">✦ Tarot Spread ✦</h2>
-                <div class="spread-selector">
-                    <div class="spread-option active" data-spread="3-card" onclick="selectSpread('3-card')">
-                        🔮 3-Card Spread
-                    </div>
-                    <div class="spread-option" data-spread="yes-no" onclick="selectSpread('yes-no')">
-                        ❓ Yes/No
-                    </div>
-                    <div class="spread-option" data-spread="5-card" onclick="selectSpread('5-card')">
-                        ⭐ 5-Card Cross
-                    </div>
-                    <div class="spread-option" data-spread="celtic" onclick="selectSpread('celtic')">
-                        ✨ Celtic Cross
-                    </div>
-                </div>
-            </div>
-            <div class="cards-container" id="cards-container">
-                <div class="empty-spread">
-                    <div class="empty-spread-icon">🔮</div>
-                    <p>Ask for a tarot reading to see your cards appear here...</p>
-                </div>
-            </div>
-            <button class="export-button" id="export-button" style="display: none;" onclick="exportReading()">
-                📥 Export Reading
-            </button>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-logo">
+            <button class="header-btn hamburger" id="hamburger">☰</button>
+            <span class="header-logo-icon">🔮</span>
+            <h1>Quantum Oracle</h1>
         </div>
-
-        <div class="chat-container">
-            <div class="reading-templates">
-                <div class="template-title">✨ Divination Methods</div>
-                <div class="template-buttons">
-                    <button class="template-btn" onclick="useTemplate('Give me a tarot reading for general guidance')">🔮 Tarot</button>
-                    <button class="template-btn" onclick="useTemplate('Cast the I Ching for my question')">☯️ I Ching</button>
-                    <button class="template-btn" onclick="useTemplate('Cast the runes for guidance')">ᚱ Runes</button>
-                    <button class="template-btn" onclick="useTemplate('What do I need to know today?')">📅 Daily</button>
-                </div>
-                <div class="template-title" style="margin-top: 15px; font-size: 14px;">Tarot Topics</div>
-                <div class="template-buttons">
-                    <button class="template-btn" onclick="useTemplate('Give me a tarot reading about my love life')">💕 Love</button>
-                    <button class="template-btn" onclick="useTemplate('Give me a tarot reading about my career')">💼 Career</button>
-                    <button class="template-btn" onclick="useTemplate('Give me a tarot reading about my spiritual path')">🙏 Spiritual</button>
-                </div>
-            </div>
-
-            <div class="chat-messages" id="chat-messages"></div>
-
-            <div class="thinking" id="thinking-animation">
-                <div class="shuffle-animation">
-                    <div class="shuffle-card"></div>
-                    <div class="shuffle-card"></div>
-                    <div class="shuffle-card"></div>
-                </div>
-            </div>
-
-            <div class="chat-input-area">
-                <div class="action-buttons">
-                    <button class="action-button" onclick="clearChat()">🗑️ Clear</button>
-                    <button class="action-button" onclick="shareReading()">🔗 Share</button>
-                </div>
-                <div class="chat-input">
-                    <input type="text" id="user-input" placeholder="Ask the Oracle...">
-                    <button id="send-button">Send ✨</button>
-                </div>
-            </div>
+        <div class="header-controls">
+            <button class="header-btn" id="themeToggle">🌙</button>
+            <button class="header-btn" id="soundToggle">🔊</button>
+            <button class="header-btn muted" id="musicToggle">🎶</button>
         </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Divination Type Section -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">Divination Type</h3>
+                <div class="divination-options">
+                    <button class="divination-btn active" data-type="tarot">
+                        <span class="divination-icon">🃏</span>
+                        <span>Tarot Cards</span>
+                    </button>
+                    <button class="divination-btn" data-type="iching">
+                        <span class="divination-icon">☯️</span>
+                        <span>I Ching</span>
+                    </button>
+                    <button class="divination-btn" data-type="runes">
+                        <span class="divination-icon">ᚱ</span>
+                        <span>Elder Runes</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Spread Type Section (Tarot only) -->
+            <div class="sidebar-section" id="spreadSection">
+                <h3 class="sidebar-section-title">Spread Type</h3>
+                <div class="spread-options">
+                    <button class="spread-btn active" data-spread="3-card">3-Card Spread</button>
+                    <button class="spread-btn" data-spread="yes-no">Yes/No Reading</button>
+                    <button class="spread-btn" data-spread="5-card">5-Card Cross</button>
+                    <button class="spread-btn" data-spread="celtic">Celtic Cross</button>
+                </div>
+            </div>
+
+            <!-- Quick Templates -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">Quick Templates</h3>
+                <div class="template-options">
+                    <button class="template-btn" data-template="What guidance do you have for me today?">📖 Daily Guidance</button>
+                    <button class="template-btn" data-template="What do I need to know about my love life?">💖 Love & Romance</button>
+                    <button class="template-btn" data-template="What should I know about my career path?">💼 Career Path</button>
+                    <button class="template-btn" data-template="What do I need to focus on for spiritual growth?">✨ Spiritual Growth</button>
+                    <button class="template-btn" data-template="What obstacles should I be aware of?">🛡️ Challenges Ahead</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Chat Area -->
+            <div class="chat-area" id="chatArea">
+                <!-- Messages will be added here -->
+                <div class="thinking-animation" id="thinkingAnimation">
+                    <div class="thinking-dots">
+                        <div class="thinking-dot"></div>
+                        <div class="thinking-dot"></div>
+                        <div class="thinking-dot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <div class="input-container">
+                        <label class="input-label">Your Question</label>
+                        <div class="selection-pills" id="selectionPills"></div>
+                        <textarea
+                            class="input-field"
+                            id="userInput"
+                            placeholder="Ask your question or describe what guidance you seek..."
+                            rows="1"
+                        ></textarea>
+                    </div>
+                    <button class="generate-btn" id="generateBtn">
+                        Generate Reading
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Card Viewer Panel -->
+        <aside class="card-viewer-panel" id="cardViewerPanel">
+            <div class="card-viewer-header">
+                <h2 class="card-viewer-title">Reading</h2>
+                <button class="minimize-btn" id="minimizeBtn">→</button>
+            </div>
+            <div class="card-viewer-content" id="cardViewerContent">
+                <div class="empty-state">
+                    <div class="empty-state-icon">🔮</div>
+                    <p>Your cards, hexagrams, or runes will appear here after generating a reading.</p>
+                </div>
+            </div>
+        </aside>
     </div>
 
-    <div class="keyboard-shortcuts">
-        <div class="shortcut"><span class="key">T</span> <span>Quick Tarot Reading</span></div>
-        <div class="shortcut"><span class="key">N</span> <span>Number Reading</span></div>
-        <div class="shortcut"><span class="key">Enter</span> <span>Send Message</span></div>
-    </div>
+    <!-- Floating Expand Button -->
+    <button class="expand-btn" id="expandBtn">
+        🔮
+        <span class="expand-btn-badge" id="expandBadge" style="display: none;"></span>
+    </button>
 
     <script>
-        const chatMessages = document.getElementById('chat-messages');
-        const userInput = document.getElementById('user-input');
-        const sendButton = document.getElementById('send-button');
-        const thinkingAnimation = document.getElementById('thinking-animation');
-        const cardsContainer = document.getElementById('cards-container');
-        const exportButton = document.getElementById('export-button');
-        const themeToggle = document.querySelector('.theme-toggle');
-        const soundToggle = document.querySelector('.sound-toggle');
-        const musicToggle = document.querySelector('.music-toggle');
-
-        let currentCards = null;
-        let currentReading = null;
+        // State Management
+        let currentDivinationType = 'tarot';
         let currentSpreadType = '3-card';
         let soundEnabled = true;
         let musicEnabled = false;
         let audioContext = null;
         let ambientOscillator = null;
+        let currentReading = null;
+        let sidebarOpen = false;
 
-        // Initialize Audio Context
+        // DOM Elements
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const themeToggle = document.getElementById('themeToggle');
+        const soundToggle = document.getElementById('soundToggle');
+        const musicToggle = document.getElementById('musicToggle');
+        const chatArea = document.getElementById('chatArea');
+        const thinkingAnimation = document.getElementById('thinkingAnimation');
+        const userInput = document.getElementById('userInput');
+        const generateBtn = document.getElementById('generateBtn');
+        const selectionPills = document.getElementById('selectionPills');
+        const cardViewerPanel = document.getElementById('cardViewerPanel');
+        const cardViewerContent = document.getElementById('cardViewerContent');
+        const minimizeBtn = document.getElementById('minimizeBtn');
+        const expandBtn = document.getElementById('expandBtn');
+        const expandBadge = document.getElementById('expandBadge');
+        const spreadSection = document.getElementById('spreadSection');
+
+        // Audio System
         function initAudio() {
             if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
         }
 
-        // Sound Effects using Web Audio API
         const sounds = {
             cardFlip: () => {
                 if (!soundEnabled) return;
@@ -769,7 +1003,7 @@
                 gain.connect(audioContext.destination);
                 osc.frequency.value = 400;
                 osc.type = 'sine';
-                gain.gain.setValueAtTime(0.15, audioContext.currentTime);
+                gain.gain.setValueAtTime(0.1, audioContext.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
                 osc.start();
                 osc.stop(audioContext.currentTime + 0.2);
@@ -778,20 +1012,20 @@
             cardShuffle: () => {
                 if (!soundEnabled) return;
                 initAudio();
-                for (let i = 0; i < 3; i++) {
+                [300, 350, 400].forEach((freq, i) => {
                     setTimeout(() => {
                         const osc = audioContext.createOscillator();
                         const gain = audioContext.createGain();
                         osc.connect(gain);
                         gain.connect(audioContext.destination);
-                        osc.frequency.value = 200 + Math.random() * 100;
-                        osc.type = 'square';
+                        osc.frequency.value = freq;
+                        osc.type = 'sine';
                         gain.gain.setValueAtTime(0.08, audioContext.currentTime);
-                        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
                         osc.start();
-                        osc.stop(audioContext.currentTime + 0.1);
+                        osc.stop(audioContext.currentTime + 0.15);
                     }, i * 50);
-                }
+                });
             },
 
             messageSend: () => {
@@ -840,11 +1074,10 @@
                 gain: audioContext.createGain()
             };
 
-            ambientOscillator.osc1.frequency.value = 110; // A2
-            ambientOscillator.osc2.frequency.value = 165; // E3
+            ambientOscillator.osc1.frequency.value = 110;
+            ambientOscillator.osc2.frequency.value = 165;
             ambientOscillator.osc1.type = 'sine';
             ambientOscillator.osc2.type = 'sine';
-
             ambientOscillator.gain.gain.value = 0.03;
 
             ambientOscillator.osc1.connect(ambientOscillator.gain);
@@ -854,7 +1087,6 @@
             ambientOscillator.osc1.start();
             ambientOscillator.osc2.start();
 
-            // Slowly modulate frequencies for ambient effect
             setInterval(() => {
                 if (ambientOscillator && musicEnabled) {
                     ambientOscillator.osc1.frequency.value = 110 + Math.sin(Date.now() / 3000) * 5;
@@ -872,6 +1104,15 @@
         }
 
         // Toggle Functions
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'light' ? '☀️' : '🌙';
+            localStorage.setItem('theme', newTheme);
+        }
+
         function toggleSound() {
             soundEnabled = !soundEnabled;
             soundToggle.classList.toggle('muted');
@@ -893,61 +1134,139 @@
             }
         }
 
-        function selectSpread(spreadType) {
-            currentSpreadType = spreadType;
-            document.querySelectorAll('.spread-option').forEach(opt => {
-                opt.classList.remove('active');
-            });
-            document.querySelector(`[data-spread="${spreadType}"]`).classList.add('active');
-            sounds.chime();
+        function toggleSidebar() {
+            sidebarOpen = !sidebarOpen;
+            sidebar.classList.toggle('open');
         }
 
-        // Load saved preferences
-        const savedSound = localStorage.getItem('soundEnabled');
-        if (savedSound !== null) {
-            soundEnabled = savedSound === 'true';
-            if (!soundEnabled) {
-                soundToggle.classList.add('muted');
-                soundToggle.textContent = '🔇';
+        // Divination Type Selection
+        document.querySelectorAll('.divination-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentDivinationType = btn.dataset.type;
+                document.querySelectorAll('.divination-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Show/hide spread section based on divination type
+                if (currentDivinationType === 'tarot') {
+                    spreadSection.style.display = 'block';
+                } else {
+                    spreadSection.style.display = 'none';
+                }
+
+                updateSelectionPills();
+                sounds.chime();
+            });
+        });
+
+        // Spread Type Selection
+        document.querySelectorAll('.spread-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentSpreadType = btn.dataset.spread;
+                document.querySelectorAll('.spread-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                updateSelectionPills();
+                sounds.chime();
+            });
+        });
+
+        // Template Buttons
+        document.querySelectorAll('.template-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                userInput.value = btn.dataset.template;
+                userInput.focus();
+            });
+        });
+
+        // Update Selection Pills
+        function updateSelectionPills() {
+            selectionPills.innerHTML = '';
+
+            const divinationTypeLabels = {
+                'tarot': '🃏 Tarot',
+                'iching': '☯️ I Ching',
+                'runes': 'ᚱ Runes'
+            };
+
+            const pill1 = document.createElement('div');
+            pill1.className = 'selection-pill';
+            pill1.innerHTML = `<span>${divinationTypeLabels[currentDivinationType]}</span>`;
+            selectionPills.appendChild(pill1);
+
+            if (currentDivinationType === 'tarot') {
+                const spreadLabels = {
+                    '3-card': '3-Card Spread',
+                    'yes-no': 'Yes/No',
+                    '5-card': '5-Card Cross',
+                    'celtic': 'Celtic Cross'
+                };
+
+                const pill2 = document.createElement('div');
+                pill2.className = 'selection-pill';
+                pill2.innerHTML = `<span>${spreadLabels[currentSpreadType]}</span>`;
+                selectionPills.appendChild(pill2);
             }
         }
 
-        const savedMusic = localStorage.getItem('musicEnabled');
-        if (savedMusic === 'true') {
-            musicEnabled = true;
-            musicToggle.classList.remove('muted');
-            musicToggle.textContent = '🎵';
-        }
-
-        // Theme Toggle
-        function toggleTheme() {
-            const body = document.body;
-            const currentTheme = body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            body.setAttribute('data-theme', newTheme);
-            themeToggle.textContent = newTheme === 'light' ? '☀️' : '🌙';
-            localStorage.setItem('theme', newTheme);
-        }
-
-        // Load saved theme
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            document.body.setAttribute('data-theme', 'light');
-            themeToggle.textContent = '☀️';
-        }
-
-        // Keyboard Shortcuts
-        document.addEventListener('keydown', (e) => {
-            if (e.target !== userInput) {
-                if (e.key === 't' || e.key === 'T') {
-                    useTemplate('Give me a tarot reading for general guidance');
-                } else if (e.key === 'n' || e.key === 'N') {
-                    useTemplate('Give me a number reading');
-                }
+        // Card Viewer Panel Controls
+        minimizeBtn.addEventListener('click', () => {
+            cardViewerPanel.classList.add('minimized');
+            expandBtn.classList.add('visible');
+            if (currentReading) {
+                expandBadge.style.display = 'flex';
+                expandBadge.textContent = '!';
             }
         });
 
-        // Card Icons based on suit and arcana
+        expandBtn.addEventListener('click', () => {
+            cardViewerPanel.classList.remove('minimized');
+            expandBtn.classList.remove('visible');
+            expandBadge.style.display = 'none';
+        });
+
+        // Hamburger Menu
+        hamburger.addEventListener('click', toggleSidebar);
+
+        // Event Listeners
+        themeToggle.addEventListener('click', toggleTheme);
+        soundToggle.addEventListener('click', toggleSound);
+        musicToggle.addEventListener('click', toggleMusic);
+
+        // Generate Button
+        generateBtn.addEventListener('click', sendMessage);
+
+        // Enter key to send
+        userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Chat Functions
+        function addMessage(message, isUser) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add(isUser ? 'user-message' : 'bot-message', 'chat-message');
+
+            if (isUser) {
+                messageElement.textContent = message;
+            } else {
+                messageElement.innerHTML = marked.parse(message);
+            }
+
+            chatArea.insertBefore(messageElement, thinkingAnimation);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        function showThinkingAnimation() {
+            thinkingAnimation.style.display = 'flex';
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        function hideThinkingAnimation() {
+            thinkingAnimation.style.display = 'none';
+        }
+
+        // Card Icons
         function getCardIcon(card) {
             if (card.arcana === 'major') {
                 const majorIcons = {
@@ -971,12 +1290,12 @@
             }
         }
 
+        // Display Tarot Cards
         function displayTarotCards(cards, positions) {
-            cardsContainer.innerHTML = '';
-            exportButton.style.display = 'block';
-            currentCards = cards;
+            cardViewerContent.innerHTML = '';
+            const cardsDisplay = document.createElement('div');
+            cardsDisplay.className = 'cards-display';
 
-            // Play shuffle sound
             sounds.cardShuffle();
 
             cards.forEach((card, index) => {
@@ -996,53 +1315,83 @@
                 `;
 
                 wrapper.appendChild(cardElement);
-                cardsContainer.appendChild(wrapper);
+                cardsDisplay.appendChild(wrapper);
 
-                // Auto-flip cards with delay and sound
+                // Auto-flip cards with delay
                 setTimeout(() => {
                     cardElement.classList.add('flipped');
                     sounds.cardFlip();
                 }, 500 + (index * 300));
 
-                // Click to flip with sound
+                // Click to flip
                 cardElement.addEventListener('click', () => {
                     cardElement.classList.toggle('flipped');
                     sounds.cardFlip();
                 });
             });
+
+            // Add export button
+            const exportBtn = document.createElement('button');
+            exportBtn.className = 'export-btn';
+            exportBtn.innerHTML = '📸 Export Reading';
+            exportBtn.addEventListener('click', exportReading);
+            cardsDisplay.appendChild(exportBtn);
+
+            cardViewerContent.appendChild(cardsDisplay);
+
+            // Show panel if minimized
+            if (cardViewerPanel.classList.contains('minimized')) {
+                expandBadge.style.display = 'flex';
+                expandBadge.textContent = cards.length;
+            }
         }
 
+        // Display Hexagram
         function displayHexagram(hexagram) {
-            cardsContainer.innerHTML = '';
-            exportButton.style.display = 'block';
+            cardViewerContent.innerHTML = '';
+            const hexagramContainer = document.createElement('div');
+            hexagramContainer.className = 'hexagram-container';
 
-            sounds.chime();
+            const linesDiv = document.createElement('div');
+            linesDiv.className = 'hexagram-lines';
 
-            const hexagramDiv = document.createElement('div');
-            hexagramDiv.className = 'hexagram-display';
-            hexagramDiv.innerHTML = `
-                <div class="hexagram-symbol">${hexagram.symbol}</div>
-                <div class="hexagram-info">
-                    <div class="hexagram-name">${hexagram.name}</div>
-                    <div class="hexagram-number">Hexagram ${hexagram.number}</div>
-                    <div class="hexagram-meaning">${hexagram.meaning}</div>
-                    <div class="hexagram-meaning" style="margin-top: 10px; font-size: 14px;">${hexagram.keywords}</div>
-                    ${hexagram.changing_lines && hexagram.changing_lines.length > 0 ?
-                        `<div style="margin-top: 15px; color: var(--accent-primary);">Changing Lines: ${hexagram.changing_lines.join(', ')}</div>` : ''}
-                </div>
+            hexagram.lines.forEach(line => {
+                const lineDiv = document.createElement('div');
+                lineDiv.className = 'hexagram-line' + (line === 6 || line === 8 ? '' : ' broken');
+                linesDiv.appendChild(lineDiv);
+            });
+
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'hexagram-info';
+            infoDiv.innerHTML = `
+                <div class="hexagram-number">#${hexagram.number}</div>
+                <div class="hexagram-name">${hexagram.name}</div>
+                <div class="hexagram-chinese">${hexagram.chinese}</div>
+                <div class="hexagram-translation">${hexagram.translation}</div>
             `;
 
-            cardsContainer.appendChild(hexagramDiv);
+            hexagramContainer.appendChild(linesDiv);
+            hexagramContainer.appendChild(infoDiv);
+
+            const exportBtn = document.createElement('button');
+            exportBtn.className = 'export-btn';
+            exportBtn.innerHTML = '📸 Export Reading';
+            exportBtn.addEventListener('click', exportReading);
+
+            cardViewerContent.appendChild(hexagramContainer);
+            cardViewerContent.appendChild(exportBtn);
+
+            if (cardViewerPanel.classList.contains('minimized')) {
+                expandBadge.style.display = 'flex';
+                expandBadge.textContent = '!';
+            }
         }
 
+        // Display Runes
         function displayRunes(runes, positions) {
-            cardsContainer.innerHTML = '';
-            exportButton.style.display = 'block';
-
-            sounds.chime();
-
-            const runesDiv = document.createElement('div');
-            runesDiv.className = 'runes-display';
+            cardViewerContent.innerHTML = '';
+            const runesContainer = document.createElement('div');
+            runesContainer.className = 'runes-container';
 
             runes.forEach((rune, index) => {
                 const runeStone = document.createElement('div');
@@ -1054,9 +1403,8 @@
                     <div class="rune-meaning">${rune.meaning}</div>
                 `;
 
-                runesDiv.appendChild(runeStone);
+                runesContainer.appendChild(runeStone);
 
-                // Animate each rune stone
                 setTimeout(() => {
                     runeStone.style.opacity = '0';
                     runeStone.style.transform = 'scale(0.8)';
@@ -1069,31 +1417,84 @@
                 }, index * 200);
             });
 
-            cardsContainer.appendChild(runesDiv);
-        }
+            const exportBtn = document.createElement('button');
+            exportBtn.className = 'export-btn';
+            exportBtn.innerHTML = '📸 Export Reading';
+            exportBtn.addEventListener('click', exportReading);
 
-        function addMessage(message, isUser) {
-            const messageElement = document.createElement('div');
-            messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
+            cardViewerContent.appendChild(runesContainer);
+            cardViewerContent.appendChild(exportBtn);
 
-            if (isUser) {
-                messageElement.textContent = message;
-            } else {
-                messageElement.innerHTML = marked.parse(message);
+            if (cardViewerPanel.classList.contains('minimized')) {
+                expandBadge.style.display = 'flex';
+                expandBadge.textContent = runes.length;
             }
-
-            chatMessages.appendChild(messageElement);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        function showThinkingAnimation() {
-            thinkingAnimation.style.display = 'flex';
+        // Send Message
+        async function sendMessage() {
+            const messageText = userInput.value.trim();
+            if (!messageText) return;
+
+            addMessage(messageText, true);
+            sounds.messageSend();
+            userInput.value = '';
+            showThinkingAnimation();
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: messageText,
+                        spread_type: currentSpreadType
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                hideThinkingAnimation();
+
+                currentReading = data;
+
+                // Display visualizations based on reading type
+                if (data.type === 'tarot' && data.cards) {
+                    displayTarotCards(data.cards, data.positions);
+                } else if (data.type === 'iching' && data.hexagram) {
+                    displayHexagram(data.hexagram);
+                } else if (data.type === 'runes' && data.runes) {
+                    displayRunes(data.runes, data.positions);
+                }
+
+                addMessage(data.response, false);
+
+                if (data.terminate) {
+                    userInput.disabled = true;
+                    generateBtn.disabled = true;
+                }
+            } catch (error) {
+                hideThinkingAnimation();
+                console.error('Chat Error:', error);
+                addMessage(`Error: ${error.message}. Please try again.`, false);
+            }
         }
 
-        function hideThinkingAnimation() {
-            thinkingAnimation.style.display = 'none';
+        // Export Reading
+        function exportReading() {
+            html2canvas(cardViewerContent).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'oracle-reading.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
         }
 
+        // Initialize Chat
         async function initializeChat() {
             try {
                 showThinkingAnimation();
@@ -1108,124 +1509,41 @@
             }
         }
 
-        async function sendMessage(message = null) {
-            const messageText = message || userInput.value.trim();
-            if (messageText) {
-                addMessage(messageText, true);
-                sounds.messageSend();
-                if (!message) userInput.value = '';
-                showThinkingAnimation();
+        // Load Saved Preferences
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.setAttribute('data-theme', 'light');
+            themeToggle.textContent = '☀️';
+        }
 
-                try {
-                    const response = await fetch('/chat', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            message: messageText,
-                            spread_type: currentSpreadType
-                        }),
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
-                    const data = await response.json();
-                    hideThinkingAnimation();
-
-                    currentReading = data;
-
-                    // Display visualizations based on reading type
-                    if (data.type === 'tarot' && data.cards) {
-                        displayTarotCards(data.cards, data.positions);
-                    } else if (data.type === 'iching' && data.hexagram) {
-                        displayHexagram(data.hexagram);
-                    } else if (data.type === 'runes' && data.runes) {
-                        displayRunes(data.runes, data.positions);
-                    }
-
-                    addMessage(data.response, false);
-
-                    if (data.terminate) {
-                        userInput.disabled = true;
-                        sendButton.disabled = true;
-                    }
-                } catch (error) {
-                    hideThinkingAnimation();
-                    console.error('Chat Error:', error);
-                    addMessage(`Error: ${error.message}. Please try again.`, false);
-                }
+        const savedSound = localStorage.getItem('soundEnabled');
+        if (savedSound !== null) {
+            soundEnabled = savedSound === 'true';
+            if (!soundEnabled) {
+                soundToggle.classList.add('muted');
+                soundToggle.textContent = '🔇';
             }
         }
 
-        function useTemplate(template) {
-            userInput.value = template;
-            sendMessage();
+        const savedMusic = localStorage.getItem('musicEnabled');
+        if (savedMusic === 'true') {
+            musicEnabled = true;
+            musicToggle.classList.remove('muted');
+            musicToggle.textContent = '🎵';
         }
 
-        function clearChat() {
-            if (confirm('Clear chat history?')) {
-                chatMessages.innerHTML = '';
-                cardsContainer.innerHTML = `
-                    <div class="empty-spread">
-                        <div class="empty-spread-icon">🔮</div>
-                        <p>Ask for a tarot reading to see your cards appear here...</p>
-                    </div>
-                `;
-                exportButton.style.display = 'none';
-                currentCards = null;
-                currentReading = null;
-                initializeChat();
-            }
-        }
+        // Initialize
+        updateSelectionPills();
+        initializeChat();
 
-        function shareReading() {
-            if (currentReading && currentReading.type === 'tarot') {
-                const shareText = `Quantum Oracle Reading:\n\n${currentReading.cards.map((c, i) =>
-                    `${currentReading.positions[i]}: ${c.name}`
-                ).join('\n')}\n\n${currentReading.response.substring(0, 200)}...`;
-
-                if (navigator.share) {
-                    navigator.share({
-                        title: 'My Quantum Oracle Reading',
-                        text: shareText,
-                        url: window.location.href
-                    });
-                } else {
-                    // Fallback: copy to clipboard
-                    navigator.clipboard.writeText(shareText);
-                    alert('Reading copied to clipboard!');
-                }
-            } else {
-                alert('No tarot reading to share yet! Ask for a reading first.');
-            }
-        }
-
-        async function exportReading() {
-            if (!currentCards) return;
-
-            try {
-                const canvas = await html2canvas(cardsContainer);
-                const link = document.createElement('a');
-                link.download = 'oracle-reading.png';
-                link.href = canvas.toDataURL();
-                link.click();
-            } catch (error) {
-                console.error('Export error:', error);
-                alert('Export failed. Please try again.');
-            }
-        }
-
-        sendButton.addEventListener('click', () => sendMessage());
-        userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendMessage();
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && sidebarOpen &&
+                !sidebar.contains(e.target) &&
+                !hamburger.contains(e.target)) {
+                toggleSidebar();
             }
         });
-
-        window.addEventListener('load', initializeChat);
     </script>
 </body>
 </html>
