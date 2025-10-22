@@ -20,6 +20,10 @@ def get_oracle():
 def index():
     return send_from_directory(app.static_folder, 'index.html')
 
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory(app.static_folder, filename)
+
 @app.route('/init', methods=['GET'])
 def init():
     try:
