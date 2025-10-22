@@ -10,16 +10,43 @@ params={
 
 class TarotDeck:
     def __init__(self):
-        self.cards = [
+        # Major Arcana
+        self.major_arcana = [
             'The Fool', 'The Magician', 'The High Priestess', 'The Empress', 'The Emperor',
             'The Hierophant', 'The Lovers', 'The Chariot', 'Strength', 'The Hermit', 'Wheel of Fortune',
             'Justice', 'The Hanged Man', 'Death', 'Temperance', 'The Devil', 'The Tower', 'The Star',
             'The Moon', 'The Sun', 'Judgement', 'The World'
-        ] + [
-            f'{rank} of {suit}' for suit in ['Wands', 'Cups', 'Swords', 'Pentacles']
-            for rank in ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Page', 'Knight', 'Queen', 'King']
+        ]
+
+        # Minor Arcana
+        suits = ['Wands', 'Cups', 'Swords', 'Pentacles']
+        ranks = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Page', 'Knight', 'Queen', 'King']
+
+        self.cards = self.major_arcana + [
+            f'{rank} of {suit}' for suit in suits for rank in ranks
         ]
         self.spread = []
+
+    def get_card_info(self, card_name):
+        """Returns detailed information about a card."""
+        is_major = card_name in self.major_arcana
+
+        if is_major:
+            arcana_type = 'major'
+            suit = None
+            rank = None
+        else:
+            arcana_type = 'minor'
+            parts = card_name.split(' of ')
+            rank = parts[0]
+            suit = parts[1] if len(parts) > 1 else None
+
+        return {
+            'name': card_name,
+            'arcana': arcana_type,
+            'suit': suit,
+            'rank': rank
+        }
 
     def shuffle(self):
         """Shuffles the deck using a standard random number generator."""

@@ -32,8 +32,14 @@ def chat():
     # Check if the message contains the word "tarot" or similar
     elif 'tarot' in user_message.lower():
         # Customize response if tarot-related
-        tarot_response = oracle.tarot_response(user_message)  # Assuming you have a separate tarot response method
-        return jsonify({'response': tarot_response, 'terminate': False})
+        tarot_data = oracle.tarot_response_structured(user_message)
+        return jsonify({
+            'response': tarot_data['text'],
+            'cards': tarot_data['cards'],
+            'positions': tarot_data['positions'],
+            'type': 'tarot',
+            'terminate': False
+        })
         
 
     else:# General response
