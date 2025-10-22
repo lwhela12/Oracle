@@ -9,15 +9,21 @@ This guide will help you deploy the Oracle application to Vercel.
 
 ## Deployment Steps
 
-### 1. Environment Variables
+### 1. Environment Variables (CRITICAL - REQUIRED)
 
-Before deploying, you need to set up your environment variable in Vercel:
+**IMPORTANT:** The app will crash without this environment variable set!
+
+Before deploying, you MUST set up your environment variable in Vercel:
 
 1. Go to your Vercel project dashboard
 2. Navigate to **Settings** → **Environment Variables**
 3. Add the following environment variable:
    - **Name:** `GEMINI_API_KEY`
-   - **Value:** Your Google Gemini API key
+   - **Value:** Your Google Gemini API key (get one at https://makersuite.google.com/app/apikey)
+   - **Environments:** Select all (Production, Preview, Development)
+4. Click **Save**
+
+**After adding the environment variable, you MUST redeploy the app** for it to take effect.
 
 ### 2. Deploy to Vercel
 
@@ -60,8 +66,14 @@ After deployment, Vercel will provide you with a URL. Visit the URL to ensure:
 If the app crashes, check:
 
 1. **Environment Variables:** Ensure `GEMINI_API_KEY` is set correctly in Vercel
+   - Go to Settings → Environment Variables
+   - Verify the variable name is exactly `GEMINI_API_KEY` (case-sensitive)
+   - Ensure it's enabled for all environments (Production, Preview, Development)
+   - After adding/changing, redeploy the app
 2. **Build Logs:** Check Vercel's deployment logs for errors
 3. **Function Logs:** Check Vercel's function logs for runtime errors
+   - Look for "GEMINI_API_KEY environment variable is not set" error
+   - This indicates the environment variable wasn't configured properly
 
 ### Static Files Not Loading
 
