@@ -15,6 +15,14 @@ load_dotenv()
 
 GOOGLE_API_KEY = os.getenv('GEMINI_API_KEY')
 
+# Validate API key
+if not GOOGLE_API_KEY:
+    raise ValueError(
+        "GEMINI_API_KEY environment variable is not set. "
+        "Please set it in your Vercel project settings under Environment Variables. "
+        "Get your API key from: https://makersuite.google.com/app/apikey"
+    )
+
 
 
 class GeminiOracle:

@@ -6,7 +6,15 @@ from oracle_logic import GeminiOracle
 app = Flask(__name__, static_folder='static')
 CORS(app)
 
-oracle = GeminiOracle()  # Global instance
+# Lazy initialization for serverless environments
+_oracle = None
+
+def get_oracle():
+    """Get or create the Oracle instance (lazy initialization)."""
+    global _oracle
+    if _oracle is None:
+        _oracle = GeminiOracle()
+    return _oracle
 
 @app.route('/')
 def index():
@@ -14,13 +22,30 @@ def index():
 
 @app.route('/init', methods=['GET'])
 def init():
-    return jsonify({
-        'response': f"Welcome! I'm {oracle.name}. What do you seek?",
-        'terminate': False
-    })
+    try:
+        oracle = get_oracle()
+        return jsonify({
+            'response': f"Welcome! I'm {oracle.name}. What do you seek?",
+            'terminate': False
+        })
+    except ValueError as e:
+        return jsonify({
+            'response': f"Configuration Error: {str(e)}",
+            'terminate': True,
+            'error': True
+        }), 500
 
 @app.route('/chat', methods=['POST'])
 def chat():
+    try:
+        oracle = get_oracle()
+    except ValueError as e:
+        return jsonify({
+            'response': f"Configuration Error: {str(e)}",
+            'terminate': True,
+            'error': True
+        }), 500
+
     data = request.json
     user_message = data['message']
     spread_type = data.get('spread_type', '3-card')
