@@ -1,3 +1,6 @@
 .env
 .vscode
-__pycache__/oracle_logic.cpython-312.pyc
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
