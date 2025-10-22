@@ -1292,6 +1292,7 @@
 
         // Display Tarot Cards
         function displayTarotCards(cards, positions) {
+            console.log('Displaying tarot cards:', cards, positions); // Debug
             cardViewerContent.innerHTML = '';
             const cardsDisplay = document.createElement('div');
             cardsDisplay.className = 'cards-display';
@@ -1339,15 +1340,17 @@
 
             cardViewerContent.appendChild(cardsDisplay);
 
-            // Show panel if minimized
+            // Always show the panel when displaying cards
             if (cardViewerPanel.classList.contains('minimized')) {
-                expandBadge.style.display = 'flex';
-                expandBadge.textContent = cards.length;
+                cardViewerPanel.classList.remove('minimized');
+                expandBtn.classList.remove('visible');
+                expandBadge.style.display = 'none';
             }
         }
 
         // Display Hexagram
         function displayHexagram(hexagram) {
+            console.log('Displaying hexagram:', hexagram); // Debug
             cardViewerContent.innerHTML = '';
             const hexagramContainer = document.createElement('div');
             hexagramContainer.className = 'hexagram-container';
@@ -1381,14 +1384,17 @@
             cardViewerContent.appendChild(hexagramContainer);
             cardViewerContent.appendChild(exportBtn);
 
+            // Always show the panel when displaying hexagram
             if (cardViewerPanel.classList.contains('minimized')) {
-                expandBadge.style.display = 'flex';
-                expandBadge.textContent = '!';
+                cardViewerPanel.classList.remove('minimized');
+                expandBtn.classList.remove('visible');
+                expandBadge.style.display = 'none';
             }
         }
 
         // Display Runes
         function displayRunes(runes, positions) {
+            console.log('Displaying runes:', runes, positions); // Debug
             cardViewerContent.innerHTML = '';
             const runesContainer = document.createElement('div');
             runesContainer.className = 'runes-container';
@@ -1425,9 +1431,11 @@
             cardViewerContent.appendChild(runesContainer);
             cardViewerContent.appendChild(exportBtn);
 
+            // Always show the panel when displaying runes
             if (cardViewerPanel.classList.contains('minimized')) {
-                expandBadge.style.display = 'flex';
-                expandBadge.textContent = runes.length;
+                cardViewerPanel.classList.remove('minimized');
+                expandBtn.classList.remove('visible');
+                expandBadge.style.display = 'none';
             }
         }
 
@@ -1477,17 +1485,23 @@
                 }
 
                 const data = await response.json();
+                console.log('Received response data:', data); // Debug
                 hideThinkingAnimation();
 
                 currentReading = data;
 
                 // Display visualizations based on reading type
                 if (data.type === 'tarot' && data.cards) {
+                    console.log('Showing tarot cards');
                     displayTarotCards(data.cards, data.positions);
                 } else if (data.type === 'iching' && data.hexagram) {
+                    console.log('Showing I Ching hexagram');
                     displayHexagram(data.hexagram);
                 } else if (data.type === 'runes' && data.runes) {
+                    console.log('Showing runes');
                     displayRunes(data.runes, data.positions);
+                } else {
+                    console.log('No visualization to display - type:', data.type);
                 }
 
                 addMessage(data.response, false);
