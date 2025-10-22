@@ -32,7 +32,7 @@ def chat():
 
     # Check if the message contains the word "tarot" or similar
     elif 'tarot' in user_message.lower():
-        # Customize response if tarot-related
+        # Tarot reading
         tarot_data = oracle.tarot_response_structured(user_message, spread_type)
         return jsonify({
             'response': tarot_data['text'],
@@ -43,6 +43,28 @@ def chat():
             'terminate': False
         })
 
+    # Check for I Ching
+    elif any(word in user_message.lower() for word in ['i ching', 'iching', 'hexagram', 'changing lines']):
+        # I Ching reading
+        iching_data = oracle.iching_response(user_message)
+        return jsonify({
+            'response': iching_data['text'],
+            'hexagram': iching_data['hexagram'],
+            'type': 'iching',
+            'terminate': False
+        })
+
+    # Check for Runes
+    elif any(word in user_message.lower() for word in ['rune', 'runes', 'futhark', 'norse']):
+        # Rune reading
+        runes_data = oracle.runes_response(user_message)
+        return jsonify({
+            'response': runes_data['text'],
+            'runes': runes_data['runes'],
+            'positions': runes_data['positions'],
+            'type': 'runes',
+            'terminate': False
+        })
 
     else:# General response
         response = oracle.respond(user_message)

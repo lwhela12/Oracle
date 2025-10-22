@@ -558,6 +558,93 @@
             margin-bottom: 20px;
             opacity: 0.3;
         }
+
+        .hexagram-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .hexagram-symbol {
+            font-size: 120px;
+            line-height: 1;
+            text-shadow: 0 0 20px rgba(155, 89, 182, 0.5);
+        }
+
+        .hexagram-info {
+            text-align: center;
+        }
+
+        .hexagram-name {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+        }
+
+        .hexagram-number {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .hexagram-meaning {
+            font-size: 18px;
+            font-style: italic;
+        }
+
+        .runes-display {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            padding: 30px;
+        }
+
+        .rune-stone {
+            background: linear-gradient(135deg, #6e7f80 0%, #4a5859 100%);
+            border-radius: 15px;
+            padding: 30px 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            min-width: 120px;
+            border: 3px solid #3a4546;
+            transition: transform 0.3s;
+        }
+
+        .rune-stone:hover {
+            transform: translateY(-5px);
+        }
+
+        .rune-symbol {
+            font-size: 60px;
+            color: #e6f3ff;
+            text-shadow: 0 0 10px rgba(230, 243, 255, 0.5);
+        }
+
+        .rune-name {
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            color: #d1d1d1;
+            font-weight: bold;
+        }
+
+        .rune-position {
+            font-size: 14px;
+            color: #a0a0a0;
+            font-style: italic;
+        }
+
+        .rune-meaning {
+            font-size: 12px;
+            color: #b0b0b0;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -601,13 +688,18 @@
 
         <div class="chat-container">
             <div class="reading-templates">
-                <div class="template-title">✨ Quick Reading Templates</div>
+                <div class="template-title">✨ Divination Methods</div>
+                <div class="template-buttons">
+                    <button class="template-btn" onclick="useTemplate('Give me a tarot reading for general guidance')">🔮 Tarot</button>
+                    <button class="template-btn" onclick="useTemplate('Cast the I Ching for my question')">☯️ I Ching</button>
+                    <button class="template-btn" onclick="useTemplate('Cast the runes for guidance')">ᚱ Runes</button>
+                    <button class="template-btn" onclick="useTemplate('What do I need to know today?')">📅 Daily</button>
+                </div>
+                <div class="template-title" style="margin-top: 15px; font-size: 14px;">Tarot Topics</div>
                 <div class="template-buttons">
                     <button class="template-btn" onclick="useTemplate('Give me a tarot reading about my love life')">💕 Love</button>
                     <button class="template-btn" onclick="useTemplate('Give me a tarot reading about my career')">💼 Career</button>
-                    <button class="template-btn" onclick="useTemplate('Give me a tarot reading for general guidance')">🌟 General</button>
                     <button class="template-btn" onclick="useTemplate('Give me a tarot reading about my spiritual path')">🙏 Spiritual</button>
-                    <button class="template-btn" onclick="useTemplate('What do I need to know today?')">📅 Daily</button>
                 </div>
             </div>
 
@@ -920,6 +1012,66 @@
             });
         }
 
+        function displayHexagram(hexagram) {
+            cardsContainer.innerHTML = '';
+            exportButton.style.display = 'block';
+
+            sounds.chime();
+
+            const hexagramDiv = document.createElement('div');
+            hexagramDiv.className = 'hexagram-display';
+            hexagramDiv.innerHTML = `
+                <div class="hexagram-symbol">${hexagram.symbol}</div>
+                <div class="hexagram-info">
+                    <div class="hexagram-name">${hexagram.name}</div>
+                    <div class="hexagram-number">Hexagram ${hexagram.number}</div>
+                    <div class="hexagram-meaning">${hexagram.meaning}</div>
+                    <div class="hexagram-meaning" style="margin-top: 10px; font-size: 14px;">${hexagram.keywords}</div>
+                    ${hexagram.changing_lines && hexagram.changing_lines.length > 0 ?
+                        `<div style="margin-top: 15px; color: var(--accent-primary);">Changing Lines: ${hexagram.changing_lines.join(', ')}</div>` : ''}
+                </div>
+            `;
+
+            cardsContainer.appendChild(hexagramDiv);
+        }
+
+        function displayRunes(runes, positions) {
+            cardsContainer.innerHTML = '';
+            exportButton.style.display = 'block';
+
+            sounds.chime();
+
+            const runesDiv = document.createElement('div');
+            runesDiv.className = 'runes-display';
+
+            runes.forEach((rune, index) => {
+                const runeStone = document.createElement('div');
+                runeStone.className = 'rune-stone';
+                runeStone.innerHTML = `
+                    <div class="rune-symbol">${rune.symbol}</div>
+                    <div class="rune-name">${rune.name}</div>
+                    <div class="rune-position">${positions[index]}</div>
+                    <div class="rune-meaning">${rune.meaning}</div>
+                `;
+
+                runesDiv.appendChild(runeStone);
+
+                // Animate each rune stone
+                setTimeout(() => {
+                    runeStone.style.opacity = '0';
+                    runeStone.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        runeStone.style.transition = 'all 0.5s ease-out';
+                        runeStone.style.opacity = '1';
+                        runeStone.style.transform = 'scale(1)';
+                        sounds.cardFlip();
+                    }, 100);
+                }, index * 200);
+            });
+
+            cardsContainer.appendChild(runesDiv);
+        }
+
         function addMessage(message, isUser) {
             const messageElement = document.createElement('div');
             messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
@@ -985,9 +1137,13 @@
 
                     currentReading = data;
 
-                    // Display cards if it's a tarot reading
+                    // Display visualizations based on reading type
                     if (data.type === 'tarot' && data.cards) {
                         displayTarotCards(data.cards, data.positions);
+                    } else if (data.type === 'iching' && data.hexagram) {
+                        displayHexagram(data.hexagram);
+                    } else if (data.type === 'runes' && data.runes) {
+                        displayRunes(data.runes, data.positions);
                     }
 
                     addMessage(data.response, false);
