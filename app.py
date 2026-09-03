@@ -1,4 +1,5 @@
 import os
+import re
 import json
 from flask import Flask, request, jsonify, send_from_directory, Response, stream_with_context
 from flask_cors import CORS
@@ -9,6 +10,21 @@ CORS(app)
 
 # Lazy initialization for serverless environments
 _oracle = None
+
+def format_api_error(err):
+    """Sanitizes sensitive API keys and provides actionable diagnostic guidance."""
+    err_str = str(err)
+    err_str = re.sub(r'AIzaSy[A-Za-z0-9_-]{33}', '[REDACTED_KEY]', err_str)
+    if 'CONSUMER_SUSPENDED' in err_str or 'has been suspended' in err_str:
+        return (
+            "Google Gemini API Key Suspended: The configured GEMINI_API_KEY was suspended/revoked by Google. "
+            "Please generate a fresh key at https://aistudio.google.com/apikey and update GEMINI_API_KEY in your Vercel Project Settings."
+        )
+    elif 'API_KEY_INVALID' in err_str or 'API key not valid' in err_str:
+        return (
+            "Invalid Google Gemini API Key: Please check GEMINI_API_KEY in your Vercel Project Settings."
+        )
+    return err_str
 
 def get_oracle():
     """Get or create the Oracle instance (lazy initialization)."""
@@ -139,8 +155,9 @@ def chat():
             return jsonify({'response': response, 'type': 'oracle', 'terminate': False})
 
     except Exception as e:
+        clean_err = format_api_error(e)
         return jsonify({
-            'response': f"The mists cloud the vision: {str(e)}",
+            'response': f"The mists cloud the vision: {clean_err}",
             'terminate': False,
             'error': True
         }), 500
@@ -217,7 +234,8 @@ def chat_stream():
             # 3. Done signal
             yield f"event: done\ndata: {json.dumps({'done': True})}\n\n"
         except Exception as err:
-            yield f"event: error\ndata: {json.dumps({'error': str(err)})}\n\n"
+            clean_err = format_api_error(err)
+            yield f"event: error\ndata: {json.dumps({'error': clean_err})}\n\n"
 
     return Response(stream_with_context(generate()), mimetype='text/event-stream', headers={
         'Cache-Control': 'no-cache',
