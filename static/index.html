@@ -585,6 +585,7 @@
             padding: 12px 8px;
             box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
             user-select: none;
+            overflow: hidden;
         }
 
         .card-back {
@@ -602,9 +603,55 @@
         }
 
         .card-front {
-            background: var(--card-front);
+            background: #0d0c14;
             transform: rotateY(180deg);
             text-align: center;
+            padding: 0;
+            position: relative;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: calc(var(--radius-md) - 2px);
+        }
+
+        .card-overlay-badge {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(13, 12, 20, 0.82);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(229, 193, 88, 0.45);
+            border-radius: 12px;
+            padding: 3px 10px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--accent-gold);
+            white-space: nowrap;
+            z-index: 3;
+            pointer-events: none;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-overlay-badge.top-badge {
+            top: 6px;
+        }
+
+        .card-art-fallback {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 8px;
+            background: var(--card-front);
         }
 
         .card-position {
@@ -1427,6 +1474,12 @@
             return window.DOMPurify ? DOMPurify.sanitize(parsed) : parsed;
         }
 
+        function getCardSlug(card) {
+            return card.name.toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)/g, '');
+        }
+
         // Renders properly centered visual cards (no bottom cutoff!)
         function renderVisualStage(metadata) {
             visualStageCard.innerHTML = '';
@@ -1436,18 +1489,27 @@
                 const container = document.createElement('div');
                 container.className = 'tarot-stage-grid';
 
-                // Helper to create card element
+                // Helper to create card element with image loading & graceful fallback
                 const makeCardEl = (card, position, index) => {
                     const wrap = document.createElement('div');
                     wrap.className = 'tarot-card-wrapper';
+                    const slug = getCardSlug(card);
+
                     wrap.innerHTML = `
                         <div class="tarot-card">
                             <div class="card-face card-back"></div>
                             <div class="card-face card-front">
-                                <div class="card-position">${position}</div>
-                                <div class="card-icon">${getCardIcon(card)}</div>
-                                <div class="card-name">${card.name}</div>
-                                ${card.suit ? `<div class="card-suit">${card.suit}</div>` : ''}
+                                <img src="/static/cards/tarot/${slug}.webp" 
+                                     alt="${card.name}" 
+                                     class="card-img"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'; const b = this.parentElement.querySelector('.card-overlay-badge'); if(b) b.style.display='none';">
+                                <div class="card-art-fallback" style="display: none;">
+                                    <div class="card-position">${position}</div>
+                                    <div class="card-icon">${getCardIcon(card)}</div>
+                                    <div class="card-name">${card.name}</div>
+                                    ${card.suit ? `<div class="card-suit">${card.suit}</div>` : ''}
+                                </div>
+                                <div class="card-overlay-badge top-badge">${position}</div>
                             </div>
                         </div>
                     `;
