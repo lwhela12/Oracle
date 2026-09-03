@@ -45,7 +45,7 @@
 
         [data-theme="light"] {
             --bg-primary: #f6f5fb;
-            --bg-secondary: rgba(255, 255, 255, 0.92);
+            --bg-secondary: rgba(255, 255, 255, 0.94);
             --bg-card: #eceaf4;
             --bg-bot: #e2dfef;
             --bg-input: rgba(255, 255, 255, 0.96);
@@ -95,15 +95,15 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 18px;
-            background: rgba(13, 12, 20, 0.85);
+            padding: 12px 20px;
+            background: rgba(13, 12, 20, 0.88);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border-color);
         }
 
         [data-theme="light"] .oracle-nav {
-            background: rgba(246, 245, 251, 0.9);
+            background: rgba(246, 245, 251, 0.92);
         }
 
         .nav-brand {
@@ -141,14 +141,14 @@
             color: var(--text-primary);
             border: 1px solid var(--border-color);
             border-radius: 20px;
-            padding: 6px 12px;
+            padding: 6px 14px;
             font-family: 'Cormorant Garamond', serif;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             transition: all 0.2s;
         }
 
@@ -167,10 +167,10 @@
             .nav-title { font-size: 16px; }
         }
 
-        /* Subtle Header Hero Banner */
+        /* Compact Header Banner */
         .hero-banner {
             width: 100%;
-            max-height: 120px;
+            max-height: 110px;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -183,10 +183,8 @@
         .hero-banner::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 35px;
+            bottom: 0; left: 0; right: 0;
+            height: 30px;
             background: linear-gradient(to top, var(--bg-primary), transparent);
             pointer-events: none;
         }
@@ -201,221 +199,349 @@
         }
 
         @media (max-width: 768px) {
-            .hero-banner { max-height: 80px; }
+            .hero-banner { max-height: 75px; }
         }
 
-        /* Main Single-Column Reading Flow */
+        /* Main Container */
         .main-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
             flex: 1;
-            padding: 0 16px;
+            padding: 20px 16px 40px;
+            gap: 24px;
         }
 
-        /* Chat Stream Area */
-        .chat-flow {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding: 24px 0 30px;
-        }
-
-        /* Welcome Hub (shown only on fresh empty state) */
-        .welcome-hub {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 30px 16px 20px;
-            gap: 20px;
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        .welcome-sigil {
-            font-size: 52px;
-            filter: drop-shadow(0 0 16px rgba(179, 136, 255, 0.4));
-            animation: floatSigil 4s ease-in-out infinite;
-        }
-
-        @keyframes floatSigil {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .welcome-title {
-            font-family: 'Cinzel', serif;
-            font-size: 26px;
-            color: var(--accent-gold);
-            letter-spacing: 1px;
-        }
-
-        .welcome-subtitle {
-            font-size: 18px;
-            color: var(--text-secondary);
-            max-width: 540px;
-            line-height: 1.5;
-        }
-
-        /* 4 Clean Starter Cards */
-        .starter-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            width: 100%;
-            max-width: 650px;
-            margin-top: 10px;
-        }
-
-        @media (max-width: 600px) {
-            .starter-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .starter-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 16px 18px;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.25s;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .starter-card:hover {
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 16px var(--border-glow);
-            transform: translateY(-2px);
-        }
-
-        .starter-card-title {
-            font-family: 'Cinzel', serif;
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .starter-card-desc {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        /* Message Bubbles */
-        .user-message {
-            align-self: flex-end;
-            background: linear-gradient(135deg, var(--accent-secondary) 0%, #5632a8 100%);
-            color: #ffffff;
-            border-radius: var(--radius-md);
-            border-bottom-right-radius: 4px;
-            padding: 14px 20px;
-            font-size: 18px;
-            max-width: 85%;
-            word-break: break-word;
-            box-shadow: 0 4px 16px rgba(118, 75, 162, 0.3);
-            animation: fadeIn 0.25s ease-out;
-        }
-
-        .bot-message-wrapper {
-            align-self: flex-start;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Inline Divination Reading Card */
-        .inline-divination-card {
+        /* Guided Consultation Portal Card */
+        .consultation-portal {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            padding: 20px;
+            padding: 28px 24px;
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            position: relative;
+            gap: 24px;
+            animation: fadeIn 0.35s ease-out;
         }
 
-        .divination-card-header {
+        .portal-header {
+            text-align: center;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-        }
-
-        .divination-badge {
-            font-family: 'Cinzel', serif;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--accent-gold);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
+            flex-direction: column;
             align-items: center;
             gap: 6px;
         }
 
-        .divination-actions {
+        .portal-title {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            color: var(--accent-gold);
+            letter-spacing: 1px;
+        }
+
+        .portal-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* Step Section */
+        .step-section {
             display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .step-label {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
             gap: 8px;
         }
 
-        .divination-action-btn {
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: rgba(179, 136, 255, 0.2);
+            border-radius: 50%;
+            font-size: 11px;
+            color: var(--accent-primary);
+        }
+
+        /* Tradition Selection Buttons */
+        .tradition-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        @media (max-width: 650px) {
+            .tradition-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .tradition-btn {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 14px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.25s;
+            user-select: none;
+            color: var(--text-primary);
+        }
+
+        .tradition-btn:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 12px var(--border-glow);
+            transform: translateY(-1px);
+        }
+
+        .tradition-btn.active {
+            background: var(--accent-secondary);
+            border-color: var(--accent-primary);
+            color: #ffffff;
+            box-shadow: 0 0 16px rgba(140, 84, 255, 0.45);
+        }
+
+        .tradition-icon {
+            font-size: 26px;
+        }
+
+        .tradition-name {
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* Sub-Spread Selector */
+        .spread-grid {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .spread-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .spread-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .spread-btn.active {
+            background: rgba(179, 136, 255, 0.2);
+            color: var(--accent-primary);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 10px rgba(179, 136, 255, 0.25);
+            font-weight: 700;
+        }
+
+        /* Prompt Inquiry Field */
+        .prompt-input-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .prompt-textarea {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 14px 18px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: var(--text-primary);
+            outline: none;
+            resize: none;
+            min-height: 80px;
+            transition: all 0.2s;
+        }
+
+        .prompt-textarea:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 14px var(--border-glow);
+        }
+
+        /* Quick Topic Suggestion Chips */
+        .topic-chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .topic-chip-label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .topic-chip {
+            background: transparent;
+            border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 4px 10px;
+            padding: 4px 12px;
             font-family: 'Cormorant Garamond', serif;
             font-size: 14px;
             color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 4px;
+            user-select: none;
         }
 
-        .divination-action-btn:hover {
+        .topic-chip:hover {
             color: var(--text-primary);
             border-color: var(--accent-primary);
+            background: rgba(179, 136, 255, 0.1);
         }
 
-        /* Inline Tarot Visuals */
-        .inline-tarot-tray {
+        /* Main Draw & Consult Action Button */
+        .consult-action-btn {
+            background: linear-gradient(135deg, var(--accent-secondary) 0%, #5632a8 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 30px;
+            padding: 16px 28px;
+            font-family: 'Cinzel', serif;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 6px 22px rgba(118, 75, 162, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .consult-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(118, 75, 162, 0.6);
+        }
+
+        /* Active Consultation Reading Display Stage */
+        .active-reading-stage {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        /* Minimized Top Bar to Start New Consultation */
+        .reading-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+        }
+
+        .reading-badge {
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .new-consult-btn {
+            background: transparent;
+            border: 1px solid var(--accent-primary);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .new-consult-btn:hover {
+            background: var(--accent-primary);
+            color: #ffffff;
+            box-shadow: 0 0 12px var(--border-glow);
+        }
+
+        /* The Centered Visual Stage */
+        .visual-stage-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 28px 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            min-height: 280px;
+        }
+
+        /* Clean Centered Tarot Grids */
+        .tarot-stage-grid {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .tarot-row {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
             flex-wrap: wrap;
-            padding: 10px 0;
             width: 100%;
         }
 
         @media (max-width: 768px) {
-            .inline-tarot-tray {
+            .tarot-row {
                 flex-wrap: nowrap;
                 justify-content: flex-start;
                 overflow-x: auto;
                 scroll-snap-type: x mandatory;
                 -webkit-overflow-scrolling: touch;
-                padding: 12px 6px;
+                padding: 10px 4px;
                 gap: 12px;
             }
             .tarot-card-wrapper {
@@ -424,11 +550,11 @@
             }
         }
 
-        /* Tarot Card 3D Flip */
+        /* 3D Tarot Card */
         .tarot-card-wrapper {
             perspective: 1000px;
-            width: 116px;
-            height: 195px;
+            width: 118px;
+            height: 198px;
         }
 
         .tarot-card {
@@ -457,7 +583,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 12px 8px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
             user-select: none;
         }
 
@@ -509,162 +635,198 @@
             color: var(--text-muted);
         }
 
-        /* Inline I Ching Visuals */
-        .inline-hexagram-tray {
+        /* I Ching Hexagram Display */
+        .hexagram-stage {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 12px;
-            padding: 12px;
+            padding: 16px;
             text-align: center;
-            background: var(--bg-card);
-            border-radius: var(--radius-md);
         }
 
-        .inline-hex-symbol {
-            font-size: 80px;
+        .hex-stage-symbol {
+            font-size: 88px;
             line-height: 1;
             color: var(--accent-primary);
-            text-shadow: 0 0 20px rgba(179, 136, 255, 0.4);
+            text-shadow: 0 0 24px rgba(179, 136, 255, 0.4);
         }
 
-        .inline-hex-title {
+        .hex-stage-title {
             font-family: 'Cinzel', serif;
-            font-size: 22px;
+            font-size: 24px;
             color: var(--accent-gold);
         }
 
-        .inline-hex-meta {
-            font-size: 15px;
+        .hex-stage-meta {
+            font-size: 16px;
             color: var(--text-secondary);
         }
 
-        .inline-hex-changing {
+        .hex-stage-changing {
             color: var(--accent-primary);
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
         }
 
-        /* Inline Runes Visuals */
-        .inline-runes-tray {
+        /* Runes Display */
+        .runes-stage-grid {
             display: flex;
             justify-content: center;
-            gap: 14px;
+            align-items: center;
+            gap: 16px;
             flex-wrap: wrap;
             padding: 10px 0;
-            width: 100%;
         }
 
-        .inline-rune-stone {
+        .rune-stone {
             background: linear-gradient(145deg, #373449 0%, #201e2c 100%);
             border: 2px solid #5a5472;
             border-radius: var(--radius-md);
-            padding: 16px 14px;
+            padding: 18px 14px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            min-width: 100px;
+            min-width: 105px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
         }
 
-        .inline-rune-symbol {
-            font-size: 46px;
+        .rune-symbol {
+            font-size: 48px;
             color: var(--accent-gold);
             text-shadow: 0 0 12px rgba(229, 193, 88, 0.4);
         }
 
-        .inline-rune-name {
+        .rune-name {
             font-family: 'Cinzel', serif;
             font-size: 14px;
             font-weight: 700;
             color: var(--text-primary);
         }
 
-        .inline-rune-pos {
+        .rune-pos {
             font-size: 11px;
             color: var(--accent-primary);
             text-transform: uppercase;
         }
 
-        .inline-rune-mean {
+        .rune-mean {
             font-size: 12px;
             color: var(--text-muted);
             text-align: center;
         }
 
-        /* Quantum Number Badge */
-        .inline-number-tray {
+        /* Numerology Display */
+        .number-stage {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 14px;
-            padding: 14px;
-            background: var(--bg-card);
-            border-radius: var(--radius-md);
+            gap: 8px;
+            padding: 16px;
         }
 
-        .quantum-number-val {
+        .number-value {
             font-family: 'Cinzel', serif;
-            font-size: 38px;
+            font-size: 46px;
             font-weight: 700;
             color: var(--accent-gold);
-            text-shadow: 0 0 16px rgba(229, 193, 88, 0.4);
+            text-shadow: 0 0 20px rgba(229, 193, 88, 0.45);
         }
 
-        /* Oracle Interpretation Body */
-        .interpretation-body {
+        /* Interpretation Text Card */
+        .interpretation-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 26px 24px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .seeker-inquiry-box {
+            background: var(--bg-card);
+            border-left: 3px solid var(--accent-primary);
+            border-radius: 4px var(--radius-sm) var(--radius-sm) 4px;
+            padding: 10px 16px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .oracle-stream-text {
             font-size: 18px;
             line-height: 1.7;
             color: var(--text-primary);
             word-break: break-word;
-            padding: 8px 4px 0;
-            border-top: 1px solid var(--border-color);
         }
 
-        .interpretation-body h1, .interpretation-body h2, .interpretation-body h3 {
+        .oracle-stream-text h1, .oracle-stream-text h2, .oracle-stream-text h3 {
             font-family: 'Cinzel', serif;
             color: var(--accent-gold);
-            margin: 14px 0 6px;
+            margin: 16px 0 8px;
         }
 
-        .interpretation-body ul, .interpretation-body ol {
+        .oracle-stream-text ul, .oracle-stream-text ol {
             padding-left: 20px;
-            margin: 8px 0;
+            margin: 10px 0;
         }
 
-        .interpretation-body p {
+        .oracle-stream-text p {
             margin-bottom: 12px;
         }
 
-        .interpretation-body p:last-child {
+        .oracle-stream-text p:last-child {
             margin-bottom: 0;
         }
 
-        .interpretation-body strong {
+        .oracle-stream-text strong {
             color: var(--accent-primary);
         }
 
-        /* General Bot Messages (Greetings, etc.) */
-        .bot-simple-message {
-            background: var(--bg-bot);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            border-bottom-left-radius: 4px;
-            padding: 14px 18px;
-            font-size: 18px;
-            max-width: 85%;
+        /* Reading Footer Tools */
+        .reading-footer-tools {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        /* Thinking Animation */
+        .tool-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 6px 14px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 15px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .tool-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--accent-primary);
+        }
+
+        /* Thinking Indicator */
         .thinking {
             display: none;
             align-items: center;
+            justify-content: center;
             gap: 10px;
             color: var(--text-muted);
             font-style: italic;
-            font-size: 15px;
-            padding: 10px 0;
+            font-size: 16px;
+            padding: 16px;
         }
 
         .shuffle-animation {
@@ -688,170 +850,9 @@
             50% { transform: translateY(-7px) scale(1.1); opacity: 1; }
         }
 
-        /* Sticky Bottom Input & Single Unified Mode Bar */
-        .chat-dock {
-            position: sticky;
-            bottom: 0;
-            z-index: 50;
-            background: var(--bg-input);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-top: 1px solid var(--border-color);
-            padding: 12px 16px max(14px, env(safe-area-inset-bottom));
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin: 0 -16px;
-        }
-
-        /* The Single Consolidated Mode Bar */
-        .mode-bar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 2px;
-        }
-
-        .mode-pill {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 6px 14px;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s;
-            user-select: none;
-            flex-shrink: 0;
-        }
-
-        .mode-pill:hover {
-            color: var(--text-primary);
-            border-color: var(--accent-primary);
-        }
-
-        .mode-pill.active {
-            background: var(--accent-secondary);
-            color: #ffffff;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 12px rgba(140, 84, 255, 0.4);
-        }
-
-        /* Tarot Sub-Spread Selector Bar */
-        .sub-spread-bar {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            padding: 2px 4px 6px;
-        }
-
-        .sub-spread-pill {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 3px 10px;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 13px;
-            color: var(--text-muted);
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s;
-            user-select: none;
-            flex-shrink: 0;
-        }
-
-        .sub-spread-pill:hover {
-            color: var(--text-primary);
-            border-color: var(--accent-primary);
-        }
-
-        .sub-spread-pill.active {
-            background: rgba(179, 136, 255, 0.2);
-            color: var(--accent-primary);
-            border-color: var(--accent-primary);
-            font-weight: 700;
-        }
-
-        /* Input Row */
-        .input-row {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .chat-input-field {
-            flex: 1;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 12px 18px;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 18px;
-            color: var(--text-primary);
-            outline: none;
-            transition: all 0.2s;
-        }
-
-        .chat-input-field:focus {
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 12px var(--border-glow);
-        }
-
-        .send-btn {
-            background: linear-gradient(135deg, var(--accent-secondary) 0%, #5e35b1 100%);
-            color: #ffffff;
-            border: none;
-            border-radius: 24px;
-            padding: 12px 22px;
-            font-family: 'Cinzel', serif;
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 14px rgba(118, 75, 162, 0.35);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-shrink: 0;
-        }
-
-        .send-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 18px rgba(118, 75, 162, 0.5);
-        }
-
-        /* Bottom Action Tools */
-        .dock-actions {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .dock-action-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            transition: color 0.2s;
-        }
-
-        .dock-action-btn:hover {
-            color: var(--text-primary);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* History Slide-over Drawer */
@@ -985,7 +986,7 @@
         </a>
         <div class="nav-controls">
             <button class="nav-btn" onclick="toggleHistory()" title="Divination Journal">
-                📜 <span class="nav-btn-label">History</span>
+                📜 <span class="nav-btn-label">Journal</span>
             </button>
             <button class="nav-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
             <button class="nav-btn" id="sound-btn" onclick="toggleSound()" title="Sound Effects">🔊</button>
@@ -1001,81 +1002,119 @@
         </picture>
     </div>
 
-    <!-- Main Reading Container -->
+    <!-- Main Container -->
     <main class="main-container">
-        <div class="chat-flow" id="chat-flow">
-            <!-- Welcome Hub (Visible when no messages yet) -->
-            <div class="welcome-hub" id="welcome-hub">
-                <div class="welcome-sigil">🔮</div>
-                <h1 class="welcome-title">Seek the Cosmic Truth</h1>
-                <p class="welcome-subtitle">
-                    Draw cards, hexagrams, or runes powered by genuine quantum entropy and interpreted by the Oracle.
-                </p>
-                <div class="starter-grid">
-                    <div class="starter-card" onclick="selectMode('tarot'); setSpread('3-card'); sendMessage('Give me a 3-card tarot reading for guidance')">
-                        <div class="starter-card-title">🔮 3-Card Tarot</div>
-                        <div class="starter-card-desc">Past, Present, and Future revelation</div>
-                    </div>
-                    <div class="starter-card" onclick="selectMode('iching'); sendMessage('Cast the I Ching for my current question')">
-                        <div class="starter-card-title">☯️ I Ching Hexagram</div>
-                        <div class="starter-card-desc">Ancient Book of Changes wisdom</div>
-                    </div>
-                    <div class="starter-card" onclick="selectMode('runes'); sendMessage('Cast the Elder Futhark runes for guidance')">
-                        <div class="starter-card-title">ᚱ Elder Futhark Runes</div>
-                        <div class="starter-card-desc">Norse stones of wyrd and fate</div>
-                    </div>
-                    <div class="starter-card" onclick="selectMode('tarot'); setSpread('3-card'); sendMessage('What cosmic wisdom do I need to know today?')">
-                        <div class="starter-card-title">✨ Daily Cosmic Message</div>
-                        <div class="starter-card-desc">Spiritual alignment for the day ahead</div>
+        
+        <!-- STEP-BY-STEP GUIDED CONSULTATION PORTAL -->
+        <section class="consultation-portal" id="consultation-portal">
+            <div class="portal-header">
+                <h1 class="portal-title">✦ Begin Your Consultation ✦</h1>
+                <p class="portal-subtitle">Follow the steps below to channel genuine quantum entropy through the Oracle.</p>
+            </div>
+
+            <!-- Step 1: Choose Tradition -->
+            <div class="step-section">
+                <div class="step-label">
+                    <span class="step-number">1</span>
+                    <span>Choose Tradition</span>
+                </div>
+                <div class="tradition-grid">
+                    <button class="tradition-btn active" data-tradition="tarot" onclick="setTradition('tarot')">
+                        <span class="tradition-icon">🔮</span>
+                        <span class="tradition-name">Tarot</span>
+                    </button>
+                    <button class="tradition-btn" data-tradition="runes" onclick="setTradition('runes')">
+                        <span class="tradition-icon">ᚱ</span>
+                        <span class="tradition-name">Runes</span>
+                    </button>
+                    <button class="tradition-btn" data-tradition="iching" onclick="setTradition('iching')">
+                        <span class="tradition-icon">☯️</span>
+                        <span class="tradition-name">I Ching</span>
+                    </button>
+                    <button class="tradition-btn" data-tradition="number" onclick="setTradition('number')">
+                        <span class="tradition-icon">🌌</span>
+                        <span class="tradition-name">Numerology</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Choose Spread / Depth (Dynamically updates) -->
+            <div class="step-section" id="spread-step">
+                <div class="step-label">
+                    <span class="step-number">2</span>
+                    <span id="spread-step-title">Choose Tarot Spread</span>
+                </div>
+                <div class="spread-grid" id="spread-options">
+                    <!-- Populated dynamically based on tradition -->
+                </div>
+            </div>
+
+            <!-- Step 3: Enter Your Inquiry -->
+            <div class="step-section">
+                <div class="step-label">
+                    <span class="step-number">3</span>
+                    <span>Enter Your Inquiry</span>
+                </div>
+                <div class="prompt-input-wrap">
+                    <textarea id="user-inquiry" class="prompt-textarea" placeholder="What question or life situation do you bring to the Oracle? (or leave blank for general guidance)"></textarea>
+                    <div class="topic-chips">
+                        <span class="topic-chip-label">Quick Inquiries:</span>
+                        <button class="topic-chip" onclick="setInquiry('What general guidance and spiritual truth do I need to hear right now?')">🧭 General Guidance</button>
+                        <button class="topic-chip" onclick="setInquiry('What do I need to know regarding my love life and relationships?')">💕 Love & Union</button>
+                        <button class="topic-chip" onclick="setInquiry('What energies are shaping my career, calling, and life purpose?')">💼 Career & Calling</button>
+                        <button class="topic-chip" onclick="setInquiry('What hidden obstacle or inner lesson am I meant to overcome?')">🙏 Spiritual Lesson</button>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="thinking" id="thinking-animation">
-            <div class="shuffle-animation">
-                <div class="shuffle-card"></div>
-                <div class="shuffle-card"></div>
-                <div class="shuffle-card"></div>
-            </div>
-            <span>The Oracle weaves the threads of quantum fate...</span>
-        </div>
+            <!-- Step 4: Consult Action Button -->
+            <button id="consult-btn" class="consult-action-btn" onclick="executeConsultation()">
+                <span>✦ Draw & Consult The Oracle ✦</span>
+            </button>
+        </section>
 
-        <!-- Sticky Bottom Chat Dock with Consolidated Mode Bar -->
-        <div class="chat-dock">
-            <!-- Consolidated Primary Mode Bar -->
-            <div class="mode-bar" id="mode-bar">
-                <button class="mode-pill active" data-mode="tarot" onclick="selectMode('tarot')">🔮 Tarot</button>
-                <button class="mode-pill" data-mode="iching" onclick="selectMode('iching')">☯️ I Ching</button>
-                <button class="mode-pill" data-mode="runes" onclick="selectMode('runes')">ᚱ Runes</button>
-                <button class="mode-pill" data-mode="number" onclick="selectMode('number')">🌌 Quantum Number</button>
-            </div>
-
-            <!-- Tarot Sub-Spread Bar (visible when Tarot is active) -->
-            <div class="sub-spread-bar" id="sub-spread-bar">
-                <span style="font-size: 12px; color: var(--text-muted); margin-right: 4px;">Spread:</span>
-                <button class="sub-spread-pill active" data-spread="3-card" onclick="setSpread('3-card')">3-Card</button>
-                <button class="sub-spread-pill" data-spread="yes-no" onclick="setSpread('yes-no')">Yes/No</button>
-                <button class="sub-spread-pill" data-spread="5-card" onclick="setSpread('5-card')">5-Card Cross</button>
-                <button class="sub-spread-pill" data-spread="celtic" onclick="setSpread('celtic')">Celtic Cross (10)</button>
-            </div>
-
-            <!-- Input Row -->
-            <div class="input-row">
-                <input type="text" id="user-input" class="chat-input-field" placeholder="Ask your question to the Oracle..." autocomplete="off">
-                <button id="send-button" class="send-btn" onclick="sendMessage()">
-                    <span>Ask</span> ✨
+        <!-- ACTIVE CONSULTATION READING STAGE -->
+        <section class="active-reading-stage" id="reading-stage">
+            <!-- Top Bar to Return / Start New Reading -->
+            <div class="reading-top-bar">
+                <div class="reading-badge" id="active-reading-badge">🔮 Sacred Tarot Reading</div>
+                <button class="new-consult-btn" onclick="startNewConsultation()">
+                    <span>✦ New Consultation</span>
                 </button>
             </div>
 
-            <!-- Dock Footer Actions -->
-            <div class="dock-actions">
-                <button class="dock-action-btn" onclick="clearChat()">
-                    🗑️ <span>Clear Consultation</span>
-                </button>
-                <span id="quantum-status" style="font-size: 12px; color: var(--accent-gold); opacity: 0.85;">⚡ Quantum RNG Active</span>
+            <!-- Centered Visual Stage for Drawn Cards / Hexagram / Runes -->
+            <div class="visual-stage-card" id="visual-stage-card">
+                <!-- Visuals inserted here dynamically -->
             </div>
-        </div>
+
+            <!-- Oracle's Streamed Divination Text -->
+            <div class="interpretation-card" id="interpretation-card">
+                <div class="seeker-inquiry-box" id="seeker-inquiry-display">
+                    "What guidance do the cards hold for me?"
+                </div>
+
+                <!-- Thinking Pulse -->
+                <div class="thinking" id="thinking-indicator">
+                    <div class="shuffle-animation">
+                        <div class="shuffle-card"></div>
+                        <div class="shuffle-card"></div>
+                        <div class="shuffle-card"></div>
+                    </div>
+                    <span>Channeling quantum entropy & weaving the divination...</span>
+                </div>
+
+                <div class="oracle-stream-text" id="oracle-stream-text"></div>
+
+                <!-- Footer Tools -->
+                <div class="reading-footer-tools">
+                    <button class="tool-btn" onclick="exportActiveReading()">📥 <span>Save Image</span></button>
+                    <button class="tool-btn" onclick="shareActiveReading()">🔗 <span>Share Reading</span></button>
+                    <button class="tool-btn" onclick="startNewConsultation()">✦ <span>Ask Another Question</span></button>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Reading History Slide-over Drawer -->
@@ -1089,17 +1128,23 @@
             <div class="empty-history">No saved readings yet. Your consultations will be preserved here.</div>
         </div>
         <div style="padding: 14px 18px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end;">
-            <button class="dock-action-btn" onclick="clearAllHistory()">🗑️ Clear Journal</button>
+            <button class="tool-btn" onclick="clearAllHistory()">🗑️ Clear Journal</button>
         </div>
     </aside>
 
     <script>
-        const chatFlow = document.getElementById('chat-flow');
-        const welcomeHub = document.getElementById('welcome-hub');
-        const userInput = document.getElementById('user-input');
-        const sendButton = document.getElementById('send-button');
-        const thinkingAnimation = document.getElementById('thinking-animation');
-        const subSpreadBar = document.getElementById('sub-spread-bar');
+        const portal = document.getElementById('consultation-portal');
+        const readingStage = document.getElementById('reading-stage');
+        const spreadStep = document.getElementById('spread-step');
+        const spreadStepTitle = document.getElementById('spread-step-title');
+        const spreadOptions = document.getElementById('spread-options');
+        const userInquiry = document.getElementById('user-inquiry');
+        const consultBtn = document.getElementById('consult-btn');
+        const visualStageCard = document.getElementById('visual-stage-card');
+        const activeReadingBadge = document.getElementById('active-reading-badge');
+        const seekerInquiryDisplay = document.getElementById('seeker-inquiry-display');
+        const oracleStreamText = document.getElementById('oracle-stream-text');
+        const thinkingIndicator = document.getElementById('thinking-indicator');
         const themeBtn = document.getElementById('theme-btn');
         const soundBtn = document.getElementById('sound-btn');
         const musicBtn = document.getElementById('music-btn');
@@ -1107,8 +1152,10 @@
         const historyOverlay = document.getElementById('history-overlay');
         const historyList = document.getElementById('history-list');
 
-        let currentMode = 'tarot';
+        // State
+        let currentTradition = 'tarot';
         let currentSpreadType = '3-card';
+        let currentReadingData = null;
         let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
         let musicEnabled = localStorage.getItem('musicEnabled') === 'true';
         let audioContext = null;
@@ -1119,6 +1166,90 @@
         if (!sessionId) {
             sessionId = 'session_' + (window.crypto && crypto.randomUUID ? crypto.randomUUID() : (Date.now() + '_' + Math.random().toString(36).substring(2)));
             sessionStorage.setItem('oracle_session_id', sessionId);
+        }
+
+        // Available Spreads Configuration
+        const TRADITION_SPREADS = {
+            tarot: {
+                title: 'Choose Tarot Spread',
+                options: [
+                    { id: '3-card', label: '🔮 3-Card Spread (Past, Present, Future)' },
+                    { id: 'yes-no', label: '❓ Yes / No (Single Card)' },
+                    { id: '5-card', label: '⭐ 5-Card Cross (Situation & Outcome)' },
+                    { id: 'celtic', label: '✨ Celtic Cross (10 Cards Comprehensive)' }
+                ],
+                default: '3-card',
+                placeholder: 'What question or life situation do you bring to the tarot? (or leave blank for general guidance)'
+            },
+            runes: {
+                title: 'Choose Rune Spread',
+                options: [
+                    { id: '3-card', label: 'ᚱ 3-Rune Cast (Situation, Action, Outcome)' },
+                    { id: 'yes-no', label: 'ᚱ Single Rune (Direct Guidance)' }
+                ],
+                default: '3-card',
+                placeholder: 'What question do you ask the Elder Futhark runes? (or leave blank for general guidance)'
+            },
+            iching: {
+                title: 'I Ching Hexagram Casting',
+                options: [
+                    { id: 'iching', label: '☯️ Ancient 64-Hexagram Coin Toss' }
+                ],
+                default: 'iching',
+                placeholder: 'What question or decision do you bring to the Book of Changes?'
+            },
+            number: {
+                title: 'Cosmic Numerology Omen',
+                options: [
+                    { id: 'number', label: '🌌 Quantum Entropic Number Reading' }
+                ],
+                default: 'number',
+                placeholder: 'What life path or inquiry do you bring to the cosmos?'
+            }
+        };
+
+        // Render Step 2 Options based on Tradition
+        function updateSpreadOptions() {
+            const config = TRADITION_SPREADS[currentTradition];
+            spreadStepTitle.textContent = config.title;
+            userInquiry.placeholder = config.placeholder;
+            spreadOptions.innerHTML = '';
+
+            if (config.options.length <= 1) {
+                // If only 1 option (like I Ching or Numerology), hide the sub-step to keep it ultra-clean
+                spreadStep.style.display = 'none';
+                currentSpreadType = config.default;
+            } else {
+                spreadStep.style.display = 'flex';
+                config.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = `spread-btn ${opt.id === currentSpreadType ? 'active' : ''}`;
+                    btn.textContent = opt.label;
+                    btn.addEventListener('click', () => {
+                        currentSpreadType = opt.id;
+                        document.querySelectorAll('.spread-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        sounds.chime();
+                    });
+                    spreadOptions.appendChild(btn);
+                });
+            }
+        }
+
+        // Set Tradition (Step 1)
+        function setTradition(tradition) {
+            currentTradition = tradition;
+            document.querySelectorAll('.tradition-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-tradition') === tradition);
+            });
+            currentSpreadType = TRADITION_SPREADS[tradition].default;
+            updateSpreadOptions();
+            sounds.chime();
+        }
+
+        function setInquiry(text) {
+            userInquiry.value = text;
+            sounds.messageSend();
         }
 
         // Web Audio Synthesizer
@@ -1208,21 +1339,17 @@
             if (!musicEnabled || ambientOscillator) return;
             initAudio();
             if (!audioContext) return;
-
             ambientOscillator = {
                 osc1: audioContext.createOscillator(),
                 osc2: audioContext.createOscillator(),
                 gain: audioContext.createGain()
             };
-
             ambientOscillator.osc1.frequency.value = 110;
             ambientOscillator.osc2.frequency.value = 165;
             ambientOscillator.gain.gain.value = 0.025;
-
             ambientOscillator.osc1.connect(ambientOscillator.gain);
             ambientOscillator.osc2.connect(ambientOscillator.gain);
             ambientOscillator.gain.connect(audioContext.destination);
-
             ambientOscillator.osc1.start();
             ambientOscillator.osc2.start();
         }
@@ -1237,7 +1364,6 @@
             }
         }
 
-        // Toggles
         function toggleSound() {
             soundEnabled = !soundEnabled;
             soundBtn.textContent = soundEnabled ? '🔊' : '🔇';
@@ -1262,25 +1388,6 @@
             body.setAttribute('data-theme', newTheme);
             themeBtn.textContent = newTheme === 'light' ? '☀️' : '🌙';
             localStorage.setItem('theme', newTheme);
-        }
-
-        // Mode & Spread Selection
-        function selectMode(mode) {
-            currentMode = mode;
-            document.querySelectorAll('.mode-pill').forEach(pill => {
-                pill.classList.toggle('active', pill.getAttribute('data-mode') === mode);
-            });
-            // Show sub-spread selector only if Tarot is active
-            subSpreadBar.style.display = (mode === 'tarot') ? 'flex' : 'none';
-            sounds.chime();
-        }
-
-        function setSpread(spread) {
-            currentSpreadType = spread;
-            document.querySelectorAll('.sub-spread-pill').forEach(pill => {
-                pill.classList.toggle('active', pill.getAttribute('data-spread') === spread);
-            });
-            sounds.chime();
         }
 
         // Initialize Preferences
@@ -1315,51 +1422,35 @@
             }
         }
 
-        // Render Markdown safely with DOMPurify
         function renderMarkdown(raw) {
             const parsed = marked.parse(raw);
             return window.DOMPurify ? DOMPurify.sanitize(parsed) : parsed;
         }
 
-        function hideWelcomeHub() {
-            if (welcomeHub && welcomeHub.style.display !== 'none') {
-                welcomeHub.style.display = 'none';
-            }
-        }
-
-        // Build Inline Visual Spread HTML inside the bot message
-        function createInlineVisualElement(metadata) {
-            const container = document.createElement('div');
-            container.className = 'inline-divination-card';
-            const cardId = 'card_' + Date.now();
-            container.id = cardId;
-
-            let badgeTitle = '✦ Oracle Divination ✦';
-            let contentHtml = '';
+        // Renders properly centered visual cards (no bottom cutoff!)
+        function renderVisualStage(metadata) {
+            visualStageCard.innerHTML = '';
 
             if (metadata.type === 'tarot' && metadata.cards) {
-                badgeTitle = `🔮 Tarot — ${metadata.spread_type || 'Reading'}`;
                 sounds.cardShuffle();
-                
-                const tray = document.createElement('div');
-                tray.className = 'inline-tarot-tray';
+                const container = document.createElement('div');
+                container.className = 'tarot-stage-grid';
 
-                metadata.cards.forEach((card, index) => {
+                // Helper to create card element
+                const makeCardEl = (card, position, index) => {
                     const wrap = document.createElement('div');
                     wrap.className = 'tarot-card-wrapper';
                     wrap.innerHTML = `
                         <div class="tarot-card">
                             <div class="card-face card-back"></div>
                             <div class="card-face card-front">
-                                <div class="card-position">${(metadata.positions && metadata.positions[index]) || 'Card'}</div>
+                                <div class="card-position">${position}</div>
                                 <div class="card-icon">${getCardIcon(card)}</div>
                                 <div class="card-name">${card.name}</div>
                                 ${card.suit ? `<div class="card-suit">${card.suit}</div>` : ''}
                             </div>
                         </div>
                     `;
-                    tray.appendChild(wrap);
-
                     const cardEl = wrap.querySelector('.tarot-card');
                     setTimeout(() => {
                         cardEl.classList.add('flipped');
@@ -1370,129 +1461,131 @@
                         cardEl.classList.toggle('flipped');
                         sounds.cardFlip();
                     });
-                });
+                    return wrap;
+                };
 
-                container.innerHTML = `
-                    <div class="divination-card-header">
-                        <span class="divination-badge">${badgeTitle}</span>
-                        <div class="divination-actions">
-                            <button class="divination-action-btn" onclick="exportCard('${cardId}')">📥 Save</button>
-                            <button class="divination-action-btn" onclick="shareCard('${cardId}')">🔗 Share</button>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(tray);
+                // Dedicated, centered layout based on spread
+                if (metadata.spread_type === '5-card') {
+                    // Row 1 (3 cards): Present Situation, Challenge, Past
+                    const row1 = document.createElement('div');
+                    row1.className = 'tarot-row';
+                    for (let i = 0; i < 3 && i < metadata.cards.length; i++) {
+                        row1.appendChild(makeCardEl(metadata.cards[i], metadata.positions[i] || `Card ${i+1}`, i));
+                    }
+                    container.appendChild(row1);
+
+                    // Row 2 (2 cards): Future, Outcome (centered below!)
+                    if (metadata.cards.length > 3) {
+                        const row2 = document.createElement('div');
+                        row2.className = 'tarot-row';
+                        for (let i = 3; i < metadata.cards.length; i++) {
+                            row2.appendChild(makeCardEl(metadata.cards[i], metadata.positions[i] || `Card ${i+1}`, i));
+                        }
+                        container.appendChild(row2);
+                    }
+                } else if (metadata.spread_type === 'celtic') {
+                    // Celtic Cross: 2 clean rows of 5 cards
+                    const row1 = document.createElement('div');
+                    row1.className = 'tarot-row';
+                    for (let i = 0; i < 5 && i < metadata.cards.length; i++) {
+                        row1.appendChild(makeCardEl(metadata.cards[i], metadata.positions[i] || `Card ${i+1}`, i));
+                    }
+                    container.appendChild(row1);
+
+                    if (metadata.cards.length > 5) {
+                        const row2 = document.createElement('div');
+                        row2.className = 'tarot-row';
+                        for (let i = 5; i < metadata.cards.length; i++) {
+                            row2.appendChild(makeCardEl(metadata.cards[i], metadata.positions[i] || `Card ${i+1}`, i));
+                        }
+                        container.appendChild(row2);
+                    }
+                } else {
+                    // Standard single row (1-card or 3-card)
+                    const row = document.createElement('div');
+                    row.className = 'tarot-row';
+                    metadata.cards.forEach((card, i) => {
+                        row.appendChild(makeCardEl(card, metadata.positions[i] || `Card ${i+1}`, i));
+                    });
+                    container.appendChild(row);
+                }
+
+                visualStageCard.appendChild(container);
 
             } else if (metadata.type === 'iching' && metadata.hexagram) {
-                badgeTitle = `☯️ I Ching — Hexagram ${metadata.hexagram.number}`;
                 sounds.chime();
-                container.innerHTML = `
-                    <div class="divination-card-header">
-                        <span class="divination-badge">${badgeTitle}</span>
-                        <div class="divination-actions">
-                            <button class="divination-action-btn" onclick="exportCard('${cardId}')">📥 Save</button>
-                        </div>
-                    </div>
-                    <div class="inline-hexagram-tray">
-                        <div class="inline-hex-symbol">${metadata.hexagram.symbol}</div>
-                        <div class="inline-hex-title">Hexagram ${metadata.hexagram.number}: ${metadata.hexagram.name}</div>
-                        <div class="inline-hex-meta"><em>${metadata.hexagram.meaning}</em> — ${metadata.hexagram.keywords}</div>
+                visualStageCard.innerHTML = `
+                    <div class="hexagram-stage">
+                        <div class="hex-stage-symbol">${metadata.hexagram.symbol}</div>
+                        <div class="hex-stage-title">Hexagram ${metadata.hexagram.number}: ${metadata.hexagram.name}</div>
+                        <div class="hex-stage-meta"><em>${metadata.hexagram.meaning}</em> — ${metadata.hexagram.keywords}</div>
                         ${metadata.hexagram.changing_lines && metadata.hexagram.changing_lines.length > 0 ?
-                            `<div class="inline-hex-changing">Changing Lines: ${metadata.hexagram.changing_lines.join(', ')}</div>` : ''}
+                            `<div class="hex-stage-changing">Changing Lines: ${metadata.hexagram.changing_lines.join(', ')}</div>` : ''}
                     </div>
                 `;
 
             } else if (metadata.type === 'runes' && metadata.runes) {
-                badgeTitle = `ᚱ Norse Rune Cast`;
                 sounds.chime();
-                const tray = document.createElement('div');
-                tray.className = 'inline-runes-tray';
-
-                metadata.runes.forEach((rune, index) => {
+                const grid = document.createElement('div');
+                grid.className = 'runes-stage-grid';
+                metadata.runes.forEach((rune, i) => {
                     const stone = document.createElement('div');
-                    stone.className = 'inline-rune-stone';
+                    stone.className = 'rune-stone';
                     stone.innerHTML = `
-                        <div class="inline-rune-pos">${(metadata.positions && metadata.positions[index]) || 'Rune'}</div>
-                        <div class="inline-rune-symbol">${rune.symbol}</div>
-                        <div class="inline-rune-name">${rune.name}</div>
-                        <div class="inline-rune-mean">${rune.meaning}</div>
+                        <div class="rune-pos">${(metadata.positions && metadata.positions[i]) || 'Rune'}</div>
+                        <div class="rune-symbol">${rune.symbol}</div>
+                        <div class="rune-name">${rune.name}</div>
+                        <div class="rune-mean">${rune.meaning}</div>
                     `;
-                    tray.appendChild(stone);
-                    setTimeout(() => sounds.cardFlip(), index * 180);
+                    grid.appendChild(stone);
+                    setTimeout(() => sounds.cardFlip(), i * 160);
                 });
-
-                container.innerHTML = `
-                    <div class="divination-card-header">
-                        <span class="divination-badge">${badgeTitle}</span>
-                        <div class="divination-actions">
-                            <button class="divination-action-btn" onclick="exportCard('${cardId}')">📥 Save</button>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(tray);
+                visualStageCard.appendChild(grid);
 
             } else if (metadata.quantum_number) {
-                badgeTitle = `🌌 Quantum Cosmic Omen`;
                 sounds.chime();
-                container.innerHTML = `
-                    <div class="divination-card-header">
-                        <span class="divination-badge">${badgeTitle}</span>
-                    </div>
-                    <div class="inline-number-tray">
+                visualStageCard.innerHTML = `
+                    <div class="number-stage">
                         <span style="font-size: 15px; color: var(--text-muted);">Quantum Entropic Integer:</span>
-                        <span class="quantum-number-val">${metadata.quantum_number}</span>
+                        <div class="number-value">${metadata.quantum_number}</div>
                     </div>
                 `;
             }
-
-            return container;
         }
 
-        // Send Message with Real-Time Inline Divination
-        async function sendMessage(overrideText = null) {
-            const text = overrideText || userInput.value.trim();
-            if (!text) return;
-
-            hideWelcomeHub();
-
-            // Append User Message Bubble
-            const userMsg = document.createElement('div');
-            userMsg.className = 'user-message';
-            userMsg.textContent = text;
-            chatFlow.appendChild(userMsg);
-            sounds.messageSend();
-            if (!overrideText) userInput.value = '';
-
-            thinkingAnimation.style.display = 'flex';
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-
-            // Create Bot Message Wrapper
-            const botWrapper = document.createElement('div');
-            botWrapper.className = 'bot-message-wrapper';
-
-            // Reading card container for inline visual spread
-            let visualCardElement = null;
+        // EXECUTE CONSULTATION (Step 4 Action)
+        async function executeConsultation() {
+            const promptText = userInquiry.value.trim() || 'Provide sacred guidance and reveal the truth of my path.';
             
-            // Reading text body
-            const textBody = document.createElement('div');
-            textBody.className = 'interpretation-body';
-            textBody.style.display = 'none';
+            sounds.messageSend();
+            consultBtn.disabled = true;
+            consultBtn.innerHTML = '<span>✦ Channeling Quantum Entropy... ✦</span>';
 
-            botWrapper.appendChild(textBody);
-            chatFlow.appendChild(botWrapper);
+            // Switch view from Portal to Active Reading Stage
+            portal.style.display = 'none';
+            readingStage.style.display = 'flex';
+
+            // Update Badge & Inquiry
+            const traditionName = TRADITION_SPREADS[currentTradition].title;
+            activeReadingBadge.textContent = `${traditionName}`;
+            seekerInquiryDisplay.textContent = `"${promptText}"`;
+            oracleStreamText.innerHTML = '';
+            visualStageCard.innerHTML = '';
+            thinkingIndicator.style.display = 'flex';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
             let fullText = '';
             let isStreamDone = false;
-            let currentReadingMeta = null;
 
             try {
                 const response = await fetch('/chat/stream', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        message: text,
+                        message: promptText,
                         spread_type: currentSpreadType,
-                        mode: currentMode,
+                        mode: currentTradition,
                         session_id: sessionId
                     })
                 });
@@ -1525,43 +1618,31 @@
                                 const parsed = JSON.parse(dataStr);
 
                                 if (eventType === 'metadata') {
-                                    currentReadingMeta = parsed;
-                                    thinkingAnimation.style.display = 'none';
-
-                                    // Render Visual Spread INLINE directly inside message wrapper!
-                                    if (parsed.type && parsed.type !== 'oracle') {
-                                        visualCardElement = createInlineVisualElement(parsed);
-                                        botWrapper.insertBefore(visualCardElement, textBody);
-                                    } else if (parsed.quantum_number) {
-                                        visualCardElement = createInlineVisualElement(parsed);
-                                        botWrapper.insertBefore(visualCardElement, textBody);
-                                    }
-                                    textBody.style.display = 'block';
+                                    currentReadingData = parsed;
+                                    thinkingIndicator.style.display = 'none';
+                                    renderVisualStage(parsed);
 
                                 } else if (eventType === 'token') {
-                                    thinkingAnimation.style.display = 'none';
-                                    textBody.style.display = 'block';
+                                    thinkingIndicator.style.display = 'none';
                                     fullText += parsed.token || '';
-                                    textBody.innerHTML = renderMarkdown(fullText);
-                                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                                    oracleStreamText.innerHTML = renderMarkdown(fullText);
 
                                 } else if (eventType === 'done') {
-                                    thinkingAnimation.style.display = 'none';
+                                    thinkingIndicator.style.display = 'none';
                                     isStreamDone = true;
-                                    saveReadingToJournal(text, currentReadingMeta, fullText);
+                                    saveReadingToJournal(promptText, currentReadingData, fullText);
 
                                 } else if (eventType === 'error') {
-                                    thinkingAnimation.style.display = 'none';
-                                    textBody.style.display = 'block';
-                                    textBody.innerHTML = renderMarkdown(`*${parsed.error}*`);
+                                    thinkingIndicator.style.display = 'none';
+                                    oracleStreamText.innerHTML = renderMarkdown(`*${parsed.error}*`);
                                     isStreamDone = true;
                                 }
                             } catch(e) {}
                         }
                     }
                 }
-            } catch (streamErr) {
-                console.warn('Stream failed, attempting fallback to /chat:', streamErr);
+            } catch (err) {
+                console.warn('Stream failed, attempting fallback to /chat:', err);
             }
 
             // Fallback to /chat if stream failed or produced nothing
@@ -1571,48 +1652,35 @@
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            message: text,
+                            message: promptText,
                             spread_type: currentSpreadType,
-                            mode: currentMode,
+                            mode: currentTradition,
                             session_id: sessionId
                         })
                     });
-                    thinkingAnimation.style.display = 'none';
+                    thinkingIndicator.style.display = 'none';
                     const data = await res.json();
-                    currentReadingMeta = data;
-
-                    if (data.type && data.type !== 'oracle') {
-                        visualCardElement = createInlineVisualElement(data);
-                        botWrapper.insertBefore(visualCardElement, textBody);
-                    }
-                    textBody.style.display = 'block';
-                    textBody.innerHTML = renderMarkdown(data.response || '');
-                    saveReadingToJournal(text, currentReadingMeta, data.response);
+                    currentReadingData = data;
+                    renderVisualStage(data);
+                    oracleStreamText.innerHTML = renderMarkdown(data.response || '');
+                    saveReadingToJournal(promptText, currentReadingData, data.response);
                 } catch (fallbackErr) {
-                    thinkingAnimation.style.display = 'none';
-                    textBody.style.display = 'block';
-                    textBody.innerHTML = renderMarkdown(`*The Oracle could not be reached: ${fallbackErr.message}*`);
+                    thinkingIndicator.style.display = 'none';
+                    oracleStreamText.innerHTML = renderMarkdown(`*The Oracle could not be reached: ${fallbackErr.message}*`);
                 }
             }
-            thinkingAnimation.style.display = 'none';
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+            thinkingIndicator.style.display = 'none';
+            consultBtn.disabled = false;
+            consultBtn.innerHTML = '<span>✦ Draw & Consult The Oracle ✦</span>';
         }
 
-        // Clear Session
-        function clearChat() {
-            if (confirm('Clear the consultation and reset the Oracle?')) {
-                fetch('/session/clear', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ session_id: sessionId })
-                }).catch(() => {});
-
-                chatFlow.innerHTML = '';
-                if (welcomeHub) {
-                    welcomeHub.style.display = 'flex';
-                    chatFlow.appendChild(welcomeHub);
-                }
-            }
+        // Return to Guided Portal for Next Question
+        function startNewConsultation() {
+            readingStage.style.display = 'none';
+            portal.style.display = 'flex';
+            userInquiry.value = '';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Divination Journal Storage
@@ -1631,12 +1699,13 @@
                 id: 'reading_' + Date.now(),
                 timestamp: new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
                 question: question,
+                tradition: currentTradition,
                 type: readingData.type || 'divination',
                 readingData: readingData,
                 text: responseText
             };
             history.unshift(entry);
-            if (history.length > 20) history.pop();
+            if (history.length > 25) history.pop();
             localStorage.setItem('oracle_reading_history', JSON.stringify(history));
             renderHistoryDrawer();
         }
@@ -1669,28 +1738,14 @@
         }
 
         function loadHistoryItem(item) {
-            hideWelcomeHub();
-
-            const userMsg = document.createElement('div');
-            userMsg.className = 'user-message';
-            userMsg.textContent = item.question;
-            chatFlow.appendChild(userMsg);
-
-            const botWrapper = document.createElement('div');
-            botWrapper.className = 'bot-message-wrapper';
-
-            if (item.readingData) {
-                const visual = createInlineVisualElement(item.readingData);
-                botWrapper.appendChild(visual);
-            }
-
-            const textBody = document.createElement('div');
-            textBody.className = 'interpretation-body';
-            textBody.innerHTML = renderMarkdown(item.text);
-            botWrapper.appendChild(textBody);
-
-            chatFlow.appendChild(botWrapper);
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            portal.style.display = 'none';
+            readingStage.style.display = 'flex';
+            activeReadingBadge.textContent = `${item.type.toUpperCase()}`;
+            seekerInquiryDisplay.textContent = `"${item.question}"`;
+            currentReadingData = item.readingData;
+            renderVisualStage(item.readingData);
+            oracleStreamText.innerHTML = renderMarkdown(item.text);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function clearAllHistory() {
@@ -1707,8 +1762,8 @@
             if (!isActive) renderHistoryDrawer();
         }
 
-        async function exportCard(cardElementId) {
-            const el = document.getElementById(cardElementId);
+        async function exportActiveReading() {
+            const el = document.getElementById('visual-stage-card');
             if (!el) return;
             try {
                 const canvas = await html2canvas(el, { backgroundColor: '#12111a', scale: 2 });
@@ -1721,7 +1776,7 @@
             }
         }
 
-        function shareCard(cardElementId) {
+        function shareActiveReading() {
             if (navigator.share) {
                 navigator.share({
                     title: 'Quantum Oracle Divination',
@@ -1734,15 +1789,9 @@
             }
         }
 
-        // Enter Key Listener
-        userInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
-
+        // Initialize App on Load
         window.addEventListener('load', () => {
+            updateSpreadOptions();
             renderHistoryDrawer();
         });
     </script>
