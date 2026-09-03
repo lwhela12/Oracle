@@ -48,40 +48,46 @@ class TarotDeck:
             'rank': rank
         }
 
+    def reset_deck(self):
+        """Resets the deck to the full 78 cards."""
+        suits = ['Wands', 'Cups', 'Swords', 'Pentacles']
+        ranks = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Page', 'Knight', 'Queen', 'King']
+        self.cards = list(self.major_arcana) + [
+            f'{rank} of {suit}' for suit in suits for rank in ranks
+        ]
+
     def shuffle(self):
-        """Shuffles the deck using a standard random number generator."""
-        random.shuffle(self.cards)
+        """Shuffles the deck using a cryptographic/system random number generator."""
+        random.SystemRandom().shuffle(self.cards)
 
     def quantum_shuffle(self):
-        """Shuffles the deck using quantum random numbers."""
-        
-            # Fetch quantum random numbers from ANU Quantum Random Numbers Server
-        response = requests.get(url, params)
-            
-            
-        quantum_numbers = response.json()['numbers']
-            # Create a list of tuples pairing each card with a quantum number
-        paired = list(zip(quantum_numbers, self.cards))
-                # Sort the pairs by the quantum number
-        paired.sort(key=lambda x: x[0])
-                # Extract the shuffled cards
-        self.cards = [card for _, card in paired]
-           
+        """Shuffles the deck using quantum random numbers, falling back gracefully to system random."""
+        try:
+            response = requests.get(url, params=params, timeout=2.5)
+            if response.status_code == 200:
+                quantum_numbers = response.json().get('numbers', [])
+                if len(quantum_numbers) >= len(self.cards):
+                    paired = list(zip(quantum_numbers, self.cards))
+                    paired.sort(key=lambda x: x[0])
+                    self.cards = [card for _, card in paired]
+                    return
+        except Exception:
+            pass
+        # Fallback to cryptographically strong system random
+        self.shuffle()
 
     def draw_card(self):
         """Draws a card from the top of the deck."""
         if self.cards:
             return self.cards.pop(0)
-        else:
-            return "The deck is empty."
-      
+        return None
+
     def reading(self, num_cards):
-        """Pulls the specified number of cards and returns them as a collection."""
+        """Resets the deck, shuffles, and pulls the requested number of cards."""
+        self.reset_deck()
         self.quantum_shuffle()
-        if num_cards > len(self.cards):
-            return "Not enough cards in the deck."
-        reading_cards = [self.draw_card() for _ in range(num_cards)]
-        return reading_cards
+        num = min(num_cards, len(self.cards))
+        return [self.draw_card() for _ in range(num)]
 
     def get_spread_positions(self, spread_type):
         """Returns position labels for different spread types."""

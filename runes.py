@@ -37,16 +37,21 @@ class RuneCast:
         self.rune_list = list(self.runes.keys())
 
     def quantum_draw(self, num_runes=3):
-        """Draw runes using quantum randomness."""
-        params = {'n': num_runes, 'min': 0, 'max': len(self.rune_list) - 1}
+        """Draw unique runes using quantum randomness without replacement."""
+        num_runes = min(num_runes, len(self.rune_list))
+        params = {'n': len(self.rune_list), 'min': 1, 'max': 10000}
         try:
-            response = requests.get(url, params)
-            indices = response.json()['numbers']
-            drawn_runes = [self.rune_list[i] for i in indices]
-            return drawn_runes
-        except:
-            # Fallback to pseudo-random
-            return random.sample(self.rune_list, num_runes)
+            response = requests.get(url, params=params, timeout=2.5)
+            if response.status_code == 200:
+                numbers = response.json().get('numbers', [])
+                if len(numbers) >= len(self.rune_list):
+                    paired = list(zip(numbers, self.rune_list))
+                    paired.sort(key=lambda x: x[0])
+                    return [rune for _, rune in paired[:num_runes]]
+        except Exception:
+            pass
+        # Fallback to cryptographically strong system random sampling without replacement
+        return random.SystemRandom().sample(self.rune_list, num_runes)
 
     def cast_runes(self, num_runes=3):
         """Perform a rune casting."""

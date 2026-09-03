@@ -74,22 +74,26 @@ class IChing:
         }
 
     def quantum_coin_toss(self):
-        """Use quantum random number to simulate coin tosses for I Ching."""
-        params = {'n': 18, 'min': 0, 'max': 1}  # 3 tosses per line, 6 lines
+        """Use quantum random numbers with timeout and cryptographic fallback for coin tosses."""
+        params = {'n': 18, 'min': 0, 'max': 1}
         try:
-            response = requests.get(url, params)
-            tosses = response.json()['numbers']
-            return tosses
-        except:
-            # Fallback to pseudo-random if API fails
-            return [random.randint(0, 1) for _ in range(18)]
+            response = requests.get(url, params=params, timeout=2.5)
+            if response.status_code == 200:
+                tosses = response.json().get('numbers', [])
+                if len(tosses) == 18:
+                    return tosses
+        except Exception:
+            pass
+        # Fallback to cryptographically strong system random
+        rng = random.SystemRandom()
+        return [rng.randint(0, 1) for _ in range(18)]
 
     def calculate_hexagram(self):
         """Calculate hexagram using coin toss method (3 coins, 6 times)."""
         tosses = self.quantum_coin_toss()
         lines = []
 
-        # Process 3 tosses at a time to generate 6 lines
+        # Process 3 tosses at a time to generate 6 lines (bottom to top)
         for i in range(0, 18, 3):
             three_tosses = tosses[i:i+3]
             heads = sum(three_tosses)
@@ -108,29 +112,42 @@ class IChing:
             else:
                 lines.append(6)  # Old yin
 
-        # Convert lines to hexagram number
-        # Lines are built from bottom to top
-        binary = ''
-        for line in lines:
-            binary += '1' if line in [7, 9] else '0'
+        # Trigram mapping from 3 lines (bottom to top): 1 for yang (7, 9), 0 for yin (6, 8)
+        trigram_map = {
+            (1, 1, 1): '☰',  # Heaven / Qian
+            (1, 1, 0): '☱',  # Lake / Dui
+            (1, 0, 1): '☲',  # Fire / Li
+            (1, 0, 0): '☳',  # Thunder / Zhen
+            (0, 1, 1): '☴',  # Wind / Xun
+            (0, 1, 0): '☵',  # Water / Kan
+            (0, 0, 1): '☶',  # Mountain / Gen
+            (0, 0, 0): '☷',  # Earth / Kun
+        }
 
-        # Convert binary to hexagram number (using lookup table)
-        hexagram_num = self.binary_to_hexagram(binary)
-        changing_lines = [i+1 for i, line in enumerate(lines) if line in [6, 9]]
+        # Lower trigram: lines 1-3 (indices 0, 1, 2)
+        lower_tuple = tuple(1 if line in [7, 9] else 0 for line in lines[0:3])
+        lower_symbol = trigram_map.get(lower_tuple, '☰')
+
+        # Upper trigram: lines 4-6 (indices 3, 4, 5)
+        upper_tuple = tuple(1 if line in [7, 9] else 0 for line in lines[3:6])
+        upper_symbol = trigram_map.get(upper_tuple, '☰')
+
+        combined_symbol = f"{upper_symbol}{lower_symbol}"
+
+        # Find matching hexagram number from hexagrams dictionary
+        hexagram_num = 1
+        for num, data in self.hexagrams.items():
+            if data['symbol'] == combined_symbol:
+                hexagram_num = num
+                break
+
+        changing_lines = [i + 1 for i, line in enumerate(lines) if line in [6, 9]]
 
         return {
             'number': hexagram_num,
             'lines': lines,
             'changing_lines': changing_lines
         }
-
-    def binary_to_hexagram(self, binary):
-        """Convert binary representation to hexagram number."""
-        # Simplified lookup - in reality this would be a full lookup table
-        # For now, use simple conversion
-        decimal = int(binary, 2)
-        # Map to 1-64 range
-        return (decimal % 64) + 1
 
     def cast_hexagram(self):
         """Perform a complete I Ching reading."""
