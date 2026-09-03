@@ -1,0 +1,18 @@
+{
+  "name": "Quantum Oracle",
+  "short_name": "Oracle",
+  "description": "Ancient Divination Powered by Quantum Entropy and Gemini AI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0d12",
+  "theme_color": "#12111a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/static/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
