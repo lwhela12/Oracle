@@ -1686,6 +1686,211 @@
             text-align: center;
         }
 
+        /* Specialized Ceremonial Rune Layouts */
+        .rune-casting-mat.layout-single {
+            justify-content: center;
+            align-items: center;
+            min-height: 280px;
+        }
+
+        .rune-casting-mat.layout-single .rune-artifact-img {
+            width: 175px;
+            height: 175px;
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 28px rgba(229, 193, 88, 0.45));
+        }
+
+        .rune-casting-mat.layout-norns {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        /* 5-Rune Wyrd Cross (Compass Layout) */
+        .rune-casting-mat.layout-five-cross {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px 16px;
+            justify-items: center;
+            align-items: center;
+            max-width: 680px;
+        }
+
+        .rune-casting-mat.layout-five-cross .rune-stone-wrapper[data-index="3"] {
+            grid-column: 2;
+            grid-row: 1; /* North */
+        }
+        .rune-casting-mat.layout-five-cross .rune-stone-wrapper[data-index="1"] {
+            grid-column: 1;
+            grid-row: 2; /* West */
+        }
+        .rune-casting-mat.layout-five-cross .rune-stone-wrapper[data-index="0"] {
+            grid-column: 2;
+            grid-row: 2; /* Center / Core */
+        }
+        .rune-casting-mat.layout-five-cross .rune-stone-wrapper[data-index="2"] {
+            grid-column: 3;
+            grid-row: 2; /* East */
+        }
+        .rune-casting-mat.layout-five-cross .rune-stone-wrapper[data-index="4"] {
+            grid-column: 2;
+            grid-row: 3; /* South */
+        }
+
+        /* The Hammer of Thor (Mjölnir T-shape) */
+        .rune-casting-mat.layout-thor-hammer {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px 16px;
+            justify-items: center;
+            align-items: center;
+            max-width: 680px;
+        }
+
+        .rune-casting-mat.layout-thor-hammer .rune-stone-wrapper[data-index="1"] {
+            grid-column: 1;
+            grid-row: 1; /* Left Wing */
+        }
+        .rune-casting-mat.layout-thor-hammer .rune-stone-wrapper[data-index="0"] {
+            grid-column: 2;
+            grid-row: 1; /* Striking Point */
+        }
+        .rune-casting-mat.layout-thor-hammer .rune-stone-wrapper[data-index="2"] {
+            grid-column: 3;
+            grid-row: 1; /* Right Wing */
+        }
+        .rune-casting-mat.layout-thor-hammer .rune-stone-wrapper[data-index="3"] {
+            grid-column: 2;
+            grid-row: 2; /* Shaft */
+        }
+        .rune-casting-mat.layout-thor-hammer .rune-stone-wrapper[data-index="4"] {
+            grid-column: 2;
+            grid-row: 3; /* Grip */
+        }
+
+        /* The Nine Worlds of Yggdrasil (Cosmic 3x3 Tree) */
+        .rune-casting-mat.layout-nine-worlds {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px 18px;
+            justify-items: center;
+            align-items: start;
+            max-width: 860px;
+        }
+
+        .rune-casting-mat.layout-nine-worlds .rune-artifact-img {
+            width: 116px;
+            height: 116px;
+        }
+
+        .rune-casting-mat.layout-nine-worlds .rune-stone-pebble {
+            width: 112px;
+            height: 102px;
+        }
+
+        .rune-casting-mat.layout-nine-worlds .pebble-glyph {
+            font-size: 44px;
+        }
+
+        @media (max-width: 680px) {
+            .rune-casting-mat.layout-five-cross,
+            .rune-casting-mat.layout-thor-hammer {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .rune-casting-mat.layout-nine-worlds {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 460px) {
+            .rune-casting-mat.layout-nine-worlds {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Merkstave (Reversed Runes) Styling */
+        .rune-stone-wrapper.is-reversed .rune-artifact-img,
+        .rune-stone-wrapper.is-reversed .rune-stone-pebble {
+            transform: rotate(180deg);
+        }
+
+        .rune-stone-wrapper.is-reversed .rune-artifact-img {
+            filter: drop-shadow(0 -16px 20px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 16px rgba(244, 63, 94, 0.45));
+        }
+
+        .rune-stone-wrapper.is-reversed:hover .rune-artifact-img {
+            filter: drop-shadow(0 -24px 32px rgba(0, 0, 0, 0.96)) drop-shadow(0 0 24px rgba(244, 63, 94, 0.7));
+        }
+
+        .rune-pos-badge.badge-merkstave {
+            background: rgba(239, 68, 68, 0.16);
+            border-color: rgba(239, 68, 68, 0.55);
+            color: #fca5a5;
+        }
+
+        .rune-pos-badge.badge-upright {
+            background: rgba(229, 193, 88, 0.12);
+            border-color: rgba(229, 193, 88, 0.4);
+            color: var(--accent-gold);
+        }
+
+        /* Tradition Modifiers Bar (Merkstave / Wyrd Toggles) */
+        .tradition-modifiers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .mod-pill {
+            background: rgba(22, 20, 32, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            user-select: none;
+        }
+
+        .mod-pill:hover {
+            border-color: var(--accent-gold);
+            color: var(--text-primary);
+            box-shadow: 0 0 10px rgba(229, 193, 88, 0.2);
+        }
+
+        .mod-pill.active {
+            background: rgba(229, 193, 88, 0.15);
+            border-color: rgba(229, 193, 88, 0.55);
+            color: var(--accent-gold);
+        }
+
+        [data-theme="light"] .mod-pill {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(124, 77, 255, 0.25);
+            color: var(--text-secondary);
+        }
+
+        [data-theme="light"] .mod-pill.active {
+            background: rgba(179, 130, 10, 0.12);
+            border-color: rgba(179, 130, 10, 0.5);
+            color: var(--accent-gold);
+        }
+
         /* Numerology Display */
         .number-stage {
             display: flex;
@@ -2129,6 +2334,9 @@
                 <div class="spread-grid" id="spread-options">
                     <!-- Populated dynamically based on tradition -->
                 </div>
+                <div class="tradition-modifiers" id="tradition-modifiers" style="display: none;">
+                    <!-- Populated dynamically for custom tradition options -->
+                </div>
             </div>
 
             <!-- Step 3: Enter Your Inquiry -->
@@ -2326,13 +2534,16 @@
                 placeholder: 'What question or life situation do you bring to the tarot? (or leave blank for general guidance)'
             },
             runes: {
-                title: 'Choose Rune Spread',
+                title: 'Choose Sacred Rune Spread',
                 options: [
-                    { id: '3-card', label: 'ᚱ 3-Rune Cast (Situation, Action, Outcome)' },
-                    { id: 'yes-no', label: 'ᚱ Single Rune (Direct Guidance)' }
+                    { id: 'norns', label: 'ᚱ The Three Norns (Urðr, Verðandi, Skuld)' },
+                    { id: 'single', label: 'ᚱ Single Rune (Odin\'s Rune / Direct Guidance)' },
+                    { id: 'five-cross', label: 'ᚱ The Five-Rune Wyrd Cross (Compass of Fate)' },
+                    { id: 'thor-hammer', label: 'ᛏ The Hammer of Thor (Mjölnir 5-Rune Cast)' },
+                    { id: 'nine-worlds', label: '🌳 The Nine Worlds of Yggdrasil (Grand 9-Realm Cast)' }
                 ],
-                default: '3-card',
-                placeholder: 'What question do you ask the Elder Futhark runes? (or leave blank for general guidance)'
+                default: 'norns',
+                placeholder: 'What question or life situation do you bring to the Elder Futhark runes? (or leave blank for general guidance)'
             },
             iching: {
                 title: 'I Ching Hexagram Casting',
@@ -2352,12 +2563,57 @@
             }
         };
 
+        // Runic Divination Modifiers
+        let runeAllowReversals = true;
+        let runeIncludeWyrd = false;
+
+        function toggleRuneMerkstave() {
+            runeAllowReversals = !runeAllowReversals;
+            const btn = document.getElementById('toggle-merkstave');
+            if (btn) {
+                btn.classList.toggle('active', runeAllowReversals);
+                btn.innerHTML = `<span>ᛦ Merkstave (Reversals): <strong>${runeAllowReversals ? 'ON' : 'OFF'}</strong></span>`;
+            }
+            sounds.chime();
+        }
+
+        function toggleRuneWyrd() {
+            runeIncludeWyrd = !runeIncludeWyrd;
+            const btn = document.getElementById('toggle-wyrd');
+            if (btn) {
+                btn.classList.toggle('active', runeIncludeWyrd);
+                btn.innerHTML = `<span>⬚ Rune Set: <strong>${runeIncludeWyrd ? 'Modern (25 + Wyrd)' : 'Traditional (24 Runes)'}</strong></span>`;
+            }
+            sounds.chime();
+        }
+
         // Render Step 2 Options based on Tradition
         function updateSpreadOptions() {
             const config = TRADITION_SPREADS[currentTradition];
             spreadStepTitle.textContent = config.title;
             userInquiry.placeholder = config.placeholder;
             spreadOptions.innerHTML = '';
+
+            const traditionModifiers = document.getElementById('tradition-modifiers');
+
+            if (currentTradition === 'runes') {
+                if (traditionModifiers) {
+                    traditionModifiers.style.display = 'flex';
+                    traditionModifiers.innerHTML = `
+                        <button type="button" class="mod-pill ${runeAllowReversals ? 'active' : ''}" id="toggle-merkstave" onclick="toggleRuneMerkstave()">
+                            <span>ᛦ Merkstave (Reversals): <strong>${runeAllowReversals ? 'ON' : 'OFF'}</strong></span>
+                        </button>
+                        <button type="button" class="mod-pill ${runeIncludeWyrd ? 'active' : ''}" id="toggle-wyrd" onclick="toggleRuneWyrd()">
+                            <span>⬚ Rune Set: <strong>${runeIncludeWyrd ? 'Modern (25 + Wyrd)' : 'Traditional (24 Runes)'}</strong></span>
+                        </button>
+                    `;
+                }
+            } else {
+                if (traditionModifiers) {
+                    traditionModifiers.style.display = 'none';
+                    traditionModifiers.innerHTML = '';
+                }
+            }
 
             if (config.options.length <= 1) {
                 // If only 1 option (like I Ching or Numerology), hide the sub-step to keep it ultra-clean
@@ -2820,6 +3076,7 @@
             const position = (activeRuneSpread.positions && activeRuneSpread.positions[activeRuneZoomIndex]) || `Rune ${activeRuneZoomIndex + 1}`;
             const total = activeRuneSpread.runes.length;
             const runeKey = (rune.key || rune.name.toLowerCase()).replace(/[^a-z0-9]+/g, '');
+            const isRev = Boolean(rune.is_reversed);
 
             const zoomImg = document.getElementById('zoomRuneImg');
             const zoomFallback = document.getElementById('zoomRuneFallback');
@@ -2831,10 +3088,34 @@
             const prevBtn = document.getElementById('runeZoomPrev');
             const nextBtn = document.getElementById('runeZoomNext');
 
-            if (zoomBadge) zoomBadge.textContent = position;
-            if (zoomTitle) zoomTitle.textContent = `${rune.symbol} ${rune.name}`;
+            if (zoomBadge) {
+                zoomBadge.innerHTML = isRev 
+                    ? `${position} &bull; <span style="color: #fca5a5;">ᛦ MERKSTAVE (REVERSED)</span>`
+                    : `${position} &bull; <span style="color: var(--accent-gold);">ᛚ UPRIGHT</span>`;
+            }
+            if (zoomTitle) {
+                zoomTitle.textContent = `${rune.symbol} ${rune.name}${isRev ? ' (Merkstave)' : ''}`;
+            }
             if (zoomAett) zoomAett.textContent = RUNE_AETTS[runeKey] || "Elder Futhark Rune";
-            if (zoomMeaning) zoomMeaning.textContent = `${rune.meaning} — ${rune.keywords || ''}`;
+            
+            if (zoomMeaning) {
+                if (isRev) {
+                    zoomMeaning.innerHTML = `
+                        <div style="color: #fca5a5; font-weight: 700; margin-bottom: 4px; font-family: 'Cinzel', serif;">✦ Merkstave Shadow Interpretation:</div>
+                        <div style="margin-bottom: 6px; font-size: 16px;">${rune.active_meaning || rune.merkstave || rune.meaning}</div>
+                        <div style="font-size: 13px; color: var(--text-muted);"><em>Keywords:</em> ${rune.active_keywords || rune.merkstave_keywords || rune.keywords}</div>
+                        <div style="margin-top: 10px; font-size: 13px; opacity: 0.8; border-top: 1px dashed rgba(229,193,88,0.25); padding-top: 8px;">
+                            <strong>Upright Essence:</strong> ${rune.meaning}
+                        </div>
+                    `;
+                } else {
+                    zoomMeaning.innerHTML = `
+                        <div style="color: var(--accent-gold); font-weight: 700; margin-bottom: 4px; font-family: 'Cinzel', serif;">✦ Upright Runic Wisdom:</div>
+                        <div style="margin-bottom: 6px; font-size: 16px;">${rune.meaning}</div>
+                        <div style="font-size: 13px; color: var(--text-muted);"><em>Keywords:</em> ${rune.keywords || ''}</div>
+                    `;
+                }
+            }
             if (zoomCounter) zoomCounter.textContent = `Rune ${activeRuneZoomIndex + 1} of ${total}`;
 
             if (prevBtn) prevBtn.style.display = total > 1 ? 'flex' : 'none';
@@ -2844,10 +3125,12 @@
                 zoomImg.style.display = 'block';
                 zoomImg.src = `/static/runes/${runeKey}.webp`;
                 zoomImg.alt = rune.name;
+                zoomImg.style.transform = isRev ? 'rotate(180deg)' : 'none';
                 zoomImg.onerror = () => {
                     zoomImg.style.display = 'none';
                     if (zoomFallback) {
                         zoomFallback.style.display = 'flex';
+                        zoomFallback.style.transform = isRev ? 'rotate(180deg)' : 'none';
                         const sym = document.getElementById('zoomRuneSymbolFallback');
                         if (sym) {
                             sym.textContent = rune.symbol;
@@ -2861,7 +3144,10 @@
                     }
                 };
             }
-            if (zoomFallback) zoomFallback.style.display = 'none';
+            if (zoomFallback) {
+                zoomFallback.style.display = 'none';
+                zoomFallback.style.transform = isRev ? 'rotate(180deg)' : 'none';
+            }
         }
 
         // Initialize Rune Zoom Lightbox Listeners
@@ -3197,8 +3483,10 @@
                 activeRuneSpread = metadata;
                 sounds.chime();
                 const mat = document.createElement('div');
-                mat.className = 'rune-casting-mat';
-                mat.innerHTML = `<div class="rune-casting-mat-header">&#5855; SACRED RUNIC CASTING CLOTH &#5855;</div>`;
+                const spreadKey = metadata.spread_type || 'norns';
+                mat.className = `rune-casting-mat layout-${spreadKey}`;
+                const spreadHeader = metadata.spread_name ? `&#5855; ${metadata.spread_name.toUpperCase()} &#5855;` : '&#5855; SACRED RUNIC CASTING CLOTH &#5855;';
+                mat.innerHTML = `<div class="rune-casting-mat-header">${spreadHeader}</div>`;
 
                 const frostRunes = ['hagalaz', 'nauthiz', 'isa', 'jera', 'eihwaz', 'perthro', 'algiz', 'sowilo'];
                 const amethystRunes = ['tiwaz', 'berkano', 'ehwaz', 'mannaz', 'laguz', 'ingwaz', 'dagaz', 'othala'];
@@ -3206,9 +3494,12 @@
                 metadata.runes.forEach((rune, i) => {
                     const wrap = document.createElement('div');
                     wrap.className = 'rune-stone-wrapper';
+                    wrap.setAttribute('data-index', i);
                     const position = (metadata.positions && metadata.positions[i]) || `Rune ${i + 1}`;
                     const runeKey = (rune.key || rune.name.toLowerCase()).replace(/[^a-z0-9]+/g, '');
-                    
+                    const isRev = Boolean(rune.is_reversed);
+                    if (isRev) wrap.classList.add('is-reversed');
+
                     // Natural random tilt between -5 and +5 degrees
                     const randomTilt = ((Math.random() * 10) - 5).toFixed(1);
                     wrap.style.transform = `rotate(${randomTilt}deg)`;
@@ -3217,18 +3508,22 @@
                     if (frostRunes.includes(runeKey)) aettClass = 'frost';
                     else if (amethystRunes.includes(runeKey)) aettClass = 'amethyst';
 
+                    const badgeClass = isRev ? 'badge-merkstave' : 'badge-upright';
+                    const orientationLabel = isRev ? 'ᛦ Merkstave' : 'ᛚ Upright';
+                    const meaningText = rune.active_meaning || rune.meaning;
+
                     wrap.innerHTML = `
                         <img src="/static/runes/${runeKey}.webp" 
                              alt="${rune.name}" 
-                             class="rune-artifact-img"
+                             class="rune-artifact-img ${isRev ? 'is-reversed' : ''}"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="rune-stone-pebble" style="display: none;">
                             <div class="pebble-glyph ${aettClass}">${rune.symbol}</div>
                         </div>
                         <div class="rune-stone-meta">
-                            <div class="rune-pos-badge">${position}</div>
-                            <div class="rune-name-label">${rune.name}</div>
-                            <div class="rune-meaning-label">${rune.meaning}</div>
+                            <div class="rune-pos-badge ${badgeClass}">${position} • ${orientationLabel}</div>
+                            <div class="rune-name-label">${rune.name} ${isRev ? '<span style="color:#fca5a5; font-size:12px;">(Merkstave)</span>' : ''}</div>
+                            <div class="rune-meaning-label">${meaningText}</div>
                         </div>
                     `;
 
@@ -3308,6 +3603,8 @@
                         message: promptText,
                         spread_type: currentSpreadType,
                         mode: currentTradition,
+                        allow_reversals: runeAllowReversals,
+                        include_wyrd: runeIncludeWyrd,
                         session_id: sessionId
                     })
                 });
@@ -3377,6 +3674,8 @@
                             message: promptText,
                             spread_type: currentSpreadType,
                             mode: currentTradition,
+                            allow_reversals: runeAllowReversals,
+                            include_wyrd: runeIncludeWyrd,
                             session_id: sessionId
                         })
                     });

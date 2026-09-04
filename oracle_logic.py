@@ -193,24 +193,91 @@ Provide a profound classical I Ching divination. Explain the Judgment and the Im
             'prompt': prompt
         }
 
-    def prepare_runes_reading(self, user_input, num_runes=3):
-        """Casts runes and builds the prompt without calling Gemini yet."""
-        rune_spread = self.runes.cast_runes(num_runes)
-        positions = ['Situation', 'Action', 'Outcome'] if num_runes == 3 else ['Rune'] * num_runes
+    def prepare_runes_reading(self, user_input, spread_type='norns', allow_reversals=True, include_wyrd=False, **kwargs):
+        """Casts runes and builds a rich Norse ceremonial divination prompt."""
+        # Handle legacy or positional num_runes argument
+        if isinstance(spread_type, int):
+            spread_type = 'single' if spread_type == 1 else 'norns'
+        elif 'num_runes' in kwargs:
+            num = kwargs['num_runes']
+            spread_type = 'single' if num == 1 else 'norns'
 
-        rune_text = '\n'.join([
-            f"- {positions[i]}: {rune['symbol']} {rune['name']} — {rune['meaning']} ({rune['keywords']})"
-            for i, rune in enumerate(rune_spread)
-        ])
+        cast = self.runes.cast_spread(
+            spread_type=spread_type,
+            allow_reversals=allow_reversals,
+            include_wyrd=include_wyrd
+        )
+        rune_spread = cast['runes']
+        positions = cast['positions']
+        spread_name = cast['spread_name']
+        spread_key = cast['spread_key']
 
-        prompt = f"""You have cast the Elder Futhark runes and drawn:
+        rune_lines = []
+        for i, rune in enumerate(rune_spread):
+            pos_label = positions[i] if i < len(positions) else f"Rune {i+1}"
+            rev_label = f"[{rune['orientation']}]" if rune.get('is_reversed') else "[Upright]"
+            meaning = rune.get('active_meaning', rune['meaning'])
+            keywords = rune.get('active_keywords', rune['keywords'])
+            aett_info = f"({rune.get('aett', '')})" if rune.get('aett') else ""
+            rune_lines.append(
+                f"- {pos_label}: {rune['symbol']} {rune['name']} {rev_label} {aett_info}\n"
+                f"  Meaning: {meaning}\n"
+                f"  Keywords: {keywords}"
+            )
+
+        rune_text = "\n\n".join(rune_lines)
+
+        # Specialized thematic instructions per spread
+        if spread_key == 'norns':
+            spread_context = (
+                "You are interpreting the threads of the Three Norns at the sacred Well of Urðr:\n"
+                "1. Urðr: The ancestral root, past deeds, and karmic origins.\n"
+                "2. Verðandi: The living present, active momentum, and emerging truth.\n"
+                "3. Skuld: The future necessity, debt of actions, and potential culmination."
+            )
+        elif spread_key == 'nine-worlds':
+            spread_context = (
+                "You are casting across the Nine Worlds of Yggdrasil, the Cosmic Tree:\n"
+                "- Upper Realms: Asgard (Divine Will/Spiritual Calling), Alfheim (Light/Intellect), Vanaheim (Heart/Fertility/Love).\n"
+                "- Midgard & The Horizon: Midgard (Mundane Reality/The Seeker), Jotunheim (Shadow Forces/Chaos), Svartalfheim (Subconscious Power/Hidden Craft).\n"
+                "- Lower Roots & Primal Elements: Muspelheim (Primal Fire/Drive), Niflheim (Primal Ice/Karmic Stagnation), Helheim (Underworld/Ancestral Rebirth)."
+            )
+        elif spread_key == 'thor-hammer':
+            spread_context = (
+                "You are invoking the Hammer of Thor (Mjölnir) for breakthrough, courage, and clearing obstacles:\n"
+                "- The Striking Point: The central conflict, deadlock, or test of resolve.\n"
+                "- The Wings: Left Wing (Inner doubt/vulnerability) vs Right Wing (Outer opposition).\n"
+                "- The Shaft & Grip: The divine wellspring of strength and the decisive action needed to strike through."
+            )
+        elif spread_key == 'five-cross':
+            spread_context = (
+                "You are laying the Five-Rune Wyrd Cross upon the sacred white linen:\n"
+                "- Center: The core essence of the seeker and situation.\n"
+                "- West & East: The fading past vs the emerging horizon.\n"
+                "- North & South: The higher spiritual lesson/aid vs the ultimate resulting wyrd."
+            )
+        else:
+            spread_context = "You are drawing Odin's Rune: an unvarnished, direct omen of wisdom from the All-Father."
+
+        prompt = f"""You have performed an authentic Elder Futhark rune casting: {spread_name}.
+{spread_context}
+
+Drawn Sacred Runes:
 {rune_text}
 
-Provide an evocative Norse rune reading for this seeker's inquiry: '{user_input}'"""
+Seeker's Inquiry: '{user_input}'
+
+Divination Guidelines:
+- Address the seeker with profound, poetic Norse wisdom, invoking the concepts of örlög (cosmic law) and wyrd (the web of fate).
+- If any runes are marked [Merkstave (Reversed)], do NOT interpret them as generic evil omens; interpret them with psychological and spiritual depth as blocked energy, internal friction, warnings of excess, or shadow aspects that require conscious awareness.
+- Symmetrical runes (such as Gebo, Isa, Hagalaz, Jera, Sowilo, Dagaz) always remain upright and represent unalterable cosmic principles.
+- Offer actionable, courageous counsel fitting for someone walking their path with honor."""
 
         return {
             'runes': rune_spread,
             'positions': positions,
+            'spread_type': spread_key,
+            'spread_name': spread_name,
             'prompt': prompt
         }
 
@@ -257,13 +324,21 @@ Provide an evocative Norse rune reading for this seeker's inquiry: '{user_input}
             'type': 'iching'
         }
 
-    def runes_response(self, user_input, num_runes=3, session_id="default"):
-        prep = self.prepare_runes_reading(user_input, num_runes)
+    def runes_response(self, user_input, spread_type='norns', allow_reversals=True, include_wyrd=False, session_id="default", **kwargs):
+        prep = self.prepare_runes_reading(
+            user_input,
+            spread_type=spread_type,
+            allow_reversals=allow_reversals,
+            include_wyrd=include_wyrd,
+            **kwargs
+        )
         text = self.send_chat(prep['prompt'], session_id)
         return {
             'text': text,
             'runes': prep['runes'],
             'positions': prep['positions'],
+            'spread_type': prep['spread_type'],
+            'spread_name': prep['spread_name'],
             'type': 'runes'
         }
 

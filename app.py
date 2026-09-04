@@ -117,11 +117,14 @@ def chat():
         oracle.clear_history(session_id)
         return jsonify({'response': f"{oracle.name}: Blessings on your path.", 'terminate': True})
 
+    allow_reversals = data.get('allow_reversals', True)
+    include_wyrd = data.get('include_wyrd', False)
+
     mode = determine_mode(user_message, explicit_mode)
 
     try:
         if mode == 'tarot':
-            tarot_data = oracle.tarot_response_structured(user_message, spread_type, session_id=session_id)
+            tarot_data = oracle.tarot_response_structured(user_message, spread_type or '3-card', session_id=session_id)
             return jsonify({
                 'response': tarot_data['text'],
                 'cards': tarot_data['cards'],
@@ -141,11 +144,20 @@ def chat():
             })
 
         elif mode == 'runes':
-            runes_data = oracle.runes_response(user_message, session_id=session_id)
+            rune_spread = spread_type if spread_type else 'norns'
+            runes_data = oracle.runes_response(
+                user_message,
+                spread_type=rune_spread,
+                allow_reversals=allow_reversals,
+                include_wyrd=include_wyrd,
+                session_id=session_id
+            )
             return jsonify({
                 'response': runes_data['text'],
                 'runes': runes_data['runes'],
                 'positions': runes_data['positions'],
+                'spread_type': runes_data['spread_type'],
+                'spread_name': runes_data['spread_name'],
                 'type': 'runes',
                 'terminate': False
             })
@@ -175,8 +187,10 @@ def chat_stream():
     data = request.get_json(silent=True) or {}
     user_message = data.get('message', '').strip()
     session_id = data.get('session_id', 'default')
-    spread_type = data.get('spread_type', '3-card')
+    spread_type = data.get('spread_type')
     explicit_mode = data.get('mode')
+    allow_reversals = data.get('allow_reversals', True)
+    include_wyrd = data.get('include_wyrd', False)
 
     # Exit check
     if user_message.lower() in ['quit', 'exit', 'bye']:
@@ -191,7 +205,7 @@ def chat_stream():
 
     # Prepare reading symbols & prompt
     if mode == 'tarot':
-        prep = oracle.prepare_tarot_reading(user_message, spread_type)
+        prep = oracle.prepare_tarot_reading(user_message, spread_type or '3-card')
         metadata = {
             'type': 'tarot',
             'cards': prep['cards'],
@@ -200,18 +214,26 @@ def chat_stream():
         }
         prompt = prep['prompt']
     elif mode == 'iching':
-        prep = oracle.prepare_iching_reading(user_message)
+        prep = oracle.prepare_iching_reading(user_input=user_message)
         metadata = {
             'type': 'iching',
             'hexagram': prep['hexagram']
         }
         prompt = prep['prompt']
     elif mode == 'runes':
-        prep = oracle.prepare_runes_reading(user_message)
+        rune_spread = spread_type if spread_type else 'norns'
+        prep = oracle.prepare_runes_reading(
+            user_message,
+            spread_type=rune_spread,
+            allow_reversals=allow_reversals,
+            include_wyrd=include_wyrd
+        )
         metadata = {
             'type': 'runes',
             'runes': prep['runes'],
-            'positions': prep['positions']
+            'positions': prep['positions'],
+            'spread_type': prep['spread_type'],
+            'spread_name': prep['spread_name']
         }
         prompt = prep['prompt']
     else:
