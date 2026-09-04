@@ -1066,33 +1066,19 @@
 
         .social-export-body {
             display: grid;
-            grid-template-columns: 340px 1fr;
+            grid-template-columns: 320px 1fr;
             overflow-y: auto;
             max-height: calc(90vh - 130px);
             background: var(--bg-primary);
         }
 
-        @media (max-width: 860px) {
-            .social-export-body {
-                grid-template-columns: 1fr;
-            }
-        }
-
         .social-export-sidebar {
-            padding: 20px 22px;
+            padding: 18px 20px;
             border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 16px;
             background: rgba(13, 10, 24, 0.4);
-        }
-
-        @media (max-width: 860px) {
-            .social-export-sidebar {
-                border-right: none;
-                border-bottom: 1px solid var(--border-color);
-                order: 2;
-            }
         }
 
         .social-control-section {
@@ -1101,36 +1087,38 @@
             gap: 4px;
         }
 
-        .quote-pills-list {
+        .quote-selector-tabs {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin: 4px 0 10px;
+            gap: 6px;
+            margin: 6px 0 10px;
         }
 
-        .quote-pill {
+        .quote-tab-btn {
+            flex: 1;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
-            padding: 8px 12px;
-            font-size: 12px;
-            line-height: 1.45;
+            padding: 8px 6px;
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
             color: var(--text-secondary);
             cursor: pointer;
-            text-align: left;
+            text-align: center;
             transition: all 0.2s;
         }
 
-        .quote-pill:hover {
+        .quote-tab-btn:hover {
             border-color: rgba(212, 175, 55, 0.5);
             color: var(--text-primary);
         }
 
-        .quote-pill.active {
-            background: rgba(212, 175, 55, 0.12);
+        .quote-tab-btn.active {
+            background: rgba(212, 175, 55, 0.15);
             border-color: var(--accent-gold);
             color: var(--accent-gold);
-            font-weight: 600;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
         }
 
         .social-quote-input {
@@ -1157,7 +1145,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            padding-top: 6px;
+            padding-top: 4px;
         }
 
         .social-primary-btn {
@@ -1168,7 +1156,7 @@
             border-radius: var(--radius-md);
             padding: 12px 16px;
             font-family: 'Cinzel', serif;
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 700;
             letter-spacing: 0.8px;
             cursor: pointer;
@@ -1223,8 +1211,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle at 50% 50%, rgba(26, 18, 50, 0.4) 0%, rgba(10, 8, 18, 0.9) 100%);
-            overflow-x: auto;
+            background: radial-gradient(circle at 50% 50%, rgba(20, 14, 38, 0.5) 0%, rgba(8, 6, 15, 0.95) 100%);
+            overflow: hidden;
+            min-height: 480px;
         }
 
         .social-card-viewport {
@@ -1233,13 +1222,13 @@
             justify-content: center;
         }
 
-        /* The Talisman Card Output Template */
+        /* The Substack-Style Divination Social Card */
         .social-talisman-card {
             position: relative;
-            background: #090714;
-            border: 1px solid rgba(212, 175, 55, 0.55);
-            border-radius: 14px;
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(140, 84, 255, 0.3);
+            background: #080612;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 0, 0, 0.8);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1250,28 +1239,15 @@
         }
 
         .social-talisman-card.format-story {
-            width: 360px;
-            height: 640px;
-            padding: 30px 22px 24px;
+            width: 290px;
+            height: 516px;
+            padding: 34px 22px 22px;
         }
 
         .social-talisman-card.format-post {
-            width: 440px;
-            height: 440px;
-            padding: 24px 20px 20px;
-        }
-
-        @media (max-width: 480px) {
-            .social-talisman-card.format-story {
-                width: 320px;
-                height: 568px;
-                padding: 24px 18px 20px;
-            }
-            .social-talisman-card.format-post {
-                width: 320px;
-                height: 320px;
-                padding: 18px 16px 16px;
-            }
+            width: 360px;
+            height: 360px;
+            padding: 28px 24px 20px;
         }
 
         /* Faded Reading Backdrop */
@@ -1289,9 +1265,9 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
-            opacity: 0.44;
-            filter: saturate(1.2) contrast(1.1) brightness(0.85);
-            transform: scale(1.06);
+            opacity: 0.52;
+            filter: saturate(1.25) contrast(1.15) brightness(0.92);
+            transform: scale(1.05);
             display: block;
         }
 
@@ -1299,35 +1275,12 @@
             position: absolute;
             inset: 0;
             background: 
-                radial-gradient(ellipse at 50% 50%, rgba(14, 11, 28, 0.4) 0%, rgba(9, 7, 18, 0.78) 58%, rgba(5, 4, 12, 0.95) 100%),
-                linear-gradient(to bottom, rgba(8, 6, 16, 0.82) 0%, transparent 20%, transparent 80%, rgba(8, 6, 16, 0.9) 100%);
+                radial-gradient(ellipse at 50% 50%, rgba(8, 6, 16, 0.3) 0%, rgba(6, 4, 12, 0.72) 65%, rgba(4, 3, 8, 0.94) 100%),
+                linear-gradient(to bottom, rgba(6, 4, 12, 0.75) 0%, rgba(6, 4, 12, 0.3) 25%, rgba(6, 4, 12, 0.3) 75%, rgba(4, 3, 8, 0.88) 100%);
             pointer-events: none;
         }
 
-        .talisman-border-frame {
-            position: absolute;
-            inset: 9px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 8px;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        .talisman-corner {
-            position: absolute;
-            font-size: 11px;
-            color: var(--accent-gold);
-            opacity: 0.9;
-            pointer-events: none;
-            line-height: 1;
-            z-index: 2;
-        }
-        .c-tl { top: 5px; left: 5px; }
-        .c-tr { top: 5px; right: 5px; }
-        .c-bl { bottom: 5px; left: 5px; }
-        .c-br { bottom: 5px; right: 5px; }
-
-        /* Talisman Header */
+        /* Top: Specific Reading Spread Type */
         .talisman-header {
             width: 100%;
             text-align: center;
@@ -1335,155 +1288,130 @@
             z-index: 3;
         }
 
-        .talisman-badge {
-            font-family: 'Cinzel', serif;
+        .talisman-spread-type {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Cinzel', sans-serif;
             font-size: 10.5px;
-            font-weight: 700;
-            letter-spacing: 2.2px;
+            font-weight: 600;
+            letter-spacing: 2.8px;
             text-transform: uppercase;
-            color: var(--accent-gold);
-            text-shadow: 0 0 12px rgba(212, 175, 55, 0.5), 0 2px 4px rgba(0,0,0,0.8);
+            color: rgba(255, 255, 255, 0.65);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
         }
 
-        .talisman-question {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 15px;
-            color: #f1edfc;
-            margin-top: 5px;
-            line-height: 1.38;
-            max-width: 92%;
-            margin-left: auto;
-            margin-right: auto;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        /* Center Overlaid Prophecy Callout */
-        .talisman-prophecy-center {
+        /* Center Overlaid Prophecy Quote (Direct on image, Substack style) */
+        .talisman-quote-container {
             width: 100%;
             flex: 1;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             position: relative;
             z-index: 3;
             margin: 12px 0;
             min-height: 0;
-        }
-
-        .talisman-quote-card {
-            width: 100%;
-            max-width: 94%;
-            background: linear-gradient(145deg, rgba(16, 12, 30, 0.88) 0%, rgba(9, 7, 18, 0.92) 100%);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(212, 175, 55, 0.42);
-            border-radius: 12px;
-            padding: 22px 20px;
-            text-align: center;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 30px rgba(212, 175, 55, 0.18);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            box-sizing: border-box;
-        }
-
-        .format-post .talisman-quote-card {
-            padding: 16px 18px;
-            gap: 8px;
-        }
-
-        .talisman-quote-ornament {
-            font-size: 12px;
-            letter-spacing: 4px;
-            color: var(--accent-gold);
-            text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
-            line-height: 1;
+            padding: 0 6px;
         }
 
         .talisman-quote-text {
-            font-family: 'Cinzel', serif;
-            font-size: 14.5px;
-            font-weight: 600;
-            line-height: 1.55;
+            font-family: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.52;
             color: #ffffff;
-            letter-spacing: 0.4px;
+            letter-spacing: 0.3px;
+            text-align: center;
             margin: 0;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
+            text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 0 3px rgba(0, 0, 0, 0.9);
             display: -webkit-box;
-            -webkit-line-clamp: 6;
+            -webkit-line-clamp: 7;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
         .format-post .talisman-quote-text {
-            font-size: 13px;
-            line-height: 1.42;
+            font-size: 15px;
+            line-height: 1.45;
             -webkit-line-clamp: 5;
         }
 
-        .talisman-quote-author {
+        .talisman-quote-attribution {
             font-family: 'Cinzel', serif;
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 2px;
+            font-size: 9.5px;
+            font-weight: 600;
+            letter-spacing: 2.2px;
             text-transform: uppercase;
-            color: var(--accent-gold);
-            opacity: 0.85;
+            color: rgba(255, 255, 255, 0.68);
+            margin-top: 14px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
         }
 
-        /* Talisman Footer Watermark */
+        /* Bottom Footer Watermark (Light, no bold, no gold) */
         .talisman-footer {
             width: 100%;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            border-top: 1px solid rgba(212, 175, 55, 0.25);
-            padding-top: 8px;
             position: relative;
             z-index: 3;
-        }
-
-        .talisman-brand {
-            font-family: 'Cinzel', serif;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--accent-gold);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
-        }
-
-        .talisman-brand-star {
-            font-size: 9px;
-            color: var(--accent-gold);
-        }
-
-        .talisman-brand-dot {
-            opacity: 0.6;
+            padding-bottom: 2px;
         }
 
         .talisman-brand-domain {
-            color: #ffffff;
-            font-weight: 700;
-            letter-spacing: 1.5px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+            font-size: 11px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.52);
+            text-transform: lowercase;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
         }
 
-        .talisman-subbrand {
-            font-size: 8.5px;
-            letter-spacing: 1.4px;
-            color: rgba(255, 255, 255, 0.6);
-            text-transform: uppercase;
+        @media (max-width: 800px) {
+            .social-export-body {
+                display: flex;
+                flex-direction: column;
+            }
+            .social-preview-wrapper {
+                order: 1;
+                padding: 14px 10px 10px;
+                min-height: 0;
+            }
+            .social-export-sidebar {
+                order: 2;
+                border-right: none;
+                border-top: 1px solid var(--border-color);
+                padding: 14px 16px 20px;
+            }
+            .social-talisman-card.format-story {
+                width: 170px;
+                height: 302px;
+                padding: 18px 12px 12px;
+            }
+            .social-talisman-card.format-post {
+                width: 220px;
+                height: 220px;
+                padding: 16px 14px 12px;
+            }
+            .social-talisman-card.format-story .talisman-quote-text {
+                font-size: 11px;
+                line-height: 1.45;
+                -webkit-line-clamp: 6;
+            }
+            .social-talisman-card.format-post .talisman-quote-text {
+                font-size: 11.5px;
+                line-height: 1.4;
+                -webkit-line-clamp: 5;
+            }
+            .social-talisman-card .talisman-spread-type {
+                font-size: 8px;
+                letter-spacing: 1.5px;
+            }
+            .social-talisman-card .talisman-quote-attribution {
+                font-size: 7.5px;
+                margin-top: 8px;
+            }
+            .social-talisman-card .talisman-brand-domain {
+                font-size: 9px;
+            }
         }
 
         .quantum-info-card {
@@ -4658,18 +4586,18 @@
                 <!-- Left Sidebar: Controls & Quote Chooser -->
                 <div class="social-export-sidebar">
                     <div class="social-control-section">
-                        <label class="social-control-label" for="socialQuoteInput">Featured Prophecy Highlight:</label>
-                        <p class="social-control-hint">Select a synthesized takeaway or customize the bold text on the talisman:</p>
-                        <div class="quote-pills-list" id="quotePillsList">
-                            <!-- Dynamically populated with candidate quotes -->
+                        <label class="social-control-label">Quote Selection:</label>
+                        <p class="social-control-hint">Tap an oracle revelation or customize the text:</p>
+                        <div class="quote-selector-tabs" id="quoteSelectorTabs">
+                            <!-- Populated with Quote 1, Quote 2, Quote 3 tabs -->
                         </div>
-                        <textarea id="socialQuoteInput" class="social-quote-input" rows="3" placeholder="Enter the bold prophecy quote..." oninput="updateSocialPreviewQuote()"></textarea>
+                        <textarea id="socialQuoteInput" class="social-quote-input" rows="3" placeholder="Enter quote text..." oninput="updateSocialPreviewQuote()"></textarea>
                     </div>
 
                     <div class="social-export-actions-panel">
                         <button type="button" class="social-primary-btn" id="socialNativeShareBtn" onclick="triggerSocialShare('share')">
                             <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                            <span>✦ Share to Stories / Socials</span>
+                            <span>Share to Stories / Socials</span>
                         </button>
                         <button type="button" class="social-secondary-btn" onclick="triggerSocialShare('download')">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -4689,40 +4617,22 @@
                                 <div class="talisman-reading-vignette"></div>
                             </div>
 
-                            <!-- Border & Filigree Corners -->
-                            <div class="talisman-border-frame"></div>
-                            <div class="talisman-corner c-tl">✦</div>
-                            <div class="talisman-corner c-tr">✦</div>
-                            <div class="talisman-corner c-bl">✦</div>
-                            <div class="talisman-corner c-br">✦</div>
-
-                            <!-- Top Header -->
+                            <!-- Top Header: Specific Spread Type -->
                             <div class="talisman-header">
-                                <div class="talisman-badge" id="talismanBadge">✦ SACRED ELDER FUTHARK RUNES ✦</div>
-                                <div class="talisman-question" id="talismanQuestion">“What energies are shaping my career, calling, and life purpose?”</div>
+                                <div class="talisman-spread-type" id="talismanSpreadType">CELTIC CROSS TAROT</div>
                             </div>
 
-                            <!-- Center Overlaid Prophecy Callout -->
-                            <div class="talisman-prophecy-center">
-                                <div class="talisman-quote-card">
-                                    <div class="talisman-quote-ornament">✦ ❖ ✦</div>
-                                    <blockquote class="talisman-quote-text" id="talismanQuoteText">
-                                        You are being commanded to strike with the truth, clear the board of false allegiances, and invite the wild winds of change to strip away everything extraneous.
-                                    </blockquote>
-                                    <div class="talisman-quote-author">THE ORACLE’S REVELATION</div>
-                                </div>
+                            <!-- Center: Overlaid Prophecy Quote (Substack style) -->
+                            <div class="talisman-quote-container">
+                                <blockquote class="talisman-quote-text" id="talismanQuoteText">
+                                    You are being commanded to strike with the truth, clear the board of false allegiances, and invite the wild winds of change to strip away everything extraneous.
+                                </blockquote>
+                                <div class="talisman-quote-attribution">— The Quantum Oracle</div>
                             </div>
 
-                            <!-- Bottom Watermark -->
+                            <!-- Bottom: Clean, unbolded domain watermark -->
                             <div class="talisman-footer">
-                                <div class="talisman-brand">
-                                    <span class="talisman-brand-star">✦</span>
-                                    <span class="talisman-brand-title">THE QUANTUM ORACLE</span>
-                                    <span class="talisman-brand-dot">·</span>
-                                    <span class="talisman-brand-domain">qoracle.com</span>
-                                    <span class="talisman-brand-star">✦</span>
-                                </div>
-                                <div class="talisman-subbrand">Genuine Quantum Entropy Verified</div>
+                                <span class="talisman-brand-domain">qoracle.com</span>
                             </div>
                         </div>
                     </div>
@@ -6795,11 +6705,44 @@
             }
         }
 
+        function getReadingSpreadTitle(tradition, data) {
+            const trad = (data && data.type) || tradition || currentTradition || 'tarot';
+            if (trad === 'tarot') {
+                const spread = (data && data.spread_type) || currentSpreadType || '3-card';
+                const map = {
+                    'celtic': 'Celtic Cross Tarot',
+                    '3-card': 'Three-Card Tarot',
+                    '5-card': 'Five-Card Cross Tarot',
+                    'yes-no': 'Single Arcanum Guidance'
+                };
+                return (map[spread] || 'Tarot Reading').toUpperCase();
+            } else if (trad === 'runes') {
+                if (data && data.spread_name) return data.spread_name.toUpperCase();
+                const spread = (data && data.spread_type) || currentSpreadType || 'norns';
+                const map = {
+                    'norns': 'Three Norns Runic Spread',
+                    'single': "Odin's Single Rune Cast",
+                    'five-cross': 'Five-Rune Wyrd Cross',
+                    'thor-hammer': "Thor's Hammer Runic Cast",
+                    'nine-worlds': 'Nine Worlds of Yggdrasil'
+                };
+                return (map[spread] || 'Elder Futhark Runes').toUpperCase();
+            } else if (trad === 'iching') {
+                if (data && data.hexagram && data.hexagram.name) {
+                    return `Hexagram ${data.hexagram.number || ''}: ${data.hexagram.name}`.toUpperCase();
+                }
+                return 'The I Ching · Book of Changes'.toUpperCase();
+            } else if (trad === 'number' || trad === 'oracle') {
+                return 'Quantum Entropic Resonance'.toUpperCase();
+            }
+            return 'Quantum Divination'.toUpperCase();
+        }
+
         function selectQuotePill(index) {
             activeQuoteIndex = index;
-            const pills = document.querySelectorAll('.quote-pill');
-            pills.forEach((p, idx) => {
-                p.classList.toggle('active', idx === index);
+            const tabs = document.querySelectorAll('.quote-tab-btn');
+            tabs.forEach((t, idx) => {
+                t.classList.toggle('active', idx === index);
             });
             const quoteInput = document.getElementById('socialQuoteInput');
             if (socialCandidateQuotes[index]) {
@@ -6812,7 +6755,8 @@
             const quoteInput = document.getElementById('socialQuoteInput');
             const previewQuote = document.getElementById('talismanQuoteText');
             if (quoteInput && previewQuote) {
-                previewQuote.textContent = quoteInput.value.trim() || 'Genuine quantum entropy channeled through the Oracle.';
+                const raw = quoteInput.value.trim() || 'The Oracle channels genuine quantum vacuum indeterminacy to illuminate your present horizon.';
+                previewQuote.textContent = raw.replace(/^["“]|["”]$/g, '');
             }
         }
 
@@ -6845,24 +6789,25 @@
                 }
             }
 
-            // 2. Gather current inquiry and response text
-            const question = (seekerInquiryDisplay.textContent || (userInquiry && userInquiry.value) || 'Consultation with the Quantum Oracle').replace(/^"|"$/g, '').trim();
+            // 2. Gather current response text
             const responseText = (oracleStreamText && oracleStreamText.innerText) || '';
 
             // 3. Extract candidate quotes
             socialCandidateQuotes = extractCandidateQuotes(responseText);
             activeQuoteIndex = 0;
 
-            // 4. Render quote pills
-            const pillsContainer = document.getElementById('quotePillsList');
-            if (pillsContainer) {
-                pillsContainer.innerHTML = '';
+            // 4. Render quote tabs
+            const tabsContainer = document.getElementById('quoteSelectorTabs');
+            if (tabsContainer) {
+                tabsContainer.innerHTML = '';
                 socialCandidateQuotes.forEach((q, idx) => {
-                    const pill = document.createElement('div');
-                    pill.className = `quote-pill ${idx === 0 ? 'active' : ''}`;
-                    pill.textContent = `“${q}”`;
-                    pill.onclick = () => selectQuotePill(idx);
-                    pillsContainer.appendChild(pill);
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = `quote-tab-btn ${idx === 0 ? 'active' : ''}`;
+                    btn.textContent = `Quote ${idx + 1}`;
+                    btn.title = q;
+                    btn.onclick = () => selectQuotePill(idx);
+                    tabsContainer.appendChild(btn);
                 });
             }
 
@@ -6873,22 +6818,11 @@
             }
             updateSocialPreviewQuote();
 
-            // 6. Set badge & question on card
-            const badgeMap = {
-                tarot: '✦ HERMETIC TAROT ARCANA ✦',
-                runes: '✦ SACRED ELDER FUTHARK RUNES ✦',
-                iching: '✦ THE I CHING · BOOK OF CHANGES ✦',
-                number: '✦ QUANTUM ENTROPIC RESONANCE ✦'
-            };
-            const tradition = (currentReadingData && currentReadingData.type) || currentTradition || 'tarot';
-            const badge = document.getElementById('talismanBadge');
-            if (badge) {
-                badge.textContent = badgeMap[tradition] || '✦ THE QUANTUM ORACLE ✦';
-            }
-
-            const talismanQuestion = document.getElementById('talismanQuestion');
-            if (talismanQuestion) {
-                talismanQuestion.textContent = `“${question}”`;
+            // 6. Set specific spread type on card
+            const spreadTitle = getReadingSpreadTitle(currentTradition, currentReadingData);
+            const spreadTypeEl = document.getElementById('talismanSpreadType');
+            if (spreadTypeEl) {
+                spreadTypeEl.textContent = spreadTitle;
             }
 
             // Default to Story format
@@ -6919,7 +6853,6 @@
             sounds.cardFlip();
 
             const format = currentSocialFormat;
-            const scale = format === 'story' ? 3 : 2.45;
 
             try {
                 const readingImg = document.getElementById('talismanReadingImg');
@@ -6927,8 +6860,12 @@
                     await readingImg.decode().catch(() => {});
                 }
 
+                // Compute exact scale to always export crisp 1080px wide image
+                const targetWidth = 1080;
+                const scale = targetWidth / cardEl.offsetWidth;
+
                 const canvas = await html2canvas(cardEl, {
-                    backgroundColor: '#0c0a17',
+                    backgroundColor: '#080612',
                     scale: scale,
                     useCORS: true,
                     logging: false
