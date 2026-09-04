@@ -21,11 +21,13 @@ For I Ching, interpret the hexagrams and changing lines with wisdom from the anc
 For rune castings, interpret the Elder Futhark symbols with knowledge of Norse tradition and fate (wyrd).
 For quantum number readings, interpret the provided quantum number through numerological, astrological, and cosmic symbolism.
 
-Formatting Guidelines:
-- Begin by addressing the seeker and acknowledging their drawn symbols (cards, hexagram, runes, or quantum number).
-- Weave your divination like a wise, ancient oracle: poetic, mysterious, evocative, yet empowering and grounded in practical wisdom.
-- Use clear markdown formatting (bolding, italics, section headers, bullet points) so the reading is beautiful and easy to read.
-- For synthesis, summaries, or verdicts, avoid raw markdown tables as narrative prose gets cramped in narrow grid columns; instead, present card-by-card takeaways and overarching syntheses using elegant headings, bullet points (such as ✦), bold card titles, and flowing prose.
+Crucial Presentation Guidelines:
+- The seeker is ALREADY viewing the physical cards, hexagrams, or runic stones beautifully arranged in their sacred geometric pattern on their visual altar.
+- NEVER print a mechanical list, itemized inventory, bulleted recap, or raw text summary of the drawn symbols at the beginning or anywhere in your response. Doing so clutters the divination.
+- Begin IMMEDIATELY with an evocative address to the seeker and dive straight into the poetic narrative divination.
+- Weave the drawn symbols and their positions organically into your prose, using elegant headers (e.g. `### ✦ The Well of Urðr: Roots of Becoming` or `### ✦ Asgard: The Divine Calling`) and bold highlights rather than a raw text listing of the cast.
+- Use clear markdown formatting (bolding, italics, section headers, bullet points for key takeaways) so the reading is beautiful, poetic, and empowering.
+- For synthesis, summaries, or verdicts, avoid raw markdown tables as narrative prose gets cramped in narrow grid columns; instead, present card-by-card takeaways and overarching syntheses using elegant headings, bullet points (such as ✦), bold titles, and flowing prose.
 """
 
 
@@ -119,13 +121,13 @@ class GeminiOracle:
         positions = self.deck.get_spread_positions(spread_type)
 
         if spread_type == 'yes-no':
-            prompt = f"The seeker drew the card: {spread[0]}. Using this card, provide a clear Yes or No answer to: '{user_input}'. Explain your reasoning based on the card's symbolism."
+            prompt = f"The seeker drew the card: {spread[0]}. Using this card, provide a clear Yes or No answer to: '{user_input}'. Explain your reasoning based on the card's symbolism. DO NOT output a mechanical recap or bulleted inventory of the card at the beginning; dive directly into your answer."
         elif spread_type == 'celtic':
             drawn_str = ', '.join([f"{pos}: {card}" for pos, card in zip(positions, spread)])
-            prompt = f"The seeker has drawn a Celtic Cross spread: {drawn_str}. Provide a comprehensive divination answering their question: '{user_input}'."
+            prompt = f"The seeker has drawn an authentic Celtic Cross spread: {drawn_str}. Provide a comprehensive divination answering their question: '{user_input}'. CRITICAL: DO NOT output an inventory list, bulleted recap, or text enumeration of the cards at the beginning of your reading, as the seeker already sees all cards visually arranged in the Celtic Cross pattern on their screen. Dive immediately into your poetic, insightful narrative interpretation."
         else:
             drawn_str = ', '.join([f"{pos}: {card}" for pos, card in zip(positions, spread)])
-            prompt = f"The seeker has drawn the cards: {drawn_str}. Provide a profound reading answering their request: '{user_input}'."
+            prompt = f"The seeker has drawn the cards: {drawn_str}. Provide a profound reading answering their request: '{user_input}'. CRITICAL: DO NOT output an inventory list, bulleted recap, or text enumeration of the cards at the beginning of your reading, as the seeker already sees the cards visually displayed above. Dive immediately into your poetic, insightful narrative interpretation."
 
         return {
             'cards': card_data,
@@ -268,7 +270,8 @@ Drawn Sacred Runes:
 Seeker's Inquiry: '{user_input}'
 
 Divination Guidelines:
-- Address the seeker with profound, poetic Norse wisdom, invoking the concepts of örlög (cosmic law) and wyrd (the web of fate).
+- CRITICAL: DO NOT output an inventory list, bulleted recap, or text enumeration of the drawn runes at the beginning of your reading. The seeker already sees the physical stones cast in their exact geometric layout on the altar cloth above.
+- Begin immediately with your evocative, poetic address and flow directly into the narrative divination, addressing the realms/positions organically in your prose.
 - If any runes are marked [Merkstave (Reversed)], do NOT interpret them as generic evil omens; interpret them with psychological and spiritual depth as blocked energy, internal friction, warnings of excess, or shadow aspects that require conscious awareness.
 - Symmetrical runes (such as Gebo, Isa, Hagalaz, Jera, Sowilo, Dagaz) always remain upright and represent unalterable cosmic principles.
 - Offer actionable, courageous counsel fitting for someone walking their path with honor."""
