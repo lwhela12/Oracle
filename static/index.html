@@ -982,7 +982,622 @@
             box-shadow: 0 0 8px #4ade80;
             animation: livePulse 2s infinite ease-in-out;
             display: inline-block;
-            flex-shrink: 0;
+        /* Social Share Card Generator & Talisman Export */
+        .social-export-dialog {
+            border: none;
+            background: transparent;
+            padding: 0;
+            max-width: 960px;
+            width: 95vw;
+            margin: auto;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.9), 0 0 40px rgba(212, 175, 55, 0.3);
+            outline: none;
+        }
+
+        .social-export-container {
+            background: var(--bg-primary);
+            border: 1px solid var(--accent-gold);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: 90vh;
+        }
+
+        .social-export-toolbar {
+            padding: 12px 24px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .social-control-label {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+        }
+
+        .social-control-hint {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            margin: 3px 0 8px;
+            line-height: 1.4;
+        }
+
+        .format-toggle-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .format-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            color: var(--text-muted);
+            font-family: 'Cinzel', serif;
+            font-size: 11.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .format-btn.active {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        .social-export-body {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            overflow-y: auto;
+            max-height: calc(90vh - 130px);
+            background: var(--bg-primary);
+        }
+
+        @media (max-width: 860px) {
+            .social-export-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .social-export-sidebar {
+            padding: 20px 22px;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            background: rgba(13, 10, 24, 0.4);
+        }
+
+        @media (max-width: 860px) {
+            .social-export-sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                order: 2;
+            }
+        }
+
+        .social-control-section {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .quote-pills-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 4px 0 10px;
+        }
+
+        .quote-pill {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            font-size: 12px;
+            line-height: 1.45;
+            color: var(--text-secondary);
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .quote-pill:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+            color: var(--text-primary);
+        }
+
+        .quote-pill.active {
+            background: rgba(212, 175, 55, 0.12);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        .social-quote-input {
+            width: 100%;
+            box-sizing: border-box;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            padding: 10px;
+            font-family: inherit;
+            font-size: 13px;
+            line-height: 1.45;
+            resize: vertical;
+        }
+
+        .social-quote-input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.25);
+        }
+
+        .social-export-actions-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-top: 6px;
+        }
+
+        .social-primary-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #d4af37 0%, #aa8420 100%);
+            color: #0b0914;
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            font-family: 'Cinzel', serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35);
+            transition: all 0.2s;
+        }
+
+        .social-primary-btn:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .social-secondary-btn {
+            width: 100%;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 10px 16px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .social-secondary-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .social-share-feedback {
+            display: none;
+            font-size: 12.5px;
+            color: var(--accent-gold);
+            text-align: center;
+            padding: 4px 0;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .social-preview-wrapper {
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 50% 50%, rgba(26, 18, 50, 0.4) 0%, rgba(10, 8, 18, 0.9) 100%);
+            overflow-x: auto;
+        }
+
+        .social-card-viewport {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* The Talisman Card Output Template */
+        .social-talisman-card {
+            position: relative;
+            background: linear-gradient(155deg, #0e0b1c 0%, #1a1433 50%, #0a0814 100%);
+            border: 1px solid rgba(212, 175, 55, 0.55);
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px rgba(140, 84, 255, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            overflow: hidden;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        .social-talisman-card.format-story {
+            width: 360px;
+            height: 640px;
+            padding: 28px 22px 22px;
+        }
+
+        .social-talisman-card.format-post {
+            width: 440px;
+            height: 440px;
+            padding: 22px 20px 18px;
+        }
+
+        @media (max-width: 480px) {
+            .social-talisman-card.format-story {
+                width: 320px;
+                height: 568px;
+                padding: 22px 16px 18px;
+            }
+            .social-talisman-card.format-post {
+                width: 320px;
+                height: 320px;
+                padding: 16px 14px 14px;
+            }
+        }
+
+        .talisman-border-frame {
+            position: absolute;
+            inset: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.22);
+            border-radius: 6px;
+            pointer-events: none;
+        }
+
+        .talisman-corner {
+            position: absolute;
+            font-size: 10px;
+            color: var(--accent-gold);
+            opacity: 0.85;
+            pointer-events: none;
+            line-height: 1;
+        }
+        .c-tl { top: 5px; left: 5px; }
+        .c-tr { top: 5px; right: 5px; }
+        .c-bl { bottom: 5px; left: 5px; }
+        .c-br { bottom: 5px; right: 5px; }
+
+        .talisman-bg-stars {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 15%, rgba(212, 175, 55, 0.12) 0%, transparent 60%),
+                        radial-gradient(circle at 50% 85%, rgba(140, 84, 255, 0.18) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .talisman-header {
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .talisman-badge {
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        }
+
+        .talisman-question {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 14.5px;
+            color: #dfdaf0;
+            margin-top: 3px;
+            line-height: 1.35;
+            max-width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .talisman-center-altar {
+            width: 100%;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            margin: 8px 0;
+            min-height: 0;
+        }
+
+        /* Tarot in Talisman */
+        .talisman-tarot-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+        .talisman-card-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            flex: 1;
+            max-width: 95px;
+        }
+        .format-post .talisman-card-box {
+            max-width: 82px;
+        }
+        .talisman-card-img-wrap {
+            width: 100%;
+            aspect-ratio: 7 / 12;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 10px rgba(212, 175, 55, 0.2);
+            background: #090812;
+        }
+        .talisman-card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .talisman-card-img-wrap.reversed img {
+            transform: rotate(180deg);
+        }
+        .talisman-card-lbl {
+            font-size: 10px;
+            font-family: 'Cinzel', serif;
+            color: #fff;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+        .talisman-card-pos {
+            font-size: 9px;
+            color: var(--accent-gold);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        /* Runes in Talisman */
+        .talisman-rune-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+        .talisman-rune-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .talisman-rune-stone {
+            width: 58px;
+            height: 74px;
+            border-radius: 12px 14px 16px 12px;
+            background: linear-gradient(145deg, #2b2342 0%, #171324 100%);
+            border: 1px solid rgba(212, 175, 55, 0.6);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), 0 0 12px rgba(212, 175, 55, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .talisman-rune-stone.reversed {
+            transform: rotate(180deg);
+        }
+        .talisman-rune-glyph {
+            font-size: 32px;
+            color: #ffd875;
+            text-shadow: 0 0 12px rgba(255, 216, 117, 0.85);
+            line-height: 1;
+        }
+        .talisman-rune-name {
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            color: #fff;
+            font-weight: 600;
+        }
+        .talisman-rune-pos {
+            font-size: 8.5px;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* I Ching in Talisman */
+        .talisman-iching-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-align: center;
+        }
+        .talisman-iching-title {
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+        .talisman-iching-sub {
+            font-size: 11px;
+            color: var(--accent-gold);
+            letter-spacing: 0.8px;
+        }
+        .talisman-hex-lines-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            width: 90px;
+            margin: 4px 0;
+        }
+        .talisman-hex-line {
+            height: 7px;
+            border-radius: 3px;
+        }
+        .talisman-hex-line.yang {
+            background: linear-gradient(90deg, #ffd875, #d4af37);
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+        }
+        .talisman-hex-line.yin {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .talisman-hex-line.yin span {
+            flex: 1;
+            height: 100%;
+            background: linear-gradient(90deg, #c084fc, #8c54ff);
+            box-shadow: 0 0 8px rgba(140, 84, 255, 0.5);
+            border-radius: 3px;
+        }
+
+        /* Numerology in Talisman */
+        .talisman-number-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .talisman-number-val {
+            font-family: 'Cinzel', serif;
+            font-size: 46px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-gold) 60%, var(--accent-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 16px rgba(212, 175, 55, 0.5));
+        }
+        .talisman-number-desc {
+            font-size: 11.5px;
+            color: var(--accent-gold);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* Prophecy Quote Wrap */
+        .talisman-prophecy-wrap {
+            width: 100%;
+            text-align: center;
+            padding: 12px 14px;
+            background: rgba(13, 10, 24, 0.65);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 8px;
+            position: relative;
+            margin-bottom: 6px;
+            backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+        .format-post .talisman-prophecy-wrap {
+            padding: 9px 12px;
+            margin-bottom: 4px;
+        }
+        .talisman-quote-text {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.45;
+            color: #ffffff;
+            letter-spacing: 0.3px;
+            margin: 0;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+        }
+        .format-post .talisman-quote-text {
+            font-size: 12px;
+            line-height: 1.35;
+        }
+
+        /* Talisman Footer Watermark */
+        .talisman-footer {
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            padding-top: 6px;
+            position: relative;
+            z-index: 2;
+        }
+        .talisman-brand {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .talisman-brand-star {
+            font-size: 9px;
+            color: var(--accent-gold);
+        }
+        .talisman-brand-dot {
+            opacity: 0.6;
+        }
+        .talisman-brand-domain {
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+        .talisman-subbrand {
+            font-size: 8.5px;
+            letter-spacing: 1.2px;
+            color: rgba(255, 255, 255, 0.55);
+            text-transform: uppercase;
         }
 
         .quantum-info-card {
@@ -3442,6 +4057,21 @@
             border-color: var(--accent-primary);
         }
 
+        .primary-export-btn {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(140, 84, 255, 0.22) 100%), var(--bg-card);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            font-weight: 600;
+            box-shadow: 0 0 14px rgba(212, 175, 55, 0.25);
+        }
+
+        .primary-export-btn:hover {
+            border-color: #fce79a;
+            color: #ffffff;
+            box-shadow: 0 0 22px rgba(212, 175, 55, 0.45);
+            transform: translateY(-1px);
+        }
+
         /* Thinking Indicator */
         .thinking {
             display: none;
@@ -3892,9 +4522,18 @@
 
                 <!-- Footer Tools -->
                 <div class="reading-footer-tools">
-                    <button class="tool-btn" onclick="exportActiveReading()"><span>✦ Save Image</span></button>
-                    <button class="tool-btn" onclick="shareActiveReading()"><span>✦ Share Reading</span></button>
-                    <button class="tool-btn" onclick="startNewConsultation()"><span>✦ New Inquiry</span></button>
+                    <button class="tool-btn primary-export-btn" onclick="openSocialExportModal()" title="Create aesthetic visual talisman for Instagram Stories, X, and feeds">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                        <span>✦ Share &amp; Export Card</span>
+                    </button>
+                    <button class="tool-btn" onclick="exportActiveReading()" title="Direct download of raw visual altar">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span>✦ Save Altar</span>
+                    </button>
+                    <button class="tool-btn" onclick="startNewConsultation()">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>
+                        <span>✦ New Inquiry</span>
+                    </button>
                 </div>
             </div>
         </section>
@@ -4089,6 +4728,110 @@
                 <button type="button" class="lore-select-btn" onclick="closeQuantumInfoModalAndConsult()">
                     <span>✦ Channel Quantum Entropy Now ✦</span>
                 </button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Social Share Card Generator Dialog -->
+    <dialog id="socialExportModal" class="lore-dialog social-export-dialog" aria-labelledby="socialExportTitle">
+        <div class="social-export-container">
+            <div class="lore-header">
+                <div class="lore-header-brand">
+                    <div class="lore-header-emblem">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--accent-gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                    </div>
+                    <div class="lore-header-meta">
+                        <div class="lore-header-tag">VISUAL TALISMAN &amp; SOCIAL EXPORT</div>
+                        <h2 class="lore-header-title" id="socialExportTitle">Share Reading Talisman</h2>
+                    </div>
+                </div>
+                <button type="button" class="lore-close-btn" onclick="closeSocialExportModal()" aria-label="Close share dialog">&times;</button>
+            </div>
+
+            <div class="social-export-toolbar">
+                <div class="format-toggle-group">
+                    <span class="social-control-label">Card Format:</span>
+                    <button type="button" class="format-btn active" id="formatBtnStory" onclick="setSocialFormat('story')">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"></rect></svg>
+                        <span>9:16 Story / Reel</span>
+                    </button>
+                    <button type="button" class="format-btn" id="formatBtnPost" onclick="setSocialFormat('post')">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>
+                        <span>1:1 Square Post</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="social-export-body">
+                <!-- Left Sidebar: Controls & Quote Chooser -->
+                <div class="social-export-sidebar">
+                    <div class="social-control-section">
+                        <label class="social-control-label" for="socialQuoteInput">Featured Prophecy Highlight:</label>
+                        <p class="social-control-hint">Select a synthesized takeaway or customize the bold text on the talisman:</p>
+                        <div class="quote-pills-list" id="quotePillsList">
+                            <!-- Dynamically populated with candidate quotes -->
+                        </div>
+                        <textarea id="socialQuoteInput" class="social-quote-input" rows="3" placeholder="Enter the bold prophecy quote..." oninput="updateSocialPreviewQuote()"></textarea>
+                    </div>
+
+                    <div class="social-export-actions-panel">
+                        <button type="button" class="social-primary-btn" id="socialNativeShareBtn" onclick="triggerSocialShare('share')">
+                            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                            <span>✦ Share to Stories / Socials</span>
+                        </button>
+                        <button type="button" class="social-secondary-btn" onclick="triggerSocialShare('download')">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            <span>Download High-Res PNG</span>
+                        </button>
+                        <div id="socialShareFeedback" class="social-share-feedback"></div>
+                    </div>
+                </div>
+
+                <!-- Right Viewport: Live Preview Canvas -->
+                <div class="social-preview-wrapper">
+                    <div class="social-card-viewport" id="socialCardViewport">
+                        <div class="social-talisman-card format-story" id="socialTalismanCard">
+                            <div class="talisman-bg-stars"></div>
+                            <div class="talisman-border-frame"></div>
+                            <div class="talisman-corner c-tl">✦</div>
+                            <div class="talisman-corner c-tr">✦</div>
+                            <div class="talisman-corner c-bl">✦</div>
+                            <div class="talisman-corner c-br">✦</div>
+
+                            <div class="talisman-header">
+                                <div class="talisman-badge" id="talismanBadge">✦ HERMETIC TAROT · THREE-CARD TRIAD ✦</div>
+                                <div class="talisman-question" id="talismanQuestion">“What guidance awaits my next step?”</div>
+                            </div>
+
+                            <div class="talisman-center-altar" id="talismanCenterAltar">
+                                <!-- Cards, Runes, or Hexagram rendered here -->
+                            </div>
+
+                            <div class="talisman-prophecy-wrap">
+                                <blockquote class="talisman-quote-text" id="talismanQuoteText">
+                                    The obstacle before you is not a barrier, but an incubation chamber for your highest wisdom.
+                                </blockquote>
+                            </div>
+
+                            <div class="talisman-footer">
+                                <div class="talisman-brand">
+                                    <span class="talisman-brand-star">✦</span>
+                                    <span class="talisman-brand-title">THE QUANTUM ORACLE</span>
+                                    <span class="talisman-brand-dot">·</span>
+                                    <span class="talisman-brand-domain">qoracle.com</span>
+                                    <span class="talisman-brand-star">✦</span>
+                                </div>
+                                <div class="talisman-subbrand">Genuine Quantum Entropy Verified</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </dialog>
@@ -6066,30 +6809,335 @@
             if (!isActive) renderHistoryDrawer();
         }
 
+        // ==========================================
+        // Social Share Card & Talisman Generator
+        // ==========================================
+        let currentSocialFormat = 'story'; // 'story' (9:16) or 'post' (1:1)
+        let socialCandidateQuotes = [];
+        let activeQuoteIndex = 0;
+
+        function downloadCanvas(canvas, filename) {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
         async function exportActiveReading() {
             const el = document.getElementById('visual-stage-card');
             if (!el) return;
             try {
                 const canvas = await html2canvas(el, { backgroundColor: '#12111a', scale: 2 });
-                const link = document.createElement('a');
-                link.download = 'oracle-reading.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
+                downloadCanvas(canvas, 'oracle-altar.png');
             } catch (e) {
                 alert('Could not generate image. Please take a screenshot instead.');
             }
         }
 
-        function shareActiveReading() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Quantum Oracle Divination',
-                    text: 'Check out my Quantum Oracle reading!',
-                    url: window.location.href
-                }).catch(() => {});
+        function extractCandidateQuotes(rawText) {
+            if (!rawText) {
+                return ["A meaningful coincidence between inner psyche and outer cosmos, liberated from mechanical causality."];
+            }
+
+            const candidates = [];
+
+            // 1. Look for bold markdown statements e.g. **The Core Omen: ...** or **...**
+            const boldMatches = rawText.match(/\*\*([^*]{25,180})\*\*/g);
+            if (boldMatches) {
+                boldMatches.forEach(m => {
+                    let clean = m.replace(/\*\*/g, '').replace(/^[A-Za-z\s]+:\s*/, '').trim();
+                    if (clean.length >= 25 && clean.length <= 180 && !candidates.includes(clean)) {
+                        candidates.push(clean);
+                    }
+                });
+            }
+
+            // 2. Look for synthesis sentences with evocative keywords
+            const sentences = rawText
+                .replace(/[#*`_>]/g, '')
+                .split(/(?<=[.?!])\s+/)
+                .map(s => s.trim())
+                .filter(s => s.length >= 35 && s.length <= 160 && !s.startsWith('-') && !s.startsWith('http'));
+
+            const keywordRegex = /(path|destiny|courage|omen|wisdom|transform|balance|inner|lesson|clarity|truth|horizon|guide|step|spirit|action|yield|illumination)/i;
+            for (let i = sentences.length - 1; i >= 0; i--) {
+                const s = sentences[i];
+                if (keywordRegex.test(s) && !candidates.includes(s)) {
+                    candidates.push(s);
+                    if (candidates.length >= 4) break;
+                }
+            }
+
+            // 3. Fallback clean sentences if few found
+            for (const s of sentences) {
+                if (candidates.length >= 3) break;
+                if (!candidates.includes(s) && s.length >= 30) {
+                    candidates.push(s);
+                }
+            }
+
+            if (candidates.length === 0) {
+                candidates.push("The Oracle channels genuine quantum vacuum indeterminacy to illuminate your present horizon.");
+            }
+
+            return candidates.slice(0, 3);
+        }
+
+        function setSocialFormat(format) {
+            currentSocialFormat = format;
+            const storyBtn = document.getElementById('formatBtnStory');
+            const postBtn = document.getElementById('formatBtnPost');
+            const card = document.getElementById('socialTalismanCard');
+
+            if (format === 'story') {
+                storyBtn.classList.add('active');
+                postBtn.classList.remove('active');
+                card.className = 'social-talisman-card format-story';
             } else {
-                navigator.clipboard.writeText(window.location.href);
-                alert('Link copied to clipboard!');
+                postBtn.classList.add('active');
+                storyBtn.classList.remove('active');
+                card.className = 'social-talisman-card format-post';
+            }
+        }
+
+        function selectQuotePill(index) {
+            activeQuoteIndex = index;
+            const pills = document.querySelectorAll('.quote-pill');
+            pills.forEach((p, idx) => {
+                p.classList.toggle('active', idx === index);
+            });
+            const quoteInput = document.getElementById('socialQuoteInput');
+            if (socialCandidateQuotes[index]) {
+                quoteInput.value = socialCandidateQuotes[index];
+                updateSocialPreviewQuote();
+            }
+        }
+
+        function updateSocialPreviewQuote() {
+            const quoteInput = document.getElementById('socialQuoteInput');
+            const previewQuote = document.getElementById('talismanQuoteText');
+            if (quoteInput && previewQuote) {
+                previewQuote.textContent = quoteInput.value.trim() || 'Genuine quantum entropy channeled through the Oracle.';
+            }
+        }
+
+        function renderTalismanAltar(metadata) {
+            const container = document.getElementById('talismanCenterAltar');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const tradition = (metadata && metadata.type) || currentTradition || 'tarot';
+
+            if (tradition === 'tarot' && metadata && metadata.cards) {
+                const row = document.createElement('div');
+                row.className = 'talisman-tarot-row';
+                const cardsToShow = metadata.cards.slice(0, 3);
+                cardsToShow.forEach((card, idx) => {
+                    const box = document.createElement('div');
+                    box.className = 'talisman-card-box';
+                    const slug = getCardSlug(card);
+                    const pos = (metadata.positions && metadata.positions[idx]) || `Card ${idx + 1}`;
+                    box.innerHTML = `
+                        <div class="talisman-card-img-wrap ${card.reversed ? 'reversed' : ''}">
+                            <img src="/static/cards/tarot/${slug}.webp" alt="${card.name}"
+                                 onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(145deg, #2b1f48, #110d22)';">
+                        </div>
+                        <div class="talisman-card-lbl">${card.name}</div>
+                        <div class="talisman-card-pos">${pos}</div>
+                    `;
+                    row.appendChild(box);
+                });
+                container.appendChild(row);
+            } else if (tradition === 'runes' && metadata && metadata.runes) {
+                const row = document.createElement('div');
+                row.className = 'talisman-rune-row';
+                const runesToShow = metadata.runes.slice(0, 3);
+                runesToShow.forEach((r, idx) => {
+                    const box = document.createElement('div');
+                    box.className = 'talisman-rune-box';
+                    const pos = (metadata.positions && metadata.positions[idx]) || `Stave ${idx + 1}`;
+                    box.innerHTML = `
+                        <div class="talisman-rune-stone ${r.reversed ? 'reversed' : ''}">
+                            <span class="talisman-rune-glyph">${r.rune || r.symbol || 'ᚠ'}</span>
+                        </div>
+                        <div class="talisman-rune-name">${r.name}</div>
+                        <div class="talisman-rune-pos">${pos}</div>
+                    `;
+                    row.appendChild(box);
+                });
+                container.appendChild(row);
+            } else if (tradition === 'iching' && metadata && metadata.hexagram) {
+                const hex = metadata.hexagram;
+                const box = document.createElement('div');
+                box.className = 'talisman-iching-box';
+                const lines = hex.lines || [7, 8, 7, 8, 7, 8];
+                const linesHtml = lines.map(lineVal => {
+                    const isYang = (lineVal === 7 || lineVal === 9);
+                    return isYang 
+                        ? '<div class="talisman-hex-line yang"></div>'
+                        : '<div class="talisman-hex-line yin"><span></span><span></span></div>';
+                }).reverse().join('');
+
+                box.innerHTML = `
+                    <div class="talisman-iching-title">${hex.name} · ${hex.chinese || ''}</div>
+                    <div class="talisman-hex-lines-wrap">${linesHtml}</div>
+                    <div class="talisman-iching-sub">Hexagram ${hex.number}: ${hex.meaning}</div>
+                `;
+                container.appendChild(box);
+            } else if (tradition === 'number' || (metadata && metadata.number)) {
+                const num = (metadata && metadata.number) || 777;
+                const box = document.createElement('div');
+                box.className = 'talisman-number-box';
+                box.innerHTML = `
+                    <div class="talisman-number-val">${num}</div>
+                    <div class="talisman-number-desc">Quantum Entropy Ground State</div>
+                `;
+                container.appendChild(box);
+            } else {
+                container.innerHTML = `
+                    <div style="font-size: 32px; color: var(--accent-gold); text-shadow: 0 0 16px rgba(212, 175, 55, 0.6);">✦ ✦ ✦</div>
+                `;
+            }
+        }
+
+        function openSocialExportModal() {
+            initAudio();
+            sounds.chime();
+
+            const dialog = document.getElementById('socialExportModal');
+            const feedback = document.getElementById('socialShareFeedback');
+            if (feedback) feedback.style.display = 'none';
+
+            // Gather current inquiry and response text
+            const question = (seekerInquiryDisplay.textContent || (userInquiry && userInquiry.value) || 'Consultation with the Quantum Oracle').replace(/^"|"$/g, '').trim();
+            const responseText = (oracleStreamText && oracleStreamText.innerText) || '';
+
+            // Extract candidate quotes
+            socialCandidateQuotes = extractCandidateQuotes(responseText);
+            activeQuoteIndex = 0;
+
+            // Render quote pills
+            const pillsContainer = document.getElementById('quotePillsList');
+            if (pillsContainer) {
+                pillsContainer.innerHTML = '';
+                socialCandidateQuotes.forEach((q, idx) => {
+                    const pill = document.createElement('div');
+                    pill.className = `quote-pill ${idx === 0 ? 'active' : ''}`;
+                    pill.textContent = `“${q}”`;
+                    pill.onclick = () => selectQuotePill(idx);
+                    pillsContainer.appendChild(pill);
+                });
+            }
+
+            // Populate textarea & preview
+            const quoteInput = document.getElementById('socialQuoteInput');
+            if (quoteInput) {
+                quoteInput.value = socialCandidateQuotes[0] || '';
+            }
+            updateSocialPreviewQuote();
+
+            // Set badge & question on card
+            const badgeMap = {
+                tarot: '✦ HERMETIC TAROT ARCANA ✦',
+                runes: '✦ SACRED ELDER FUTHARK RUNES ✦',
+                iching: '✦ THE I CHING · BOOK OF CHANGES ✦',
+                number: '✦ QUANTUM ENTROPIC RESONANCE ✦'
+            };
+            const tradition = (currentReadingData && currentReadingData.type) || currentTradition || 'tarot';
+            const badge = document.getElementById('talismanBadge');
+            if (badge) {
+                badge.textContent = badgeMap[tradition] || '✦ THE QUANTUM ORACLE ✦';
+            }
+
+            const talismanQuestion = document.getElementById('talismanQuestion');
+            if (talismanQuestion) {
+                talismanQuestion.textContent = `“${question}”`;
+            }
+
+            // Render Center Altar
+            renderTalismanAltar(currentReadingData);
+
+            // Default to Story format
+            setSocialFormat('story');
+
+            if (dialog && !dialog.open) {
+                dialog.showModal();
+            }
+        }
+
+        function closeSocialExportModal() {
+            const dialog = document.getElementById('socialExportModal');
+            if (dialog && dialog.open) {
+                dialog.close();
+            }
+        }
+
+        async function triggerSocialShare(mode) {
+            const cardEl = document.getElementById('socialTalismanCard');
+            const feedback = document.getElementById('socialShareFeedback');
+            if (!cardEl) return;
+
+            if (feedback) {
+                feedback.textContent = '✦ Weaving high-resolution talisman...';
+                feedback.style.display = 'block';
+            }
+
+            sounds.cardFlip();
+
+            const format = currentSocialFormat;
+            const scale = format === 'story' ? 3 : 2.45;
+
+            try {
+                const canvas = await html2canvas(cardEl, {
+                    backgroundColor: '#0c0a17',
+                    scale: scale,
+                    useCORS: true,
+                    logging: false
+                });
+
+                const filename = `quantum-oracle-${format}.png`;
+
+                if (mode === 'share') {
+                    if (navigator.canShare && canvas.toBlob) {
+                        canvas.toBlob(async (blob) => {
+                            if (!blob) {
+                                downloadCanvas(canvas, filename);
+                                if (feedback) feedback.textContent = '✦ Talisman downloaded!';
+                                return;
+                            }
+                            const file = new File([blob], filename, { type: 'image/png' });
+                            if (navigator.canShare({ files: [file] })) {
+                                try {
+                                    await navigator.share({
+                                        title: 'Quantum Oracle Divination',
+                                        text: `My divination reading from The Quantum Oracle: "${document.getElementById('socialQuoteInput').value.trim()}" — qoracle.com`,
+                                        files: [file]
+                                    });
+                                    if (feedback) feedback.textContent = '✦ Talisman shared!';
+                                } catch (err) {
+                                    if (err.name !== 'AbortError') {
+                                        downloadCanvas(canvas, filename);
+                                        if (feedback) feedback.textContent = '✦ Saved image to your device!';
+                                    } else {
+                                        if (feedback) feedback.textContent = '';
+                                    }
+                                }
+                            } else {
+                                downloadCanvas(canvas, filename);
+                                if (feedback) feedback.textContent = '✦ High-res PNG downloaded!';
+                            }
+                        }, 'image/png');
+                    } else {
+                        downloadCanvas(canvas, filename);
+                        if (feedback) feedback.textContent = '✦ High-res PNG downloaded!';
+                    }
+                } else {
+                    downloadCanvas(canvas, filename);
+                    if (feedback) feedback.textContent = '✦ High-res PNG downloaded!';
+                }
+            } catch (e) {
+                console.error(e);
+                if (feedback) feedback.textContent = 'Could not generate image. Please take a screenshot instead.';
             }
         }
 
@@ -6105,8 +7153,7 @@
                 portal.style.display = 'none';
                 readingStage.style.display = 'flex';
                 if (demoType === 'iching') {
-                    activeReadingBadge.textContent = '✦ I Ching Hexagram Consultation ✦';
-                    renderVisualStage({
+                    currentReadingData = {
                         type: 'iching',
                         hexagram: {
                             number: 38,
@@ -6131,12 +7178,13 @@
                                 lines: [7, 8, 8, 7, 8, 7]
                             }
                         }
-                    });
+                    };
+                    activeReadingBadge.textContent = '✦ I Ching Hexagram Consultation ✦';
+                    renderVisualStage(currentReadingData);
                     seekerInquiryDisplay.textContent = '"What guidance does the Book of Changes hold for navigating tension?"';
                     oracleStreamText.innerHTML = '<p>The Oracle reveals <strong>Hexagram 38: Opposition (睽)</strong> transforming into <strong>Hexagram 21: Biting Through (噬嗑)</strong>...</p>';
                 } else if (demoType === 'iching-steadfast') {
-                    activeReadingBadge.textContent = '✦ I Ching Hexagram Consultation ✦';
-                    renderVisualStage({
+                    currentReadingData = {
                         type: 'iching',
                         hexagram: {
                             number: 1,
@@ -6150,12 +7198,13 @@
                             changing_lines: [],
                             lines: [7, 7, 7, 7, 7, 7]
                         }
-                    });
+                    };
+                    activeReadingBadge.textContent = '✦ I Ching Hexagram Consultation ✦';
+                    renderVisualStage(currentReadingData);
                     seekerInquiryDisplay.textContent = '"What is the ultimate creative force of my inquiry?"';
                     oracleStreamText.innerHTML = '<p>The oracle reveals <strong>Hexagram 1: The Creative (乾)</strong> in steadfast, immutable form...</p>';
                 } else if (demoType === 'tarot') {
-                    activeReadingBadge.textContent = '✦ Sacred Tarot Consultation ✦';
-                    renderVisualStage({
+                    currentReadingData = {
                         type: 'tarot',
                         cards: [
                             { name: 'The Magician', suit: 'Major Arcana', number: 1 },
@@ -6164,20 +7213,23 @@
                         ],
                         positions: ['Past / Foundation', 'Present / Crossing', 'Future / Potential'],
                         spread_type: '3-card'
-                    });
+                    };
+                    activeReadingBadge.textContent = '✦ Sacred Tarot Consultation ✦';
+                    renderVisualStage(currentReadingData);
                     seekerInquiryDisplay.textContent = '"What energies surround my creative endeavors?"';
                     oracleStreamText.innerHTML = '<p>The cards lay before you upon the aged walnut altar...</p>';
                 } else if (demoType === 'runes') {
-                    activeReadingBadge.textContent = '✦ Elder Futhark Runic Ritual ✦';
-                    renderVisualStage({
+                    currentReadingData = {
                         type: 'runes',
                         runes: [
-                            { name: 'Ansuz', symbol: 'ᚨ', meaning: 'Divine Voice & Inspiration', keywords: 'Wisdom, Odin, Truth' },
-                            { name: 'Raidho', symbol: 'ᚱ', meaning: 'The Sacred Journey & Rhythm', keywords: 'Travel, Destiny, Alignment' },
-                            { name: 'Algiz', symbol: 'ᛉ', meaning: 'Sanctuary & Higher Protection', keywords: 'Shield, Elk, Divine Connection' }
+                            { name: 'Ansuz', rune: 'ᚨ', symbol: 'ᚨ', meaning: 'Divine Voice & Inspiration', keywords: 'Wisdom, Odin, Truth' },
+                            { name: 'Raidho', rune: 'ᚱ', symbol: 'ᚱ', meaning: 'The Sacred Journey & Rhythm', keywords: 'Travel, Destiny, Alignment' },
+                            { name: 'Algiz', rune: 'ᛉ', symbol: 'ᛉ', meaning: 'Sanctuary & Higher Protection', keywords: 'Shield, Elk, Divine Connection' }
                         ],
                         positions: ['Situation', 'Action', 'Outcome']
-                    });
+                    };
+                    activeReadingBadge.textContent = '✦ Elder Futhark Runic Ritual ✦';
+                    renderVisualStage(currentReadingData);
                     seekerInquiryDisplay.textContent = '"What do the ancient stones foresee on my journey?"';
                     oracleStreamText.innerHTML = '<p>The Elder Futhark runes clatter upon the sacred woven cloth...</p>';
                 }
