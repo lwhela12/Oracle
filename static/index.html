@@ -1069,13 +1069,9 @@
             gap: 14px;
             cursor: zoom-in;
             position: relative;
-            transition: transform 0.28s cubic-bezier(0.2, 0, 0.2, 1);
             user-select: none;
             z-index: 2;
-        }
-
-        .rune-stone-wrapper:hover {
-            transform: translateY(-8px) scale(1.06) !important;
+            perspective: 800px;
         }
 
         .rune-artifact-img {
@@ -1085,11 +1081,13 @@
             display: block;
             background: transparent !important;
             filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.85)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
-            transition: filter 0.28s ease;
+            transition: transform 0.12s ease-out, filter 0.28s ease;
+            transform-style: preserve-3d;
+            will-change: transform, filter;
         }
 
         .rune-stone-wrapper:hover .rune-artifact-img {
-            filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 24px rgba(229, 193, 88, 0.5));
+            filter: drop-shadow(0 24px 32px rgba(0, 0, 0, 0.96)) drop-shadow(0 0 24px rgba(229, 193, 88, 0.5));
         }
 
         /* Physical Organic Pebble Fallback (Authentic Rounded River Stone - NO CARDS!) */
@@ -1107,7 +1105,9 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            transition: all 0.28s ease;
+            transition: transform 0.12s ease-out, box-shadow 0.28s ease;
+            transform-style: preserve-3d;
+            will-change: transform;
         }
 
         .rune-stone-wrapper:hover .rune-stone-pebble {
@@ -2383,6 +2383,32 @@
                     if (runeZoomNext) runeZoomNext.click();
                 }
             });
+
+            // 3D physical object inspection parallax in lightbox
+            const zoomContainer = runeZoomDialog.querySelector('.card-zoom-container');
+            const zoomImg = document.getElementById('zoomRuneImg');
+            const zoomPebble = document.getElementById('zoomRuneFallback');
+            if (zoomContainer) {
+                zoomContainer.addEventListener('mousemove', (e) => {
+                    const rect = zoomContainer.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width - 0.5;
+                    const y = (e.clientY - rect.top) / rect.height - 0.5;
+                    const rotX = (-y * 22).toFixed(2);
+                    const rotY = (x * 22).toFixed(2);
+                    const target = (zoomImg && zoomImg.style.display !== 'none') ? zoomImg : zoomPebble;
+                    if (target) {
+                        target.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.04) translateZ(20px)`;
+                    }
+                });
+                zoomContainer.addEventListener('mouseleave', () => {
+                    const target = (zoomImg && zoomImg.style.display !== 'none') ? zoomImg : zoomPebble;
+                    if (target) {
+                        target.style.transition = 'transform 0.4s ease';
+                        target.style.transform = '';
+                        setTimeout(() => { target.style.transition = ''; }, 400);
+                    }
+                });
+            }
         }
 
         // Renders properly centered visual cards (no bottom cutoff!)
@@ -2531,6 +2557,28 @@
                             <div class="rune-meaning-label">${rune.meaning}</div>
                         </div>
                     `;
+
+                    // 3D physical object parallax tilt on hover
+                    wrap.addEventListener('mousemove', (e) => {
+                        const rect = wrap.getBoundingClientRect();
+                        const x = (e.clientX - rect.left) / rect.width - 0.5;
+                        const y = (e.clientY - rect.top) / rect.height - 0.5;
+                        const rotX = (-y * 22).toFixed(2);
+                        const rotY = (x * 22).toFixed(2);
+                        const stoneEl = wrap.querySelector('.rune-artifact-img:not([style*="display: none"])') || wrap.querySelector('.rune-stone-pebble');
+                        if (stoneEl) {
+                            stoneEl.style.transform = `perspective(500px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.08, 1.08, 1.08) translateZ(14px)`;
+                        }
+                    });
+
+                    wrap.addEventListener('mouseleave', () => {
+                        const stoneEl = wrap.querySelector('.rune-artifact-img') || wrap.querySelector('.rune-stone-pebble');
+                        if (stoneEl) {
+                            stoneEl.style.transition = 'transform 0.35s ease';
+                            stoneEl.style.transform = '';
+                            setTimeout(() => { stoneEl.style.transition = ''; }, 350);
+                        }
+                    });
 
                     wrap.addEventListener('click', () => {
                         openRuneZoom(i);
