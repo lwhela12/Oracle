@@ -278,56 +278,483 @@
             color: var(--accent-primary);
         }
 
-        /* Tradition Selection Buttons */
-        .tradition-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-
-        @media (max-width: 650px) {
-            .tradition-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .tradition-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 14px 12px;
+        /* Step 1 Label Row with Lore Guide Trigger */
+        .step-label-row {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            transition: all 0.25s;
-            user-select: none;
-            color: var(--text-primary);
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
-        .tradition-btn:hover {
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 12px var(--border-glow);
+        .tradition-guide-trigger {
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            color: var(--accent-gold);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: all 0.22s ease;
+            text-transform: uppercase;
+        }
+
+        .tradition-guide-trigger:hover {
+            background: rgba(212, 175, 55, 0.18);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 14px rgba(212, 175, 55, 0.35);
             transform: translateY(-1px);
         }
 
-        .tradition-btn.active {
-            background: var(--accent-secondary);
-            border-color: var(--accent-primary);
-            color: #ffffff;
-            box-shadow: 0 0 16px rgba(140, 84, 255, 0.45);
+        /* Tradition Selection Grid & Luxury Cards */
+        .tradition-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
         }
 
-        .tradition-icon {
-            font-size: 26px;
+        @media (max-width: 960px) {
+            .tradition-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
         }
 
-        .tradition-name {
+        @media (max-width: 480px) {
+            .tradition-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+
+        .tradition-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 18px 16px 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+            text-align: left;
+        }
+
+        .tradition-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: transparent;
+            transition: background 0.3s ease;
+        }
+
+        .tradition-card:hover {
+            border-color: rgba(212, 175, 55, 0.55);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 16px rgba(212, 175, 55, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .tradition-card:hover::before {
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .tradition-card.active {
+            background: linear-gradient(165deg, rgba(140, 84, 255, 0.16) 0%, rgba(212, 175, 55, 0.08) 100%), var(--bg-card);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.35), 0 8px 28px rgba(0, 0, 0, 0.4);
+        }
+
+        .tradition-card.active::before {
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-gold), var(--accent-primary));
+        }
+
+        .tradition-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .tradition-emblem-wrap {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.16) 0%, rgba(140, 84, 255, 0.08) 70%, transparent 100%);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .tradition-card:hover .tradition-emblem-wrap,
+        .tradition-card.active .tradition-emblem-wrap {
+            transform: scale(1.06);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 14px rgba(212, 175, 55, 0.35);
+        }
+
+        .tradition-era-badge {
             font-family: 'Cinzel', serif;
-            font-size: 14px;
+            font-size: 9.5px;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.22);
+            border-radius: 12px;
+            padding: 2px 7px;
+            white-space: nowrap;
+        }
+
+        .tradition-card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tradition-title {
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
             font-weight: 700;
+            letter-spacing: 0.6px;
+            color: var(--accent-gold);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .tradition-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13px;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .tradition-desc {
+            font-size: 12px;
+            line-height: 1.45;
+            color: var(--text-muted);
+            margin-top: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .tradition-card-footer {
+            margin-top: 4px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .tradition-lore-btn {
+            background: transparent;
+            border: 1px solid rgba(212, 175, 55, 0.28);
+            border-radius: 14px;
+            padding: 3px 10px;
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s ease;
+        }
+
+        .tradition-lore-btn:hover {
+            background: rgba(212, 175, 55, 0.16);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Tradition Lore & History Modal Dialog */
+        .lore-dialog {
+            border: none;
+            background: transparent;
+            padding: 0;
+            max-width: 780px;
+            width: 92vw;
+            margin: auto;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.85), 0 0 40px rgba(140, 84, 255, 0.25);
+            outline: none;
+        }
+
+        .lore-dialog::backdrop {
+            background: rgba(6, 4, 12, 0.82);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .lore-container {
+            background: var(--bg-primary);
+            border: 1px solid var(--accent-gold);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: 88vh;
+        }
+
+        .lore-header {
+            padding: 18px 24px;
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.1) 0%, transparent 100%), var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .lore-header-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .lore-header-emblem {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 75%);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .lore-header-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .lore-header-tag {
+            font-family: 'Cinzel', serif;
+            font-size: 10.5px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            opacity: 0.85;
+        }
+
+        .lore-header-title {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+            letter-spacing: 0.6px;
+        }
+
+        .lore-close-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            color: var(--text-secondary);
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lore-close-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            background: rgba(212, 175, 55, 0.12);
+        }
+
+        .lore-tabs {
+            display: flex;
+            gap: 6px;
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .lore-tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 18px;
+            padding: 5px 14px;
+            font-family: 'Cinzel', serif;
+            font-size: 11.5px;
             letter-spacing: 0.5px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .lore-tab-btn:hover {
+            color: var(--text-primary);
+            border-color: rgba(212, 175, 55, 0.25);
+        }
+
+        .lore-tab-btn.active {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        .lore-body {
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .lore-summary-quote {
+            background: rgba(212, 175, 55, 0.05);
+            border-left: 3px solid var(--accent-gold);
+            padding: 12px 18px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            font-style: italic;
+            color: var(--accent-gold);
+            line-height: 1.5;
+        }
+
+        .lore-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .lore-section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            padding-bottom: 5px;
+        }
+
+        .lore-section-content {
+            font-size: 14.5px;
+            line-height: 1.68;
+            color: var(--text-primary);
+        }
+
+        .lore-section-content p {
+            margin: 0 0 10px 0;
+        }
+
+        .lore-section-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .lore-section-content ul {
+            margin: 6px 0 12px 18px;
+            padding: 0;
+        }
+
+        .lore-section-content li {
+            margin-bottom: 6px;
+        }
+
+        .lore-footer {
+            padding: 14px 24px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .lore-select-btn {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, #a855f7 100%);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: var(--radius-sm);
+            color: #ffffff;
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(140, 84, 255, 0.35);
+        }
+
+        .lore-select-btn:hover {
+            box-shadow: 0 6px 20px rgba(140, 84, 255, 0.55), 0 0 16px rgba(212, 175, 55, 0.35);
+            transform: translateY(-1px);
+        }
+
+        /* Light Mode Overrides for Tradition Cards & Lore Modal */
+        [data-theme="light"] .tradition-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(124, 77, 255, 0.2);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        [data-theme="light"] .tradition-card:hover {
+            border-color: rgba(179, 130, 10, 0.5);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 0 16px rgba(179, 130, 10, 0.15);
+        }
+
+        [data-theme="light"] .tradition-card.active {
+            background: linear-gradient(165deg, rgba(140, 84, 255, 0.1) 0%, rgba(212, 175, 55, 0.08) 100%), #ffffff;
+            border-color: rgba(179, 130, 10, 0.7);
+            box-shadow: 0 0 20px rgba(179, 130, 10, 0.25), 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        [data-theme="light"] .lore-container {
+            background: #fdfcf9;
+            border-color: rgba(179, 130, 10, 0.6);
+        }
+
+        [data-theme="light"] .lore-header {
+            background: linear-gradient(180deg, rgba(179, 130, 10, 0.08) 0%, transparent 100%), #f8f6f0;
+        }
+
+        [data-theme="light"] .lore-tabs {
+            background: #f5f3ec;
+        }
+
+        [data-theme="light"] .lore-footer {
+            background: #f8f6f0;
         }
 
         /* Sub-Spread Selector */
@@ -2428,6 +2855,22 @@
     </style>
 </head>
 <body>
+    <!-- Global SVG Gradients for Sacred Insignias -->
+    <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+        <defs>
+            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f6d365" />
+                <stop offset="50%" stop-color="#e5c158" />
+                <stop offset="100%" stop-color="#b3820a" />
+            </linearGradient>
+            <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#c084fc" />
+                <stop offset="50%" stop-color="#8c54ff" />
+                <stop offset="100%" stop-color="#581c87" />
+            </linearGradient>
+        </defs>
+    </svg>
+
     <!-- Top Navigation Bar -->
     <header class="oracle-nav">
         <a href="/" class="nav-brand">
@@ -2436,7 +2879,8 @@
         </a>
         <div class="nav-controls">
             <button class="nav-btn" onclick="toggleHistory()" title="Divination Journal">
-                📜 <span class="nav-btn-label">Journal</span>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                <span class="nav-btn-label">Journal</span>
             </button>
             <button class="nav-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
             <button class="nav-btn" id="sound-btn" onclick="toggleSound()" title="Sound Effects">🔊</button>
@@ -2464,27 +2908,128 @@
 
             <!-- Step 1: Choose Tradition -->
             <div class="step-section">
-                <div class="step-label">
-                    <span class="step-number">1</span>
-                    <span>Choose Tradition</span>
+                <div class="step-label-row">
+                    <div class="step-label">
+                        <span class="step-number">1</span>
+                        <span>Select Divination Tradition</span>
+                    </div>
+                    <button type="button" class="tradition-guide-trigger" onclick="openTraditionLore(currentTradition)" title="Read comprehensive history, origins, and ceremonial usage">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        <span>Tradition Lore & History</span>
+                    </button>
                 </div>
                 <div class="tradition-grid">
-                    <button class="tradition-btn active" data-tradition="tarot" onclick="setTradition('tarot')">
-                        <span class="tradition-icon">🔮</span>
-                        <span class="tradition-name">Tarot</span>
-                    </button>
-                    <button class="tradition-btn" data-tradition="runes" onclick="setTradition('runes')">
-                        <span class="tradition-icon">ᚱ</span>
-                        <span class="tradition-name">Runes</span>
-                    </button>
-                    <button class="tradition-btn" data-tradition="iching" onclick="setTradition('iching')">
-                        <span class="tradition-icon">☯️</span>
-                        <span class="tradition-name">I Ching</span>
-                    </button>
-                    <button class="tradition-btn" data-tradition="number" onclick="setTradition('number')">
-                        <span class="tradition-icon">🌌</span>
-                        <span class="tradition-name">Numerology</span>
-                    </button>
+                    <!-- Tarot -->
+                    <div class="tradition-card active" data-tradition="tarot" onclick="setTradition('tarot')">
+                        <div class="tradition-card-top">
+                            <div class="tradition-emblem-wrap">
+                                <svg viewBox="0 0 48 48" width="34" height="34" fill="none" class="tradition-emblem-svg">
+                                    <circle cx="24" cy="24" r="22" stroke="url(#goldGrad)" stroke-width="1.5" stroke-dasharray="2 2" opacity="0.6"/>
+                                    <circle cx="24" cy="24" r="18" stroke="url(#goldGrad)" stroke-width="1.2"/>
+                                    <path d="M24 8v5 M24 35v5 M8 24h5 M35 24h5 M12.7 12.7l3.5 3.5 M31.8 31.8l3.5 3.5 M12.7 35.3l3.5-3.5 M31.8 16.2l3.5-3.5" stroke="url(#goldGrad)" stroke-width="1.2" stroke-linecap="round"/>
+                                    <path d="M19 24a5 5 0 1 1 10 0 5 5 0 0 1-10 0z" fill="rgba(212, 175, 55, 0.2)" stroke="url(#goldGrad)" stroke-width="1.4"/>
+                                    <circle cx="24" cy="24" r="2.2" fill="url(#goldGrad)"/>
+                                    <path d="M17 24c2.5-4 11.5-4 14 0c-2.5 4-11.5 4-14 0z" stroke="url(#goldGrad)" stroke-width="1" fill="none"/>
+                                </svg>
+                            </div>
+                            <span class="tradition-era-badge">Milan · 15th C.</span>
+                        </div>
+                        <div class="tradition-card-body">
+                            <h3 class="tradition-title">Tarot Arcana</h3>
+                            <p class="tradition-tagline">78 Sacred Archetypes & Journey of the Soul</p>
+                            <p class="tradition-desc">Archetypal psychology, subconscious clarity, and navigating personal turning points.</p>
+                        </div>
+                        <div class="tradition-card-footer">
+                            <button type="button" class="tradition-lore-btn" onclick="event.stopPropagation(); openTraditionLore('tarot');" title="Learn history and ceremonial usage of Tarot">
+                                <span>✦</span> Lore & Origins
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Runes -->
+                    <div class="tradition-card" data-tradition="runes" onclick="setTradition('runes')">
+                        <div class="tradition-card-top">
+                            <div class="tradition-emblem-wrap">
+                                <svg viewBox="0 0 48 48" width="34" height="34" fill="none" class="tradition-emblem-svg">
+                                    <polygon points="24,3 42,13.5 42,34.5 24,45 6,34.5 6,13.5" stroke="url(#goldGrad)" stroke-width="1.4" fill="rgba(212, 175, 55, 0.08)"/>
+                                    <circle cx="24" cy="24" r="16" stroke="url(#goldGrad)" stroke-width="1" stroke-dasharray="3 3" opacity="0.7"/>
+                                    <path d="M24 10v28" stroke="url(#goldGrad)" stroke-width="2.2" stroke-linecap="round"/>
+                                    <path d="M16 16l8 7l8-7" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M24 23l7-5 M24 28l7-5" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <span class="tradition-era-badge">Elder Futhark · 2nd C.</span>
+                        </div>
+                        <div class="tradition-card-body">
+                            <h3 class="tradition-title">Sacred Runes</h3>
+                            <p class="tradition-tagline">Norse Staves of Wyrd & Örlög</p>
+                            <p class="tradition-desc">Courage, elemental forces, cosmic fate, and confronting unvarnished truths.</p>
+                        </div>
+                        <div class="tradition-card-footer">
+                            <button type="button" class="tradition-lore-btn" onclick="event.stopPropagation(); openTraditionLore('runes');" title="Learn history and ceremonial usage of Runes">
+                                <span>✦</span> Lore & Origins
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- I Ching -->
+                    <div class="tradition-card" data-tradition="iching" onclick="setTradition('iching')">
+                        <div class="tradition-card-top">
+                            <div class="tradition-emblem-wrap">
+                                <svg viewBox="0 0 48 48" width="34" height="34" fill="none" class="tradition-emblem-svg">
+                                    <circle cx="24" cy="24" r="22" stroke="url(#goldGrad)" stroke-width="1.2"/>
+                                    <g stroke="url(#goldGrad)" stroke-width="1.4" stroke-linecap="round" opacity="0.85">
+                                        <line x1="20" y1="5" x2="28" y2="5"/><line x1="20" y1="7.5" x2="28" y2="7.5"/><line x1="20" y1="10" x2="28" y2="10"/>
+                                        <line x1="20" y1="38" x2="23" y2="38"/><line x1="25" y1="38" x2="28" y2="38"/>
+                                        <line x1="20" y1="40.5" x2="23" y2="40.5"/><line x1="25" y1="40.5" x2="28" y2="40.5"/>
+                                        <line x1="20" y1="43" x2="23" y2="43"/><line x1="25" y1="43" x2="28" y2="43"/>
+                                    </g>
+                                    <circle cx="24" cy="24" r="12" stroke="url(#goldGrad)" stroke-width="1.4" fill="#0f0c1b"/>
+                                    <path d="M24 12 A6 6 0 0 1 24 24 A6 6 0 0 0 24 36 A12 12 0 0 1 24 12 Z" fill="url(#goldGrad)"/>
+                                    <circle cx="24" cy="18" r="1.8" fill="#0f0c1b"/>
+                                    <circle cx="24" cy="30" r="1.8" fill="url(#goldGrad)"/>
+                                </svg>
+                            </div>
+                            <span class="tradition-era-badge">Zhou Dynasty · 1000 BCE</span>
+                        </div>
+                        <div class="tradition-card-body">
+                            <h3 class="tradition-title">The I Ching</h3>
+                            <p class="tradition-tagline">The Book of Changes · 易經</p>
+                            <p class="tradition-desc">Strategic wisdom, dynamic timing, and harmonizing with the natural flow of change.</p>
+                        </div>
+                        <div class="tradition-card-footer">
+                            <button type="button" class="tradition-lore-btn" onclick="event.stopPropagation(); openTraditionLore('iching');" title="Learn history and ceremonial usage of I Ching">
+                                <span>✦</span> Lore & Origins
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quantum Numerology -->
+                    <div class="tradition-card" data-tradition="number" onclick="setTradition('number')">
+                        <div class="tradition-card-top">
+                            <div class="tradition-emblem-wrap">
+                                <svg viewBox="0 0 48 48" width="34" height="34" fill="none" class="tradition-emblem-svg">
+                                    <circle cx="24" cy="24" r="22" stroke="url(#goldGrad)" stroke-width="1.2" stroke-dasharray="1 3"/>
+                                    <ellipse cx="24" cy="24" rx="19" ry="8" stroke="url(#goldGrad)" stroke-width="1.3" transform="rotate(30 24 24)"/>
+                                    <ellipse cx="24" cy="24" rx="19" ry="8" stroke="url(#goldGrad)" stroke-width="1.3" transform="rotate(-30 24 24)"/>
+                                    <ellipse cx="24" cy="24" rx="19" ry="8" stroke="url(#goldGrad)" stroke-width="1.3" transform="rotate(90 24 24)"/>
+                                    <circle cx="24" cy="24" r="3.5" fill="url(#goldGrad)"/>
+                                    <circle cx="24" cy="24" r="7" stroke="url(#goldGrad)" stroke-width="1" stroke-dasharray="2 2" opacity="0.6"/>
+                                </svg>
+                            </div>
+                            <span class="tradition-era-badge">Quantum Ground State</span>
+                        </div>
+                        <div class="tradition-card-body">
+                            <h3 class="tradition-title">Quantum Numerology</h3>
+                            <p class="tradition-tagline">Entropic Integer & Harmonics</p>
+                            <p class="tradition-desc">Pure mathematical resonance, cosmic synchronicity, and unvarnished omens.</p>
+                        </div>
+                        <div class="tradition-card-footer">
+                            <button type="button" class="tradition-lore-btn" onclick="event.stopPropagation(); openTraditionLore('number');" title="Learn history and ceremonial usage of Quantum Numerology">
+                                <span>✦</span> Lore & Origins
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -2511,11 +3056,11 @@
                 <div class="prompt-input-wrap">
                     <textarea id="user-inquiry" class="prompt-textarea" placeholder="What question or life situation do you bring to the Oracle? (or leave blank for general guidance)"></textarea>
                     <div class="topic-chips">
-                        <span class="topic-chip-label">Quick Inquiries:</span>
-                        <button class="topic-chip" onclick="setInquiry('What general guidance and spiritual truth do I need to hear right now?')">🧭 General Guidance</button>
-                        <button class="topic-chip" onclick="setInquiry('What do I need to know regarding my love life and relationships?')">💕 Love & Union</button>
-                        <button class="topic-chip" onclick="setInquiry('What energies are shaping my career, calling, and life purpose?')">💼 Career & Calling</button>
-                        <button class="topic-chip" onclick="setInquiry('What hidden obstacle or inner lesson am I meant to overcome?')">🙏 Spiritual Lesson</button>
+                        <span class="topic-chip-label">Inquiry Themes:</span>
+                        <button class="topic-chip" onclick="setInquiry('What general guidance and spiritual truth do I need to hear right now?')">✦ General Guidance</button>
+                        <button class="topic-chip" onclick="setInquiry('What do I need to know regarding my love life and relationships?')">✦ Love & Union</button>
+                        <button class="topic-chip" onclick="setInquiry('What energies are shaping my career, calling, and life purpose?')">✦ Career & Purpose</button>
+                        <button class="topic-chip" onclick="setInquiry('What hidden obstacle or inner lesson am I meant to overcome?')">✦ Spiritual Lesson</button>
                     </div>
                 </div>
             </div>
@@ -2530,7 +3075,7 @@
         <section class="active-reading-stage" id="reading-stage">
             <!-- Top Bar to Return / Start New Reading -->
             <div class="reading-top-bar">
-                <div class="reading-badge" id="active-reading-badge">🔮 Sacred Tarot Reading</div>
+                <div class="reading-badge" id="active-reading-badge">✦ Sacred Tarot Consultation ✦</div>
                 <button class="new-consult-btn" onclick="startNewConsultation()">
                     <span>✦ New Consultation</span>
                 </button>
@@ -2561,9 +3106,9 @@
 
                 <!-- Footer Tools -->
                 <div class="reading-footer-tools">
-                    <button class="tool-btn" onclick="exportActiveReading()">📥 <span>Save Image</span></button>
-                    <button class="tool-btn" onclick="shareActiveReading()">🔗 <span>Share Reading</span></button>
-                    <button class="tool-btn" onclick="startNewConsultation()">✦ <span>Ask Another Question</span></button>
+                    <button class="tool-btn" onclick="exportActiveReading()"><span>✦ Save Image</span></button>
+                    <button class="tool-btn" onclick="shareActiveReading()"><span>✦ Share Reading</span></button>
+                    <button class="tool-btn" onclick="startNewConsultation()"><span>✦ New Inquiry</span></button>
                 </div>
             </div>
         </section>
@@ -2574,14 +3119,14 @@
     <div class="history-overlay" id="history-overlay" onclick="toggleHistory()"></div>
     <aside class="history-drawer" id="history-drawer">
         <div class="drawer-header">
-            <h3 class="drawer-title">📜 Divination Journal</h3>
+            <h3 class="drawer-title">✦ Divination Journal ✦</h3>
             <button class="drawer-close" onclick="toggleHistory()">&times;</button>
         </div>
         <div class="drawer-body" id="history-list">
             <div class="empty-history">No saved readings yet. Your consultations will be preserved here.</div>
         </div>
         <div style="padding: 14px 18px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end;">
-            <button class="tool-btn" onclick="clearAllHistory()">🗑️ Clear Journal</button>
+            <button class="tool-btn" onclick="clearAllHistory()">✦ Clear Journal</button>
         </div>
     </aside>
 
@@ -2647,6 +3192,40 @@
         </div>
     </dialog>
 
+    <!-- Tradition Lore & History Dossier Dialog -->
+    <dialog id="traditionLoreModal" class="lore-dialog" aria-labelledby="loreModalTitle">
+        <div class="lore-container">
+            <div class="lore-header">
+                <div class="lore-header-brand">
+                    <div class="lore-header-emblem" id="loreModalEmblem"></div>
+                    <div class="lore-header-meta">
+                        <div class="lore-header-tag" id="loreModalTag">SACRED LINEAGE &amp; HISTORICAL ORIGINS</div>
+                        <h2 class="lore-header-title" id="loreModalTitle">Tradition Lore</h2>
+                    </div>
+                </div>
+                <button type="button" class="lore-close-btn" onclick="closeTraditionLore()" aria-label="Close lore view">&times;</button>
+            </div>
+
+            <div class="lore-tabs">
+                <button type="button" class="lore-tab-btn active" data-tab="tarot" onclick="switchLoreTradition('tarot')">Tarot Arcana</button>
+                <button type="button" class="lore-tab-btn" data-tab="runes" onclick="switchLoreTradition('runes')">Sacred Runes</button>
+                <button type="button" class="lore-tab-btn" data-tab="iching" onclick="switchLoreTradition('iching')">The I Ching</button>
+                <button type="button" class="lore-tab-btn" data-tab="number" onclick="switchLoreTradition('number')">Quantum Numerology</button>
+            </div>
+
+            <div class="lore-body" id="loreModalBody">
+                <!-- Dynamically populated by renderLoreModalContent -->
+            </div>
+
+            <div class="lore-footer">
+                <button type="button" class="tool-btn" onclick="closeTraditionLore()">Close Dossier</button>
+                <button type="button" class="lore-select-btn" id="loreSelectTraditionBtn" onclick="selectTraditionFromLore()">
+                    <span>✦ Select Tradition for Consultation ✦</span>
+                </button>
+            </div>
+        </div>
+    </dialog>
+
     <script>
         const portal = document.getElementById('consultation-portal');
         const readingStage = document.getElementById('reading-stage');
@@ -2687,44 +3266,345 @@
         const TRADITION_SPREADS = {
             tarot: {
                 title: 'Choose Tarot Spread',
+                badgeTitle: '✦ Sacred Tarot Consultation ✦',
                 options: [
-                    { id: '3-card', label: '🔮 3-Card Spread (Past, Present, Future)' },
-                    { id: 'yes-no', label: '❓ Yes / No (Single Card)' },
-                    { id: '5-card', label: '⭐ 5-Card Cross (Situation & Outcome)' },
-                    { id: 'celtic', label: '✨ Celtic Cross (10 Cards Comprehensive)' }
+                    { id: '3-card', label: 'Three-Card Triad (Past, Present, Future)' },
+                    { id: 'yes-no', label: 'Single Arcanum (Direct Guidance / Yes-No)' },
+                    { id: '5-card', label: 'Five-Card Cross (Situation & Horizon)' },
+                    { id: 'celtic', label: 'Celtic Cross (Comprehensive 10-Card Altar)' }
                 ],
                 default: '3-card',
                 placeholder: 'What question or life situation do you bring to the tarot? (or leave blank for general guidance)'
             },
             runes: {
                 title: 'Choose Sacred Rune Spread',
+                badgeTitle: '✦ Elder Futhark Runic Ritual ✦',
                 options: [
-                    { id: 'norns', label: 'ᚱ The Three Norns (Urðr, Verðandi, Skuld)' },
-                    { id: 'single', label: 'ᚱ Single Rune (Odin\'s Rune / Direct Guidance)' },
-                    { id: 'five-cross', label: 'ᚱ The Five-Rune Wyrd Cross (Compass of Fate)' },
-                    { id: 'thor-hammer', label: 'ᛏ The Hammer of Thor (Mjölnir 5-Rune Cast)' },
-                    { id: 'nine-worlds', label: '🌳 The Nine Worlds of Yggdrasil (Grand 9-Realm Cast)' }
+                    { id: 'norns', label: 'The Three Norns (Urðr, Verðandi, Skuld)' },
+                    { id: 'single', label: 'Single Rune (Odin\'s Direct Guidance)' },
+                    { id: 'five-cross', label: 'The Five-Rune Wyrd Cross (Compass of Fate)' },
+                    { id: 'thor-hammer', label: 'The Hammer of Thor (Mjölnir 5-Rune Cast)' },
+                    { id: 'nine-worlds', label: 'The Nine Worlds of Yggdrasil (Grand 9-Realm Tree)' }
                 ],
                 default: 'norns',
                 placeholder: 'What question or life situation do you bring to the Elder Futhark runes? (or leave blank for general guidance)'
             },
             iching: {
                 title: 'I Ching Hexagram Casting',
+                badgeTitle: '✦ I Ching Hexagram Consultation ✦',
                 options: [
-                    { id: 'iching', label: '☯️ Ancient 64-Hexagram Coin Toss' }
+                    { id: 'iching', label: 'Ancient 64-Hexagram Cast (Three Bronze Coins)' }
                 ],
                 default: 'iching',
                 placeholder: 'What question or decision do you bring to the Book of Changes?'
             },
             number: {
                 title: 'Cosmic Numerology Omen',
+                badgeTitle: '✦ Quantum Entropic Resonance ✦',
                 options: [
-                    { id: 'number', label: '🌌 Quantum Entropic Number Reading' }
+                    { id: 'number', label: 'Quantum Entropic Resonance (1–999 Cosmic Omen)' }
                 ],
                 default: 'number',
                 placeholder: 'What life path or inquiry do you bring to the cosmos?'
             }
         };
+
+        // Helper to return clean vector SVG emblem for each tradition
+        function getTraditionEmblemSvg(key) {
+            if (key === 'tarot') {
+                return `
+                    <svg viewBox="0 0 48 48" width="34" height="34" fill="none" class="tradition-emblem-svg">
+                        <circle cx="24" cy="24" r="22" stroke="url(#goldGrad)" stroke-width="1.5" stroke-dasharray="2 2" opacity="0.6"/>
+                        <circle cx="24" cy="24" r="18" stroke="url(#goldGrad)" stroke-width="1.2"/>
+                        <path d="M24 8v5 M24 35v5 M8 24h5 M35 24h5 M12.7 12.7l3.5 3.5 M31.8 31.8l3.5 3.5 M12.7 35.3l3.5-3.5 M31.8 16.2l3.5-3.5" stroke="url(#goldGrad)" stroke-width="1.2" stroke-linecap="round"/>
+                        <path d="M19 24a5 5 0 1 1 10 0 5 5 0 0 1-10 0z" fill="rgba(212, 175, 55, 0.2)" stroke="url(#goldGrad)" stroke-width="1.4"/>
+                        <circle cx="24" cy="24" r="2.2" fill="url(#goldGrad)"/>
+                        <path d="M17 24c2.5-4 11.5-4 14 0c-2.5 4-11.5 4-14 0z" stroke="url(#goldGrad)" stroke-width="1" fill="none"/>
+                    </svg>
+                `;
+            } else if (key === 'runes') {
+                return `
+                    <svg viewBox="0 0 48 48" width="34" height="34" fill="none" class="tradition-emblem-svg">
+                        <polygon points="24,3 42,13.5 42,34.5 24,45 6,34.5 6,13.5" stroke="url(#goldGrad)" stroke-width="1.4" fill="rgba(212, 175, 55, 0.08)"/>
+                        <circle cx="24" cy="24" r="16" stroke="url(#goldGrad)" stroke-width="1" stroke-dasharray="3 3" opacity="0.7"/>
+                        <path d="M24 10v28" stroke="url(#goldGrad)" stroke-width="2.2" stroke-linecap="round"/>
+                        <path d="M16 16l8 7l8-7" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M24 23l7-5 M24 28l7-5" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                `;
+            } else if (key === 'iching') {
+                return `
+                    <svg viewBox="0 0 48 48" width="34" height="34" fill="none" class="tradition-emblem-svg">
+                        <circle cx="24" cy="24" r="22" stroke="url(#goldGrad)" stroke-width="1.2"/>
+                        <g stroke="url(#goldGrad)" stroke-width="1.4" stroke-linecap="round" opacity="0.85">
+                            <line x1="20" y1="5" x2="28" y2="5"/><line x1="20" y1="7.5" x2="28" y2="7.5"/><line x1="20" y1="10" x2="28" y2="10"/>
+                            <line x1="20" y1="38" x2="23" y2="38"/><line x1="25" y1="38" x2="28" y2="38"/>
+                            <line x1="20" y1="40.5" x2="23" y2="40.5"/><line x1="25" y1="40.5" x2="28" y2="40.5"/>
+                            <line x1="20" y1="43" x2="23" y2="43"/><line x1="25" y1="43" x2="28" y2="43"/>
+                        </g>
+                        <circle cx="24" cy="24" r="12" stroke="url(#goldGrad)" stroke-width="1.4" fill="#0f0c1b"/>
+                        <path d="M24 12 A6 6 0 0 1 24 24 A6 6 0 0 0 24 36 A12 12 0 0 1 24 12 Z" fill="url(#goldGrad)"/>
+                        <circle cx="24" cy="18" r="1.8" fill="#0f0c1b"/>
+                        <circle cx="24" cy="30" r="1.8" fill="url(#goldGrad)"/>
+                    </svg>
+                `;
+            } else {
+                return `
+                    <svg viewBox="0 0 48 48" width="34" height="34" fill="none" class="tradition-emblem-svg">
+                        <circle cx="24" cy="24" r="22" stroke="url(#goldGrad)" stroke-width="1.2" stroke-dasharray="1 3"/>
+                        <ellipse cx="24" cy="24" rx="19" ry="8" stroke="url(#goldGrad)" stroke-width="1.3" transform="rotate(30 24 24)"/>
+                        <ellipse cx="24" cy="24" rx="19" ry="8" stroke="url(#goldGrad)" stroke-width="1.3" transform="rotate(-30 24 24)"/>
+                        <ellipse cx="24" cy="24" rx="19" ry="8" stroke="url(#goldGrad)" stroke-width="1.3" transform="rotate(90 24 24)"/>
+                        <circle cx="24" cy="24" r="3.5" fill="url(#goldGrad)"/>
+                        <circle cx="24" cy="24" r="7" stroke="url(#goldGrad)" stroke-width="1" stroke-dasharray="2 2" opacity="0.6"/>
+                    </svg>
+                `;
+            }
+        }
+
+        // Comprehensive Historical Lore & Divination Dossier
+        const TRADITION_LORE = {
+            tarot: {
+                title: "Hermetic Tarot Arcana",
+                nativeName: "Tarocchi · Arcana Maiora",
+                era: "Northern Italy · Mid-15th Century",
+                tagline: "78 Sacred Archetypes & The Hero's Journey of the Soul",
+                history: `
+                    <p>The Tarot originated in mid-15th-century Renaissance Italy (Milan, Ferrara, and Bologna) as hand-painted allegorical cards known as <em>Carte da Trionfi</em> (Cards of Triumph), commissioned by prominent noble families such as the Visconti and Sforza.</p>
+                    <p>By the late 18th century, French occultists including Antoine Court de Gébelin and Jean-Baptiste Alliette (Éteilla) recognized the 22 Major Arcana as an unwritten repository of ancient Hermetic, Egyptian, and Kabbalistic wisdom. In 1909, Arthur Edward Waite and visionary occult artist Pamela Colman Smith revolutionized the tradition by illustrating all 56 Minor Arcana with emotive, scene-based narratives, creating the world-renowned <strong>Rider-Waite-Smith deck</strong>.</p>
+                    <p>Pioneering psychiatrist <strong>Carl Gustav Jung</strong> recognized the 78 Tarot cards as psychological archetypes residing in humanity's collective unconscious. Tarot divination operates through the principle of <em>synchronicity</em>—an acausal connecting link where the physical drawing of symbolic archetypes mirrors the seeker's hidden psychological currents and potential trajectories.</p>
+                `,
+                usage: `
+                    <p><strong>When to Consult:</strong></p>
+                    <ul>
+                        <li>Navigating major life crossroads, transitions, or relationship complexities.</li>
+                        <li>Uncovering unconscious blind spots, hidden motives, and subconscious obstacles.</li>
+                        <li>Clarifying where you stand in life's 22 stages of spiritual evolution (<em>The Fool's Journey</em>).</li>
+                    </ul>
+                    <p>Tarot does not prescribe fatalistic outcomes; it mirrors the energetic momentum currently unfolding, empowering you with sovereign clarity to consciously shape your path.</p>
+                `,
+                mechanics: `
+                    <p><strong>Sacred Architecture:</strong></p>
+                    <ul>
+                        <li><strong>22 Major Arcana:</strong> High spiritual initiations, macrocosmic milestones, and karmic crossroads (The Fool through The World).</li>
+                        <li><strong>56 Minor Arcana:</strong> The day-to-day realities of life, partitioned across the four classical elements:
+                            <ul>
+                                <li><strong>Wands (Fire):</strong> Willpower, ambition, creativity, and spiritual drive.</li>
+                                <li><strong>Cups (Water):</strong> Emotions, relationships, dreams, and intuitive depths.</li>
+                                <li><strong>Swords (Air):</strong> Intellect, communication, discernment, and mental challenges.</li>
+                                <li><strong>Pentacles (Earth):</strong> Physical reality, career, health, and manifestation.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p><strong>Quantum Entropy Integration:</strong> The Oracle draws cards via genuine quantum vacuum entropy, guaranteeing that every shuffle is liberated from mechanical predictability and resonant with the seeker's inquiry.</p>
+                `
+            },
+            runes: {
+                title: "Sacred Elder Futhark Runes",
+                nativeName: "Rúnar · Wyrd & Örlög",
+                era: "Germanic & Norse · 2nd–8th Century CE",
+                tagline: "The Primal Staves of Cosmic Law, Fortitude & Destiny",
+                history: `
+                    <p>The Elder Futhark is the oldest documented runic alphabet, used across Germanic and Scandinavian tribes from the 2nd through the 8th century CE. The word <em>rún</em> translates literally to <strong>secret</strong>, <strong>mystery</strong>, or <strong>whisper</strong>.</p>
+                    <p>In Norse cosmology recorded in the <em>Poetic Edda</em> (<em>Hávamál</em>, 138–139), the All-Father Odin hung himself upside-down from the windswept cosmic ash tree <strong>Yggdrasil</strong> for nine days and nights, pierced by his spear Gungnir. Sacrificing his mortal ego to his divine self, he peered into the primordial waters of the Well of Urðr and seized the holy runes.</p>
+                    <p>In antiquity, runes were inscribed onto weapons for victory, carved upon boundary stones for protection, and cast onto clean linen cloths by ancient <em>Völvas</em> (seeresses) and <em>Eriloz</em> (rune masters) to decipher the web of <strong>Wyrd</strong> (fate) and <strong>Örlög</strong> (primal ancestral debt).</p>
+                `,
+                usage: `
+                    <p><strong>When to Consult:</strong></p>
+                    <ul>
+                        <li>Times of upheaval, conflict, breakthrough, or severe tests of willpower.</li>
+                        <li>Seeking direct, unvarnished counsel without sugarcoating or flattery.</li>
+                        <li>Understanding the karmic causes (<em>Urðr</em>) currently bearing fruit in your present circumstances (<em>Verðandi</em>).</li>
+                    </ul>
+                    <p>The runes speak in primal, elemental truths—demanding courage, self-discipline, and personal responsibility from the seeker.</p>
+                `,
+                mechanics: `
+                    <p><strong>Sacred Architecture:</strong></p>
+                    <ul>
+                        <li><strong>The 24 Staves in Three Ættir:</strong> The alphabet is structured into three families of eight runes, each governed by a Norse deity:
+                            <ul>
+                                <li><strong>Freyr's Ætt:</strong> Primal creation, life force, material wealth, communication, and movement.</li>
+                                <li><strong>Heimdall's Ætt:</strong> Testing, hardship, natural cataclysms (hail, ice, necessity), and inner maturation.</li>
+                                <li><strong>Týr's Ætt:</strong> Justice, spiritual honor, community, and divine transcendence.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Merkstave (Reversals):</strong> Symmetrical runes remain upright as immutable cosmic laws. Reversible runes drawn Merkstave indicate internal friction, blocked vitality, warnings of excess, or shadow dynamics requiring conscious vigilance.</li>
+                    </ul>
+                    <p><strong>Quantum Entropy Integration:</strong> Stones are drawn without replacement using genuine quantum random number seeds, mirroring the ancient rite of shaking stones in a pouch and casting them onto the sacred altar cloth.</p>
+                `
+            },
+            iching: {
+                title: "The I Ching · Book of Changes",
+                nativeName: "易經 · Zhōuyì (周易)",
+                era: "Ancient China · Western Zhou (c. 1000 BCE)",
+                tagline: "The Art of Masterful Timing & Taoist Harmony",
+                history: `
+                    <p>With a documented lineage spanning over 3,000 years, the <strong>I Ching</strong> (<em>Yi Jing</em> / <em>Book of Changes</em>) is one of the oldest and most revered philosophical texts in human history, laying the foundational metaphysics for both Taoism and Confucianism.</p>
+                    <p>Tradition attributes its genesis to four supreme sages of ancient China:</p>
+                    <ul>
+                        <li><strong>Fu Xi:</strong> The mythical sovereign who conceived the Eight Trigrams (<em>Bagua</em>) by observing the astronomical heavens and earthly landscapes.</li>
+                        <li><strong>King Wen of Zhou:</strong> Who combined the trigrams into the 64 hexagrams and composed the core Judgments (<em>Tuan</em>) while unjustly imprisoned.</li>
+                        <li><strong>The Duke of Zhou:</strong> Who wrote the poetic counsels for all 384 individual lines.</li>
+                        <li><strong>Confucius:</strong> Who, alongside his disciples, authored the <em>Ten Wings</em> philosophical commentaries, transforming the oracle into a guide for ethical leadership and cosmic alignment.</li>
+                    </ul>
+                    <p>Carl Jung collaborated closely with sinologist Richard Wilhelm on its definitive Western translation, citing the I Ching as the paramount historical proof of acausal synchronicity.</p>
+                `,
+                usage: `
+                    <p><strong>When to Consult:</strong></p>
+                    <ul>
+                        <li>Strategic dilemmas, career leadership choices, and governance decisions.</li>
+                        <li>Determining optimal timing—knowing when to advance, when to hold ground, and when to yield.</li>
+                        <li>Understanding the evolutionary arc of any dilemma and restoring balance with the Tao.</li>
+                    </ul>
+                    <p>The I Ching treats change not as an enemy, but as the only eternal law of existence. It instructs the seeker on how to become a <em>Junzi</em> (noble, centered person) amidst shifting tides.</p>
+                `,
+                mechanics: `
+                    <p><strong>Sacred Architecture:</strong></p>
+                    <ul>
+                        <li><strong>The 64 Hexagrams:</strong> Each hexagram is a vertical stack of six lines built from Line 1 (the ground/root) up to Line 6 (the heaven/crown), composed of two interacting three-line trigrams (Upper Realm and Lower Ground).</li>
+                        <li><strong>The Ancient Three-Coin Method:</strong> Three bronze coins are tossed six times. The values generate four states:
+                            <ul>
+                                <li><strong>Stable Yang (7):</strong> Solid bar (⚊), steady creative force.</li>
+                                <li><strong>Stable Yin (8):</strong> Broken bar (⚋), steady receptive ground.</li>
+                                <li><strong>Old Yin (6, ×):</strong> Yielding energy at its extreme, transforming into Yang.</li>
+                                <li><strong>Old Yang (9, ○):</strong> Creative energy at its peak, transforming into Yin.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Zhi Gua (Resulting Transformation):</strong> When changing lines occur, they invert their polarity, transforming the primary situation into a resulting hexagram that foretells the energetic resolution.</li>
+                    </ul>
+                `
+            },
+            number: {
+                title: "Quantum Numerology & Harmonics",
+                nativeName: "Arithmology · Pythagorean Tetractys",
+                era: "Pythagorean School (530 BCE) & Modern Quantum Electrodynamics",
+                tagline: "Vibrational Mathematics & Objective Synchronicity",
+                history: `
+                    <p>In ancient Croton around 530 BCE, the philosopher and mystic <strong>Pythagoras of Samos</strong> taught that <em>"all things are number"</em>. In Pythagorean arithmology, numbers are not cold quantitative counters, but living archetypal frequencies that constitute the vibrational geometry of the cosmos.</p>
+                    <p>Esoteric arithmetic identified numbers 1 through 9 as the primordial cycle of manifestation—beginning with the Monad (1: the undivided source) and culminating in the Ennead (9: humanitarian completion and cosmic synthesis), while honoring higher octaves known as <strong>Master Numbers</strong> (11, 22, 33).</p>
+                    <p>In this sanctuary, we unite this ancient wisdom with modern <strong>Quantum Electrodynamics</strong>. Traditional computer algorithms generate "pseudo-random" numbers calculated through deterministic formulas. The Quantum Oracle instead samples true <strong>quantum vacuum fluctuations</strong>—measuring non-deterministic quantum ground states that are fundamentally uncaused and unpredictable, providing pure synchronistic resonance.</p>
+                `,
+                usage: `
+                    <p><strong>When to Consult:</strong></p>
+                    <ul>
+                        <li>Seeking an objective, unvarnished omen free from interpretive biases or preconceptions.</li>
+                        <li>Identifying the foundational vibrational signature of your current day, year, or undertaking.</li>
+                        <li>Direct meditation on sacred geometry and vibrational alignment.</li>
+                    </ul>
+                `,
+                mechanics: `
+                    <p><strong>Sacred Architecture:</strong></p>
+                    <ul>
+                        <li><strong>Entropic Integer Draw (1–999):</strong> Quantum hardware entropy channels a live integer.</li>
+                        <li><strong>Digital Reduction to Root:</strong> Digits are systematically summed (e.g. 847 → 8 + 4 + 7 = 19 → 1 + 9 = 10 → 1 + 0 = 1), revealing the underlying root vibration.</li>
+                        <li><strong>Master Number Recognition:</strong> Intensified numbers (11: The Visionary Illuminator, 22: The Master Builder, 33: The Avatar of Compassion) are preserved without further reduction.</li>
+                        <li><strong>Hermetic Decoding:</strong> The integer is analyzed across classical numerological correspondences, elemental polarities, and actionable spiritual counsel.</li>
+                    </ul>
+                `
+            }
+        };
+
+        let activeLoreTradition = 'tarot';
+
+        function openTraditionLore(traditionKey) {
+            initAudio();
+            sounds.chime();
+            const key = traditionKey || currentTradition || 'tarot';
+            activeLoreTradition = key;
+            renderLoreModalContent(key);
+            const dialog = document.getElementById('traditionLoreModal');
+            if (dialog && !dialog.open) {
+                dialog.showModal();
+            }
+        }
+
+        function closeTraditionLore() {
+            const dialog = document.getElementById('traditionLoreModal');
+            if (dialog && dialog.open) {
+                dialog.close();
+            }
+        }
+
+        function switchLoreTradition(traditionKey) {
+            activeLoreTradition = traditionKey;
+            renderLoreModalContent(traditionKey);
+            sounds.cardFlip();
+        }
+
+        function selectTraditionFromLore() {
+            setTradition(activeLoreTradition);
+            closeTraditionLore();
+            const spreadSection = document.getElementById('spread-step');
+            if (spreadSection) {
+                spreadSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        function renderLoreModalContent(traditionKey) {
+            const lore = TRADITION_LORE[traditionKey];
+            if (!lore) return;
+
+            // Update tab active state
+            document.querySelectorAll('.lore-tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-tab') === traditionKey);
+            });
+
+            const emblemEl = document.getElementById('loreModalEmblem');
+            const tagEl = document.getElementById('loreModalTag');
+            const titleEl = document.getElementById('loreModalTitle');
+            const bodyEl = document.getElementById('loreModalBody');
+            const selectBtn = document.getElementById('loreSelectTraditionBtn');
+
+            if (emblemEl) emblemEl.innerHTML = getTraditionEmblemSvg(traditionKey);
+            if (tagEl) tagEl.textContent = `${lore.era} · ${lore.nativeName}`;
+            if (titleEl) titleEl.textContent = lore.title;
+            if (selectBtn) {
+                selectBtn.innerHTML = `<span>✦ Select ${lore.title} for Consultation ✦</span>`;
+            }
+
+            if (bodyEl) {
+                bodyEl.innerHTML = `
+                    <div class="lore-summary-quote">
+                        <div class="lore-summary-tagline">${lore.tagline}</div>
+                    </div>
+
+                    <div class="lore-section">
+                        <div class="lore-section-title">
+                            <span class="lore-section-glyph">✦</span>
+                            <span>Sacred Lineage &amp; Historical Origins</span>
+                        </div>
+                        <div class="lore-section-content">${lore.history}</div>
+                    </div>
+
+                    <div class="lore-section">
+                        <div class="lore-section-title">
+                            <span class="lore-section-glyph">✦</span>
+                            <span>When &amp; Why to Consult</span>
+                        </div>
+                        <div class="lore-section-content">${lore.usage}</div>
+                    </div>
+
+                    <div class="lore-section">
+                        <div class="lore-section-title">
+                            <span class="lore-section-glyph">✦</span>
+                            <span>Ceremonial Mechanics &amp; Divination Flow</span>
+                        </div>
+                        <div class="lore-section-content">${lore.mechanics}</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize Backdrop Click to Dismiss for Lore Modal
+        const traditionLoreModal = document.getElementById('traditionLoreModal');
+        if (traditionLoreModal) {
+            traditionLoreModal.addEventListener('click', (e) => {
+                const container = traditionLoreModal.querySelector('.lore-container');
+                if (container && !container.contains(e.target)) {
+                    closeTraditionLore();
+                }
+            });
+        }
 
         // Runic Divination Modifiers
         let runeAllowReversals = true;
@@ -2802,7 +3682,7 @@
         // Set Tradition (Step 1)
         function setTradition(tradition) {
             currentTradition = tradition;
-            document.querySelectorAll('.tradition-btn').forEach(btn => {
+            document.querySelectorAll('.tradition-card, .tradition-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.getAttribute('data-tradition') === tradition);
             });
             currentSpreadType = TRADITION_SPREADS[tradition].default;
@@ -3785,8 +4665,8 @@
             readingStage.style.display = 'flex';
 
             // Update Badge & Inquiry
-            const traditionName = TRADITION_SPREADS[currentTradition].title;
-            activeReadingBadge.textContent = `${traditionName}`;
+            const traditionName = TRADITION_SPREADS[currentTradition].badgeTitle || TRADITION_SPREADS[currentTradition].title;
+            activeReadingBadge.textContent = traditionName;
             seekerInquiryDisplay.textContent = `"${promptText}"`;
             oracleStreamText.innerHTML = '';
             visualStageCard.innerHTML = '';
@@ -3964,7 +4844,13 @@
         function loadHistoryItem(item) {
             portal.style.display = 'none';
             readingStage.style.display = 'flex';
-            activeReadingBadge.textContent = `${item.type.toUpperCase()}`;
+            const badgeMap = {
+                tarot: '✦ Sacred Tarot Consultation ✦',
+                runes: '✦ Elder Futhark Runic Ritual ✦',
+                iching: '✦ I Ching Hexagram Consultation ✦',
+                number: '✦ Quantum Entropic Resonance ✦'
+            };
+            activeReadingBadge.textContent = badgeMap[item.type] || `✦ ${item.type.toUpperCase()} CONSULTATION ✦`;
             seekerInquiryDisplay.textContent = `"${item.question}"`;
             currentReadingData = item.readingData;
             renderVisualStage(item.readingData);
@@ -4025,7 +4911,7 @@
                 portal.style.display = 'none';
                 readingStage.style.display = 'flex';
                 if (demoType === 'iching') {
-                    activeReadingBadge.textContent = '☯️ Ancient I Ching Hexagram';
+                    activeReadingBadge.textContent = '✦ I Ching Hexagram Consultation ✦';
                     renderVisualStage({
                         type: 'iching',
                         hexagram: {
@@ -4055,7 +4941,7 @@
                     seekerInquiryDisplay.textContent = '"What guidance does the Book of Changes hold for navigating tension?"';
                     oracleStreamText.innerHTML = '<p>The Oracle reveals <strong>Hexagram 38: Opposition (睽)</strong> transforming into <strong>Hexagram 21: Biting Through (噬嗑)</strong>...</p>';
                 } else if (demoType === 'iching-steadfast') {
-                    activeReadingBadge.textContent = '☯️ Ancient I Ching Hexagram';
+                    activeReadingBadge.textContent = '✦ I Ching Hexagram Consultation ✦';
                     renderVisualStage({
                         type: 'iching',
                         hexagram: {
@@ -4074,7 +4960,7 @@
                     seekerInquiryDisplay.textContent = '"What is the ultimate creative force of my inquiry?"';
                     oracleStreamText.innerHTML = '<p>The oracle reveals <strong>Hexagram 1: The Creative (乾)</strong> in steadfast, immutable form...</p>';
                 } else if (demoType === 'tarot') {
-                    activeReadingBadge.textContent = '🔮 Sacred Tarot Reading';
+                    activeReadingBadge.textContent = '✦ Sacred Tarot Consultation ✦';
                     renderVisualStage({
                         type: 'tarot',
                         cards: [
@@ -4088,7 +4974,7 @@
                     seekerInquiryDisplay.textContent = '"What energies surround my creative endeavors?"';
                     oracleStreamText.innerHTML = '<p>The cards lay before you upon the aged walnut altar...</p>';
                 } else if (demoType === 'runes') {
-                    activeReadingBadge.textContent = 'ᚱ Elder Futhark Runes';
+                    activeReadingBadge.textContent = '✦ Elder Futhark Runic Ritual ✦';
                     renderVisualStage({
                         type: 'runes',
                         runes: [
