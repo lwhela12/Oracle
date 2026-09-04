@@ -1236,10 +1236,10 @@
         /* The Talisman Card Output Template */
         .social-talisman-card {
             position: relative;
-            background: linear-gradient(155deg, #0e0b1c 0%, #1a1433 50%, #0a0814 100%);
+            background: #090714;
             border: 1px solid rgba(212, 175, 55, 0.55);
-            border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px rgba(140, 84, 255, 0.25);
+            border-radius: 14px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(140, 84, 255, 0.3);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1252,84 +1252,110 @@
         .social-talisman-card.format-story {
             width: 360px;
             height: 640px;
-            padding: 28px 22px 22px;
+            padding: 30px 22px 24px;
         }
 
         .social-talisman-card.format-post {
             width: 440px;
             height: 440px;
-            padding: 22px 20px 18px;
+            padding: 24px 20px 20px;
         }
 
         @media (max-width: 480px) {
             .social-talisman-card.format-story {
                 width: 320px;
                 height: 568px;
-                padding: 22px 16px 18px;
+                padding: 24px 18px 20px;
             }
             .social-talisman-card.format-post {
                 width: 320px;
                 height: 320px;
-                padding: 16px 14px 14px;
+                padding: 18px 16px 16px;
             }
+        }
+
+        /* Faded Reading Backdrop */
+        .talisman-reading-backdrop {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+            background: #080612;
+        }
+
+        .talisman-reading-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0.44;
+            filter: saturate(1.2) contrast(1.1) brightness(0.85);
+            transform: scale(1.06);
+            display: block;
+        }
+
+        .talisman-reading-vignette {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 50% 50%, rgba(14, 11, 28, 0.4) 0%, rgba(9, 7, 18, 0.78) 58%, rgba(5, 4, 12, 0.95) 100%),
+                linear-gradient(to bottom, rgba(8, 6, 16, 0.82) 0%, transparent 20%, transparent 80%, rgba(8, 6, 16, 0.9) 100%);
+            pointer-events: none;
         }
 
         .talisman-border-frame {
             position: absolute;
-            inset: 8px;
-            border: 1px solid rgba(212, 175, 55, 0.22);
-            border-radius: 6px;
+            inset: 9px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
             pointer-events: none;
+            z-index: 2;
         }
 
         .talisman-corner {
             position: absolute;
-            font-size: 10px;
+            font-size: 11px;
             color: var(--accent-gold);
-            opacity: 0.85;
+            opacity: 0.9;
             pointer-events: none;
             line-height: 1;
+            z-index: 2;
         }
         .c-tl { top: 5px; left: 5px; }
         .c-tr { top: 5px; right: 5px; }
         .c-bl { bottom: 5px; left: 5px; }
         .c-br { bottom: 5px; right: 5px; }
 
-        .talisman-bg-stars {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 50% 15%, rgba(212, 175, 55, 0.12) 0%, transparent 60%),
-                        radial-gradient(circle at 50% 85%, rgba(140, 84, 255, 0.18) 0%, transparent 65%);
-            pointer-events: none;
-        }
-
+        /* Talisman Header */
         .talisman-header {
             width: 100%;
             text-align: center;
             position: relative;
-            z-index: 2;
+            z-index: 3;
         }
 
         .talisman-badge {
             font-family: 'Cinzel', serif;
-            font-size: 10px;
+            font-size: 10.5px;
             font-weight: 700;
-            letter-spacing: 2px;
+            letter-spacing: 2.2px;
             text-transform: uppercase;
             color: var(--accent-gold);
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+            text-shadow: 0 0 12px rgba(212, 175, 55, 0.5), 0 2px 4px rgba(0,0,0,0.8);
         }
 
         .talisman-question {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            font-size: 14.5px;
-            color: #dfdaf0;
-            margin-top: 3px;
-            line-height: 1.35;
-            max-width: 95%;
+            font-size: 15px;
+            color: #f1edfc;
+            margin-top: 5px;
+            line-height: 1.38;
+            max-width: 92%;
             margin-left: auto;
             margin-right: auto;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
@@ -1337,228 +1363,79 @@
             -webkit-box-orient: vertical;
         }
 
-        .talisman-center-altar {
+        /* Center Overlaid Prophecy Callout */
+        .talisman-prophecy-center {
             width: 100%;
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            z-index: 2;
-            margin: 8px 0;
+            z-index: 3;
+            margin: 12px 0;
             min-height: 0;
         }
 
-        /* Tarot in Talisman */
-        .talisman-tarot-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+        .talisman-quote-card {
             width: 100%;
-        }
-        .talisman-card-box {
+            max-width: 94%;
+            background: linear-gradient(145deg, rgba(16, 12, 30, 0.88) 0%, rgba(9, 7, 18, 0.92) 100%);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(212, 175, 55, 0.42);
+            border-radius: 12px;
+            padding: 22px 20px;
+            text-align: center;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 30px rgba(212, 175, 55, 0.18);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
-            flex: 1;
-            max-width: 95px;
-        }
-        .format-post .talisman-card-box {
-            max-width: 82px;
-        }
-        .talisman-card-img-wrap {
-            width: 100%;
-            aspect-ratio: 7 / 12;
-            border-radius: 4px;
-            overflow: hidden;
-            border: 1px solid rgba(212, 175, 55, 0.5);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 10px rgba(212, 175, 55, 0.2);
-            background: #090812;
-        }
-        .talisman-card-img-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        .talisman-card-img-wrap.reversed img {
-            transform: rotate(180deg);
-        }
-        .talisman-card-lbl {
-            font-size: 10px;
-            font-family: 'Cinzel', serif;
-            color: #fff;
-            font-weight: 600;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
-        }
-        .talisman-card-pos {
-            font-size: 9px;
-            color: var(--accent-gold);
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
+            gap: 12px;
+            box-sizing: border-box;
         }
 
-        /* Runes in Talisman */
-        .talisman-rune-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            width: 100%;
-            flex-wrap: wrap;
+        .format-post .talisman-quote-card {
+            padding: 16px 18px;
+            gap: 8px;
         }
-        .talisman-rune-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-        .talisman-rune-stone {
-            width: 58px;
-            height: 74px;
-            border-radius: 12px 14px 16px 12px;
-            background: linear-gradient(145deg, #2b2342 0%, #171324 100%);
-            border: 1px solid rgba(212, 175, 55, 0.6);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), 0 0 12px rgba(212, 175, 55, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .talisman-rune-stone.reversed {
-            transform: rotate(180deg);
-        }
-        .talisman-rune-glyph {
-            font-size: 32px;
-            color: #ffd875;
-            text-shadow: 0 0 12px rgba(255, 216, 117, 0.85);
+
+        .talisman-quote-ornament {
+            font-size: 12px;
+            letter-spacing: 4px;
+            color: var(--accent-gold);
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
             line-height: 1;
         }
-        .talisman-rune-name {
-            font-family: 'Cinzel', serif;
-            font-size: 10px;
-            color: #fff;
-            font-weight: 600;
-        }
-        .talisman-rune-pos {
-            font-size: 8.5px;
-            color: var(--accent-gold);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
 
-        /* I Ching in Talisman */
-        .talisman-iching-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            text-align: center;
-        }
-        .talisman-iching-title {
-            font-family: 'Cinzel', serif;
-            font-size: 15px;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: 1px;
-        }
-        .talisman-iching-sub {
-            font-size: 11px;
-            color: var(--accent-gold);
-            letter-spacing: 0.8px;
-        }
-        .talisman-hex-lines-wrap {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            width: 90px;
-            margin: 4px 0;
-        }
-        .talisman-hex-line {
-            height: 7px;
-            border-radius: 3px;
-        }
-        .talisman-hex-line.yang {
-            background: linear-gradient(90deg, #ffd875, #d4af37);
-            box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
-        }
-        .talisman-hex-line.yin {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-        }
-        .talisman-hex-line.yin span {
-            flex: 1;
-            height: 100%;
-            background: linear-gradient(90deg, #c084fc, #8c54ff);
-            box-shadow: 0 0 8px rgba(140, 84, 255, 0.5);
-            border-radius: 3px;
-        }
-
-        /* Numerology in Talisman */
-        .talisman-number-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-        }
-        .talisman-number-val {
-            font-family: 'Cinzel', serif;
-            font-size: 46px;
-            font-weight: 700;
-            letter-spacing: 4px;
-            background: linear-gradient(135deg, #fff 0%, var(--accent-gold) 60%, var(--accent-primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 16px rgba(212, 175, 55, 0.5));
-        }
-        .talisman-number-desc {
-            font-size: 11.5px;
-            color: var(--accent-gold);
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-        /* Prophecy Quote Wrap */
-        .talisman-prophecy-wrap {
-            width: 100%;
-            text-align: center;
-            padding: 12px 14px;
-            background: rgba(13, 10, 24, 0.65);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            border-radius: 8px;
-            position: relative;
-            margin-bottom: 6px;
-            backdrop-filter: blur(4px);
-            z-index: 2;
-        }
-        .format-post .talisman-prophecy-wrap {
-            padding: 9px 12px;
-            margin-bottom: 4px;
-        }
         .talisman-quote-text {
             font-family: 'Cinzel', serif;
-            font-size: 13px;
+            font-size: 14.5px;
             font-weight: 600;
-            line-height: 1.45;
+            line-height: 1.55;
             color: #ffffff;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.4px;
             margin: 0;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
+            display: -webkit-box;
+            -webkit-line-clamp: 6;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
+
         .format-post .talisman-quote-text {
-            font-size: 12px;
-            line-height: 1.35;
+            font-size: 13px;
+            line-height: 1.42;
+            -webkit-line-clamp: 5;
+        }
+
+        .talisman-quote-author {
+            font-family: 'Cinzel', serif;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            opacity: 0.85;
         }
 
         /* Talisman Footer Watermark */
@@ -1568,12 +1445,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2px;
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
-            padding-top: 6px;
+            gap: 3px;
+            border-top: 1px solid rgba(212, 175, 55, 0.25);
+            padding-top: 8px;
             position: relative;
-            z-index: 2;
+            z-index: 3;
         }
+
         .talisman-brand {
             font-family: 'Cinzel', serif;
             font-size: 11px;
@@ -1583,23 +1461,28 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
         }
+
         .talisman-brand-star {
             font-size: 9px;
             color: var(--accent-gold);
         }
+
         .talisman-brand-dot {
             opacity: 0.6;
         }
+
         .talisman-brand-domain {
             color: #ffffff;
             font-weight: 700;
             letter-spacing: 1.5px;
         }
+
         .talisman-subbrand {
             font-size: 8.5px;
-            letter-spacing: 1.2px;
-            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 1.4px;
+            color: rgba(255, 255, 255, 0.6);
             text-transform: uppercase;
         }
 
@@ -4800,28 +4683,37 @@
                 <div class="social-preview-wrapper">
                     <div class="social-card-viewport" id="socialCardViewport">
                         <div class="social-talisman-card format-story" id="socialTalismanCard">
-                            <div class="talisman-bg-stars"></div>
+                            <!-- Faded Reading Backdrop -->
+                            <div class="talisman-reading-backdrop">
+                                <img id="talismanReadingImg" src="" alt="Active Divination Altar" class="talisman-reading-img">
+                                <div class="talisman-reading-vignette"></div>
+                            </div>
+
+                            <!-- Border & Filigree Corners -->
                             <div class="talisman-border-frame"></div>
                             <div class="talisman-corner c-tl">✦</div>
                             <div class="talisman-corner c-tr">✦</div>
                             <div class="talisman-corner c-bl">✦</div>
                             <div class="talisman-corner c-br">✦</div>
 
+                            <!-- Top Header -->
                             <div class="talisman-header">
-                                <div class="talisman-badge" id="talismanBadge">✦ HERMETIC TAROT · THREE-CARD TRIAD ✦</div>
-                                <div class="talisman-question" id="talismanQuestion">“What guidance awaits my next step?”</div>
+                                <div class="talisman-badge" id="talismanBadge">✦ SACRED ELDER FUTHARK RUNES ✦</div>
+                                <div class="talisman-question" id="talismanQuestion">“What energies are shaping my career, calling, and life purpose?”</div>
                             </div>
 
-                            <div class="talisman-center-altar" id="talismanCenterAltar">
-                                <!-- Cards, Runes, or Hexagram rendered here -->
+                            <!-- Center Overlaid Prophecy Callout -->
+                            <div class="talisman-prophecy-center">
+                                <div class="talisman-quote-card">
+                                    <div class="talisman-quote-ornament">✦ ❖ ✦</div>
+                                    <blockquote class="talisman-quote-text" id="talismanQuoteText">
+                                        You are being commanded to strike with the truth, clear the board of false allegiances, and invite the wild winds of change to strip away everything extraneous.
+                                    </blockquote>
+                                    <div class="talisman-quote-author">THE ORACLE’S REVELATION</div>
+                                </div>
                             </div>
 
-                            <div class="talisman-prophecy-wrap">
-                                <blockquote class="talisman-quote-text" id="talismanQuoteText">
-                                    The obstacle before you is not a barrier, but an incubation chamber for your highest wisdom.
-                                </blockquote>
-                            </div>
-
+                            <!-- Bottom Watermark -->
                             <div class="talisman-footer">
                                 <div class="talisman-brand">
                                     <span class="talisman-brand-star">✦</span>
@@ -6924,86 +6816,7 @@
             }
         }
 
-        function renderTalismanAltar(metadata) {
-            const container = document.getElementById('talismanCenterAltar');
-            if (!container) return;
-            container.innerHTML = '';
-
-            const tradition = (metadata && metadata.type) || currentTradition || 'tarot';
-
-            if (tradition === 'tarot' && metadata && metadata.cards) {
-                const row = document.createElement('div');
-                row.className = 'talisman-tarot-row';
-                const cardsToShow = metadata.cards.slice(0, 3);
-                cardsToShow.forEach((card, idx) => {
-                    const box = document.createElement('div');
-                    box.className = 'talisman-card-box';
-                    const slug = getCardSlug(card);
-                    const pos = (metadata.positions && metadata.positions[idx]) || `Card ${idx + 1}`;
-                    box.innerHTML = `
-                        <div class="talisman-card-img-wrap ${card.reversed ? 'reversed' : ''}">
-                            <img src="/static/cards/tarot/${slug}.webp" alt="${card.name}"
-                                 onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(145deg, #2b1f48, #110d22)';">
-                        </div>
-                        <div class="talisman-card-lbl">${card.name}</div>
-                        <div class="talisman-card-pos">${pos}</div>
-                    `;
-                    row.appendChild(box);
-                });
-                container.appendChild(row);
-            } else if (tradition === 'runes' && metadata && metadata.runes) {
-                const row = document.createElement('div');
-                row.className = 'talisman-rune-row';
-                const runesToShow = metadata.runes.slice(0, 3);
-                runesToShow.forEach((r, idx) => {
-                    const box = document.createElement('div');
-                    box.className = 'talisman-rune-box';
-                    const pos = (metadata.positions && metadata.positions[idx]) || `Stave ${idx + 1}`;
-                    box.innerHTML = `
-                        <div class="talisman-rune-stone ${r.reversed ? 'reversed' : ''}">
-                            <span class="talisman-rune-glyph">${r.rune || r.symbol || 'ᚠ'}</span>
-                        </div>
-                        <div class="talisman-rune-name">${r.name}</div>
-                        <div class="talisman-rune-pos">${pos}</div>
-                    `;
-                    row.appendChild(box);
-                });
-                container.appendChild(row);
-            } else if (tradition === 'iching' && metadata && metadata.hexagram) {
-                const hex = metadata.hexagram;
-                const box = document.createElement('div');
-                box.className = 'talisman-iching-box';
-                const lines = hex.lines || [7, 8, 7, 8, 7, 8];
-                const linesHtml = lines.map(lineVal => {
-                    const isYang = (lineVal === 7 || lineVal === 9);
-                    return isYang 
-                        ? '<div class="talisman-hex-line yang"></div>'
-                        : '<div class="talisman-hex-line yin"><span></span><span></span></div>';
-                }).reverse().join('');
-
-                box.innerHTML = `
-                    <div class="talisman-iching-title">${hex.name} · ${hex.chinese || ''}</div>
-                    <div class="talisman-hex-lines-wrap">${linesHtml}</div>
-                    <div class="talisman-iching-sub">Hexagram ${hex.number}: ${hex.meaning}</div>
-                `;
-                container.appendChild(box);
-            } else if (tradition === 'number' || (metadata && metadata.number)) {
-                const num = (metadata && metadata.number) || 777;
-                const box = document.createElement('div');
-                box.className = 'talisman-number-box';
-                box.innerHTML = `
-                    <div class="talisman-number-val">${num}</div>
-                    <div class="talisman-number-desc">Quantum Entropy Ground State</div>
-                `;
-                container.appendChild(box);
-            } else {
-                container.innerHTML = `
-                    <div style="font-size: 32px; color: var(--accent-gold); text-shadow: 0 0 16px rgba(212, 175, 55, 0.6);">✦ ✦ ✦</div>
-                `;
-            }
-        }
-
-        function openSocialExportModal() {
+        async function openSocialExportModal() {
             initAudio();
             sounds.chime();
 
@@ -7011,15 +6824,36 @@
             const feedback = document.getElementById('socialShareFeedback');
             if (feedback) feedback.style.display = 'none';
 
-            // Gather current inquiry and response text
+            // 1. Snapshot the actual active reading stage into high-res data URL for faded backdrop
+            const stageCard = document.getElementById('visual-stage-card');
+            const readingImg = document.getElementById('talismanReadingImg');
+
+            if (stageCard && readingImg) {
+                try {
+                    const canvas = await html2canvas(stageCard, {
+                        backgroundColor: null,
+                        scale: 2,
+                        useCORS: true,
+                        logging: false
+                    });
+                    readingImg.src = canvas.toDataURL('image/png');
+                    if (readingImg.decode) {
+                        await readingImg.decode().catch(() => {});
+                    }
+                } catch (e) {
+                    console.warn('Could not snapshot visual stage:', e);
+                }
+            }
+
+            // 2. Gather current inquiry and response text
             const question = (seekerInquiryDisplay.textContent || (userInquiry && userInquiry.value) || 'Consultation with the Quantum Oracle').replace(/^"|"$/g, '').trim();
             const responseText = (oracleStreamText && oracleStreamText.innerText) || '';
 
-            // Extract candidate quotes
+            // 3. Extract candidate quotes
             socialCandidateQuotes = extractCandidateQuotes(responseText);
             activeQuoteIndex = 0;
 
-            // Render quote pills
+            // 4. Render quote pills
             const pillsContainer = document.getElementById('quotePillsList');
             if (pillsContainer) {
                 pillsContainer.innerHTML = '';
@@ -7032,14 +6866,14 @@
                 });
             }
 
-            // Populate textarea & preview
+            // 5. Populate textarea & preview quote
             const quoteInput = document.getElementById('socialQuoteInput');
             if (quoteInput) {
                 quoteInput.value = socialCandidateQuotes[0] || '';
             }
             updateSocialPreviewQuote();
 
-            // Set badge & question on card
+            // 6. Set badge & question on card
             const badgeMap = {
                 tarot: '✦ HERMETIC TAROT ARCANA ✦',
                 runes: '✦ SACRED ELDER FUTHARK RUNES ✦',
@@ -7056,9 +6890,6 @@
             if (talismanQuestion) {
                 talismanQuestion.textContent = `“${question}”`;
             }
-
-            // Render Center Altar
-            renderTalismanAltar(currentReadingData);
 
             // Default to Story format
             setSocialFormat('story');
@@ -7091,6 +6922,11 @@
             const scale = format === 'story' ? 3 : 2.45;
 
             try {
+                const readingImg = document.getElementById('talismanReadingImg');
+                if (readingImg && readingImg.src && !readingImg.complete && readingImg.decode) {
+                    await readingImg.decode().catch(() => {});
+                }
+
                 const canvas = await html2canvas(cardEl, {
                     backgroundColor: '#0c0a17',
                     scale: scale,
