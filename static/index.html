@@ -455,7 +455,10 @@
             border: 1px solid rgba(212, 175, 55, 0.22);
             border-radius: 12px;
             padding: 2px 7px;
-            white-space: nowrap;
+            min-width: 0;
+            text-align: center;
+            line-height: 1.25;
+            white-space: normal;
         }
 
         .tradition-card-body {
@@ -985,13 +988,16 @@
             flex-shrink: 0;
         }
 
-        /* Social Share Card Generator & Talisman Export */
+        /* ==========================================================
+           Social Share Card Generator & Talisman Export
+           ========================================================== */
         .social-export-dialog {
             border: none;
             background: transparent;
             padding: 0;
-            max-width: 960px;
-            width: 95vw;
+            max-width: 1040px;
+            width: 96vw;
+            max-height: 96vh;
             margin: auto;
             border-radius: var(--radius-lg);
             box-shadow: 0 24px 70px rgba(0, 0, 0, 0.9), 0 0 40px rgba(212, 175, 55, 0.3);
@@ -1005,121 +1011,156 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            max-height: 90vh;
+            max-height: 92vh;
         }
 
-        .social-export-toolbar {
-            padding: 12px 24px;
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
+        .social-export-body {
+            display: grid;
+            grid-template-columns: 340px minmax(0, 1fr);
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow: hidden;
+            background: var(--bg-primary);
+        }
+
+        .social-export-sidebar {
+            padding: 20px 22px 22px;
+            border-right: 1px solid var(--border-color);
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 20px;
+            background: rgba(13, 10, 24, 0.4);
+            overflow-y: auto;
+            min-height: 0;
+        }
+
+        .social-control-section {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
         }
 
         .social-control-label {
             font-family: 'Cinzel', serif;
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
             text-transform: uppercase;
             color: var(--accent-gold);
         }
 
         .social-control-hint {
-            font-size: 12.5px;
+            font-size: 13px;
             color: var(--text-muted);
-            margin: 3px 0 8px;
+            margin: -2px 0 2px;
             line-height: 1.4;
         }
 
+        /* Format pills */
         .format-toggle-group {
-            display: flex;
-            align-items: center;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 8px;
         }
 
         .format-btn {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
+            justify-content: center;
+            gap: 9px;
+            padding: 9px 10px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 18px;
-            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
             font-family: 'Cinzel', serif;
-            font-size: 11.5px;
+            font-size: 12px;
+            letter-spacing: 0.4px;
+            line-height: 1.2;
+            text-align: left;
             cursor: pointer;
             transition: all 0.2s;
         }
 
+        .format-btn svg { flex-shrink: 0; }
+
+        .format-btn small {
+            display: block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 12.5px;
+            color: var(--text-muted);
+            letter-spacing: 0;
+            font-weight: 400;
+            margin-top: 1px;
+        }
+
+        .format-btn:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+            color: var(--text-primary);
+        }
+
         .format-btn.active {
-            background: rgba(212, 175, 55, 0.15);
+            background: rgba(212, 175, 55, 0.14);
             border-color: var(--accent-gold);
             color: var(--accent-gold);
             font-weight: 700;
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
         }
 
-        .social-export-body {
-            display: grid;
-            grid-template-columns: 320px 1fr;
-            overflow-y: auto;
-            max-height: calc(90vh - 130px);
-            background: var(--bg-primary);
-        }
+        .format-btn.active small { color: rgba(212, 175, 55, 0.8); }
 
-        .social-export-sidebar {
-            padding: 18px 20px;
-            border-right: 1px solid var(--border-color);
+        /* Quote candidates */
+        .quote-option-list {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            background: rgba(13, 10, 24, 0.4);
-        }
-
-        .social-control-section {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .quote-selector-tabs {
-            display: flex;
             gap: 6px;
-            margin: 6px 0 10px;
         }
 
-        .quote-tab-btn {
-            flex: 1;
+        .quote-option {
+            text-align: left;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
-            padding: 8px 6px;
-            font-family: 'Cinzel', serif;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+            padding: 8px 12px 8px 30px;
+            position: relative;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14.5px;
+            line-height: 1.35;
             color: var(--text-secondary);
             cursor: pointer;
-            text-align: center;
             transition: all 0.2s;
+            display: block;
+            width: 100%;
         }
 
-        .quote-tab-btn:hover {
+        .quote-option-text {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .quote-option::before {
+            content: '✦';
+            position: absolute;
+            left: 11px;
+            top: 9px;
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .quote-option:hover {
             border-color: rgba(212, 175, 55, 0.5);
             color: var(--text-primary);
         }
 
-        .quote-tab-btn.active {
-            background: rgba(212, 175, 55, 0.15);
+        .quote-option.active {
+            background: rgba(212, 175, 55, 0.12);
             border-color: var(--accent-gold);
-            color: var(--accent-gold);
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+            color: var(--text-primary);
         }
+
+        .quote-option.active::before { color: var(--accent-gold); }
 
         .social-quote-input {
             width: 100%;
@@ -1128,11 +1169,12 @@
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
             color: var(--text-primary);
-            padding: 10px;
-            font-family: inherit;
-            font-size: 13px;
+            padding: 10px 12px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 15px;
             line-height: 1.45;
             resize: vertical;
+            min-height: 78px;
         }
 
         .social-quote-input:focus {
@@ -1141,7 +1183,18 @@
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.25);
         }
 
+        .social-quote-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 0.2px;
+        }
+
+        .social-quote-meta .is-long { color: #e0a86b; }
+
         .social-export-actions-panel {
+            margin-top: auto;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -1174,6 +1227,13 @@
             box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
         }
 
+        .social-primary-btn:disabled,
+        .social-secondary-btn:disabled {
+            opacity: 0.55;
+            cursor: progress;
+            transform: none;
+        }
+
         .social-secondary-btn {
             width: 100%;
             background: var(--bg-card);
@@ -1198,220 +1258,150 @@
         }
 
         .social-share-feedback {
-            display: none;
+            min-height: 18px;
             font-size: 12.5px;
             color: var(--accent-gold);
             text-align: center;
-            padding: 4px 0;
-            animation: fadeIn 0.2s ease;
+            padding: 2px 0;
+            transition: opacity 0.2s ease;
         }
 
+        /* Live preview (the preview image IS the export, scaled down) */
         .social-preview-wrapper {
-            padding: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle at 50% 50%, rgba(20, 14, 38, 0.5) 0%, rgba(8, 6, 15, 0.95) 100%);
-            overflow: hidden;
-            min-height: 480px;
-        }
-
-        .social-card-viewport {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* The Substack-Style Divination Social Card */
-        .social-talisman-card {
-            position: relative;
-            background: #080612;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 12px;
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 0, 0, 0.8);
+            padding: 22px 24px 18px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 12px;
+            background: radial-gradient(circle at 50% 42%, rgba(26, 18, 46, 0.75) 0%, rgba(8, 6, 15, 0.98) 100%);
             overflow: hidden;
-            box-sizing: border-box;
-            user-select: none;
+            min-height: 0;
         }
 
-        .social-talisman-card.format-story {
-            width: 290px;
-            height: 516px;
-            padding: 34px 22px 22px;
-        }
-
-        .social-talisman-card.format-post {
-            width: 360px;
-            height: 360px;
-            padding: 28px 24px 20px;
-        }
-
-        /* Faded Reading Backdrop with Enhanced Card Visibility */
-        .talisman-reading-backdrop {
-            position: absolute;
-            inset: 0;
+        .talisman-preview-frame {
+            position: relative;
+            border-radius: 14px;
             overflow: hidden;
-            pointer-events: none;
-            z-index: 1;
             background: #080612;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            flex: 0 1 auto;
+            min-height: 0;
         }
 
-        .talisman-reading-img {
+        .talisman-preview-frame.format-story {
+            height: min(calc(92vh - 200px), 720px);
+            aspect-ratio: 9 / 16;
+        }
+
+        .talisman-preview-frame.format-post {
+            width: min(calc(92vh - 200px), 520px, 100%);
+            aspect-ratio: 1 / 1;
+        }
+
+        .talisman-preview-img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            object-position: center;
-            opacity: 0.85;
-            filter: saturate(1.22) contrast(1.1) brightness(0.98);
-            transform: scale(1.03);
             display: block;
+            object-fit: contain;
+            transition: opacity 0.25s ease;
         }
 
-        .talisman-reading-vignette {
+        .talisman-preview-frame.is-rendering .talisman-preview-img { opacity: 0.4; }
+        .talisman-preview-frame.is-empty .talisman-preview-img { opacity: 0; }
+
+        .talisman-preview-status {
             position: absolute;
             inset: 0;
-            background: 
-                radial-gradient(ellipse at 50% 50%, rgba(6, 4, 12, 0.15) 0%, rgba(6, 4, 12, 0.42) 65%, rgba(4, 3, 8, 0.80) 100%),
-                linear-gradient(to bottom, rgba(5, 4, 10, 0.72) 0%, transparent 16%, transparent 84%, rgba(5, 4, 10, 0.8) 100%);
-            pointer-events: none;
-        }
-
-        /* Top: Specific Reading Spread Type */
-        .talisman-header {
-            width: 100%;
-            text-align: center;
-            position: relative;
-            z-index: 3;
-        }
-
-        .talisman-spread-type {
-            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Cinzel', sans-serif;
-            font-size: 10.5px;
-            font-weight: 600;
-            letter-spacing: 2.8px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.7);
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
-        }
-
-        /* Center Overlaid Prophecy Quote (Direct on image, Substack style) */
-        .talisman-quote-container {
-            width: 92%;
-            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
-            z-index: 3;
-            margin: 6px auto;
-            min-height: 0;
-            padding: 10px 12px;
-            border-radius: 12px;
-            background: radial-gradient(ellipse at 50% 50%, rgba(6, 4, 14, 0.52) 0%, rgba(6, 4, 14, 0.22) 65%, transparent 92%);
-        }
-
-        .talisman-quote-text {
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 19px;
-            font-weight: 700;
-            line-height: 1.44;
-            color: #ffffff;
-            letter-spacing: 0.2px;
-            text-align: center;
-            margin: 0;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 1), 0 0 16px rgba(0, 0, 0, 0.95), 0 0 28px rgba(0, 0, 0, 0.85);
-            word-break: break-word;
-            overflow-wrap: break-word;
-        }
-
-        .format-post .talisman-quote-text {
-            font-size: 17.5px;
-            line-height: 1.4;
-        }
-
-        .talisman-quote-attribution {
+            gap: 12px;
             font-family: 'Cinzel', serif;
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 1.8px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.76);
-            margin-top: 14px;
-            white-space: nowrap;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
-        }
-
-        /* Bottom Footer Watermark (Light, no bold, no gold) */
-        .talisman-footer {
-            width: 100%;
-            text-align: center;
-            position: relative;
-            z-index: 3;
-            padding-bottom: 2px;
-        }
-
-        .talisman-brand-domain {
-            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
             font-size: 11px;
-            font-weight: 300;
             letter-spacing: 2px;
-            color: rgba(255, 255, 255, 0.52);
-            text-transform: lowercase;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .talisman-preview-frame.is-rendering .talisman-preview-status,
+        .talisman-preview-frame.is-empty .talisman-preview-status { opacity: 1; }
+
+        .talisman-preview-status .spin {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid rgba(212, 175, 55, 0.25);
+            border-top-color: var(--accent-gold);
+            animation: talismanSpin 0.9s linear infinite;
+        }
+
+        @keyframes talismanSpin { to { transform: rotate(360deg); } }
+
+        .talisman-preview-caption {
+            font-family: 'Cinzel', serif;
+            font-size: 10.5px;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        .talisman-preview-caption span + span::before {
+            content: '·';
+            margin-right: 14px;
+            color: var(--border-color);
+        }
+
+        /* Altar hint: the "rotate device" nudge only makes sense on phones */
+        .hint-rotate { display: none; }
+
+        @media (max-width: 640px) {
+            .hint-rotate { display: inline; }
         }
 
         @media (max-width: 800px) {
+            .social-export-dialog {
+                width: 100vw;
+                max-width: 100vw;
+                max-height: 100vh;
+                border-radius: 0;
+            }
+            .social-export-container {
+                max-height: 100vh;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
             .social-export-body {
                 display: flex;
                 flex-direction: column;
+                overflow-y: auto;
             }
             .social-preview-wrapper {
                 order: 1;
-                padding: 14px 10px 10px;
-                min-height: 0;
+                flex: 0 0 auto;
+                padding: 16px 14px 12px;
             }
             .social-export-sidebar {
                 order: 2;
                 border-right: none;
                 border-top: 1px solid var(--border-color);
-                padding: 14px 16px 20px;
+                padding: 16px 16px 26px;
+                overflow: visible;
+                gap: 18px;
             }
-            .social-talisman-card.format-story {
-                width: 180px;
-                height: 320px;
-                padding: 18px 12px 12px;
-            }
-            .social-talisman-card.format-post {
-                width: 220px;
-                height: 220px;
-                padding: 16px 14px 12px;
-            }
-            .social-talisman-card.format-story .talisman-quote-text {
-                font-size: 12px !important;
-                line-height: 1.38 !important;
-            }
-            .social-talisman-card.format-post .talisman-quote-text {
-                font-size: 12px !important;
-                line-height: 1.38 !important;
-            }
-            .social-talisman-card .talisman-spread-type {
-                font-size: 8px;
-                letter-spacing: 1.5px;
-            }
-            .social-talisman-card .talisman-quote-attribution {
-                font-size: 7.5px;
-                margin-top: 8px;
-            }
-            .social-talisman-card .talisman-brand-domain {
-                font-size: 9px;
-            }
+            .social-export-actions-panel { margin-top: 2px; }
+            .talisman-preview-frame.format-story { height: min(58vh, 520px); }
+            .talisman-preview-frame.format-post { width: min(88vw, 58vh); }
         }
-
         .quantum-info-card {
             background: linear-gradient(165deg, rgba(28, 20, 52, 0.75) 0%, rgba(13, 10, 24, 0.92) 100%), var(--bg-secondary);
             border: 1px solid rgba(212, 175, 55, 0.35);
@@ -2469,22 +2459,37 @@
             border-radius: calc(var(--radius-md) - 2px);
         }
 
+        /* Position badges size themselves to the card so long labels (e.g. "Present Situation")
+           wrap onto two lines instead of being clipped by the card face */
+        .tarot-card-wrapper {
+            container-type: inline-size;
+        }
+
         .card-overlay-badge {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(13, 12, 20, 0.82);
+            width: max-content;
+            max-width: calc(100% - 10px);
+            box-sizing: border-box;
+            background: rgba(13, 12, 20, 0.84);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(229, 193, 88, 0.45);
             border-radius: 12px;
-            padding: 3px 10px;
-            font-size: 10px;
+            padding: 3px 8px;
+            padding: 3px clamp(5px, 7cqw, 9px);
+            font-size: 9px;
+            font-size: clamp(6.5px, 9.5cqw, 10px);
+            line-height: 1.2;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
+            letter-spacing: clamp(0.3px, 0.7cqw, 0.8px);
             color: var(--accent-gold);
-            white-space: nowrap;
+            text-align: center;
+            white-space: normal;
+            overflow-wrap: normal;
             z-index: 3;
             pointer-events: none;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
@@ -2492,6 +2497,12 @@
 
         .card-overlay-badge.top-badge {
             top: 6px;
+        }
+
+        /* Hide hover affordances and helper captions while the altar is photographed for export */
+        .visual-stage-card.is-capturing .altar-orientation-hint,
+        .visual-stage-card.is-capturing .tarot-card-wrapper::after {
+            display: none !important;
         }
 
         .card-art-fallback {
@@ -3574,10 +3585,8 @@
             padding: 4px 8px;
             margin-top: 10px;
             user-select: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
+            display: block;
+            line-height: 1.5;
         }
 
         /* Merkstave (Reversed Runes) Styling */
@@ -4566,30 +4575,34 @@
                 <button type="button" class="lore-close-btn" onclick="closeSocialExportModal()" aria-label="Close share dialog">&times;</button>
             </div>
 
-            <div class="social-export-toolbar">
-                <div class="format-toggle-group">
-                    <span class="social-control-label">Card Format:</span>
-                    <button type="button" class="format-btn active" id="formatBtnStory" onclick="setSocialFormat('story')">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"></rect></svg>
-                        <span>9:16 Story / Reel</span>
-                    </button>
-                    <button type="button" class="format-btn" id="formatBtnPost" onclick="setSocialFormat('post')">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>
-                        <span>1:1 Square Post</span>
-                    </button>
-                </div>
-            </div>
-
             <div class="social-export-body">
-                <!-- Left Sidebar: Controls & Quote Chooser -->
+                <!-- Left Sidebar: Format, Quote & Actions -->
                 <div class="social-export-sidebar">
                     <div class="social-control-section">
-                        <label class="social-control-label">Quote Selection:</label>
-                        <p class="social-control-hint">Tap an oracle revelation or customize the text:</p>
-                        <div class="quote-selector-tabs" id="quoteSelectorTabs">
-                            <!-- Populated with Quote 1, Quote 2, Quote 3 tabs -->
+                        <span class="social-control-label">Format</span>
+                        <div class="format-toggle-group" role="group" aria-label="Card format">
+                            <button type="button" class="format-btn active" id="formatBtnStory" onclick="setSocialFormat('story')" aria-pressed="true">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"></rect></svg>
+                                <span>Story<small>9:16 · Reels</small></span>
+                            </button>
+                            <button type="button" class="format-btn" id="formatBtnPost" onclick="setSocialFormat('post')" aria-pressed="false">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>
+                                <span>Post<small>1:1 · Feed</small></span>
+                            </button>
                         </div>
-                        <textarea id="socialQuoteInput" class="social-quote-input" rows="3" placeholder="Enter quote text..." oninput="updateSocialPreviewQuote()"></textarea>
+                    </div>
+
+                    <div class="social-control-section">
+                        <span class="social-control-label">Prophecy Quote</span>
+                        <p class="social-control-hint">Choose a line from your reading, or write your own.</p>
+                        <div class="quote-option-list" id="quoteSelectorTabs">
+                            <!-- Populated with the Oracle's most quotable lines -->
+                        </div>
+                        <textarea id="socialQuoteInput" class="social-quote-input" rows="3" maxlength="320" placeholder="Enter quote text..." oninput="onSocialQuoteInput()" aria-label="Quote text"></textarea>
+                        <div class="social-quote-meta">
+                            <span>Shorter reads bolder</span>
+                            <span id="socialQuoteCount">0 / 320</span>
+                        </div>
                     </div>
 
                     <div class="social-export-actions-panel">
@@ -4597,42 +4610,26 @@
                             <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                             <span>Share to Stories / Socials</span>
                         </button>
-                        <button type="button" class="social-secondary-btn" onclick="triggerSocialShare('download')">
+                        <button type="button" class="social-secondary-btn" id="socialDownloadBtn" onclick="triggerSocialShare('download')">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                             <span>Download High-Res PNG</span>
                         </button>
-                        <div id="socialShareFeedback" class="social-share-feedback"></div>
+                        <div id="socialShareFeedback" class="social-share-feedback" role="status" aria-live="polite"></div>
                     </div>
                 </div>
 
-                <!-- Right Viewport: Live Preview Canvas -->
+                <!-- Right: Live Preview (exact export, scaled to fit) -->
                 <div class="social-preview-wrapper">
-                    <div class="social-card-viewport" id="socialCardViewport">
-                        <div class="social-talisman-card format-story" id="socialTalismanCard">
-                            <!-- Faded Reading Backdrop -->
-                            <div class="talisman-reading-backdrop">
-                                <img id="talismanReadingImg" src="" alt="Active Divination Altar" class="talisman-reading-img">
-                                <div class="talisman-reading-vignette"></div>
-                            </div>
-
-                            <!-- Top Header: Specific Spread Type -->
-                            <div class="talisman-header">
-                                <div class="talisman-spread-type" id="talismanSpreadType">CELTIC CROSS TAROT</div>
-                            </div>
-
-                            <!-- Center: Overlaid Prophecy Quote (Substack style) -->
-                            <div class="talisman-quote-container">
-                                <blockquote class="talisman-quote-text" id="talismanQuoteText">
-                                    You are being commanded to strike with the truth, clear the board of false allegiances, and invite the wild winds of change to strip away everything extraneous.
-                                </blockquote>
-                                <div class="talisman-quote-attribution">— The Quantum Oracle</div>
-                            </div>
-
-                            <!-- Bottom: Clean, unbolded domain watermark -->
-                            <div class="talisman-footer">
-                                <span class="talisman-brand-domain">qoracle.com</span>
-                            </div>
+                    <div class="talisman-preview-frame format-story is-empty" id="talismanPreviewFrame">
+                        <img id="talismanPreviewImg" class="talisman-preview-img" alt="Preview of your shareable reading card" src="">
+                        <div class="talisman-preview-status">
+                            <div class="spin"></div>
+                            <span>Weaving talisman</span>
                         </div>
+                    </div>
+                    <div class="talisman-preview-caption">
+                        <span id="talismanPreviewDims">1080 × 1920 · PNG</span>
+                        <span>Exact export preview</span>
                     </div>
                 </div>
             </div>
@@ -6139,7 +6136,7 @@
                 // Add altar orientation hint
                 const hint = document.createElement('div');
                 hint.className = 'altar-orientation-hint';
-                hint.innerHTML = '✦ Sacred Geometric Altar · Rotate device for panoramic view · Tap to inspect ✦';
+                hint.innerHTML = '✦ Sacred Geometric Altar <span class="hint-rotate">· Rotate device for panoramic view</span> · Tap to inspect ✦';
                 visualStageCard.appendChild(hint);
 
             } else if (metadata.type === 'iching' && metadata.hexagram) {
@@ -6378,7 +6375,7 @@
 
                 const hint = document.createElement('div');
                 hint.className = 'altar-orientation-hint';
-                hint.innerHTML = '✦ Sacred Runic Altar · Rotate device for panoramic view · Tap to inspect ✦';
+                hint.innerHTML = '✦ Sacred Runic Altar <span class="hint-rotate">· Rotate device for panoramic view</span> · Tap to inspect ✦';
                 visualStageCard.appendChild(hint);
 
             } else if (metadata.quantum_number) {
@@ -6614,10 +6611,34 @@
 
         // ==========================================
         // Social Share Card & Talisman Generator
+        // The card is composited on a <canvas>, so the on-screen preview is
+        // pixel-identical to the exported PNG. html2canvas is only used to
+        // photograph the live altar; all cropping / fitting is done here.
         // ==========================================
         let currentSocialFormat = 'story'; // 'story' (9:16) or 'post' (1:1)
         let socialCandidateQuotes = [];
         let activeQuoteIndex = 0;
+        let talismanSnapshot = null;   // { canvas, content: {x, y, w, h} } — altar render + tight spread bounds (canvas px)
+        let talismanRenderSeq = 0;
+        let talismanRenderTimer = null;
+        let talismanPreviewUrl = null;
+        let talismanFontsReady = null;
+
+        const TALISMAN_FORMATS = {
+            story: { w: 1080, h: 1920, label: '1080 × 1920 · PNG' },
+            post:  { w: 1080, h: 1080, label: '1080 × 1080 · PNG' }
+        };
+        // Per tradition: elements whose union defines "the spread", and (optionally) the surface whose
+        // texture the crop may extend over. Runes crop to the stones but never past the casting cloth.
+        const TALISMAN_CONTENT_RULES = [
+            { content: '.tarot-card-wrapper', clamp: null },
+            { content: '.rune-stone-wrapper', clamp: '.rune-casting-mat' },
+            { content: '.iching-stage-container > *', clamp: null },
+            { content: '.number-stage', clamp: null }
+        ];
+        const TALISMAN_SERIF = "'Cormorant Garamond', Georgia, 'Times New Roman', serif";
+        const TALISMAN_DISPLAY = "'Cinzel', 'Cormorant Garamond', Georgia, serif";
+        const TALISMAN_SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
 
         function downloadCanvas(canvas, filename) {
             const link = document.createElement('a');
@@ -6629,79 +6650,62 @@
         async function exportActiveReading() {
             const el = document.getElementById('visual-stage-card');
             if (!el) return;
+            el.classList.add('is-capturing');
             try {
-                const canvas = await html2canvas(el, { backgroundColor: '#12111a', scale: 2 });
+                const canvas = await html2canvas(el, { backgroundColor: '#12111a', scale: 2, useCORS: true, logging: false });
                 downloadCanvas(canvas, 'oracle-altar.png');
             } catch (e) {
                 alert('Could not generate image. Please take a screenshot instead.');
+            } finally {
+                el.classList.remove('is-capturing');
             }
         }
 
-        function extractCandidateQuotes(rawText) {
-            if (!rawText) {
-                return ["A meaningful coincidence between inner psyche and outer cosmos, liberated from mechanical causality."];
-            }
+        // Pulls the most quotable lines out of the rendered reading.
+        function extractCandidateQuotes(sourceEl) {
+            const fallback = ["A meaningful coincidence between inner psyche and outer cosmos, liberated from mechanical causality."];
+            if (!sourceEl) return fallback;
+            const rawText = sourceEl.innerText || '';
+            if (!rawText.trim()) return fallback;
 
             const candidates = [];
+            const push = (s) => {
+                const clean = (s || '')
+                    .replace(/\s+/g, ' ')
+                    .replace(/^[A-Za-z✦·—-]+(?:\s[A-Za-z✦·—-]+){0,3}:\s+/, '')
+                    .replace(/^["“]+|["”]+$/g, '')
+                    .trim();
+                if (clean.length >= 25 && clean.length <= 280 && !candidates.includes(clean)) candidates.push(clean);
+            };
 
-            // 1. Look for bold markdown statements e.g. **The Core Omen: ...** or **...**
-            const boldMatches = rawText.match(/\*\*([^*]{25,280})\*\*/g);
-            if (boldMatches) {
-                boldMatches.forEach(m => {
-                    let clean = m.replace(/\*\*/g, '').replace(/^[A-Za-z\s]+:\s*/, '').trim();
-                    if (clean.length >= 25 && clean.length <= 280 && !candidates.includes(clean)) {
-                        candidates.push(clean);
-                    }
-                });
-            }
+            // 1. The Oracle's own emphasised prophecies are the most shareable lines
+            sourceEl.querySelectorAll('strong, b').forEach(el => {
+                if (el.closest('h1, h2, h3, h4')) return;
+                push(el.textContent);
+            });
 
-            // 2. Look for synthesis sentences with evocative keywords
+            // 2. Evocative sentences, scanning from the closing synthesis backwards
             const sentences = rawText
                 .replace(/[#*`_>]/g, '')
                 .split(/(?<=[.?!])\s+/)
                 .map(s => s.trim())
-                .filter(s => s.length >= 30 && s.length <= 260 && !s.startsWith('-') && !s.startsWith('http'));
+                .filter(s => s.length >= 30 && s.length <= 260 && !/^[-•✦]/.test(s) && !s.startsWith('http'));
 
-            const keywordRegex = /(path|destiny|courage|omen|wisdom|transform|balance|inner|lesson|clarity|truth|horizon|guide|step|spirit|action|yield|illumination)/i;
-            for (let i = sentences.length - 1; i >= 0; i--) {
-                const s = sentences[i];
-                if (keywordRegex.test(s) && !candidates.includes(s)) {
-                    candidates.push(s);
-                    if (candidates.length >= 4) break;
-                }
+            const keywordRegex = /(path|destiny|courage|omen|wisdom|transform|balance|inner|lesson|clarity|truth|horizon|guide|step|spirit|action|yield|illumination|trust|release|become)/i;
+            for (let i = sentences.length - 1; i >= 0 && candidates.length < 4; i--) {
+                if (keywordRegex.test(sentences[i])) push(sentences[i]);
             }
 
-            // 3. Fallback clean sentences if few found
+            // 3. Plain sentences if we are still short
             for (const s of sentences) {
                 if (candidates.length >= 3) break;
-                if (!candidates.includes(s) && s.length >= 30) {
-                    candidates.push(s);
-                }
+                push(s);
             }
 
             if (candidates.length === 0) {
                 candidates.push("The Oracle channels genuine quantum vacuum indeterminacy to illuminate your present horizon.");
             }
-
-            return candidates.slice(0, 3);
-        }
-
-        function setSocialFormat(format) {
-            currentSocialFormat = format;
-            const storyBtn = document.getElementById('formatBtnStory');
-            const postBtn = document.getElementById('formatBtnPost');
-            const card = document.getElementById('socialTalismanCard');
-
-            if (format === 'story') {
-                storyBtn.classList.add('active');
-                postBtn.classList.remove('active');
-                card.className = 'social-talisman-card format-story';
-            } else {
-                postBtn.classList.add('active');
-                storyBtn.classList.remove('active');
-                card.className = 'social-talisman-card format-post';
-            }
-            updateSocialPreviewQuote();
+            return candidates.slice(0, 4);
         }
 
         function getReadingSpreadTitle(tradition, data) {
@@ -6737,59 +6741,562 @@
             return 'Quantum Divination'.toUpperCase();
         }
 
-        function selectQuotePill(index) {
-            activeQuoteIndex = index;
-            const tabs = document.querySelectorAll('.quote-tab-btn');
-            tabs.forEach((t, idx) => {
-                t.classList.toggle('active', idx === index);
-            });
-            const quoteInput = document.getElementById('socialQuoteInput');
-            if (socialCandidateQuotes[index]) {
-                quoteInput.value = socialCandidateQuotes[index];
-                updateSocialPreviewQuote();
+        function ensureTalismanFonts() {
+            if (!talismanFontsReady) {
+                talismanFontsReady = (document.fonts && document.fonts.load)
+                    ? Promise.all([
+                        document.fonts.load('700 48px "Cormorant Garamond"'),
+                        document.fonts.load('600 24px Cinzel')
+                    ]).catch(() => {})
+                    : Promise.resolve();
+            }
+            return talismanFontsReady;
+        }
+
+        // Photographs the live altar once per share session. Returns the raw stage render plus the
+        // tight bounding box of the spread itself, so the compositor can place every card without
+        // cropping or distortion regardless of the card format's aspect ratio.
+        async function captureAltarSnapshot() {
+            const stage = document.getElementById('visual-stage-card');
+            if (!stage || typeof html2canvas !== 'function') return null;
+
+            stage.classList.add('is-capturing');
+            try {
+                void stage.offsetHeight; // reflow after hiding the hint so measurements match the capture
+                const stageRect = stage.getBoundingClientRect();
+                const union = (a, r) => a
+                    ? { left: Math.min(a.left, r.left), top: Math.min(a.top, r.top), right: Math.max(a.right, r.right), bottom: Math.max(a.bottom, r.bottom) }
+                    : { left: r.left, top: r.top, right: r.right, bottom: r.bottom };
+                let box = null;
+                let clampRect = { left: stageRect.left, top: stageRect.top, right: stageRect.right, bottom: stageRect.bottom };
+                for (const rule of TALISMAN_CONTENT_RULES) {
+                    const els = stage.querySelectorAll(rule.content);
+                    if (!els.length) continue;
+                    els.forEach(el => {
+                        const r = el.getBoundingClientRect();
+                        if (r.width >= 2 && r.height >= 2) box = union(box, r);
+                    });
+                    if (!box) continue;
+                    const clampEl = rule.clamp ? stage.querySelector(rule.clamp) : null;
+                    if (clampEl) {
+                        const c = clampEl.getBoundingClientRect();
+                        const inset = 6; // stay inside the surface's border
+                        clampRect = {
+                            left: Math.max(clampRect.left, c.left + inset), top: Math.max(clampRect.top, c.top + inset),
+                            right: Math.min(clampRect.right, c.right - inset), bottom: Math.min(clampRect.bottom, c.bottom - inset)
+                        };
+                    }
+                    break;
+                }
+                if (!box) box = { left: stageRect.left, top: stageRect.top, right: stageRect.right, bottom: stageRect.bottom };
+
+                // Breathing room of altar texture around the spread, clamped to its surface
+                const padX = (box.right - box.left) * 0.14 + 18;
+                const padY = (box.bottom - box.top) * 0.14 + 18;
+                const left = Math.max(clampRect.left, box.left - padX);
+                const top = Math.max(clampRect.top, box.top - padY);
+                const right = Math.min(clampRect.right, box.right + padX);
+                const bottom = Math.min(clampRect.bottom, box.bottom + padY);
+
+                // Render scale: enough pixels that the spread stays crisp at 1080px export, capped for memory
+                const longSide = Math.max(1, right - left, bottom - top);
+                let scale = Math.max(2, 1150 / longSide);
+                scale = Math.min(scale, 4, Math.sqrt(14e6 / Math.max(1, stageRect.width * stageRect.height)));
+
+                const canvas = await html2canvas(stage, {
+                    backgroundColor: null,
+                    scale,
+                    useCORS: true,
+                    logging: false
+                });
+
+                return {
+                    canvas,
+                    content: {
+                        x: (left - stageRect.left) * scale,
+                        y: (top - stageRect.top) * scale,
+                        w: (right - left) * scale,
+                        h: (bottom - top) * scale
+                    }
+                };
+            } catch (e) {
+                console.warn('Could not snapshot visual stage:', e);
+                return null;
+            } finally {
+                stage.classList.remove('is-capturing');
             }
         }
 
-        function updateSocialPreviewQuote() {
-            const quoteInput = document.getElementById('socialQuoteInput');
-            const previewQuote = document.getElementById('talismanQuoteText');
-            if (quoteInput && previewQuote) {
-                const raw = quoteInput.value.trim() || 'The Oracle channels genuine quantum vacuum indeterminacy to illuminate your present horizon.';
-                const clean = raw.replace(/^["“]|["”]$/g, '');
-                previewQuote.textContent = clean;
+        // ---------- Canvas typesetting helpers ----------
+        function talismanFont(weight, size, family) {
+            return `${weight} ${size}px ${family}`;
+        }
 
-                // Adjust font size dynamically on desktop preview so quotes fill the area without clipping
-                const isMobile = window.innerWidth <= 800;
-                if (!isMobile) {
-                    const len = clean.length;
-                    if (currentSocialFormat === 'story') {
-                        if (len > 220) {
-                            previewQuote.style.fontSize = '14.5px';
-                            previewQuote.style.lineHeight = '1.38';
-                        } else if (len > 140) {
-                            previewQuote.style.fontSize = '16.5px';
-                            previewQuote.style.lineHeight = '1.42';
-                        } else if (len > 70) {
-                            previewQuote.style.fontSize = '19px';
-                            previewQuote.style.lineHeight = '1.45';
-                        } else {
-                            previewQuote.style.fontSize = '22px';
-                            previewQuote.style.lineHeight = '1.48';
-                        }
-                    } else {
-                        if (len > 170) {
-                            previewQuote.style.fontSize = '13.5px';
-                            previewQuote.style.lineHeight = '1.36';
-                        } else if (len > 100) {
-                            previewQuote.style.fontSize = '15.5px';
-                            previewQuote.style.lineHeight = '1.4';
-                        } else {
-                            previewQuote.style.fontSize = '18.5px';
-                            previewQuote.style.lineHeight = '1.45';
-                        }
-                    }
+        // Centered text with letter-spacing (native where supported, manual otherwise)
+        function drawTrackedText(ctx, text, cx, y, tracking) {
+            if ('letterSpacing' in ctx) {
+                ctx.letterSpacing = `${tracking}px`;
+                ctx.textAlign = 'center';
+                ctx.fillText(text, cx + tracking / 2, y);
+                ctx.letterSpacing = '0px';
+                return;
+            }
+            const chars = [...text];
+            const widths = chars.map(c => ctx.measureText(c).width);
+            const total = widths.reduce((a, b) => a + b, 0) + tracking * (chars.length - 1);
+            let x = cx - total / 2;
+            ctx.textAlign = 'left';
+            chars.forEach((c, i) => {
+                ctx.fillText(c, x, y);
+                x += widths[i] + tracking;
+            });
+        }
+
+        function wrapLines(ctx, text, maxWidth) {
+            const words = text.split(/\s+/).filter(Boolean);
+            const lines = [];
+            let line = '';
+            for (const word of words) {
+                const test = line ? `${line} ${word}` : word;
+                if (!line || ctx.measureText(test).width <= maxWidth) {
+                    line = test;
+                } else {
+                    lines.push(line);
+                    line = word;
                 }
             }
+            if (line) lines.push(line);
+            return lines;
+        }
+
+        // Re-wraps at narrower widths (same line count) so line lengths are even and no orphans dangle
+        function balanceLines(ctx, text, maxWidth, lines) {
+            if (lines.length < 2) return lines;
+            const spreadOf = (ls) => {
+                const ws = ls.map(l => ctx.measureText(l).width);
+                return Math.max(...ws) - Math.min(...ws);
+            };
+            let best = lines;
+            let bestSpread = spreadOf(lines);
+            for (let f = 0.97; f >= 0.7; f -= 0.03) {
+                const cand = wrapLines(ctx, text, maxWidth * f);
+                if (cand.length !== lines.length) break;
+                const s = spreadOf(cand);
+                if (s < bestSpread) { best = cand; bestSpread = s; }
+            }
+            return best;
+        }
+
+        // Largest font size whose wrapped block fits the box → { size, lines, lineHeight }
+        function fitQuote(ctx, text, maxWidth, maxHeight, maxSize, minSize, lhRatio) {
+            for (let size = maxSize; size >= minSize; size -= 2) {
+                ctx.font = talismanFont(700, size, TALISMAN_SERIF);
+                const lines = wrapLines(ctx, text, maxWidth);
+                const lh = Math.round(size * lhRatio);
+                if (lines.length * lh <= maxHeight && lines.every(l => ctx.measureText(l).width <= maxWidth)) {
+                    return { size, lines: balanceLines(ctx, text, maxWidth, lines), lineHeight: lh };
+                }
+            }
+            // Does not fit even at the minimum: truncate gracefully
+            ctx.font = talismanFont(700, minSize, TALISMAN_SERIF);
+            const lines = wrapLines(ctx, text, maxWidth);
+            const lh = Math.round(minSize * lhRatio);
+            const maxLines = Math.max(1, Math.floor(maxHeight / lh));
+            if (lines.length > maxLines) {
+                lines.length = maxLines;
+                let last = lines[maxLines - 1];
+                while (last.length > 3 && ctx.measureText(`${last}…`).width > maxWidth) last = last.slice(0, -1).trimEnd();
+                lines[maxLines - 1] = `${last.replace(/[,.;:\s]+$/, '')}…`;
+            }
+            return { size: minSize, lines, lineHeight: lh };
+        }
+
+        // ---------- Canvas image helpers ----------
+        // Soft, colour-matched ambient fill: cover-crop of the spread, blurred via progressive downscale
+        function drawAmbientFill(ctx, snap, W, H) {
+            const { canvas: src, content: c } = snap;
+            const targetAspect = W / H;
+            let sx = c.x, sy = c.y, sw = c.w, sh = c.h;
+            if (sw / sh > targetAspect) {
+                sw = sh * targetAspect;
+                sx = c.x + (c.w - sw) / 2;
+            } else {
+                sh = sw / targetAspect;
+                sy = c.y + (c.h - sh) / 2;
+            }
+            const small = document.createElement('canvas');
+            small.width = 12;
+            small.height = Math.max(1, Math.round(12 / targetAspect));
+            const sctx = small.getContext('2d');
+            sctx.imageSmoothingEnabled = true;
+            sctx.imageSmoothingQuality = 'high';
+            sctx.drawImage(src, sx, sy, sw, sh, 0, 0, small.width, small.height);
+
+            const mid = document.createElement('canvas');
+            mid.width = 72;
+            mid.height = Math.max(1, Math.round(72 / targetAspect));
+            const mctx = mid.getContext('2d');
+            mctx.imageSmoothingEnabled = true;
+            mctx.imageSmoothingQuality = 'high';
+            mctx.drawImage(small, 0, 0, mid.width, mid.height);
+
+            ctx.save();
+            ctx.globalAlpha = 0.88;
+            const over = 1.08;
+            ctx.drawImage(mid, -(W * (over - 1)) / 2, -(H * (over - 1)) / 2, W * over, H * over);
+            ctx.restore();
+        }
+
+        function drawFallbackAmbient(ctx, W, H) {
+            const g = ctx.createRadialGradient(W / 2, H * 0.45, 0, W / 2, H * 0.45, Math.max(W, H) * 0.7);
+            g.addColorStop(0, 'rgba(120, 82, 40, 0.55)');
+            g.addColorStop(0.5, 'rgba(40, 24, 50, 0.6)');
+            g.addColorStop(1, 'rgba(8, 6, 18, 1)');
+            ctx.fillStyle = g;
+            ctx.fillRect(0, 0, W, H);
+        }
+
+        // Draws the spread at its true aspect ratio and feathers its edges into the ambient fill
+        function drawFeatheredArt(ctx, snap, art) {
+            const { canvas: src, content: c } = snap;
+            const w = Math.round(art.w);
+            const h = Math.round(art.h);
+            if (w < 2 || h < 2) return;
+
+            const off = document.createElement('canvas');
+            off.width = w;
+            off.height = h;
+            const octx = off.getContext('2d');
+            octx.imageSmoothingEnabled = true;
+            octx.imageSmoothingQuality = 'high';
+            octx.drawImage(src, c.x, c.y, c.w, c.h, 0, 0, w, h);
+
+            octx.globalCompositeOperation = 'destination-in';
+            const fx = Math.min(w * 0.13, 130) / w;
+            const fy = Math.min(h * 0.13, 130) / h;
+            let g = octx.createLinearGradient(0, 0, w, 0);
+            g.addColorStop(0, 'rgba(0,0,0,0)');
+            g.addColorStop(fx, 'rgba(0,0,0,1)');
+            g.addColorStop(1 - fx, 'rgba(0,0,0,1)');
+            g.addColorStop(1, 'rgba(0,0,0,0)');
+            octx.fillStyle = g;
+            octx.fillRect(0, 0, w, h);
+            g = octx.createLinearGradient(0, 0, 0, h);
+            g.addColorStop(0, 'rgba(0,0,0,0)');
+            g.addColorStop(fy, 'rgba(0,0,0,1)');
+            g.addColorStop(1 - fy, 'rgba(0,0,0,1)');
+            g.addColorStop(1, 'rgba(0,0,0,0)');
+            octx.fillStyle = g;
+            octx.fillRect(0, 0, w, h);
+
+            ctx.drawImage(off, Math.round(art.x), Math.round(art.y), w, h);
+        }
+
+        // ---------- Layout ----------
+        // Story: header / spread / quote stacked inside Instagram's safe zones.
+        // Post: stacked for wide spreads, side-by-side for tall spreads (single card, 5-card cross).
+        function computeTalismanLayout(ctx, format, W, H, snap, quote) {
+            const isStory = format === 'story';
+            const aspect = snap ? snap.content.w / Math.max(1, snap.content.h) : 1;
+            const L = {
+                W, H, isStory,
+                headerY: isStory ? 250 : 92,
+                footerY: isStory ? H - 250 : H - 72,
+                art: null,
+                quote: null
+            };
+            const contentTop = isStory ? 330 : 156;
+            const contentBottom = isStory ? H - 330 : H - 150;
+            const zoneH = contentBottom - contentTop;
+            const attrH = isStory ? 24 : 20;
+            const attrGap = isStory ? 40 : 30;
+
+            if (!isStory && snap && aspect < 1.2) {
+                // Side-by-side square post
+                const margin = 64;
+                const colGap = 44;
+                const artColW = 470;
+                let aw = artColW;
+                let ah = aw / aspect;
+                if (ah > zoneH) { ah = zoneH; aw = ah * aspect; }
+                L.art = { x: margin + (artColW - aw) / 2, y: contentTop + (zoneH - ah) / 2, w: aw, h: ah };
+
+                const qx0 = margin + artColW + colGap;
+                const qw = W - margin - qx0;
+                const fit = fitQuote(ctx, quote, qw, zoneH - attrGap - attrH, 46, 26, 1.22);
+                const quoteH = fit.lines.length * fit.lineHeight;
+                const blockH = quoteH + attrGap + attrH;
+                const top = contentTop + (zoneH - blockH) / 2;
+                L.quote = { cx: qx0 + qw / 2, top, width: qw, fit, attrY: top + quoteH + attrGap + attrH * 0.75 };
+                return L;
+            }
+
+            // Stacked
+            const artMaxW = isStory ? 900 : 940;
+            const artMaxH = isStory ? 820 : 480;
+            const artGap = isStory ? 72 : 54;
+            let art = null;
+            if (snap) {
+                let aw = artMaxW;
+                let ah = aw / aspect;
+                if (ah > artMaxH) { ah = artMaxH; aw = ah * aspect; }
+                art = { w: aw, h: ah };
+            }
+            const quoteMaxW = isStory ? 880 : 900;
+            const availQuoteH = zoneH - (art ? art.h + artGap : 0) - attrGap - attrH;
+            const fit = fitQuote(ctx, quote, quoteMaxW, Math.max(120, availQuoteH), isStory ? 68 : 54, isStory ? 34 : 28, 1.22);
+            const quoteH = fit.lines.length * fit.lineHeight;
+            const groupH = (art ? art.h + artGap : 0) + quoteH + attrGap + attrH;
+            let y = contentTop + Math.max(0, (zoneH - groupH) * 0.42); // optical centre sits slightly high
+            if (art) {
+                L.art = { x: (W - art.w) / 2, y, w: art.w, h: art.h };
+                y += art.h + artGap;
+            }
+            L.quote = { cx: W / 2, top: y, width: quoteMaxW, fit, attrY: y + quoteH + attrGap + attrH * 0.75 };
+            return L;
+        }
+
+        function drawTalismanType(ctx, L, title, quote) {
+            const { isStory } = L;
+            ctx.textBaseline = 'alphabetic';
+
+            // Header: spread name
+            ctx.save();
+            ctx.font = talismanFont(600, isStory ? 27 : 23, TALISMAN_SANS);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.74)';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
+            ctx.shadowBlur = 12;
+            ctx.shadowOffsetY = 2;
+            drawTrackedText(ctx, title, L.W / 2, L.headerY, isStory ? 7 : 6);
+            ctx.restore();
+
+            // Quote
+            const q = L.quote;
+            ctx.save();
+            ctx.font = talismanFont(700, q.fit.size, TALISMAN_SERIF);
+            ctx.fillStyle = '#ffffff';
+            ctx.textAlign = 'center';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.95)';
+            ctx.shadowBlur = 22;
+            ctx.shadowOffsetY = 3;
+            let y = q.top + q.fit.size * 0.82;
+            q.fit.lines.forEach(line => {
+                ctx.fillText(line, q.cx, y);
+                y += q.fit.lineHeight;
+            });
+            ctx.restore();
+
+            // Attribution
+            ctx.save();
+            ctx.font = talismanFont(600, isStory ? 21 : 18, TALISMAN_DISPLAY);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.78)';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetY = 2;
+            drawTrackedText(ctx, '— THE QUANTUM ORACLE', q.cx, q.attrY, isStory ? 5 : 4);
+            ctx.restore();
+
+            // Footer domain watermark
+            ctx.save();
+            ctx.font = talismanFont(300, isStory ? 28 : 24, TALISMAN_SANS);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.56)';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+            ctx.shadowBlur = 8;
+            ctx.shadowOffsetY = 1;
+            drawTrackedText(ctx, 'qoracle.com', L.W / 2, L.footerY, isStory ? 6 : 5);
+            ctx.restore();
+        }
+
+        function getSocialQuoteText() {
+            const quoteInput = document.getElementById('socialQuoteInput');
+            const raw = (quoteInput && quoteInput.value.trim()) || 'The Oracle channels genuine quantum vacuum indeterminacy to illuminate your present horizon.';
+            return raw.replace(/^["“]+|["”]+$/g, '').replace(/\s+/g, ' ').trim();
+        }
+
+        // Full-resolution composition of the share card
+        function composeTalisman(format) {
+            const spec = TALISMAN_FORMATS[format] || TALISMAN_FORMATS.story;
+            const W = spec.w;
+            const H = spec.h;
+            const canvas = document.createElement('canvas');
+            canvas.width = W;
+            canvas.height = H;
+            const ctx = canvas.getContext('2d');
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+            const quote = getSocialQuoteText();
+            const title = getReadingSpreadTitle(currentTradition, currentReadingData);
+            const snap = talismanSnapshot;
+
+            // 1. Ground + ambient colour drawn from the altar itself
+            ctx.fillStyle = '#080612';
+            ctx.fillRect(0, 0, W, H);
+            if (snap) drawAmbientFill(ctx, snap, W, H);
+            else drawFallbackAmbient(ctx, W, H);
+
+            // 2. Darken so type stays legible, heavier at the top and bottom bands
+            let g = ctx.createLinearGradient(0, 0, 0, H);
+            g.addColorStop(0, 'rgba(6, 4, 14, 0.62)');
+            g.addColorStop(0.35, 'rgba(6, 4, 14, 0.24)');
+            g.addColorStop(0.7, 'rgba(6, 4, 14, 0.46)');
+            g.addColorStop(1, 'rgba(6, 4, 14, 0.80)');
+            ctx.fillStyle = g;
+            ctx.fillRect(0, 0, W, H);
+
+            // 3. Layout, then the spread at true aspect ratio
+            const L = computeTalismanLayout(ctx, format, W, H, snap, quote);
+            if (snap && L.art) drawFeatheredArt(ctx, snap, L.art);
+
+            // 4. Edge vignette to bind the composition
+            const rg = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.42, W / 2, H / 2, Math.hypot(W, H) * 0.58);
+            rg.addColorStop(0, 'rgba(4, 3, 8, 0)');
+            rg.addColorStop(1, 'rgba(4, 3, 8, 0.62)');
+            ctx.fillStyle = rg;
+            ctx.fillRect(0, 0, W, H);
+
+            // 5. Soft dark halo behind the quote block keeps type legible over bright ambient colour
+            if (L.quote) {
+                const q = L.quote;
+                const qh = q.fit.lines.length * q.fit.lineHeight;
+                const cy = q.top + qh / 2;
+                const rx = q.width * 0.72;
+                const ry = qh * 0.9 + 120;
+                ctx.save();
+                ctx.translate(q.cx, cy);
+                ctx.scale(rx / ry, 1);
+                const halo = ctx.createRadialGradient(0, 0, 0, 0, 0, ry);
+                halo.addColorStop(0, 'rgba(6, 4, 14, 0.5)');
+                halo.addColorStop(0.6, 'rgba(6, 4, 14, 0.28)');
+                halo.addColorStop(1, 'rgba(6, 4, 14, 0)');
+                ctx.fillStyle = halo;
+                ctx.fillRect(-ry * 2, -ry, ry * 4, ry * 2);
+                ctx.restore();
+            }
+
+            // 6. Type
+            drawTalismanType(ctx, L, title, quote);
+            return canvas;
+        }
+
+        // ---------- Preview & controls ----------
+        function scheduleTalismanRender(delay = 200) {
+            clearTimeout(talismanRenderTimer);
+            talismanRenderTimer = setTimeout(renderTalismanPreview, delay);
+        }
+
+        async function renderTalismanPreview() {
+            const frame = document.getElementById('talismanPreviewFrame');
+            const img = document.getElementById('talismanPreviewImg');
+            if (!frame || !img) return;
+            const seq = ++talismanRenderSeq;
+            frame.classList.add('is-rendering');
+            try {
+                await ensureTalismanFonts();
+                if (seq !== talismanRenderSeq) return;
+                const canvas = composeTalisman(currentSocialFormat);
+                await new Promise(resolve => {
+                    canvas.toBlob(blob => {
+                        if (seq !== talismanRenderSeq || !blob) return resolve();
+                        if (talismanPreviewUrl) URL.revokeObjectURL(talismanPreviewUrl);
+                        talismanPreviewUrl = URL.createObjectURL(blob);
+                        img.onload = () => {
+                            frame.classList.remove('is-empty', 'is-rendering');
+                            resolve();
+                        };
+                        img.onerror = () => {
+                            frame.classList.remove('is-rendering');
+                            resolve();
+                        };
+                        img.src = talismanPreviewUrl;
+                    }, 'image/jpeg', 0.9);
+                });
+            } catch (e) {
+                console.error('Talisman render failed:', e);
+                frame.classList.remove('is-rendering');
+            }
+        }
+
+        function setSocialFormat(format, opts = {}) {
+            currentSocialFormat = format === 'post' ? 'post' : 'story';
+            const storyBtn = document.getElementById('formatBtnStory');
+            const postBtn = document.getElementById('formatBtnPost');
+            const frame = document.getElementById('talismanPreviewFrame');
+            const dims = document.getElementById('talismanPreviewDims');
+            const isStory = currentSocialFormat === 'story';
+
+            if (storyBtn) {
+                storyBtn.classList.toggle('active', isStory);
+                storyBtn.setAttribute('aria-pressed', String(isStory));
+            }
+            if (postBtn) {
+                postBtn.classList.toggle('active', !isStory);
+                postBtn.setAttribute('aria-pressed', String(!isStory));
+            }
+            if (frame) {
+                frame.classList.remove('format-story', 'format-post');
+                frame.classList.add(`format-${currentSocialFormat}`);
+            }
+            if (dims) dims.textContent = TALISMAN_FORMATS[currentSocialFormat].label;
+            if (opts.render !== false) renderTalismanPreview();
+        }
+
+        function renderQuoteOptions() {
+            const list = document.getElementById('quoteSelectorTabs');
+            if (!list) return;
+            list.innerHTML = '';
+            socialCandidateQuotes.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `quote-option${idx === activeQuoteIndex ? ' active' : ''}`;
+                const text = document.createElement('span');
+                text.className = 'quote-option-text';
+                text.textContent = q;
+                btn.appendChild(text);
+                btn.title = q;
+                btn.setAttribute('aria-pressed', String(idx === activeQuoteIndex));
+                btn.onclick = () => selectQuotePill(idx);
+                list.appendChild(btn);
+            });
+        }
+
+        function syncQuoteOptionState() {
+            const options = document.querySelectorAll('#quoteSelectorTabs .quote-option');
+            options.forEach((btn, idx) => {
+                const on = idx === activeQuoteIndex;
+                btn.classList.toggle('active', on);
+                btn.setAttribute('aria-pressed', String(on));
+            });
+        }
+
+        function selectQuotePill(index) {
+            activeQuoteIndex = index;
+            const quoteInput = document.getElementById('socialQuoteInput');
+            if (quoteInput && socialCandidateQuotes[index] !== undefined) {
+                quoteInput.value = socialCandidateQuotes[index];
+            }
+            syncQuoteOptionState();
+            updateSocialQuoteCount();
+            renderTalismanPreview();
+        }
+
+        function updateSocialQuoteCount() {
+            const quoteInput = document.getElementById('socialQuoteInput');
+            const counter = document.getElementById('socialQuoteCount');
+            if (!quoteInput || !counter) return;
+            const len = quoteInput.value.trim().length;
+            const max = parseInt(quoteInput.getAttribute('maxlength'), 10) || 320;
+            counter.textContent = `${len} / ${max}`;
+            counter.classList.toggle('is-long', len > 200);
+        }
+
+        function onSocialQuoteInput() {
+            const quoteInput = document.getElementById('socialQuoteInput');
+            const value = quoteInput ? quoteInput.value.trim() : '';
+            activeQuoteIndex = socialCandidateQuotes.indexOf(value);
+            syncQuoteOptionState();
+            updateSocialQuoteCount();
+            scheduleTalismanRender(220);
         }
 
         async function openSocialExportModal() {
@@ -6798,161 +7305,92 @@
 
             const dialog = document.getElementById('socialExportModal');
             const feedback = document.getElementById('socialShareFeedback');
-            if (feedback) feedback.style.display = 'none';
+            const frame = document.getElementById('talismanPreviewFrame');
+            if (feedback) feedback.textContent = '';
+            if (frame) frame.classList.add('is-empty');
 
-            // 1. Snapshot the actual active reading stage into high-res data URL for faded backdrop
-            const stageCard = document.getElementById('visual-stage-card');
-            const readingImg = document.getElementById('talismanReadingImg');
-
-            if (stageCard && readingImg) {
-                // Temporarily hide helper captions like "Rotate device for panoramic view" during snapshot
-                const hint = stageCard.querySelector('.altar-orientation-hint');
-                const wasHintDisplay = hint ? hint.style.display : null;
-                if (hint) hint.style.display = 'none';
-
-                try {
-                    const canvas = await html2canvas(stageCard, {
-                        backgroundColor: null,
-                        scale: 2,
-                        useCORS: true,
-                        logging: false
-                    });
-                    readingImg.src = canvas.toDataURL('image/png');
-                    if (readingImg.decode) {
-                        await readingImg.decode().catch(() => {});
-                    }
-                } catch (e) {
-                    console.warn('Could not snapshot visual stage:', e);
-                } finally {
-                    if (hint) hint.style.display = wasHintDisplay || '';
-                }
-            }
-
-            // 2. Gather current response text
-            const responseText = (oracleStreamText && oracleStreamText.innerText) || '';
-
-            // 3. Extract candidate quotes
-            socialCandidateQuotes = extractCandidateQuotes(responseText);
+            // Quote candidates from the rendered reading
+            socialCandidateQuotes = extractCandidateQuotes(oracleStreamText);
             activeQuoteIndex = 0;
-
-            // 4. Render quote tabs
-            const tabsContainer = document.getElementById('quoteSelectorTabs');
-            if (tabsContainer) {
-                tabsContainer.innerHTML = '';
-                socialCandidateQuotes.forEach((q, idx) => {
-                    const btn = document.createElement('button');
-                    btn.type = 'button';
-                    btn.className = `quote-tab-btn ${idx === 0 ? 'active' : ''}`;
-                    btn.textContent = `Quote ${idx + 1}`;
-                    btn.title = q;
-                    btn.onclick = () => selectQuotePill(idx);
-                    tabsContainer.appendChild(btn);
-                });
-            }
-
-            // 5. Populate textarea & preview quote
+            renderQuoteOptions();
             const quoteInput = document.getElementById('socialQuoteInput');
-            if (quoteInput) {
-                quoteInput.value = socialCandidateQuotes[0] || '';
-            }
-            updateSocialPreviewQuote();
+            if (quoteInput) quoteInput.value = socialCandidateQuotes[0] || '';
+            updateSocialQuoteCount();
+            setSocialFormat('story', { render: false });
 
-            // 6. Set specific spread type on card
-            const spreadTitle = getReadingSpreadTitle(currentTradition, currentReadingData);
-            const spreadTypeEl = document.getElementById('talismanSpreadType');
-            if (spreadTypeEl) {
-                spreadTypeEl.textContent = spreadTitle;
-            }
-
-            // Default to Story format
-            setSocialFormat('story');
-
-            if (dialog && !dialog.open) {
-                dialog.showModal();
-            }
+            // Open immediately with a weaving state, then photograph the altar behind the dialog
+            if (dialog && !dialog.open) dialog.showModal();
+            talismanSnapshot = await captureAltarSnapshot();
+            renderTalismanPreview();
         }
 
         function closeSocialExportModal() {
             const dialog = document.getElementById('socialExportModal');
-            if (dialog && dialog.open) {
-                dialog.close();
-            }
+            clearTimeout(talismanRenderTimer);
+            if (dialog && dialog.open) dialog.close();
+        }
+
+        function socialFilename(format) {
+            const title = getReadingSpreadTitle(currentTradition, currentReadingData)
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)/g, '');
+            return `qoracle-${title || 'reading'}-${format}.png`;
         }
 
         async function triggerSocialShare(mode) {
-            const cardEl = document.getElementById('socialTalismanCard');
             const feedback = document.getElementById('socialShareFeedback');
-            if (!cardEl) return;
+            const shareBtn = document.getElementById('socialNativeShareBtn');
+            const downloadBtn = document.getElementById('socialDownloadBtn');
+            const setBusy = (busy) => {
+                if (shareBtn) shareBtn.disabled = busy;
+                if (downloadBtn) downloadBtn.disabled = busy;
+            };
+            const say = (msg) => { if (feedback) feedback.textContent = msg; };
 
-            if (feedback) {
-                feedback.textContent = '✦ Weaving high-resolution talisman...';
-                feedback.style.display = 'block';
-            }
-
+            say('✦ Weaving high-resolution talisman...');
+            setBusy(true);
             sounds.cardFlip();
 
             const format = currentSocialFormat;
+            const filename = socialFilename(format);
 
             try {
-                const readingImg = document.getElementById('talismanReadingImg');
-                if (readingImg && readingImg.src && !readingImg.complete && readingImg.decode) {
-                    await readingImg.decode().catch(() => {});
-                }
+                await ensureTalismanFonts();
+                const canvas = composeTalisman(format);
+                const quoteText = getSocialQuoteText();
 
-                // Compute exact scale to always export crisp 1080px wide image
-                const targetWidth = 1080;
-                const scale = targetWidth / cardEl.offsetWidth;
-
-                const canvas = await html2canvas(cardEl, {
-                    backgroundColor: '#080612',
-                    scale: scale,
-                    useCORS: true,
-                    logging: false
-                });
-
-                const filename = `quantum-oracle-${format}.png`;
-
-                if (mode === 'share') {
-                    if (navigator.canShare && canvas.toBlob) {
-                        canvas.toBlob(async (blob) => {
-                            if (!blob) {
-                                downloadCanvas(canvas, filename);
-                                if (feedback) feedback.textContent = '✦ Talisman downloaded!';
-                                return;
-                            }
-                            const file = new File([blob], filename, { type: 'image/png' });
-                            if (navigator.canShare({ files: [file] })) {
-                                try {
-                                    await navigator.share({
-                                        title: 'Quantum Oracle Divination',
-                                        text: `My divination reading from The Quantum Oracle: "${document.getElementById('socialQuoteInput').value.trim()}" — qoracle.com`,
-                                        files: [file]
-                                    });
-                                    if (feedback) feedback.textContent = '✦ Talisman shared!';
-                                } catch (err) {
-                                    if (err.name !== 'AbortError') {
-                                        downloadCanvas(canvas, filename);
-                                        if (feedback) feedback.textContent = '✦ Saved image to your device!';
-                                    } else {
-                                        if (feedback) feedback.textContent = '';
-                                    }
-                                }
+                if (mode === 'share' && navigator.share && navigator.canShare && canvas.toBlob) {
+                    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                    if (!blob) throw new Error('toBlob failed');
+                    const file = new File([blob], filename, { type: 'image/png' });
+                    if (navigator.canShare({ files: [file] })) {
+                        try {
+                            await navigator.share({
+                                title: 'Quantum Oracle Divination',
+                                text: `My divination reading from The Quantum Oracle: "${quoteText}" — qoracle.com`,
+                                files: [file]
+                            });
+                            say('✦ Talisman shared!');
+                        } catch (err) {
+                            if (err && err.name === 'AbortError') {
+                                say('');
                             } else {
                                 downloadCanvas(canvas, filename);
-                                if (feedback) feedback.textContent = '✦ High-res PNG downloaded!';
+                                say('✦ Saved image to your device!');
                             }
-                        }, 'image/png');
-                    } else {
-                        downloadCanvas(canvas, filename);
-                        if (feedback) feedback.textContent = '✦ High-res PNG downloaded!';
+                        }
+                        return;
                     }
-                } else {
-                    downloadCanvas(canvas, filename);
-                    if (feedback) feedback.textContent = '✦ High-res PNG downloaded!';
                 }
+
+                downloadCanvas(canvas, filename);
+                say('✦ High-res PNG downloaded!');
             } catch (e) {
                 console.error(e);
-                if (feedback) feedback.textContent = 'Could not generate image. Please take a screenshot instead.';
+                say('Could not generate image. Please take a screenshot instead.');
+            } finally {
+                setBusy(false);
             }
         }
 
