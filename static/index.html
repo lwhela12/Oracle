@@ -923,6 +923,516 @@
             background: #f8f6f0;
         }
 
+        /* ==========================================================================
+           QUANTUM RANDOM NUMBER GENERATION (QRNG) INFO CARD & DOSSIER STYLES
+           ========================================================================== */
+
+        @keyframes quantumSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        .live-pulse-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 8px #4ade80;
+            animation: livePulse 2s infinite ease-in-out;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .quantum-info-card {
+            background: linear-gradient(165deg, rgba(28, 20, 52, 0.75) 0%, rgba(13, 10, 24, 0.92) 100%), var(--bg-secondary);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            border-radius: var(--radius-lg);
+            padding: 22px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(140, 84, 255, 0.12);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.35s ease-out;
+        }
+
+        .quantum-info-card::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(140, 84, 255, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .quantum-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .quantum-brand-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .quantum-orbital-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(140, 84, 255, 0.2) 0%, rgba(212, 175, 55, 0.1) 70%, transparent 100%);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 0 16px rgba(140, 84, 255, 0.3);
+        }
+
+        .quantum-orbital-svg {
+            animation: quantumSpin 25s linear infinite;
+            transform-origin: center;
+        }
+
+        .quantum-title-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .quantum-provenance-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            color: var(--accent-gold);
+            opacity: 0.9;
+        }
+
+        .quantum-card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 2px 0 0;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+        }
+
+        .quantum-dossier-trigger-btn {
+            background: rgba(212, 175, 55, 0.12);
+            border: 1px solid var(--accent-gold);
+            border-radius: 20px;
+            padding: 7px 16px;
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            color: var(--accent-gold);
+            cursor: pointer;
+            transition: all 0.22s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+        }
+
+        .quantum-dossier-trigger-btn:hover {
+            background: rgba(212, 175, 55, 0.22);
+            box-shadow: 0 0 16px rgba(212, 175, 55, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .quantum-card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Comparison Banner: PRNG vs. QRNG */
+        .quantum-comparison-banner {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 14px;
+            align-items: center;
+            background: rgba(10, 7, 18, 0.55);
+            border: 1px solid rgba(140, 84, 255, 0.25);
+            border-radius: var(--radius-md);
+            padding: 14px 18px;
+        }
+
+        .quantum-comparison-col {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .quantum-comparison-divider {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 8px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .comparison-tag {
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+        }
+
+        .comparison-tag.deterministic {
+            color: #f87171;
+        }
+
+        .comparison-tag.quantum-true {
+            color: #4ade80;
+        }
+
+        .comparison-title {
+            font-family: 'Cinzel', serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .comparison-desc {
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Interactive Protocols Across Traditions */
+        .quantum-protocols-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quantum-section-subhead {
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+        }
+
+        .quantum-protocol-tabs {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .quantum-protocol-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .quantum-protocol-tab {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 32px;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 0 14px;
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            line-height: 1;
+            transform: translateY(0);
+        }
+
+        .quantum-protocol-tab:hover:not(.active) {
+            color: var(--text-primary);
+            border-color: rgba(212, 175, 55, 0.35);
+            background: rgba(212, 175, 55, 0.06);
+        }
+
+        .quantum-protocol-tab.active {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        .quantum-protocol-content {
+            background: rgba(14, 10, 26, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: var(--radius-md);
+            padding: 14px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        .protocol-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .protocol-hardware-badge {
+            font-family: monospace;
+            font-size: 11px;
+            color: #a78bfa;
+            background: rgba(167, 139, 250, 0.12);
+            border: 1px solid rgba(167, 139, 250, 0.35);
+            border-radius: 10px;
+            padding: 3px 9px;
+            letter-spacing: 0.2px;
+        }
+
+        .protocol-lead {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .protocol-lead strong {
+            color: var(--accent-gold);
+        }
+
+        .protocol-sub {
+            font-size: 13px;
+            line-height: 1.55;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* The Three Pillars: Why This Is Invaluable */
+        .quantum-pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .quantum-pillar-card {
+            background: rgba(12, 8, 22, 0.65);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: border-color 0.2s;
+        }
+
+        .quantum-pillar-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        .pillar-num {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            opacity: 0.8;
+            letter-spacing: 0.5px;
+        }
+
+        .pillar-title {
+            font-family: 'Cinzel', serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+            letter-spacing: 0.4px;
+        }
+
+        .pillar-sub {
+            font-size: 11px;
+            color: #c084fc;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .pillar-text {
+            font-size: 12.5px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Reading Stage Quantum Provenance Pill */
+        .reading-badge-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .reading-quantum-provenance {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            line-height: 1;
+        }
+
+        .reading-quantum-provenance:hover {
+            background: rgba(212, 175, 55, 0.18);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.25);
+        }
+
+        .provenance-arrow {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .step-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* Light Mode Styles for Quantum Components */
+        [data-theme="light"] .quantum-info-card {
+            background: linear-gradient(165deg, rgba(245, 243, 238, 0.95) 0%, #ffffff 100%);
+            border-color: rgba(179, 130, 10, 0.4);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        [data-theme="light"] .quantum-comparison-banner {
+            background: #f5f3ec;
+            border-color: rgba(179, 130, 10, 0.25);
+        }
+
+        [data-theme="light"] .quantum-protocol-content {
+            background: #fbf9f4;
+            border-color: rgba(179, 130, 10, 0.3);
+        }
+
+        [data-theme="light"] .quantum-pillar-card {
+            background: #faf8f3;
+            border-color: rgba(179, 130, 10, 0.2);
+        }
+
+        [data-theme="light"] .quantum-protocol-tab {
+            background: #f3efe6;
+            color: #4b5563;
+        }
+
+        [data-theme="light"] .quantum-protocol-tab.active {
+            background: rgba(179, 130, 10, 0.14);
+            border-color: rgba(179, 130, 10, 0.7);
+            color: var(--accent-gold);
+        }
+
+        [data-theme="light"] .protocol-hardware-badge {
+            color: #7c3aed;
+            background: rgba(124, 58, 237, 0.08);
+            border-color: rgba(124, 58, 237, 0.25);
+        }
+
+        [data-theme="light"] .reading-quantum-provenance {
+            background: rgba(179, 130, 10, 0.08);
+            border-color: rgba(179, 130, 10, 0.4);
+            color: var(--accent-gold);
+        }
+
+        /* Mobile Adjustments for Quantum Info Card */
+        @media (max-width: 600px) {
+            .quantum-info-card {
+                padding: 16px 14px;
+                gap: 14px;
+            }
+
+            .quantum-card-title {
+                font-size: 15px;
+            }
+
+            .quantum-comparison-banner {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 12px 14px;
+            }
+
+            .quantum-comparison-divider {
+                width: fit-content;
+                margin: 0 auto;
+            }
+
+            .quantum-protocol-tabs {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 4px;
+            }
+
+            .quantum-protocol-tab {
+                padding: 0 4px;
+                font-size: 10px;
+                height: 30px;
+                border-radius: 15px;
+            }
+
+            .quantum-pillars-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .quantum-card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .quantum-dossier-trigger-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 8px 12px;
+            }
+        }
+
         /* Sub-Spread Selector */
         .spread-grid {
             display: flex;
@@ -3044,6 +3554,14 @@
             <span class="nav-title">Quantum Oracle</span>
         </a>
         <div class="nav-controls">
+            <button class="nav-btn" onclick="openQuantumInfoModal()" title="Quantum Random Number Generation (QRNG)">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="2.5"></circle>
+                    <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)"></ellipse>
+                    <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+                </svg>
+                <span class="nav-btn-label">Quantum RNG</span>
+            </button>
             <button class="nav-btn" onclick="toggleHistory()" title="Divination Journal">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 <span class="nav-btn-label">Journal</span>
@@ -3072,6 +3590,100 @@
                 <p class="portal-subtitle">Follow the steps below to channel genuine quantum entropy through the Oracle.</p>
             </div>
 
+            <!-- QUANTUM RANDOM NUMBER GENERATION (QRNG) INFO CARD -->
+            <div class="quantum-info-card" id="quantumInfoCard">
+                <div class="quantum-card-header">
+                    <div class="quantum-brand-group">
+                        <div class="quantum-orbital-badge" aria-hidden="true">
+                            <svg viewBox="0 0 40 40" width="30" height="30" fill="none" class="quantum-orbital-svg">
+                                <circle cx="20" cy="20" r="3.5" fill="url(#goldGrad)"/>
+                                <circle cx="20" cy="20" r="17" stroke="url(#goldGrad)" stroke-width="1" stroke-dasharray="2 3" opacity="0.4"/>
+                                <ellipse cx="20" cy="20" rx="15" ry="6" stroke="var(--accent-primary)" stroke-width="1.2" transform="rotate(0 20 20)" opacity="0.85"/>
+                                <ellipse cx="20" cy="20" rx="15" ry="6" stroke="var(--accent-gold)" stroke-width="1.2" transform="rotate(60 20 20)" opacity="0.85"/>
+                                <ellipse cx="20" cy="20" rx="15" ry="6" stroke="#4ade80" stroke-width="1.2" transform="rotate(120 20 20)" opacity="0.85"/>
+                            </svg>
+                        </div>
+                        <div class="quantum-title-meta">
+                            <div class="quantum-provenance-tag">
+                                <span class="live-pulse-dot"></span>
+                                <span>PHYSICAL VACUUM ENTROPY · QRANDOM.IO</span>
+                            </div>
+                            <h2 class="quantum-card-title">How Quantum Randomness Powers Your Divination</h2>
+                        </div>
+                    </div>
+                    <div class="quantum-card-header-actions">
+                        <button type="button" class="quantum-dossier-trigger-btn" onclick="openQuantumInfoModal()" title="Open Comprehensive Scientific &amp; Metaphysical Dossier">
+                            <span>✦ Full Dossier &amp; Whitepaper</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="quantum-card-body">
+                    <!-- Comparison Banner: PRNG vs. QRNG -->
+                    <div class="quantum-comparison-banner">
+                        <div class="quantum-comparison-col">
+                            <div class="comparison-tag deterministic">Classical Apps (PRNG)</div>
+                            <div class="comparison-title">Deterministic Pseudo-Randomness</div>
+                            <p class="comparison-desc">Uses mathematical software formulas seeded by the computer clock. If the formula and timestamp are known, all outputs are predetermined before you even click.</p>
+                        </div>
+                        <div class="quantum-comparison-divider">VS</div>
+                        <div class="quantum-comparison-col">
+                            <div class="comparison-tag quantum-true">Quantum Oracle (QRNG)</div>
+                            <div class="comparison-title">Physical Quantum Vacuum Fluctuations</div>
+                            <p class="comparison-desc">Measures optical zero-point energy in the subatomic vacuum. Virtual particles spontaneously emerge and annihilate—strictly acausal, non-deterministic, and immune to algorithmic bias.</p>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Protocols: How each tradition uses QRNG -->
+                    <div class="quantum-protocols-section">
+                        <div class="quantum-section-subhead">
+                            <span>⚛️ Live Quantum Protocols Across Traditions</span>
+                        </div>
+                        
+                        <div class="quantum-protocol-tabs">
+                            <button type="button" class="quantum-protocol-tab active" data-qtab="tarot" onclick="switchQuantumProtocolTab('tarot')">
+                                <span>Tarot Arcana</span>
+                            </button>
+                            <button type="button" class="quantum-protocol-tab" data-qtab="runes" onclick="switchQuantumProtocolTab('runes')">
+                                <span>Sacred Runes</span>
+                            </button>
+                            <button type="button" class="quantum-protocol-tab" data-qtab="iching" onclick="switchQuantumProtocolTab('iching')">
+                                <span>The I Ching</span>
+                            </button>
+                            <button type="button" class="quantum-protocol-tab" data-qtab="number" onclick="switchQuantumProtocolTab('number')">
+                                <span>Quantum Numerology</span>
+                            </button>
+                        </div>
+
+                        <div class="quantum-protocol-content" id="quantumProtocolContent">
+                            <!-- Populated dynamically by switchQuantumProtocolTab -->
+                        </div>
+                    </div>
+
+                    <!-- The Three Pillars: Why This Is Invaluable -->
+                    <div class="quantum-pillars-grid">
+                        <div class="quantum-pillar-card">
+                            <div class="pillar-num">01 · SYNCHRONICITY</div>
+                            <h4 class="pillar-title">Acausal Synchronicity</h4>
+                            <div class="pillar-sub">The Pauli-Jung Thesis (1952)</div>
+                            <p class="pillar-text">Nobel physicist Wolfgang Pauli and Carl Jung proved genuine divination requires acausality—meaningful connections without physical cause-and-effect. Quantum collapse is the only strictly acausal phenomenon known in modern physics.</p>
+                        </div>
+                        <div class="quantum-pillar-card">
+                            <div class="pillar-num">02 · INTEGRITY</div>
+                            <h4 class="pillar-title">Zero Algorithmic Bias</h4>
+                            <div class="pillar-sub">Liberated from Code &amp; Seeds</div>
+                            <p class="pillar-text">No algorithm or AI model pre-selects your cards. Even the Oracle server cannot predict the draw until the physical quantum measurement occurs at the exact moment of your consultation.</p>
+                        </div>
+                        <div class="quantum-pillar-card">
+                            <div class="pillar-num">03 · ENTANGLEMENT</div>
+                            <h4 class="pillar-title">Temporal Entanglement</h4>
+                            <div class="pillar-sub">The Seeker's Moment in Time</div>
+                            <p class="pillar-text">Your inquiry is physically bound to an unrepeatable quantum snapshot of the universe's ground state. No two readings can ever draw from the same vacuum state.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Step 1: Choose Tradition -->
             <div class="step-section">
                 <div class="step-label-row">
@@ -3079,10 +3691,20 @@
                         <span class="step-number">1</span>
                         <span>Select Divination Tradition</span>
                     </div>
-                    <button type="button" class="tradition-guide-trigger" onclick="openTraditionLore(currentTradition)" title="Read comprehensive history, origins, and ceremonial usage">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                        <span>Tradition Lore & History</span>
-                    </button>
+                    <div class="step-header-actions">
+                        <button type="button" class="tradition-guide-trigger" onclick="openQuantumInfoModal()" title="Explore how genuine quantum vacuum fluctuations power the Oracle">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="2.5"></circle>
+                                <ellipse cx="12" cy="12" rx="8" ry="3" transform="rotate(30 12 12)"></ellipse>
+                                <ellipse cx="12" cy="12" rx="8" ry="3" transform="rotate(-30 12 12)"></ellipse>
+                            </svg>
+                            <span>Quantum Engine (QRNG)</span>
+                        </button>
+                        <button type="button" class="tradition-guide-trigger" onclick="openTraditionLore(currentTradition)" title="Read comprehensive history, origins, and ceremonial usage">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            <span>Tradition Lore &amp; History</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="tradition-grid">
                     <!-- Tarot -->
@@ -3241,7 +3863,14 @@
         <section class="active-reading-stage" id="reading-stage">
             <!-- Top Bar to Return / Start New Reading -->
             <div class="reading-top-bar">
-                <div class="reading-badge" id="active-reading-badge">✦ Sacred Tarot Consultation ✦</div>
+                <div class="reading-badge-group">
+                    <div class="reading-badge" id="active-reading-badge">✦ Sacred Tarot Consultation ✦</div>
+                    <button type="button" class="reading-quantum-provenance" onclick="openQuantumInfoModal()" title="View quantum entropy collapse details">
+                        <span class="live-pulse-dot"></span>
+                        <span>Entropy: Live Quantum Vacuum State (QRNG)</span>
+                        <span class="provenance-arrow">↗</span>
+                    </button>
+                </div>
                 <button class="new-consult-btn" onclick="startNewConsultation()">
                     <span>✦ New Consultation</span>
                 </button>
@@ -3407,6 +4036,67 @@
                 <button type="button" class="tool-btn" onclick="closeTraditionLore()">Close Dossier</button>
                 <button type="button" class="lore-select-btn" id="loreSelectTraditionBtn" onclick="selectTraditionFromLore()">
                     <span>✦ Select Tradition for Consultation ✦</span>
+                </button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Quantum Architecture & Entropy Dossier Dialog -->
+    <dialog id="quantumInfoModal" class="lore-dialog" aria-labelledby="quantumModalTitle">
+        <div class="lore-container">
+            <div class="lore-header">
+                <div class="lore-header-brand">
+                    <div class="lore-header-emblem" id="quantumModalEmblem">
+                        <svg viewBox="0 0 40 40" width="28" height="28" fill="none">
+                            <circle cx="20" cy="20" r="3.5" fill="url(#goldGrad)"/>
+                            <ellipse cx="20" cy="20" rx="16" ry="6.5" stroke="var(--accent-primary)" stroke-width="1.2" transform="rotate(0 20 20)" opacity="0.85"/>
+                            <ellipse cx="20" cy="20" rx="16" ry="6.5" stroke="var(--accent-gold)" stroke-width="1.2" transform="rotate(60 20 20)" opacity="0.85"/>
+                            <ellipse cx="20" cy="20" rx="16" ry="6.5" stroke="#4ade80" stroke-width="1.2" transform="rotate(120 20 20)" opacity="0.85"/>
+                        </svg>
+                    </div>
+                    <div class="lore-header-meta">
+                        <div class="lore-header-tag">PHYSICAL VACUUM INDETERMINACY &amp; SYNCHRONICITY</div>
+                        <h2 class="lore-header-title" id="quantumModalTitle">Quantum Entropy (QRNG) Dossier</h2>
+                    </div>
+                </div>
+                <button type="button" class="lore-close-btn" onclick="closeQuantumInfoModal()" aria-label="Close quantum dossier view">&times;</button>
+            </div>
+
+            <div class="lore-tabs">
+                <button type="button" class="lore-tab-btn active" data-qmodal-tab="comparison" onclick="switchQuantumModalTab('comparison')">
+                    <span class="lore-tab-text">
+                        <span class="tab-label-full">Quantum vs. PRNG</span>
+                        <span class="tab-label-short">Overview</span>
+                    </span>
+                </button>
+                <button type="button" class="lore-tab-btn" data-qmodal-tab="traditions" onclick="switchQuantumModalTab('traditions')">
+                    <span class="lore-tab-text">
+                        <span class="tab-label-full">Four Tradition Protocols</span>
+                        <span class="tab-label-short">Protocols</span>
+                    </span>
+                </button>
+                <button type="button" class="lore-tab-btn" data-qmodal-tab="synchronicity" onclick="switchQuantumModalTab('synchronicity')">
+                    <span class="lore-tab-text">
+                        <span class="tab-label-full">The Pauli-Jung Thesis</span>
+                        <span class="tab-label-short">Synchronicity</span>
+                    </span>
+                </button>
+                <button type="button" class="lore-tab-btn" data-qmodal-tab="integrity" onclick="switchQuantumModalTab('integrity')">
+                    <span class="lore-tab-text">
+                        <span class="tab-label-full">Cryptographic Integrity</span>
+                        <span class="tab-label-short">Integrity</span>
+                    </span>
+                </button>
+            </div>
+
+            <div class="lore-body" id="quantumModalBody">
+                <!-- Populated dynamically by switchQuantumModalTab -->
+            </div>
+
+            <div class="lore-footer">
+                <button type="button" class="tool-btn" onclick="closeQuantumInfoModal()">Close Dossier</button>
+                <button type="button" class="lore-select-btn" onclick="closeQuantumInfoModalAndConsult()">
+                    <span>✦ Channel Quantum Entropy Now ✦</span>
                 </button>
             </div>
         </div>
@@ -3658,6 +4348,7 @@
                         </li>
                         <li><strong>Zhi Gua (Resulting Transformation):</strong> When changing lines occur, they invert their polarity, transforming the primary situation into a resulting hexagram that foretells the energetic resolution.</li>
                     </ul>
+                    <p><strong>Quantum Entropy Integration:</strong> The Oracle conducts 18 independent quantum measurements to cast the three bronze coins across six throws, ensuring each hexagram line and dynamic transformation emerges from genuine physical vacuum states.</p>
                 `
             },
             number: {
@@ -3791,6 +4482,266 @@
                 }
             });
         }
+
+        /* ==========================================================================
+           QUANTUM RANDOM NUMBER GENERATION (QRNG) PROTOCOLS & MODAL LOGIC
+           ========================================================================== */
+
+        const QUANTUM_PROTOCOLS = {
+            tarot: {
+                title: "Tarot Arcana · 78-Integer Quantum Stream",
+                badge: "qrandom.io/api/random/ints?n=78&min=1&max=78",
+                lead: "The Oracle requests a live stream of <strong>78 quantum random integers</strong> from optical zero-point energy sensors. Each of the 78 cards (22 Major Arcana + 56 Minor Arcana) is paired 1-to-1 with an independent quantum value and sorted, executing an authentic, uncaused shuffle of the full deck before dealing your spread.",
+                sub: "<strong>Ceremonial Parallel:</strong> In physical divination, the human hand shuffles and cuts the deck to transfer the seeker's energetic focus. Quantum entropy replaces digital pseudo-random algorithms with true physical acausality, ensuring no card draw was predetermined before your inquiry."
+            },
+            runes: {
+                title: "Sacred Runes · Dual-Stage Stave Draw & Parity Reversal",
+                badge: "runes.py · Dual-Slice Quantum State Measurement",
+                lead: "The Oracle requests a multi-integer quantum entropy burst. <strong>Slice 1</strong> orders candidate Elder Futhark runes to blindly draw staves without replacement from the linen cloth. <strong>Slice 2</strong> evaluates live subatomic parity (<code>n % 2 == 1</code>) to independently collapse reversible runes into <strong>Upright</strong> or <strong>Merkstave (Reversed)</strong>.",
+                sub: "<strong>Ceremonial Parallel:</strong> Recreates the ancient Germanic rite described by Tacitus in 98 CE: shaking carved beech staves in a clean pouch, casting them onto white linen, and observing both which runes appear and which land inverted in the shadow."
+            },
+            iching: {
+                title: "The I Ching · 18-Measurement Quantum Coin Toss",
+                badge: "iching.py · 18 Quantum States (6 Throws × 3 Coins)",
+                lead: "The Oracle conducts <strong>18 independent binary quantum measurements</strong> representing 6 throws of three bronze coins from the root (Line 1: Earth) up to the crown (Line 6: Heaven). The quantum sums yield 6 (Old Yin), 7 (Young Yang), 8 (Young Yin), and 9 (Old Yang), driving the dynamic generation of changing lines and the transformed hexagram (<em>Zhi Gua</em>).",
+                sub: "<strong>Ceremonial Parallel:</strong> Eliminates computer percentages. The three virtual coins tumble through physical quantum indeterminacy just as bronze coins tumble through physical air and gravity."
+            },
+            number: {
+                title: "Quantum Numerology · Zero-Point Energy Integer Collapse",
+                badge: "oracle_logic.py · qrandom.io/api/random/int (1–999)",
+                lead: "Directly samples zero-point energy fluctuations to collapse a live <strong>quantum integer omen between 1 and 999</strong> straight from the quantum foam. The number is decoded through Pythagorean arithmology, digital root summation, Master Number preservation (11, 22, 33), and prime harmonics.",
+                sub: "<strong>Ceremonial Parallel:</strong> Pythagoras taught that 'all things are number'—the universe is vibrating geometry. The live integer draw captures the exact energetic frequency of the universe at the second you consult the Oracle."
+            }
+        };
+
+        function switchQuantumProtocolTab(traditionKey) {
+            const proto = QUANTUM_PROTOCOLS[traditionKey];
+            if (!proto) return;
+
+            document.querySelectorAll('.quantum-protocol-tab').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-qtab') === traditionKey);
+            });
+
+            const contentEl = document.getElementById('quantumProtocolContent');
+            if (contentEl) {
+                contentEl.innerHTML = `
+                    <div class="protocol-badge-row">
+                        <span class="protocol-hardware-badge">${proto.badge}</span>
+                    </div>
+                    <p class="protocol-lead">${proto.lead}</p>
+                    <p class="protocol-sub">${proto.sub}</p>
+                `;
+            }
+        }
+
+        const QUANTUM_MODAL_DATA = {
+            comparison: `
+                <div class="lore-summary-quote">
+                    <div class="lore-summary-tagline">"In classical physics, nature is an automatic clockwork. In quantum physics, nature is an unceasing, uncaused spontaneous creation."</div>
+                </div>
+
+                <div class="lore-section">
+                    <div class="lore-section-title">
+                        <span class="lore-section-glyph">✦</span>
+                        <span>The Deception of Computer "Randomness" (PRNG)</span>
+                    </div>
+                    <div class="lore-section-content">
+                        <p>Traditional computers are deterministic calculators. When a standard divination app shuffles a deck of tarot cards or tosses coins, it relies on a <strong>Pseudo-Random Number Generator (PRNG)</strong>—an algorithm such as the Mersenne Twister or a Linear Congruential Formula.</p>
+                        <p>PRNG algorithms require an initial number called a <strong>seed</strong>, which is usually the device's clock timestamp in milliseconds. Once the seed enters the mathematical equation, <em>every subsequent number in the sequence is 100% predetermined</em>. If someone knew the exact millisecond you clicked, they could calculate all drawn cards before they even appeared on your screen. The reading was mechanically fixed—a simulation of fate rather than a living synchronicity.</p>
+                    </div>
+                </div>
+
+                <div class="lore-section">
+                    <div class="lore-section-title">
+                        <span class="lore-section-glyph">✦</span>
+                        <span>True Quantum Random Number Generation (QRNG)</span>
+                    </div>
+                    <div class="lore-section-content">
+                        <p>The Quantum Oracle shatters algorithmic predetermination by channeling live physical entropy from <strong>Quantum Electrodynamics</strong> via optical zero-point sensors at <code>qrandom.io</code>.</p>
+                        <p>According to quantum field theory and Heisenberg's Uncertainty Principle (<code>ΔE·Δt ≥ ℏ/2</code>), the quantum vacuum is never empty. It is a turbulent sea of <strong>zero-point vacuum fluctuations</strong>—virtual photons spontaneously emerging and annihilating in intervals on the order of Planck time. Physical optoelectronic sensors measure the phase noise of these quantum events, producing truly non-deterministic digital entropy that cannot be predicted by any formula or supercomputer.</p>
+                    </div>
+                </div>
+
+                <div class="lore-section">
+                    <div class="lore-section-title">
+                        <span class="lore-section-glyph">✦</span>
+                        <span>Dual-Tier Enterprise Architecture &amp; Cryptographic Fallback</span>
+                    </div>
+                    <div class="lore-section-content">
+                        <p>To ensure high availability without compromising purity, our backend implements a dual-tier entropy architecture:</p>
+                        <ul>
+                            <li><strong>Primary (Live Quantum Vacuum):</strong> Directly streams physical quantum measurements from <code>qrandom.io</code> with a 2.5-second strict timeout.</li>
+                            <li><strong>Cryptographic Fallback (OS Hardware Entropy):</strong> If network latency occurs, the system immediately fails over to <code>random.SystemRandom()</code>—reading hardware thermal noise from the operating system's cryptographic entropy pool (<code>/dev/urandom</code>). Standard seeded PRNGs are strictly prohibited across our codebase.</li>
+                        </ul>
+                    </div>
+                </div>
+            `,
+            traditions: `
+                <div class="lore-summary-quote">
+                    <div class="lore-summary-tagline">"Four sacred ceremonies, each mapped to a distinct quantum mechanical collapse."</div>
+                </div>
+
+                <div class="lore-section">
+                    <div class="lore-section-title">
+                        <span class="lore-section-glyph">✦</span>
+                        <span>1. Tarot Arcana · 78-Integer Quantum Shuffle</span>
+                    </div>
+                    <div class="lore-section-content">
+                        <p><strong>Code Implementation:</strong> <code>tarot.py</code> (<code>TarotDeck.quantum_shuffle()</code>)</p>
+                        <p>Before any cards are dealt, the server requests 78 quantum integers from the vacuum state (<code>n=78, min=1, max=78</code>). Every single card across the 22 Major Arcana and 56 Minor Arcana is paired with a live quantum measurement and sorted. The cards are physically rearranged in memory through pure quantum noise before your spread (Triad, Cross, or Celtic Cross) is drawn from the top of the deck.</p>
+                    </div>
+                </div>
+
+                <div class="lore-section">
+                    <div class="lore-section-title">
+                        <span class="lore-section-glyph">✦</span>
+                        <span>2. Sacred Runes · Dual-Stage Stave Draw &amp; Parity Reversal</span>
+                    </div>
+                    <div class="lore-section-content">
+                        <p><strong>Code Implementation:</strong> <code>runes.py</code> (<code>RuneSet.quantum_draw_with_reversals()</code>)</p>
+                        <p>The Oracle requests an array of quantum values partitioned into two distinct functional slices:</p>
+                        <ul>
+                            <li><strong>Slice 1 (Stave Selection):</strong> Sorts the candidate runes to select 1, 3, 5, or 9 staves without replacement, replicating the blind draw from a sacred pouch.</li>
+                            <li><strong>Slice 2 (Orientation Collapse):</strong> Samples quantum parity (<code>n % 2 == 1</code>) to independently determine whether reversible runes land <strong>Upright</strong> or in <strong>Merkstave (Reversed)</strong>, honoring the shadow warnings of the Elder Futhark.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="lore-section">
+                    <div class="lore-section-title">
+                        <span class="lore-section-glyph">✦</span>
+                        <span>3. The I Ching · 18 Binary Quantum Coin Measurements</span>
+                    </div>
+                    <div class="lore-section-content">
+                        <p><strong>Code Implementation:</strong> <code>iching.py</code> (<code>IChingOracle.quantum_coin_toss()</code>)</p>
+                        <p>The ancient three-coin method requires throwing three bronze coins six times, constructing the hexagram from the earth line (Line 1) to the heaven line (Line 6). The Oracle measures <strong>18 independent quantum binary states</strong> (<code>n=18, min=0, max=1</code>). Summing each triad of throws creates the four classic Taoist conditions: Old Yin (6), Young Yang (7), Young Yin (8), and Old Yang (9), automatically identifying changing lines and deriving the transformed hexagram (<em>Zhi Gua</em>).</p>
+                    </div>
+                </div>
+
+                <div class="lore-section">
+                    <div class="lore-section-title">
+                        <span class="lore-section-glyph">✦</span>
+                        <span>4. Quantum Numerology · Zero-Point Ground State Collapse</span>
+                    </div>
+                    <div class="lore-section-content">
+                        <p><strong>Code Implementation:</strong> <code>oracle_logic.py</code> (<code>_get_quantum_number()</code>)</p>
+                        <p>Collapses an instantaneous integer omen between 1 and 999 directly from the quantum foam. The integer is decoded through Pythagorean digital root reduction, prime harmonic analysis, and Master Number preservation (11, 22, 33), providing an unvarnished mathematical snapshot of the seeker's moment in time.</p>
+                    </div>
+                </div>
+            `,
+            synchronicity: `
+                <div class="lore-summary-quote">
+                    <div class="lore-summary-tagline">"Synchronicity is an acausal connecting principle—meaningful coincidence between an inner psychic state and an outer physical occurrence." — Carl Gustav Jung</div>
+                </div>
+
+                <div class="lore-section">
+                    <div class="lore-section-title">
+                        <span class="lore-section-glyph">✦</span>
+                        <span>The 1952 Pauli-Jung Breakthrough</span>
+                    </div>
+                    <div class="lore-section-content">
+                        <p>In 1952, one of the most remarkable intellectual collaborations of the 20th century took place between <strong>Wolfgang Pauli</strong> (Nobel Laureate in Physics, discoverer of the exclusion principle) and <strong>Carl Gustav Jung</strong> (founder of analytical psychology). Together, they published <em>The Interpretation of Nature and the Psyche</em>.</p>
+                        <p>Jung had spent decades studying divination systems (notably the I Ching and Tarot), observing that seekers repeatedly drew symbols that possessed uncanny, profound relevance to their private psychological struggles. Jung called this phenomenon <strong>Synchronicity</strong>: an acausal connecting principle where two events share deep meaning despite having no physical cause-and-effect link.</p>
+                    </div>
+                </div>
+
+                <div class="lore-section">
+                    <div class="lore-section-title">
+                        <span class="lore-section-glyph">✦</span>
+                        <span>Why Classical Physics Denied Divination</span>
+                    </div>
+                    <div class="lore-section-content">
+                        <p>For centuries, Western science was dominated by Newtonian determinism—the belief that the universe is a giant mechanical clockwork where every event must have an antecedent physical cause (a falling domino). Under this framework, divination was dismissed as either fraudulent or mere wishful thinking, because a deck of cards cannot "know" your thoughts.</p>
+                    </div>
+                </div>
+
+                <div class="lore-section">
+                    <div class="lore-section-title">
+                        <span class="lore-section-glyph">✦</span>
+                        <span>How Quantum Mechanics Validated Acausality</span>
+                    </div>
+                    <div class="lore-section-content">
+                        <p>Wolfgang Pauli demonstrated to Jung that modern physics had utterly demolished mechanical determinism. At the subatomic scale, quantum transitions (such as radioactive decay or virtual photon collapse) are <strong>strictly acausal</strong>. There is no physical cause that dictates why a given atom decays at a specific moment.</p>
+                        <p>By harnessing genuine quantum vacuum entropy, the Quantum Oracle operates in the exact physical medium that Pauli and Jung identified: an acausal domain where the physical event is liberated from mechanical chains, allowing your conscious inquiry to meet genuine synchronicity.</p>
+                    </div>
+                </div>
+            `,
+            integrity: `
+                <div class="lore-summary-quote">
+                    <div class="lore-summary-tagline">"Divination without integrity is deceit. The Quantum Oracle is built on absolute cryptographic transparency."</div>
+                </div>
+
+                <div class="lore-section">
+                    <div class="lore-section-title">
+                        <span class="lore-section-glyph">✦</span>
+                        <span>The Quantum Oracle Oath of Transparency</span>
+                    </div>
+                    <div class="lore-section-content">
+                        <ul>
+                            <li><strong>AI Does Not Pick Your Cards:</strong> The Gemini AI model never selects, shuffles, or rigs the drawn cards, runes, or coins. The AI's sole role is that of a scholar and mystic: interpreting the symbols collapsed by quantum vacuum noise.</li>
+                            <li><strong>No Algorithmic Bias:</strong> No engagement algorithms, retention loops, or emotional manipulation. The cards fall exactly as quantum physics dictates.</li>
+                            <li><strong>No Pre-Generated Cache:</strong> Every single consultation initiates a live HTTP stream to the quantum entropy sensors. We never draw from stale or recycled random number pools.</li>
+                            <li><strong>Ephemeral Privacy:</strong> Your inquiries and readings belong solely to you. Divination history is stored locally in your browser's private storage (<code>localStorage</code>) and is never monetized or fed into advertising models.</li>
+                        </ul>
+                    </div>
+                </div>
+            `
+        };
+
+        let activeQuantumModalTab = 'comparison';
+
+        function openQuantumInfoModal(defaultTab) {
+            initAudio();
+            sounds.chime();
+            const tab = defaultTab || activeQuantumModalTab || 'comparison';
+            switchQuantumModalTab(tab);
+            const dialog = document.getElementById('quantumInfoModal');
+            if (dialog && !dialog.open) {
+                dialog.showModal();
+            }
+        }
+
+        function closeQuantumInfoModal() {
+            const dialog = document.getElementById('quantumInfoModal');
+            if (dialog && dialog.open) {
+                dialog.close();
+            }
+        }
+
+        function closeQuantumInfoModalAndConsult() {
+            closeQuantumInfoModal();
+            const portal = document.getElementById('consultation-portal');
+            if (portal) {
+                portal.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function switchQuantumModalTab(tabKey) {
+            activeQuantumModalTab = tabKey;
+            document.querySelectorAll('[data-qmodal-tab]').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-qmodal-tab') === tabKey);
+            });
+
+            const bodyEl = document.getElementById('quantumModalBody');
+            if (bodyEl && QUANTUM_MODAL_DATA[tabKey]) {
+                bodyEl.innerHTML = QUANTUM_MODAL_DATA[tabKey];
+            }
+            sounds.cardFlip();
+        }
+
+        // Initialize Backdrop Click to Dismiss for Quantum Modal
+        const quantumInfoModal = document.getElementById('quantumInfoModal');
+        if (quantumInfoModal) {
+            quantumInfoModal.addEventListener('click', (e) => {
+                const container = quantumInfoModal.querySelector('.lore-container');
+                if (container && !container.contains(e.target)) {
+                    closeQuantumInfoModal();
+                }
+            });
+        }
+
+        // Initialize Embedded Quantum Protocol Card on Load
+        switchQuantumProtocolTab('tarot');
 
         // Runic Divination Modifiers
         let runeAllowReversals = true;
