@@ -513,6 +513,107 @@
             justify-content: center;
             gap: 20px;
             min-height: 280px;
+            position: relative;
+            transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        /* -------------------------------------------------------------------------
+           THEME 1: TAROT — Aged Dark Walnut & Mahogany Altar Table
+           ------------------------------------------------------------------------- */
+        .visual-stage-card.stage-theme-tarot {
+            background: 
+                /* Warm amber candlelight glow radiating from center */
+                radial-gradient(ellipse at 50% 45%, rgba(245, 195, 95, 0.16) 0%, rgba(160, 90, 30, 0.1) 35%, rgba(24, 15, 12, 0.94) 75%, #0e0806 100%),
+                /* Subtle aged wood plank grain */
+                repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.28) 0px, rgba(0, 0, 0, 0.28) 2px, transparent 2px, transparent 22px),
+                repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.012) 0px, rgba(255, 255, 255, 0.012) 1px, transparent 1px, transparent 80px),
+                linear-gradient(180deg, #1c110a 0%, #120905 100%);
+            border: 2px solid rgba(212, 160, 60, 0.35);
+            box-shadow: 
+                inset 0 0 80px rgba(0, 0, 0, 0.88),
+                inset 0 1px 1px rgba(255, 220, 140, 0.25),
+                0 16px 44px rgba(0, 0, 0, 0.75);
+            overflow: hidden;
+        }
+
+        .visual-stage-card.stage-theme-tarot::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 1px solid rgba(212, 160, 60, 0.22);
+            border-radius: calc(var(--radius-lg) - 6px);
+            pointer-events: none;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .visual-stage-card.stage-theme-tarot::after {
+            content: '❖';
+            position: absolute;
+            top: 12px;
+            left: 14px;
+            font-size: 13px;
+            color: rgba(229, 193, 88, 0.45);
+            text-shadow: 0 0 6px rgba(229, 193, 88, 0.3);
+            pointer-events: none;
+        }
+
+        /* -------------------------------------------------------------------------
+           THEME 2: RUNES — Sacred Norse Woven Altar Cloth
+           ------------------------------------------------------------------------- */
+        .visual-stage-card.stage-theme-runes {
+            background: 
+                /* Starlit twilight center ambiance */
+                radial-gradient(ellipse at 50% 50%, rgba(46, 70, 95, 0.25) 0%, rgba(18, 26, 36, 0.75) 45%, rgba(11, 14, 20, 0.96) 80%, #080a0e 100%),
+                /* Dense Nordic linen cross-weave texture */
+                repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 3px),
+                repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 3px),
+                #0e131a;
+            border: 2px dashed rgba(140, 185, 230, 0.32);
+            box-shadow: 
+                inset 0 0 85px rgba(4, 7, 12, 0.92),
+                inset 0 0 24px rgba(78, 140, 210, 0.12),
+                0 16px 44px rgba(0, 0, 0, 0.75);
+            overflow: hidden;
+        }
+
+        .visual-stage-card.stage-theme-runes::before {
+            content: '';
+            position: absolute;
+            inset: 7px;
+            border: 1px dotted rgba(140, 185, 230, 0.22);
+            border-radius: calc(var(--radius-lg) - 5px);
+            pointer-events: none;
+        }
+
+        /* -------------------------------------------------------------------------
+           THEME 3: I CHING — Imperial Cinnabar & Polished Ebony Lacquer Altar Board
+           ------------------------------------------------------------------------- */
+        .visual-stage-card.stage-theme-iching {
+            background: 
+                /* High-gloss lacquer reflective specular light */
+                linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.015) 30%, transparent 60%),
+                /* Imperial Cinnabar center aura with deep ebony fade */
+                radial-gradient(ellipse at 50% 40%, rgba(186, 32, 38, 0.28) 0%, rgba(105, 14, 18, 0.2) 40%, rgba(18, 10, 12, 0.96) 80%, #0b0607 100%),
+                /* Subtle wood grain beneath lacquer */
+                repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0px, rgba(0, 0, 0, 0.2) 2px, transparent 2px, transparent 12px),
+                #0d0708;
+            border: 2px solid rgba(229, 193, 88, 0.5);
+            outline: 1px solid rgba(186, 32, 38, 0.5);
+            outline-offset: -7px;
+            box-shadow: 
+                inset 0 0 75px rgba(0, 0, 0, 0.92),
+                inset 0 0 35px rgba(186, 32, 38, 0.25),
+                0 16px 48px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+        }
+
+        .visual-stage-card.stage-theme-iching::before {
+            content: '';
+            position: absolute;
+            inset: 12px;
+            border: 1px dashed rgba(229, 193, 88, 0.28);
+            border-radius: calc(var(--radius-lg) - 8px);
+            pointer-events: none;
         }
 
         /* Clean Centered Tarot Grids */
@@ -981,39 +1082,443 @@
             text-shadow: none;
         }
 
-        /* I Ching Hexagram Display */
-        .hexagram-stage {
+        /* ==========================================================================
+           I CHING AUTHENTIC STACKED HEXAGRAMS & TRANSFORMATION ENGINE
+           ========================================================================== */
+        .iching-stage-container {
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 22px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .iching-board-header {
+            display: flex;
+            align-items: center;
             gap: 12px;
-            padding: 16px;
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            opacity: 0.9;
+        }
+
+        .iching-board-header span {
+            color: #e54d52;
+            font-size: 15px;
+        }
+
+        /* Dual Hexagram Pillars Row */
+        .iching-pillars-row {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 24px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .iching-pillars-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 18px;
+            }
+        }
+
+        /* Hexagram Pillar Card */
+        .hex-pillar {
+            background: rgba(18, 12, 14, 0.76);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 193, 88, 0.35);
+            border-radius: 16px;
+            padding: 22px 24px;
+            min-width: 290px;
+            max-width: 360px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), inset 0 0 16px rgba(186, 32, 38, 0.15);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .hex-pillar:hover {
+            border-color: rgba(229, 193, 88, 0.65);
+            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.75), 0 0 20px rgba(229, 193, 88, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .hex-pillar.primary {
+            border-color: rgba(229, 193, 88, 0.45);
+        }
+
+        .hex-pillar.transformed {
+            border-color: rgba(186, 32, 38, 0.55);
+            background: rgba(24, 12, 14, 0.8);
+        }
+
+        /* Pillar Role Badge (本卦 / 之卦) */
+        .hex-pillar-badge {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            background: rgba(229, 193, 88, 0.15);
+            color: var(--accent-gold);
+            border: 1px solid rgba(229, 193, 88, 0.35);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hex-pillar.transformed .hex-pillar-badge {
+            background: rgba(186, 32, 38, 0.25);
+            color: #ff9498;
+            border-color: rgba(186, 32, 38, 0.5);
+        }
+
+        /* Pillar Title & Chinese Typography */
+        .hex-pillar-head {
             text-align: center;
         }
 
-        .hex-stage-symbol {
-            font-size: 88px;
-            line-height: 1;
-            color: var(--accent-primary);
-            text-shadow: 0 0 24px rgba(179, 136, 255, 0.4);
-        }
-
-        .hex-stage-title {
+        .hex-pillar-name {
             font-family: 'Cinzel', serif;
-            font-size: 24px;
-            color: var(--accent-gold);
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.25;
         }
 
-        .hex-stage-meta {
+        .hex-pillar-chinese {
+            font-family: 'Cinzel', serif, "STSong", "Songti SC", "SimSun";
             font-size: 16px;
+            color: var(--accent-gold);
+            margin-top: 4px;
+        }
+
+        /* Trigram Decomposition Badges (Upper & Lower Bagua) */
+        .hex-trigrams-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 6px 10px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 11px;
             color: var(--text-secondary);
         }
 
-        .hex-stage-changing {
-            color: var(--accent-primary);
+        .trigram-chip {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .trigram-chip .tg-sym {
             font-size: 15px;
+            color: var(--accent-gold);
+        }
+
+        .trigram-chip .tg-label {
             font-weight: 600;
         }
+
+        .trigram-divider {
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        /* 6-Line Stacked Hexagram Engine */
+        .hex-lines-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 10px;
+            background: rgba(8, 5, 6, 0.65);
+            border-radius: 12px;
+            border: 1px solid rgba(229, 193, 88, 0.18);
+        }
+
+        /* Hexagram Line Row */
+        .hex-line-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            height: 18px;
+            position: relative;
+        }
+
+        .hex-line-num {
+            font-size: 10px;
+            font-family: monospace;
+            color: var(--text-muted);
+            width: 18px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        /* Bar Container */
+        .hex-line-bar {
+            flex: 1;
+            height: 12px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            border-radius: 3px;
+            transition: all 0.25s ease;
+        }
+
+        /* Solid Yang Bar (7 or 9) */
+        .hex-line-bar.solid {
+            background: linear-gradient(90deg, #b88628 0%, #ffd700 50%, #b88628 100%);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6), 0 0 8px rgba(229, 193, 88, 0.25);
+            border-radius: 3px;
+        }
+
+        /* Broken Yin Bar (6 or 8) */
+        .hex-line-bar.broken {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            background: transparent;
+        }
+
+        .hex-line-bar.broken .bar-segment {
+            flex: 1;
+            height: 100%;
+            background: linear-gradient(90deg, #a67922 0%, #e6be55 50%, #a67922 100%);
+            border-radius: 3px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6), 0 0 6px rgba(229, 193, 88, 0.2);
+        }
+
+        /* Moving / Changing Line Styles (Old Yang 9, Old Yin 6) */
+        .hex-line-row.changing .hex-line-bar.solid {
+            background: linear-gradient(90deg, #e54d52 0%, #ffc83b 50%, #e54d52 100%);
+            box-shadow: 0 0 14px rgba(255, 90, 95, 0.7), 0 0 6px rgba(255, 215, 0, 0.8);
+            animation: hexPulse 2.2s ease-in-out infinite;
+        }
+
+        .hex-line-row.changing .hex-line-bar.broken .bar-segment {
+            background: linear-gradient(90deg, #c42f34 0%, #ff7377 50%, #c42f34 100%);
+            box-shadow: 0 0 12px rgba(255, 90, 95, 0.7), 0 0 6px rgba(255, 120, 120, 0.7);
+            animation: hexPulse 2.2s ease-in-out infinite;
+        }
+
+        @keyframes hexPulse {
+            0%, 100% {
+                filter: brightness(1) drop-shadow(0 0 3px rgba(229, 77, 82, 0.5));
+            }
+            50% {
+                filter: brightness(1.3) drop-shadow(0 0 10px rgba(255, 190, 60, 0.9));
+            }
+        }
+
+        /* Changing Line Indicator Pill */
+        .hex-changing-tag {
+            font-size: 11px;
+            font-weight: 700;
+            width: 22px;
+            height: 18px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .hex-changing-tag.old-yang {
+            color: #ffd700;
+            background: rgba(229, 77, 82, 0.28);
+            border: 1px solid rgba(229, 77, 82, 0.55);
+            box-shadow: 0 0 8px rgba(229, 77, 82, 0.45);
+        }
+
+        .hex-changing-tag.old-yin {
+            color: #ff9999;
+            background: rgba(186, 32, 38, 0.28);
+            border: 1px solid rgba(186, 32, 38, 0.55);
+            box-shadow: 0 0 8px rgba(186, 32, 38, 0.45);
+        }
+
+        .hex-changing-tag.static {
+            opacity: 0.18;
+            color: var(--text-muted);
+        }
+
+        .hex-changing-tag.transformed-indicator {
+            color: #ffc83b;
+            background: rgba(229, 193, 88, 0.15);
+            border: 1px solid rgba(229, 193, 88, 0.35);
+            font-size: 10px;
+        }
+
+        /* Hex Pillar Meaning Footer */
+        .hex-pillar-footer {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 10px;
+            width: 100%;
+        }
+
+        .hex-pillar-footer em {
+            color: #ffffff;
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        /* Transformation Bridge (between Primary and Transformed Hexagrams) */
+        .iching-transform-bridge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px;
+            min-width: 110px;
+        }
+
+        .bridge-arrow-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(186, 32, 38, 0.4) 0%, rgba(20, 10, 12, 0.8) 100%);
+            border: 1px solid rgba(229, 193, 88, 0.4);
+            box-shadow: 0 0 16px rgba(186, 32, 38, 0.4);
+            animation: bridgeFlow 2s ease-in-out infinite;
+        }
+
+        @keyframes bridgeFlow {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 12px rgba(186, 32, 38, 0.4);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 22px rgba(229, 193, 88, 0.6);
+            }
+        }
+
+        .bridge-arrow {
+            font-size: 20px;
+            color: var(--accent-gold);
+        }
+
+        .bridge-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--accent-gold);
+            text-align: center;
+        }
+
+        .bridge-lines-list {
+            font-size: 11px;
+            color: #ff9999;
+            background: rgba(186, 32, 38, 0.25);
+            border-radius: 12px;
+            padding: 2px 10px;
+            border: 1px solid rgba(186, 32, 38, 0.45);
+        }
+
+        /* 3 Ancient Bronze Coins Tray */
+        .iching-coins-tray {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: rgba(12, 8, 9, 0.65);
+            border: 1px solid rgba(229, 193, 88, 0.22);
+            border-radius: 14px;
+        }
+
+        .coins-tray-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(229, 193, 88, 0.75);
+            font-weight: 600;
+        }
+
+        .coins-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        /* Ancient Bronze Coin: Round with Square Hole & Inscribed Han Characters */
+        .ancient-bronze-coin {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: 
+                radial-gradient(circle at 35% 30%, #d4a755 0%, #997026 35%, #593f14 75%, #2a1c07 100%);
+            border: 2px solid #5a4016;
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.65),
+                inset 0 1px 2px rgba(255, 230, 150, 0.45),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: default;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .ancient-bronze-coin:hover {
+            transform: translateY(-3px) rotate(8deg);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.75), inset 0 1px 2px rgba(255, 230, 150, 0.6);
+        }
+
+        /* The Center Square Cutout */
+        .coin-center-hole {
+            width: 15px;
+            height: 15px;
+            background: #0d0809;
+            border: 1.5px solid #4a3411;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 1px rgba(255, 215, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Decorative Han/Zhou Characters on Coin */
+        .coin-glyph {
+            position: absolute;
+            font-size: 8px;
+            font-family: "STSong", "Songti SC", "SimSun", serif;
+            font-weight: 700;
+            color: rgba(255, 225, 140, 0.7);
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
+            pointer-events: none;
+            line-height: 1;
+        }
+
+        .coin-glyph.top { top: 3px; left: 50%; transform: translateX(-50%); }
+        .coin-glyph.bottom { bottom: 3px; left: 50%; transform: translateX(-50%); }
+        .coin-glyph.left { left: 3px; top: 50%; transform: translateY(-50%); }
+        .coin-glyph.right { right: 3px; top: 50%; transform: translateY(-50%); }
 
         /* Runes Altar Casting Mat & Physical Stone Relics */
         .rune-casting-mat {
@@ -1993,6 +2498,30 @@
                         osc.stop(audioContext.currentTime + 0.7);
                     }, i * 90);
                 });
+            },
+            coinClatter: () => {
+                if (!soundEnabled) return;
+                initAudio();
+                if (!audioContext) return;
+                // Realistic metallic bronze coins clattering on a lacquer board
+                const numStrikes = 6;
+                for (let i = 0; i < numStrikes; i++) {
+                    setTimeout(() => {
+                        const osc = audioContext.createOscillator();
+                        const gain = audioContext.createGain();
+                        osc.connect(gain);
+                        gain.connect(audioContext.destination);
+                        // High metallic bronze resonance clinks
+                        const baseFreqs = [1850, 2150, 2480, 2920, 3250];
+                        osc.frequency.value = baseFreqs[i % baseFreqs.length] + (Math.random() * 140 - 70);
+                        osc.type = 'sine';
+                        const strikeVolume = 0.09 * Math.pow(0.72, i);
+                        gain.gain.setValueAtTime(strikeVolume, audioContext.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.0005, audioContext.currentTime + 0.06 + Math.random() * 0.04);
+                        osc.start();
+                        osc.stop(audioContext.currentTime + 0.11);
+                    }, i * (50 + Math.random() * 25));
+                }
             }
         };
 
@@ -2414,6 +2943,8 @@
         // Renders properly centered visual cards (no bottom cutoff!)
         function renderVisualStage(metadata) {
             visualStageCard.innerHTML = '';
+            const themeTradition = metadata.type || currentTradition || 'tarot';
+            visualStageCard.className = `visual-stage-card stage-theme-${themeTradition}`;
 
             if (metadata.type === 'tarot' && metadata.cards) {
                 activeTarotSpread = metadata;
@@ -2508,16 +3039,159 @@
                 visualStageCard.appendChild(container);
 
             } else if (metadata.type === 'iching' && metadata.hexagram) {
-                sounds.chime();
-                visualStageCard.innerHTML = `
-                    <div class="hexagram-stage">
-                        <div class="hex-stage-symbol">${metadata.hexagram.symbol}</div>
-                        <div class="hex-stage-title">Hexagram ${metadata.hexagram.number}: ${metadata.hexagram.name}</div>
-                        <div class="hex-stage-meta"><em>${metadata.hexagram.meaning}</em> — ${metadata.hexagram.keywords}</div>
-                        ${metadata.hexagram.changing_lines && metadata.hexagram.changing_lines.length > 0 ?
-                            `<div class="hex-stage-changing">Changing Lines: ${metadata.hexagram.changing_lines.join(', ')}</div>` : ''}
+                sounds.coinClatter();
+                const hex = metadata.hexagram;
+
+                const stageWrap = document.createElement('div');
+                stageWrap.className = 'iching-stage-container';
+
+                // Header
+                stageWrap.innerHTML = `
+                    <div class="iching-board-header">
+                        <span>☯</span> THE BOOK OF CHANGES · I CHING <span>☯</span>
                     </div>
                 `;
+
+                // Helper to render a hexagram pillar
+                const buildHexPillar = (hexData, roleTitle, isPrimary) => {
+                    const pillar = document.createElement('div');
+                    pillar.className = `hex-pillar ${isPrimary ? 'primary' : 'transformed'}`;
+
+                    const upper = hexData.upper_trigram || {};
+                    const lower = hexData.lower_trigram || {};
+
+                    // Stack lines from Line 6 down to Line 1 (top to bottom visual layout)
+                    let linesHtml = '';
+                    const lineVals = hexData.lines || [7, 8, 7, 8, 7, 8];
+                    for (let i = 5; i >= 0; i--) {
+                        const val = lineVals[i];
+                        const lineNum = i + 1;
+                        const isYang = (val === 7 || val === 9);
+                        const isChanging = (val === 6 || val === 9);
+
+                        let barHtml = '';
+                        if (isYang) {
+                            barHtml = `<div class="hex-line-bar solid" title="Line ${lineNum}: Solid Yang Bar"></div>`;
+                        } else {
+                            barHtml = `
+                                <div class="hex-line-bar broken" title="Line ${lineNum}: Broken Yin Bar">
+                                    <span class="bar-segment"></span>
+                                    <span class="bar-segment"></span>
+                                </div>
+                            `;
+                        }
+
+                        let tagHtml = '';
+                        if (val === 9) {
+                            tagHtml = `<div class="hex-changing-tag old-yang" title="Line ${lineNum}: Old Yang (9) — Changing into Yin">○</div>`;
+                        } else if (val === 6) {
+                            tagHtml = `<div class="hex-changing-tag old-yin" title="Line ${lineNum}: Old Yin (6) — Changing into Yang">×</div>`;
+                        } else if (!isPrimary && hex.changing_lines && hex.changing_lines.includes(lineNum)) {
+                            tagHtml = `<div class="hex-changing-tag transformed-indicator" title="Line ${lineNum}: Transformed Line">✦</div>`;
+                        } else {
+                            tagHtml = `<div class="hex-changing-tag static">•</div>`;
+                        }
+
+                        linesHtml += `
+                            <div class="hex-line-row ${isChanging ? 'changing' : ''}">
+                                <span class="hex-line-num">L${lineNum}</span>
+                                ${barHtml}
+                                ${tagHtml}
+                            </div>
+                        `;
+                    }
+
+                    pillar.innerHTML = `
+                        <div class="hex-pillar-badge">${roleTitle}</div>
+                        <div class="hex-pillar-head">
+                            <div class="hex-pillar-name">Hexagram ${hexData.number}</div>
+                            <div class="hex-pillar-chinese">${hexData.name} ${hexData.chinese ? `· ${hexData.chinese}` : ''}</div>
+                        </div>
+                        <div class="hex-trigrams-box">
+                            <div class="trigram-chip" title="Upper Trigram: Outer Realm & Action">
+                                <span class="tg-sym">${upper.symbol || '☰'}</span>
+                                <span class="tg-label">Upper: ${upper.name || 'Upper'}</span>
+                            </div>
+                            <span class="trigram-divider">over</span>
+                            <div class="trigram-chip" title="Lower Trigram: Inner Ground & Core">
+                                <span class="tg-sym">${lower.symbol || '☰'}</span>
+                                <span class="tg-label">Lower: ${lower.name || 'Lower'}</span>
+                            </div>
+                        </div>
+                        <div class="hex-lines-stack">
+                            ${linesHtml}
+                        </div>
+                        <div class="hex-pillar-footer">
+                            <em>${hexData.meaning || ''}</em>
+                            ${hexData.keywords ? `<div style="color: var(--text-muted); font-size: 11px; margin-top: 4px;">${hexData.keywords}</div>` : ''}
+                        </div>
+                    `;
+                    return pillar;
+                };
+
+                // Pillars Row
+                const pillarsRow = document.createElement('div');
+                pillarsRow.className = 'iching-pillars-row';
+
+                const hasChanging = hex.changing_lines && hex.changing_lines.length > 0 && hex.transformed;
+
+                if (hasChanging) {
+                    // Left: Primary Hexagram
+                    pillarsRow.appendChild(buildHexPillar(hex, '本卦 · Primary Hexagram', true));
+
+                    // Center: Energetic Transformation Bridge
+                    const bridge = document.createElement('div');
+                    bridge.className = 'iching-transform-bridge';
+                    bridge.innerHTML = `
+                        <div class="bridge-arrow-wrap" title="Celestial Transformation Energy">
+                            <span class="bridge-arrow">➔</span>
+                        </div>
+                        <div class="bridge-label">Changing Lines</div>
+                        <div class="bridge-lines-list">Lines ${hex.changing_lines.join(', ')}</div>
+                    `;
+                    pillarsRow.appendChild(bridge);
+
+                    // Right: Transformed Hexagram
+                    pillarsRow.appendChild(buildHexPillar(hex.transformed, '之卦 · Resulting Hexagram', false));
+                } else {
+                    // Single Steadfast Pillar
+                    pillarsRow.appendChild(buildHexPillar(hex, '定卦 · Steadfast / Immutable', true));
+                }
+
+                stageWrap.appendChild(pillarsRow);
+
+                // Ancient Bronze Coins Tray
+                const coinsTray = document.createElement('div');
+                coinsTray.className = 'iching-coins-tray';
+                coinsTray.innerHTML = `
+                    <div class="coins-tray-title">Ritual Three-Coin Cast · 三錢筮法</div>
+                    <div class="coins-row">
+                        <div class="ancient-bronze-coin" title="Ancient Han/Zhou Bronze Oracle Coin">
+                            <span class="coin-glyph top">乾</span>
+                            <span class="coin-glyph bottom">坤</span>
+                            <span class="coin-glyph left">易</span>
+                            <span class="coin-glyph right">道</span>
+                            <div class="coin-center-hole"></div>
+                        </div>
+                        <div class="ancient-bronze-coin" title="Ancient Han/Zhou Bronze Oracle Coin">
+                            <span class="coin-glyph top">乾</span>
+                            <span class="coin-glyph bottom">坤</span>
+                            <span class="coin-glyph left">易</span>
+                            <span class="coin-glyph right">道</span>
+                            <div class="coin-center-hole"></div>
+                        </div>
+                        <div class="ancient-bronze-coin" title="Ancient Han/Zhou Bronze Oracle Coin">
+                            <span class="coin-glyph top">乾</span>
+                            <span class="coin-glyph bottom">坤</span>
+                            <span class="coin-glyph left">易</span>
+                            <span class="coin-glyph right">道</span>
+                            <div class="coin-center-hole"></div>
+                        </div>
+                    </div>
+                `;
+                stageWrap.appendChild(coinsTray);
+
+                visualStageCard.appendChild(stageWrap);
 
             } else if (metadata.type === 'runes' && metadata.runes) {
                 activeRuneSpread = metadata;
@@ -2618,6 +3292,7 @@
             seekerInquiryDisplay.textContent = `"${promptText}"`;
             oracleStreamText.innerHTML = '';
             visualStageCard.innerHTML = '';
+            visualStageCard.className = `visual-stage-card stage-theme-${currentTradition}`;
             thinkingIndicator.style.display = 'flex';
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2840,6 +3515,91 @@
         window.addEventListener('load', () => {
             updateSpreadOptions();
             renderHistoryDrawer();
+
+            // Demo URL query param handler for testing and showcase verification
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('demo')) {
+                const demoType = urlParams.get('demo');
+                portal.style.display = 'none';
+                readingStage.style.display = 'flex';
+                if (demoType === 'iching') {
+                    activeReadingBadge.textContent = '☯️ Ancient I Ching Hexagram';
+                    renderVisualStage({
+                        type: 'iching',
+                        hexagram: {
+                            number: 38,
+                            name: 'Opposition',
+                            chinese: '睽 (Kuí)',
+                            symbol: '☲☱',
+                            meaning: 'Fire over Lake',
+                            keywords: 'Creative divergence, unique vantage, finding harmony in difference',
+                            upper_trigram: { symbol: '☲', name: 'Fire', element: 'Radiant Flame', nature: 'Clinging' },
+                            lower_trigram: { symbol: '☱', name: 'Lake', element: 'Open Water', nature: 'Joyful' },
+                            changing_lines: [2, 5],
+                            lines: [7, 9, 8, 7, 9, 7],
+                            transformed: {
+                                number: 21,
+                                name: 'Biting Through',
+                                chinese: '噬嗑 (Shì Kè)',
+                                symbol: '☲☳',
+                                meaning: 'Fire over Thunder',
+                                keywords: 'Piercing obstacle, enforcing justice, removing delusion',
+                                upper_trigram: { symbol: '☲', name: 'Fire', element: 'Radiant Flame', nature: 'Clinging' },
+                                lower_trigram: { symbol: '☳', name: 'Thunder', element: 'Awakening Shock', nature: 'Arousing' },
+                                lines: [7, 8, 8, 7, 8, 7]
+                            }
+                        }
+                    });
+                    seekerInquiryDisplay.textContent = '"What guidance does the Book of Changes hold for navigating tension?"';
+                    oracleStreamText.innerHTML = '<p>The Oracle reveals <strong>Hexagram 38: Opposition (睽)</strong> transforming into <strong>Hexagram 21: Biting Through (噬嗑)</strong>...</p>';
+                } else if (demoType === 'iching-steadfast') {
+                    activeReadingBadge.textContent = '☯️ Ancient I Ching Hexagram';
+                    renderVisualStage({
+                        type: 'iching',
+                        hexagram: {
+                            number: 1,
+                            name: 'The Creative',
+                            chinese: '乾 (Qián)',
+                            symbol: '☰☰',
+                            meaning: 'Heaven over Heaven',
+                            keywords: 'Pure yang, primal power, perseverance, dragon in the abyss',
+                            upper_trigram: { symbol: '☰', name: 'Heaven', element: 'Firmament', nature: 'Creative' },
+                            lower_trigram: { symbol: '☰', name: 'Heaven', element: 'Firmament', nature: 'Creative' },
+                            changing_lines: [],
+                            lines: [7, 7, 7, 7, 7, 7]
+                        }
+                    });
+                    seekerInquiryDisplay.textContent = '"What is the ultimate creative force of my inquiry?"';
+                    oracleStreamText.innerHTML = '<p>The oracle reveals <strong>Hexagram 1: The Creative (乾)</strong> in steadfast, immutable form...</p>';
+                } else if (demoType === 'tarot') {
+                    activeReadingBadge.textContent = '🔮 Sacred Tarot Reading';
+                    renderVisualStage({
+                        type: 'tarot',
+                        cards: [
+                            { name: 'The Magician', suit: 'Major Arcana', number: 1 },
+                            { name: 'The High Priestess', suit: 'Major Arcana', number: 2 },
+                            { name: 'The Empress', suit: 'Major Arcana', number: 3 }
+                        ],
+                        positions: ['Past / Foundation', 'Present / Crossing', 'Future / Potential'],
+                        spread_type: '3-card'
+                    });
+                    seekerInquiryDisplay.textContent = '"What energies surround my creative endeavors?"';
+                    oracleStreamText.innerHTML = '<p>The cards lay before you upon the aged walnut altar...</p>';
+                } else if (demoType === 'runes') {
+                    activeReadingBadge.textContent = 'ᚱ Elder Futhark Runes';
+                    renderVisualStage({
+                        type: 'runes',
+                        runes: [
+                            { name: 'Ansuz', symbol: 'ᚨ', meaning: 'Divine Voice & Inspiration', keywords: 'Wisdom, Odin, Truth' },
+                            { name: 'Raidho', symbol: 'ᚱ', meaning: 'The Sacred Journey & Rhythm', keywords: 'Travel, Destiny, Alignment' },
+                            { name: 'Algiz', symbol: 'ᛉ', meaning: 'Sanctuary & Higher Protection', keywords: 'Shield, Elk, Divine Connection' }
+                        ],
+                        positions: ['Situation', 'Action', 'Outcome']
+                    });
+                    seekerInquiryDisplay.textContent = '"What do the ancient stones foresee on my journey?"';
+                    oracleStreamText.innerHTML = '<p>The Elder Futhark runes clatter upon the sacred woven cloth...</p>';
+                }
+            }
         });
     </script>
 </body>

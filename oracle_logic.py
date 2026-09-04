@@ -137,15 +137,56 @@ class GeminiOracle:
     def prepare_iching_reading(self, user_input):
         """Casts hexagram and builds the prompt without calling Gemini yet."""
         hexagram = self.iching.cast_hexagram()
-        changing_desc = f"Changing lines: {', '.join(map(str, hexagram['changing_lines']))}" if hexagram['changing_lines'] else "No changing lines"
+        primary_name = f"Hexagram {hexagram['number']}: {hexagram['name']} {hexagram.get('chinese', '')}"
+        upper = hexagram.get('upper_trigram', {})
+        lower = hexagram.get('lower_trigram', {})
+        trigram_desc = f"{upper.get('name', 'Upper')} ({upper.get('element', '')}) above {lower.get('name', 'Lower')} ({lower.get('element', '')})"
+        
+        transformed = hexagram.get('transformed')
+        if transformed:
+            trans_upper = transformed.get('upper_trigram', {})
+            trans_lower = transformed.get('lower_trigram', {})
+            trans_trigram_desc = f"{trans_upper.get('name', 'Upper')} ({trans_upper.get('element', '')}) above {trans_lower.get('name', 'Lower')} ({trans_lower.get('element', '')})"
+            changing_lines_str = ', '.join(map(str, hexagram['changing_lines']))
+            
+            prompt = f"""You have cast the ancient I Ching (Book of Changes) using the traditional three-coin oracle method and received:
 
-        prompt = f"""You have cast the I Ching and received:
-Hexagram {hexagram['number']}: {hexagram['name']} ({hexagram['symbol']})
-Meaning: {hexagram['meaning']}
-Keywords: {hexagram['keywords']}
-{changing_desc}
+1. PRIMARY HEXAGRAM (Present Situation):
+   - {primary_name} ({hexagram['symbol']})
+   - Trigram Architecture: {trigram_desc}
+   - Meaning: {hexagram['meaning']}
+   - Core Essence: {hexagram['keywords']}
 
-Provide an I Ching divination for this seeker's question: '{user_input}'"""
+2. MOVING / CHANGING LINES (Active Forces in Motion):
+   - Active Line(s): {changing_lines_str} (counting from bottom Line 1 to top Line 6)
+   - These dynamic lines represent the specific tensions, critical choices, and emerging shifts in the seeker's circumstance.
+
+3. TRANSFORMED HEXAGRAM (Zhi Gua — Emerging Trajectory / Future Outcome):
+   - Hexagram {transformed['number']}: {transformed['name']} {transformed.get('chinese', '')} ({transformed['symbol']})
+   - Trigram Architecture: {trans_trigram_desc}
+   - Meaning: {transformed['meaning']}
+   - Core Essence: {transformed['keywords']}
+
+Seeker's Inquiry: '{user_input}'
+
+Provide a profound classical I Ching divination. In your counsel:
+- Open with the poetic archetypal wisdom of the Primary Hexagram (The Judgment & The Image).
+- Elucidate the specific counsel and warnings of the Moving Line(s).
+- Reveal the destination and trajectory shown by the Transformed Hexagram.
+- Offer actionable philosophical guidance for walking this path in harmony with the Tao."""
+        else:
+            prompt = f"""You have cast the ancient I Ching (Book of Changes) using the traditional three-coin oracle method and received a steadfast, unchanging hexagram:
+
+PRIMARY HEXAGRAM (Enduring Reality):
+- {primary_name} ({hexagram['symbol']})
+- Trigram Architecture: {trigram_desc}
+- Meaning: {hexagram['meaning']}
+- Core Essence: {hexagram['keywords']}
+- Stability: No changing lines are present, signifying an immutable, steady-state condition where the primary archetype must be deeply integrated rather than rushed.
+
+Seeker's Inquiry: '{user_input}'
+
+Provide a profound classical I Ching divination. Explain the Judgment and the Image of this hexagram, revealing how its elemental energies guide the seeker's inquiry in alignment with the Tao."""
 
         return {
             'hexagram': hexagram,
