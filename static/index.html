@@ -6775,7 +6775,8 @@
                     ? { left: Math.min(a.left, r.left), top: Math.min(a.top, r.top), right: Math.max(a.right, r.right), bottom: Math.max(a.bottom, r.bottom) }
                     : { left: r.left, top: r.top, right: r.right, bottom: r.bottom };
                 let box = null;
-                let clampRect = { left: stageRect.left, top: stageRect.top, right: stageRect.right, bottom: stageRect.bottom };
+                const stageInset = 4; // stay inside the altar's 2px border
+                let clampRect = { left: stageRect.left + stageInset, top: stageRect.top + stageInset, right: stageRect.right - stageInset, bottom: stageRect.bottom - stageInset };
                 for (const rule of TALISMAN_CONTENT_RULES) {
                     const els = stage.querySelectorAll(rule.content);
                     if (!els.length) continue;
@@ -6798,8 +6799,8 @@
                 if (!box) box = { left: stageRect.left, top: stageRect.top, right: stageRect.right, bottom: stageRect.bottom };
 
                 // Breathing room of altar texture around the spread, clamped to its surface
-                const padX = (box.right - box.left) * 0.09 + 14;
-                const padY = (box.bottom - box.top) * 0.09 + 14;
+                const padX = (box.right - box.left) * 0.06 + 10;
+                const padY = (box.bottom - box.top) * 0.06 + 10;
                 const left = Math.max(clampRect.left, box.left - padX);
                 const top = Math.max(clampRect.top, box.top - padY);
                 const right = Math.min(clampRect.right, box.right + padX);
@@ -6963,40 +6964,52 @@
             ctx.fillRect(0, 0, W, H);
         }
 
-        // Draws the spread at its true aspect ratio and feathers its edges into the ambient fill
-        function drawFeatheredArt(ctx, snap, art) {
+        function talismanRoundRect(ctx, x, y, w, h, r) {
+            const rr = Math.max(0, Math.min(r, w / 2, h / 2));
+            ctx.beginPath();
+            ctx.moveTo(x + rr, y);
+            ctx.lineTo(x + w - rr, y);
+            ctx.arcTo(x + w, y, x + w, y + rr, rr);
+            ctx.lineTo(x + w, y + h - rr);
+            ctx.arcTo(x + w, y + h, x + w - rr, y + h, rr);
+            ctx.lineTo(x + rr, y + h);
+            ctx.arcTo(x, y + h, x, y + h - rr, rr);
+            ctx.lineTo(x, y + rr);
+            ctx.arcTo(x, y, x + rr, y, rr);
+            ctx.closePath();
+        }
+
+        // Draws the spread at its true aspect ratio as a framed altar photograph: rounded corners,
+        // a gold hairline and a soft drop shadow over the blurred backdrop.
+        function drawFramedArt(ctx, snap, art, radius) {
             const { canvas: src, content: c } = snap;
+            const x = Math.round(art.x);
+            const y = Math.round(art.y);
             const w = Math.round(art.w);
             const h = Math.round(art.h);
             if (w < 2 || h < 2) return;
 
-            const off = document.createElement('canvas');
-            off.width = w;
-            off.height = h;
-            const octx = off.getContext('2d');
-            octx.imageSmoothingEnabled = true;
-            octx.imageSmoothingQuality = 'high';
-            octx.drawImage(src, c.x, c.y, c.w, c.h, 0, 0, w, h);
+            ctx.save();
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+            ctx.shadowBlur = 54;
+            ctx.shadowOffsetY = 22;
+            ctx.fillStyle = '#0a0812';
+            talismanRoundRect(ctx, x, y, w, h, radius);
+            ctx.fill();
+            ctx.restore();
 
-            octx.globalCompositeOperation = 'destination-in';
-            const fx = Math.min(w * 0.08, 90) / w;
-            const fy = Math.min(h * 0.08, 90) / h;
-            let g = octx.createLinearGradient(0, 0, w, 0);
-            g.addColorStop(0, 'rgba(0,0,0,0)');
-            g.addColorStop(fx, 'rgba(0,0,0,1)');
-            g.addColorStop(1 - fx, 'rgba(0,0,0,1)');
-            g.addColorStop(1, 'rgba(0,0,0,0)');
-            octx.fillStyle = g;
-            octx.fillRect(0, 0, w, h);
-            g = octx.createLinearGradient(0, 0, 0, h);
-            g.addColorStop(0, 'rgba(0,0,0,0)');
-            g.addColorStop(fy, 'rgba(0,0,0,1)');
-            g.addColorStop(1 - fy, 'rgba(0,0,0,1)');
-            g.addColorStop(1, 'rgba(0,0,0,0)');
-            octx.fillStyle = g;
-            octx.fillRect(0, 0, w, h);
+            ctx.save();
+            talismanRoundRect(ctx, x, y, w, h, radius);
+            ctx.clip();
+            ctx.drawImage(src, c.x, c.y, c.w, c.h, x, y, w, h);
+            ctx.restore();
 
-            ctx.drawImage(off, Math.round(art.x), Math.round(art.y), w, h);
+            ctx.save();
+            ctx.strokeStyle = 'rgba(229, 193, 88, 0.34)';
+            ctx.lineWidth = 2;
+            talismanRoundRect(ctx, x + 1, y + 1, w - 2, h - 2, Math.max(0, radius - 1));
+            ctx.stroke();
+            ctx.restore();
         }
 
         // ---------- Layout ----------
@@ -7012,8 +7025,8 @@
                 art: null,
                 quote: null
             };
-            const contentTop = isStory ? 310 : 156;
-            const contentBottom = isStory ? H - 350 : H - 150;
+            const contentTop = isStory ? 300 : 156;
+            const contentBottom = isStory ? H - 330 : H - 150;
             const zoneH = contentBottom - contentTop;
             const attrH = isStory ? 24 : 20;
             const attrGap = isStory ? 40 : 30;
@@ -7040,14 +7053,17 @@
 
             // Stacked, art first: the quote is set at a comfortable size (bounded), the spread takes the
             // rest. Very long quotes shrink toward the floor rather than squeezing the cards below a minimum.
+            // Tall spreads (single card, five-card cross, Celtic Cross) are height-bound in a story,
+            // so the quote yields more height to them than it does for wide spreads.
+            const tall = snap && aspect < 0.85;
             const artMaxW = isStory ? 940 : 960;
-            const artCapH = isStory ? 1010 : 540;
+            const artCapH = isStory ? 1060 : 540;
             const artMinH = isStory ? 560 : 300;
-            const artGap = isStory ? 56 : 48;
+            const artGap = isStory ? 52 : 48;
             const quoteMaxW = isStory ? 900 : 920;
-            const quoteMaxSize = isStory ? 62 : 50;
+            const quoteMaxSize = isStory ? (tall ? 56 : 62) : 50;
             const quoteMinSize = isStory ? 40 : 28;
-            const quoteBlockCap = isStory ? 330 : 240;
+            const quoteBlockCap = isStory ? (tall ? 270 : 330) : 240;
 
             let fit = fitQuote(ctx, quote, quoteMaxW, quoteBlockCap, quoteMaxSize, quoteMinSize, 1.22);
             let quoteH = fit.lines.length * fit.lineHeight;
@@ -7164,7 +7180,7 @@
 
             // 3. Layout, then the spread at true aspect ratio
             const L = computeTalismanLayout(ctx, format, W, H, snap, quote);
-            if (snap && L.art) drawFeatheredArt(ctx, snap, L.art);
+            if (snap && L.art) drawFramedArt(ctx, snap, L.art, L.isStory ? 30 : 26);
 
             // 4. Edge vignette to bind the composition
             const rg = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.42, W / 2, H / 2, Math.hypot(W, H) * 0.58);
