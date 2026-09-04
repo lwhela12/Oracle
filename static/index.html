@@ -167,26 +167,21 @@
             .nav-title { font-size: 16px; }
         }
 
-        /* Compact Header Banner */
+        /* Atmospheric Hero Banner (Option B - Ambient Fade) */
         .hero-banner {
             width: 100%;
-            max-height: 110px;
+            height: 140px;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            background: #000;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .hero-banner::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 30px;
-            background: linear-gradient(to top, var(--bg-primary), transparent);
+            background: transparent;
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.75) 45%, rgba(0, 0, 0, 0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.75) 45%, rgba(0, 0, 0, 0) 100%);
             pointer-events: none;
+            user-select: none;
+            margin-bottom: -15px;
         }
 
         .hero-banner picture,
@@ -194,12 +189,15 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
+            object-position: center 30%;
             display: block;
         }
 
         @media (max-width: 768px) {
-            .hero-banner { max-height: 75px; }
+            .hero-banner {
+                height: 85px;
+                margin-bottom: -10px;
+            }
         }
 
         /* Main Container */
@@ -240,6 +238,13 @@
             font-size: 24px;
             color: var(--accent-gold);
             letter-spacing: 1px;
+        }
+
+        @media (max-width: 600px) {
+            .portal-title {
+                font-size: 20px;
+                letter-spacing: 0.5px;
+            }
         }
 
         .portal-subtitle {
@@ -3633,9 +3638,15 @@
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 <span class="nav-btn-label">Journal</span>
             </button>
-            <button class="nav-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
-            <button class="nav-btn" id="sound-btn" onclick="toggleSound()" title="Sound Effects">🔊</button>
-            <button class="nav-btn muted" id="music-btn" onclick="toggleMusic()" title="Ambient Drone">🎵</button>
+            <button class="nav-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle Theme" aria-label="Toggle Theme">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+            <button class="nav-btn" id="sound-btn" onclick="toggleSound()" title="Sound Effects" aria-label="Sound Effects">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+            </button>
+            <button class="nav-btn muted" id="music-btn" onclick="toggleMusic()" title="Ambient Drone" aria-label="Ambient Drone">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+            </button>
         </div>
     </header>
 
@@ -3653,7 +3664,7 @@
         <!-- STEP-BY-STEP GUIDED CONSULTATION PORTAL -->
         <section class="consultation-portal" id="consultation-portal">
             <div class="portal-header">
-                <h1 class="portal-title">✦ Welcome ✦</h1>
+                <h1 class="portal-title">✦ Welcome to the Quantum Oracle ✦</h1>
                 <p class="portal-subtitle">The Quantum Oracle uses quantum randomness mixed with traditional divinatory techniques.</p>
             </div>
 
@@ -5006,18 +5017,33 @@
             }
         }
 
+        const NAV_ICONS = {
+            moon: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`,
+            sun: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="1" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`,
+            soundOn: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>`,
+            soundOff: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>`,
+            musicOn: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>`,
+            musicOff: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle><line x1="1" y1="1" x2="23" y2="23"></line></svg>`
+        };
+
         function toggleSound() {
             soundEnabled = !soundEnabled;
-            soundBtn.textContent = soundEnabled ? '🔊' : '🔇';
-            soundBtn.classList.toggle('muted', !soundEnabled);
+            if (soundBtn) {
+                soundBtn.innerHTML = soundEnabled ? NAV_ICONS.soundOn : NAV_ICONS.soundOff;
+                soundBtn.classList.toggle('muted', !soundEnabled);
+                soundBtn.title = soundEnabled ? "Sound Effects (Enabled)" : "Sound Effects (Muted)";
+            }
             localStorage.setItem('soundEnabled', soundEnabled);
             if (soundEnabled) sounds.chime();
         }
 
         function toggleMusic() {
             musicEnabled = !musicEnabled;
-            musicBtn.textContent = musicEnabled ? '🎵' : '🎶';
-            musicBtn.classList.toggle('muted', !musicEnabled);
+            if (musicBtn) {
+                musicBtn.innerHTML = musicEnabled ? NAV_ICONS.musicOn : NAV_ICONS.musicOff;
+                musicBtn.classList.toggle('muted', !musicEnabled);
+                musicBtn.title = musicEnabled ? "Ambient Drone (Playing)" : "Ambient Drone (Muted)";
+            }
             localStorage.setItem('musicEnabled', musicEnabled);
             if (musicEnabled) startAmbientMusic();
             else stopAmbientMusic();
@@ -5028,21 +5054,37 @@
             const currentTheme = body.getAttribute('data-theme') || 'dark';
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
             body.setAttribute('data-theme', newTheme);
-            themeBtn.textContent = newTheme === 'light' ? '☀️' : '🌙';
+            if (themeBtn) {
+                themeBtn.innerHTML = newTheme === 'light' ? NAV_ICONS.sun : NAV_ICONS.moon;
+                themeBtn.title = newTheme === 'light' ? "Light Theme (Click for Dark)" : "Dark Theme (Click for Light)";
+            }
             localStorage.setItem('theme', newTheme);
         }
 
         // Initialize Preferences
-        if (!soundEnabled) {
-            soundBtn.classList.add('muted');
-            soundBtn.textContent = '🔇';
+        if (soundBtn) {
+            soundBtn.innerHTML = soundEnabled ? NAV_ICONS.soundOn : NAV_ICONS.soundOff;
+            if (!soundEnabled) {
+                soundBtn.classList.add('muted');
+            }
         }
-        if (musicEnabled) {
-            musicBtn.classList.remove('muted');
+        if (musicBtn) {
+            musicBtn.innerHTML = musicEnabled ? NAV_ICONS.musicOn : NAV_ICONS.musicOff;
+            if (!musicEnabled) {
+                musicBtn.classList.add('muted');
+            } else {
+                musicBtn.classList.remove('muted');
+            }
         }
         if (localStorage.getItem('theme') === 'light') {
             document.body.setAttribute('data-theme', 'light');
-            themeBtn.textContent = '☀️';
+            if (themeBtn) {
+                themeBtn.innerHTML = NAV_ICONS.sun;
+                themeBtn.title = "Light Theme (Click for Dark)";
+            }
+        } else if (themeBtn) {
+            themeBtn.innerHTML = NAV_ICONS.moon;
+            themeBtn.title = "Dark Theme (Click for Light)";
         }
 
         // Card Visual Icons
