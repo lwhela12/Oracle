@@ -2505,6 +2505,13 @@
             display: none !important;
         }
 
+        /* The share-card compositor also drops the frame ornament and inner border, which
+           otherwise leak into the crop when a spread reaches the altar's edge */
+        .visual-stage-card.is-capturing-bare::before,
+        .visual-stage-card.is-capturing-bare::after {
+            display: none !important;
+        }
+
         .card-art-fallback {
             width: 100%;
             height: 100%;
@@ -6760,7 +6767,7 @@
             const stage = document.getElementById('visual-stage-card');
             if (!stage || typeof html2canvas !== 'function') return null;
 
-            stage.classList.add('is-capturing');
+            stage.classList.add('is-capturing', 'is-capturing-bare');
             try {
                 void stage.offsetHeight; // reflow after hiding the hint so measurements match the capture
                 const stageRect = stage.getBoundingClientRect();
@@ -6791,8 +6798,8 @@
                 if (!box) box = { left: stageRect.left, top: stageRect.top, right: stageRect.right, bottom: stageRect.bottom };
 
                 // Breathing room of altar texture around the spread, clamped to its surface
-                const padX = (box.right - box.left) * 0.14 + 18;
-                const padY = (box.bottom - box.top) * 0.14 + 18;
+                const padX = (box.right - box.left) * 0.09 + 14;
+                const padY = (box.bottom - box.top) * 0.09 + 14;
                 const left = Math.max(clampRect.left, box.left - padX);
                 const top = Math.max(clampRect.top, box.top - padY);
                 const right = Math.min(clampRect.right, box.right + padX);
@@ -6800,7 +6807,7 @@
 
                 // Render scale: enough pixels that the spread stays crisp at 1080px export, capped for memory
                 const longSide = Math.max(1, right - left, bottom - top);
-                let scale = Math.max(2, 1150 / longSide);
+                let scale = Math.max(2, 1300 / longSide);
                 scale = Math.min(scale, 4, Math.sqrt(14e6 / Math.max(1, stageRect.width * stageRect.height)));
 
                 const canvas = await html2canvas(stage, {
@@ -6823,7 +6830,7 @@
                 console.warn('Could not snapshot visual stage:', e);
                 return null;
             } finally {
-                stage.classList.remove('is-capturing');
+                stage.classList.remove('is-capturing', 'is-capturing-bare');
             }
         }
 
@@ -6972,8 +6979,8 @@
             octx.drawImage(src, c.x, c.y, c.w, c.h, 0, 0, w, h);
 
             octx.globalCompositeOperation = 'destination-in';
-            const fx = Math.min(w * 0.13, 130) / w;
-            const fy = Math.min(h * 0.13, 130) / h;
+            const fx = Math.min(w * 0.08, 90) / w;
+            const fy = Math.min(h * 0.08, 90) / h;
             let g = octx.createLinearGradient(0, 0, w, 0);
             g.addColorStop(0, 'rgba(0,0,0,0)');
             g.addColorStop(fx, 'rgba(0,0,0,1)');
@@ -7005,8 +7012,8 @@
                 art: null,
                 quote: null
             };
-            const contentTop = isStory ? 330 : 156;
-            const contentBottom = isStory ? H - 330 : H - 150;
+            const contentTop = isStory ? 310 : 156;
+            const contentBottom = isStory ? H - 350 : H - 150;
             const zoneH = contentBottom - contentTop;
             const attrH = isStory ? 24 : 20;
             const attrGap = isStory ? 40 : 30;
@@ -7031,21 +7038,32 @@
                 return L;
             }
 
-            // Stacked
-            const artMaxW = isStory ? 900 : 940;
-            const artMaxH = isStory ? 820 : 480;
-            const artGap = isStory ? 72 : 54;
+            // Stacked, art first: the quote is set at a comfortable size (bounded), the spread takes the
+            // rest. Very long quotes shrink toward the floor rather than squeezing the cards below a minimum.
+            const artMaxW = isStory ? 940 : 960;
+            const artCapH = isStory ? 1010 : 540;
+            const artMinH = isStory ? 560 : 300;
+            const artGap = isStory ? 56 : 48;
+            const quoteMaxW = isStory ? 900 : 920;
+            const quoteMaxSize = isStory ? 62 : 50;
+            const quoteMinSize = isStory ? 40 : 28;
+            const quoteBlockCap = isStory ? 330 : 240;
+
+            let fit = fitQuote(ctx, quote, quoteMaxW, quoteBlockCap, quoteMaxSize, quoteMinSize, 1.22);
+            let quoteH = fit.lines.length * fit.lineHeight;
             let art = null;
             if (snap) {
-                let aw = artMaxW;
-                let ah = aw / aspect;
-                if (ah > artMaxH) { ah = artMaxH; aw = ah * aspect; }
+                let availArtH = zoneH - quoteH - attrGap - attrH - artGap;
+                if (availArtH < artMinH) {
+                    fit = fitQuote(ctx, quote, quoteMaxW, Math.max(80, zoneH - artMinH - artGap - attrGap - attrH), quoteMaxSize, quoteMinSize, 1.22);
+                    quoteH = fit.lines.length * fit.lineHeight;
+                    availArtH = zoneH - quoteH - attrGap - attrH - artGap;
+                }
+                let ah = Math.min(artCapH, Math.max(artMinH, availArtH));
+                let aw = ah * aspect;
+                if (aw > artMaxW) { aw = artMaxW; ah = aw / aspect; }
                 art = { w: aw, h: ah };
             }
-            const quoteMaxW = isStory ? 880 : 900;
-            const availQuoteH = zoneH - (art ? art.h + artGap : 0) - attrGap - attrH;
-            const fit = fitQuote(ctx, quote, quoteMaxW, Math.max(120, availQuoteH), isStory ? 68 : 54, isStory ? 34 : 28, 1.22);
-            const quoteH = fit.lines.length * fit.lineHeight;
             const groupH = (art ? art.h + artGap : 0) + quoteH + attrGap + attrH;
             let y = contentTop + Math.max(0, (zoneH - groupH) * 0.42); // optical centre sits slightly high
             if (art) {
