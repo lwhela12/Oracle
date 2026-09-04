@@ -1020,11 +1020,104 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 16px;
+            gap: 28px;
             flex-wrap: wrap;
-            padding: 10px 0;
+            padding: 16px 0;
+            perspective: 1000px;
         }
 
+        /* Standalone Physical Stone Artifact */
+        .rune-stone-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            cursor: zoom-in;
+            position: relative;
+            transition: transform 0.25s cubic-bezier(0.2, 0, 0.2, 1);
+            user-select: none;
+        }
+
+        .rune-stone-wrapper:hover {
+            transform: translateY(-8px) scale(1.06);
+        }
+
+        .rune-artifact-img {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+            display: block;
+            filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 16px rgba(229, 193, 88, 0.3));
+            transition: filter 0.25s ease;
+        }
+
+        .rune-stone-wrapper:hover .rune-artifact-img {
+            filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.88)) drop-shadow(0 0 24px rgba(229, 193, 88, 0.55));
+        }
+
+        .rune-stone-wrapper::after {
+            content: '🔍';
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 22px;
+            height: 22px;
+            background: rgba(13, 12, 20, 0.85);
+            border: 1px solid var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            opacity: 0;
+            transform: scale(0.6);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            pointer-events: none;
+            z-index: 5;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .rune-stone-wrapper:hover::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .rune-stone-meta {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .rune-pos-badge {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 2px 10px;
+            border-radius: 12px;
+            background: rgba(229, 193, 88, 0.12);
+            border: 1px solid rgba(229, 193, 88, 0.4);
+            color: var(--accent-gold);
+        }
+
+        .rune-name-label {
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .rune-meaning-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            max-width: 140px;
+            line-height: 1.25;
+            text-align: center;
+        }
+
+        /* Fallback Rune Stone (when image not present) */
         .rune-stone {
             background: linear-gradient(145deg, #373449 0%, #201e2c 100%);
             border: 2px solid #5a5472;
@@ -1627,6 +1720,33 @@
         </div>
     </dialog>
 
+    <!-- Rune Zoom Lightbox Dialog -->
+    <dialog id="runeZoomDialog" class="card-zoom-dialog" aria-labelledby="zoomRuneName">
+        <div class="card-zoom-container">
+            <button class="card-zoom-close" id="runeZoomClose" aria-label="Close rune view">&times;</button>
+            <button class="card-zoom-nav prev" id="runeZoomPrev" aria-label="Previous rune">&#8249;</button>
+            <button class="card-zoom-nav next" id="runeZoomNext" aria-label="Next rune">&#8250;</button>
+
+            <div style="width: min(340px, 80vw); height: min(340px, 80vw); display: flex; align-items: center; justify-content: center; position: relative;">
+                <img id="zoomRuneImg" src="" alt="Zoomed Rune Stone" style="width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 20px 36px rgba(0,0,0,0.85)) drop-shadow(0 0 32px rgba(229, 193, 88, 0.4));">
+                <div id="zoomRuneFallback" class="rune-stone" style="display: none; width: 140px; height: 160px; justify-content: center;">
+                    <div id="zoomRuneSymbolFallback" class="rune-symbol"></div>
+                    <div id="zoomRuneNameFallback" class="rune-name"></div>
+                </div>
+            </div>
+
+            <div class="card-zoom-meta">
+                <div class="zoom-badge" id="zoomRunePosition">Position</div>
+                <h2 class="zoom-title" id="zoomRuneName">Fehu</h2>
+                <div style="font-size: 13px; font-weight: 700; color: var(--accent-gold); letter-spacing: 0.5px;" id="zoomRuneAett">Freyr's Aett &bull; Creation &amp; Wealth</div>
+                <div style="font-size: 13px; color: var(--text-secondary); max-width: 360px; line-height: 1.5; text-align: center;" id="zoomRuneMeaning">Meaning</div>
+                <div class="zoom-hint">
+                    <span class="zoom-counter" id="zoomRuneCounter">Rune 1 of 3</span>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
     <script>
         const portal = document.getElementById('consultation-portal');
         const readingStage = document.getElementById('reading-stage');
@@ -1792,6 +1912,29 @@
                         osc.stop(audioContext.currentTime + 0.09);
                     }, i * 45);
                 }
+            },
+            stoneClack: () => {
+                if (!soundEnabled) return;
+                initAudio();
+                if (!audioContext) return;
+                const osc1 = audioContext.createOscillator();
+                const osc2 = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                osc1.connect(gain);
+                osc2.connect(gain);
+                gain.connect(audioContext.destination);
+                osc1.frequency.setValueAtTime(160 + Math.random() * 40, audioContext.currentTime);
+                osc1.frequency.exponentialRampToValueAtTime(70, audioContext.currentTime + 0.12);
+                osc1.type = 'triangle';
+                osc2.frequency.setValueAtTime(340 + Math.random() * 50, audioContext.currentTime);
+                osc2.frequency.exponentialRampToValueAtTime(120, audioContext.currentTime + 0.08);
+                osc2.type = 'sine';
+                gain.gain.setValueAtTime(0.18, audioContext.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.13);
+                osc1.start();
+                osc2.start();
+                osc1.stop(audioContext.currentTime + 0.13);
+                osc2.stop(audioContext.currentTime + 0.13);
             },
             messageSend: () => {
                 if (!soundEnabled) return;
@@ -2073,6 +2216,145 @@
             });
         }
 
+        // Rune Zoom Lightbox Controller
+        let activeRuneSpread = null;
+        let activeRuneZoomIndex = 0;
+
+        const RUNE_AETTS = {
+            fehu: "Freyr's Aett • Creation & Wealth",
+            uruz: "Freyr's Aett • Primordial Vitality & Strength",
+            thurisaz: "Freyr's Aett • Reactive Power & Breakthrough",
+            ansuz: "Freyr's Aett • Odin's Wisdom & Divine Breath",
+            raidho: "Freyr's Aett • Cosmic Journey & Order",
+            kenaz: "Freyr's Aett • Torch, Craft & Inner Fire",
+            gebo: "Freyr's Aett • Sacred Gift & Equal Exchange",
+            wunjo: "Freyr's Aett • Joy, Harmony & Fellowship",
+            hagalaz: "Hagal's Aett • Cosmic Egg & Transformation",
+            nauthiz: "Hagal's Aett • Need, Friction & Endurance",
+            isa: "Hagal's Aett • Glacier, Stillness & Focus",
+            jera: "Hagal's Aett • Harvest & Natural Cycles",
+            eihwaz: "Hagal's Aett • Yew Tree & Cosmic Axis",
+            perthro: "Hagal's Aett • Mystery, Chance & Fate",
+            algiz: "Hagal's Aett • Elk & Divine Sanctuary",
+            sowilo: "Hagal's Aett • Solar Victory & Wholeness",
+            tiwaz: "Tyr's Aett • Honor, Law & North Star",
+            berkano: "Tyr's Aett • Birch, Earth Mother & Renewal",
+            ehwaz: "Tyr's Aett • Horse, Trust & Dynamic Movement",
+            mannaz: "Tyr's Aett • Humanity & Collective Self",
+            laguz: "Tyr's Aett • Deep Ocean & Subconscious Tides",
+            ingwaz: "Tyr's Aett • Seed of Potential & Internal Growth",
+            dagaz: "Tyr's Aett • Dawn, Awakening & Illumination",
+            othala: "Tyr's Aett • Ancestral Heritage & Sacred Land",
+            wyrd: "The Void • Cosmic Loom of the Norns & Destiny"
+        };
+
+        function openRuneZoom(index) {
+            if (!activeRuneSpread || !activeRuneSpread.runes || !activeRuneSpread.runes[index]) return;
+            activeRuneZoomIndex = index;
+            updateRuneZoomContent();
+            const dialog = document.getElementById('runeZoomDialog');
+            if (dialog) {
+                if (!dialog.open) {
+                    dialog.showModal();
+                    sounds.stoneClack();
+                }
+            }
+        }
+
+        function updateRuneZoomContent() {
+            if (!activeRuneSpread || !activeRuneSpread.runes) return;
+            const rune = activeRuneSpread.runes[activeRuneZoomIndex];
+            const position = (activeRuneSpread.positions && activeRuneSpread.positions[activeRuneZoomIndex]) || `Rune ${activeRuneZoomIndex + 1}`;
+            const total = activeRuneSpread.runes.length;
+            const runeKey = (rune.key || rune.name.toLowerCase()).replace(/[^a-z0-9]+/g, '');
+
+            const zoomImg = document.getElementById('zoomRuneImg');
+            const zoomFallback = document.getElementById('zoomRuneFallback');
+            const zoomBadge = document.getElementById('zoomRunePosition');
+            const zoomTitle = document.getElementById('zoomRuneName');
+            const zoomAett = document.getElementById('zoomRuneAett');
+            const zoomMeaning = document.getElementById('zoomRuneMeaning');
+            const zoomCounter = document.getElementById('zoomRuneCounter');
+            const prevBtn = document.getElementById('runeZoomPrev');
+            const nextBtn = document.getElementById('runeZoomNext');
+
+            if (zoomBadge) zoomBadge.textContent = position;
+            if (zoomTitle) zoomTitle.textContent = `${rune.symbol} ${rune.name}`;
+            if (zoomAett) zoomAett.textContent = RUNE_AETTS[runeKey] || "Elder Futhark Rune";
+            if (zoomMeaning) zoomMeaning.textContent = `${rune.meaning} — ${rune.keywords || ''}`;
+            if (zoomCounter) zoomCounter.textContent = `Rune ${activeRuneZoomIndex + 1} of ${total}`;
+
+            if (prevBtn) prevBtn.style.display = total > 1 ? 'flex' : 'none';
+            if (nextBtn) nextBtn.style.display = total > 1 ? 'flex' : 'none';
+
+            if (zoomImg) {
+                zoomImg.style.display = 'block';
+                zoomImg.src = `/static/runes/${runeKey}.webp`;
+                zoomImg.alt = rune.name;
+                zoomImg.onerror = () => {
+                    zoomImg.style.display = 'none';
+                    if (zoomFallback) {
+                        zoomFallback.style.display = 'flex';
+                        const sym = document.getElementById('zoomRuneSymbolFallback');
+                        const nm = document.getElementById('zoomRuneNameFallback');
+                        if (sym) sym.textContent = rune.symbol;
+                        if (nm) nm.textContent = rune.name;
+                    }
+                };
+            }
+            if (zoomFallback) zoomFallback.style.display = 'none';
+        }
+
+        // Initialize Rune Zoom Lightbox Listeners
+        const runeZoomDialog = document.getElementById('runeZoomDialog');
+        const runeZoomClose = document.getElementById('runeZoomClose');
+        const runeZoomPrev = document.getElementById('runeZoomPrev');
+        const runeZoomNext = document.getElementById('runeZoomNext');
+
+        if (runeZoomDialog) {
+            runeZoomDialog.addEventListener('click', (event) => {
+                const container = runeZoomDialog.querySelector('.card-zoom-container');
+                if (container && !container.contains(event.target)) {
+                    runeZoomDialog.close();
+                }
+            });
+
+            if (runeZoomClose) {
+                runeZoomClose.addEventListener('click', () => runeZoomDialog.close());
+            }
+
+            if (runeZoomPrev) {
+                runeZoomPrev.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (activeRuneSpread && activeRuneSpread.runes && activeRuneSpread.runes.length > 1) {
+                        activeRuneZoomIndex = (activeRuneZoomIndex - 1 + activeRuneSpread.runes.length) % activeRuneSpread.runes.length;
+                        updateRuneZoomContent();
+                        sounds.stoneClack();
+                    }
+                });
+            }
+
+            if (runeZoomNext) {
+                runeZoomNext.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (activeRuneSpread && activeRuneSpread.runes && activeRuneSpread.runes.length > 1) {
+                        activeRuneZoomIndex = (activeRuneZoomIndex + 1) % activeRuneSpread.runes.length;
+                        updateRuneZoomContent();
+                        sounds.stoneClack();
+                    }
+                });
+            }
+
+            window.addEventListener('keydown', (e) => {
+                if (!runeZoomDialog.open) return;
+                if (e.key === 'ArrowLeft') {
+                    if (runeZoomPrev) runeZoomPrev.click();
+                } else if (e.key === 'ArrowRight') {
+                    if (runeZoomNext) runeZoomNext.click();
+                }
+            });
+        }
+
         // Renders properly centered visual cards (no bottom cutoff!)
         function renderVisualStage(metadata) {
             visualStageCard.innerHTML = '';
@@ -2182,20 +2464,45 @@
                 `;
 
             } else if (metadata.type === 'runes' && metadata.runes) {
+                activeRuneSpread = metadata;
                 sounds.chime();
                 const grid = document.createElement('div');
                 grid.className = 'runes-stage-grid';
+
                 metadata.runes.forEach((rune, i) => {
-                    const stone = document.createElement('div');
-                    stone.className = 'rune-stone';
-                    stone.innerHTML = `
-                        <div class="rune-pos">${(metadata.positions && metadata.positions[i]) || 'Rune'}</div>
-                        <div class="rune-symbol">${rune.symbol}</div>
-                        <div class="rune-name">${rune.name}</div>
-                        <div class="rune-mean">${rune.meaning}</div>
+                    const wrap = document.createElement('div');
+                    wrap.className = 'rune-stone-wrapper';
+                    const position = (metadata.positions && metadata.positions[i]) || `Rune ${i + 1}`;
+                    const runeKey = (rune.key || rune.name.toLowerCase()).replace(/[^a-z0-9]+/g, '');
+                    
+                    // Natural random tilt between -4 and +4 degrees
+                    const randomTilt = ((Math.random() * 8) - 4).toFixed(1);
+                    wrap.style.transform = `rotate(${randomTilt}deg)`;
+
+                    wrap.innerHTML = `
+                        <img src="/static/runes/${runeKey}.webp" 
+                             alt="${rune.name}" 
+                             class="rune-artifact-img"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="rune-stone" style="display: none;">
+                            <div class="rune-pos">${position}</div>
+                            <div class="rune-symbol">${rune.symbol}</div>
+                            <div class="rune-name">${rune.name}</div>
+                            <div class="rune-mean">${rune.meaning}</div>
+                        </div>
+                        <div class="rune-stone-meta">
+                            <div class="rune-pos-badge">${position}</div>
+                            <div class="rune-name-label">${rune.name}</div>
+                            <div class="rune-meaning-label">${rune.meaning}</div>
+                        </div>
                     `;
-                    grid.appendChild(stone);
-                    setTimeout(() => sounds.cardFlip(), i * 160);
+
+                    wrap.addEventListener('click', () => {
+                        openRuneZoom(i);
+                    });
+
+                    grid.appendChild(wrap);
+                    setTimeout(() => sounds.stoneClack(), i * 180);
                 });
                 visualStageCard.appendChild(grid);
 
