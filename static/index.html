@@ -7137,7 +7137,7 @@
             ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
             ctx.shadowBlur = 8;
             ctx.shadowOffsetY = 1;
-            drawTrackedText(ctx, 'qoracle.com', L.W / 2, L.footerY, isStory ? 6 : 5);
+            drawTrackedText(ctx, 'qoracle.app', L.W / 2, L.footerY, isStory ? 6 : 5);
             ctx.restore();
         }
 
@@ -7402,7 +7402,7 @@
                         try {
                             await navigator.share({
                                 title: 'Quantum Oracle Divination',
-                                text: `My divination reading from The Quantum Oracle: "${quoteText}" — qoracle.com`,
+                                text: `My divination reading from The Quantum Oracle: "${quoteText}" — qoracle.app`,
                                 files: [file]
                             });
                             say('✦ Talisman shared!');
