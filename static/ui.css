@@ -90,8 +90,8 @@ input[type="radio"],input[type="checkbox"] { accent-color:var(--accent-gold); fl
 .hero-seal::before { content:''; position:absolute; inset:-38px; border:1px dashed rgba(212,183,124,.28); border-radius:50%; z-index:-1; animation:ring-turn 140s linear infinite; }
 .hero-seal::after { content:''; position:absolute; inset:-14px; border:1px solid rgba(212,183,124,.22); border-radius:50%; z-index:-1; }
 .seal-halo { position:absolute; inset:-50px; border-radius:50%; z-index:-2; pointer-events:none; background:radial-gradient(circle,rgba(131,96,200,.36) 0%,rgba(131,96,200,.14) 36%,transparent 62%); animation:halo-breathe 7s ease-in-out infinite; }
-.seal-orbit { position:absolute; inset:-38px; border-radius:50%; z-index:2; animation:ring-turn 42s linear infinite; }
-.seal-orbit::before { content:''; position:absolute; top:-3px; left:50%; width:6px; height:6px; margin-left:-3px; border-radius:50%; background:var(--accent-gold-bright); box-shadow:0 0 10px 2px var(--ember); }
+.seal-orbit { --orbit-r:114px; position:absolute; top:50%; left:50%; width:6px; height:6px; margin:-3px 0 0 -3px; border-radius:50%; z-index:2; background:var(--accent-gold-bright); box-shadow:0 0 10px 2px var(--ember); animation:orbit 42s linear infinite; }
+@keyframes orbit { from { transform:rotate(0deg) translateY(calc(-1 * var(--orbit-r))); } to { transform:rotate(360deg) translateY(calc(-1 * var(--orbit-r))); } }
 @keyframes ring-turn { to { transform:rotate(360deg); } }
 @keyframes seal-breathe { 0%,100% { filter:drop-shadow(0 0 14px rgba(241,212,146,.18)); } 50% { filter:drop-shadow(0 0 26px rgba(241,212,146,.42)); } }
 @keyframes halo-breathe { 0%,100% { opacity:.65; } 50% { opacity:1; } }
@@ -382,8 +382,7 @@ dialog.card-zoom-dialog[open] { display:block; }
     .hero-seal:before { inset:-20px; }
     .hero-seal:after { inset:-9px; }
     .seal-halo { inset:-24px; }
-    .seal-orbit { inset:-20px; }
-    .seal-orbit::before { width:4px; height:4px; margin-left:-2px; }
+    .seal-orbit { --orbit-r:58px; width:4px; height:4px; margin:-2px 0 0 -2px; } /* orbit-dot */
     .home-intro h1 { font-size:44px; letter-spacing:-.7px; line-height:1; margin:10px 0 14px; padding-right:96px; }
     .home-description { font-size:12px; line-height:1.8; }
     .choice-heading { margin-bottom:8px; }
