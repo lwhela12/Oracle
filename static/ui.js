@@ -231,12 +231,14 @@ async function executeConsultation() {
                 if (version !== consultationVersion) { await reader.cancel(); return; }
                 buffer += decoder.decode(chunk.value, {stream: !chunk.done});
                 let boundary;
-                while ((boundary = buffer.search(/\r?\n\r?\n/)) >= 0) {
+                while (!done && (boundary = buffer.search(/\r?\n\r?\n/)) >= 0) {
                     const block = buffer.slice(0, boundary).replace(/\r\n/g, '\n');
                     const delimiter = buffer.slice(boundary).match(/^\r?\n\r?\n/)[0].length;
                     buffer = buffer.slice(boundary + delimiter);
                     acceptEvent(block);
                 }
+                // Some hosts (Vercel) keep the connection open after the generator finishes. The done event is the end of the reading.
+                if (done) { reader.cancel().catch(() => {}); break; }
                 if (chunk.done) { if (buffer.trim()) acceptEvent(buffer.replace(/\r\n/g, '\n')); break; }
             }
         } else {
