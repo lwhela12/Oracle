@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bgL" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#fffcf4" />
+      <stop offset="65%" stop-color="#f3ebdb" />
+      <stop offset="100%" stop-color="#e3d6bd" />
+    </radialGradient>
+    <linearGradient id="goldL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b48a3c" />
+      <stop offset="50%" stop-color="#8f6b2a" />
+      <stop offset="100%" stop-color="#6b4e1c" />
+    </linearGradient>
+    <linearGradient id="violetL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8f74c9" />
+      <stop offset="100%" stop-color="#5a4390" />
+    </linearGradient>
+    <radialGradient id="irisL" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#c9b6ec" />
+      <stop offset="100%" stop-color="#6d4fb0" />
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bgL)" />
+  <rect x="3" y="3" width="506" height="506" rx="125" fill="none" stroke="#c8b58c" stroke-width="3" />
+  <circle cx="256" cy="256" r="200" fill="none" stroke="url(#violetL)" stroke-width="3" opacity="0.55" stroke-dasharray="4 8" />
+  <circle cx="256" cy="256" r="180" fill="none" stroke="url(#goldL)" stroke-width="2.5" opacity="0.85" />
+  <g stroke="url(#goldL)" stroke-width="2" opacity="0.7">
+    <line x1="256" y1="56" x2="256" y2="456" />
+    <line x1="56" y1="256" x2="456" y2="256" />
+    <line x1="115" y1="115" x2="397" y2="397" stroke-dasharray="3 6" />
+    <line x1="115" y1="397" x2="397" y2="115" stroke-dasharray="3 6" />
+  </g>
+  <path d="M 120 256 C 180 160, 332 160, 392 256 C 332 352, 180 352, 120 256 Z" fill="#fbf6ea" stroke="url(#goldL)" stroke-width="8" />
+  <circle cx="256" cy="256" r="58" fill="#efe7fa" stroke="url(#violetL)" stroke-width="4" />
+  <circle cx="256" cy="256" r="42" fill="url(#irisL)" />
+  <circle cx="256" cy="256" r="18" fill="#2b2140" />
+  <circle cx="247" cy="245" r="6" fill="#ffffff" opacity="0.9" />
+  <polygon points="256,120 260,135 275,135 263,144 267,159 256,150 245,159 249,144 237,135 252,135" fill="url(#goldL)" />
+  <polygon points="256,362 260,377 275,377 263,386 267,401 256,392 245,401 249,386 237,377 252,377" fill="url(#goldL)" />
+  <circle cx="170" cy="180" r="4" fill="#8f6b2a" />
+  <circle cx="342" cy="180" r="4" fill="#8f6b2a" />
+  <circle cx="170" cy="332" r="4" fill="#8f6b2a" />
+  <circle cx="342" cy="332" r="4" fill="#8f6b2a" />
+</svg>
