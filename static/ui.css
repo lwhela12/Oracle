@@ -90,8 +90,7 @@ input[type="radio"],input[type="checkbox"] { accent-color:var(--accent-gold); fl
 .eyebrow::before { content:'\2726\00a0'; font-style:normal; font-size:.62em; color:var(--accent-gold-bright); vertical-align:.18em; }
 .page-heading h1,.setup-heading h1 { font-family:var(--reading-font); font-weight:400; font-size:64px; line-height:1.02; letter-spacing:-1.3px; color:var(--text-primary); margin:0 0 20px; }
 .home-description { font-size:15px; line-height:1.85; color:var(--text-secondary); }
-.choice-heading { margin-bottom:22px; }
-.choice-heading h1 { font-family:var(--reading-font); font-weight:400; font-size:34px; line-height:1.2; letter-spacing:-.3px; color:var(--text-primary); }
+.choice-heading { margin-bottom:14px; }
 .logo-light { display:none; }
 [data-theme="light"] .logo-dark { display:none; }
 [data-theme="light"] .logo-light { display:inline; }
@@ -368,8 +367,7 @@ dialog.card-zoom-dialog[open] { display:block; }
     .main-container { padding:24px 22px calc(96px + env(safe-area-inset-bottom,0px)); }
     .home-page { max-width:440px; padding-top:8px; }
     .home-description { font-size:12px; line-height:1.8; }
-    .choice-heading { margin-bottom:12px; }
-    .choice-heading h1 { font-size:27px; }
+    .choice-heading { margin-bottom:8px; }
     .tradition-choice { min-height:77px; gap:15px; padding:10px 2px; }
     .choice-emblem { width:39px; height:39px; }
     .choice-emblem svg { width:37px; height:37px; }
