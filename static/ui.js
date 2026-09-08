@@ -202,7 +202,10 @@ async function executeConsultation() {
     navigateOracle('reading');
     let text = '';
     let done = false;
-    const timeout = setTimeout(() => controller.abort(), 120000);
+    // Abort on silence, not on total duration: a long reading keeps streaming well past two minutes.
+    let timeout;
+    const armTimeout = ms => { clearTimeout(timeout); timeout = setTimeout(() => controller.abort(), ms); };
+    armTimeout(120000);
     const acceptMetadata = data => {
         currentReadingData = data;
         visualStageCard.hidden = false;
@@ -229,6 +232,7 @@ async function executeConsultation() {
             while (true) {
                 const chunk = await reader.read();
                 if (version !== consultationVersion) { await reader.cancel(); return; }
+                armTimeout(90000);
                 buffer += decoder.decode(chunk.value, {stream: !chunk.done});
                 let boundary;
                 while (!done && (boundary = buffer.search(/\r?\n\r?\n/)) >= 0) {
@@ -243,6 +247,7 @@ async function executeConsultation() {
             }
         } else {
             // Compatibility for hosts without the streaming route. Never silently redraw after partial output.
+            armTimeout(240000);
             const fallback = await fetch('/chat', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body), signal:controller.signal});
             const data = await fallback.json();
             if (!fallback.ok || data.error) throw new Error('The reading could not be completed. Please try again.');
@@ -258,7 +263,8 @@ async function executeConsultation() {
         document.getElementById('reading-share-btn').disabled = false;
     } catch (error) {
         if (version !== consultationVersion) return;
-        document.getElementById('reading-error-message').textContent = error.name === 'AbortError' ? 'This reading is taking too long. Please try again for a new draw.' : error.message || 'The reading could not be completed.';
+        const stalled = error.name === 'AbortError';
+        document.getElementById('reading-error-message').textContent = stalled && text ? 'The connection went quiet before the reading finished. What arrived is shown above. Try again for a fresh draw.' : stalled ? 'This reading is taking too long. Please try again for a new draw.' : error.message || 'The reading could not be completed.';
         document.getElementById('reading-error').hidden = false;
     } finally {
         clearTimeout(timeout);
