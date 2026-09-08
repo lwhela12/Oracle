@@ -259,10 +259,10 @@ def chat_stream():
             clean_err = format_api_error(err)
             yield f"event: error\ndata: {json.dumps({'error': clean_err})}\n\n"
 
+    # No explicit Connection header: it is invalid on HTTP/2 and kept Vercel from closing the response after the done event.
     return Response(stream_with_context(generate()), mimetype='text/event-stream', headers={
         'Cache-Control': 'no-cache',
-        'X-Accel-Buffering': 'no',
-        'Connection': 'keep-alive'
+        'X-Accel-Buffering': 'no'
     })
 
 
