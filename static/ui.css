@@ -358,7 +358,10 @@ dialog.card-zoom-dialog[open] { display:block; }
 .social-share-feedback { grid-column:1/-1; padding:0; min-height:0; font-family:var(--ui-font); font-size:12px; line-height:1.5; color:var(--text-secondary); }
 .social-share-feedback:empty { display:none; }
 /* The keyboard may shrink only the visual viewport, leaving layout height unchanged. */
-.social-export-dialog,.settings-dialog,dialog.card-zoom-dialog { position:fixed; top:calc(var(--viewport-offset,0px) + var(--safe-top) + var(--safe-height) / 2); bottom:auto; left:0; right:0; margin:0 auto; transform:translateY(-50%); }
+.social-export-dialog,.settings-dialog,dialog.card-zoom-dialog { position:fixed; top:calc(var(--viewport-offset,0px) + var(--safe-top) + var(--safe-height) / 2); bottom:auto; left:0; right:0; margin:0 auto; }
+.social-export-dialog,.settings-dialog { transform:translateY(-50%); }
+/* Independent translation cannot be overwritten by the artwork scale animation. */
+dialog.card-zoom-dialog { translate:0 -50%; }
 @media(max-width:760px) {
     .app-header { height:calc(64px + var(--safe-top)); padding:var(--safe-top) 20px 0; gap:10px; }
     .app-brand { font-size:14px; gap:9px; letter-spacing:.15px; }

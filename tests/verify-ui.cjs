@@ -103,6 +103,27 @@ function event(type,data) { return `event: ${type}\ndata: ${JSON.stringify(data)
         assert.match(await page.locator('#active-reading-badge').textContent(),/Tarot/);
         await page.locator('.tarot-card-wrapper').first().press('Enter');
         assert(await page.locator('#cardZoomDialog').isVisible());
+        // Centering must survive the artwork's open/starting/reduced-motion transforms.
+        for (const reducedMotion of ['no-preference','reduce']) {
+            await page.emulateMedia({reducedMotion});
+            for (const [width,height,top,bottom] of [[390,844,0,0],[390,844,59,34],[375,667,20,0],[667,375,0,21]]) {
+                await page.setViewportSize({width,height});
+                await page.evaluate(({top,bottom})=>{
+                    document.documentElement.style.setProperty('--safe-top',top+'px');
+                    document.documentElement.style.setProperty('--safe-bottom',bottom+'px');
+                    syncVisibleViewport();
+                },{top,bottom});
+                await page.waitForTimeout(350); // Let the actual opening/resize transition settle.
+                const box=await page.locator('#cardZoomDialog').boundingBox();
+                assert(box.y>=top && box.y+box.height<=height-bottom+1,'Card viewer stays within safe viewport: '+JSON.stringify(box));
+                assert(Math.abs(box.y+box.height/2-(top+(height-top-bottom)/2))<2,'Card viewer is vertically centered');
+                const close=await page.locator('#cardZoomClose').boundingBox();
+                assert(close.y>=top && close.y+close.height<=height-bottom,'Card close stays reachable');
+            }
+        }
+        await page.evaluate(()=>{document.documentElement.style.removeProperty('--safe-top');document.documentElement.style.removeProperty('--safe-bottom');});
+        await page.setViewportSize({width:390,height:844});
+        await page.emulateMedia({reducedMotion:'no-preference'});
         const initial=await page.locator('#zoomCardCounter').textContent();
         await page.getByRole('button',{name:'Next card'}).click();assert.notEqual(await page.locator('#zoomCardCounter').textContent(),initial);
         await page.locator('#cardZoomDialog').dispatchEvent('touchstart',{touches:[{identifier:1,clientX:260,clientY:240}]});
