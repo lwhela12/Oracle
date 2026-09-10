@@ -15,6 +15,45 @@ let consultationVersion = 0;
 let isConsulting = false;
 let readingComplete = false;
 
+let currentReadingLayers = ReadingLayers.parse('');
+function resetReadingLayers() {
+    currentReadingLayers = ReadingLayers.parse('');
+    document.getElementById('reading-heart').hidden = true;
+    document.getElementById('reading-heart-text').innerHTML = '';
+    const depth = document.getElementById('reading-depth');
+    depth.open = false;
+    depth.hidden = true;
+    for (const id of ['card-personal-reading','rune-personal-reading']) {
+        const box=document.getElementById(id); box.innerHTML=''; delete box.dataset.symbol;
+    }
+}
+function renderReadingLayers(text) {
+    currentReadingLayers = ReadingLayers.parse(text);
+    const {heart,depth,layered}=currentReadingLayers;
+    document.getElementById('reading-heart').hidden = !heart;
+    document.getElementById('reading-heart-text').innerHTML = renderMarkdown(heart);
+    const disclosure=document.getElementById('reading-depth');
+    disclosure.hidden = !depth;
+    disclosure.classList.toggle('legacy-reading',!layered || !heart);
+    if (depth && (!layered || !heart)) disclosure.open=true;
+    oracleStreamText.innerHTML=renderMarkdown(depth);
+    if(document.getElementById('cardZoomDialog').open) renderSymbolReading('card',activeZoomIndex);
+    if(document.getElementById('runeZoomDialog').open) renderSymbolReading('rune',activeRuneZoomIndex);
+}
+function renderSymbolReading(kind,index) {
+    const box=document.getElementById(kind+'-personal-reading');
+    const key=kind+':'+index;
+    if(box.dataset.symbol!==key) {
+        box.dataset.symbol=key;
+        box.innerHTML='<div class="symbol-brief"></div><details class="reading-depth"><summary>Go deeper</summary><div class="symbol-depth"></div></details>';
+        box.closest('dialog').scrollTop=0;
+    }
+    const symbol=currentReadingLayers.symbols[index+1];
+    box.querySelector('.symbol-brief').innerHTML=symbol?.brief ? renderMarkdown(symbol.brief) : '<p class="field-help">'+(isConsulting ? 'Your personal interpretation is still unfolding…' : 'This reading does not include a separate interpretation for this symbol.')+'</p>';
+    box.querySelector('details').hidden=!symbol?.depth;
+    box.querySelector('.symbol-depth').innerHTML=renderMarkdown(symbol?.depth||'');
+}
+
 function escapeText(value) {
     return String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 }
@@ -201,6 +240,7 @@ async function executeConsultation() {
     seekerInquiryDisplay.textContent = question || 'General guidance';
     visualStageCard.innerHTML = '';
     visualStageCard.hidden = true;
+    resetReadingLayers();
     oracleStreamText.innerHTML = '';
     oracleStreamText.setAttribute('aria-busy', 'true');
     thinkingIndicator.style.display = 'flex';
@@ -223,7 +263,7 @@ async function executeConsultation() {
         if (!data) return;
         const parsed = JSON.parse(data);
         if (event === 'metadata') acceptMetadata(parsed);
-        else if (event === 'token') { text += parsed.token || ''; oracleStreamText.innerHTML = renderMarkdown(text); }
+        else if (event === 'token') { text += parsed.token || ''; renderReadingLayers(text); }
         else if (event === 'done') done = true;
         else if (event === 'error') throw new Error('The reading could not be completed. Please try again.');
     };
@@ -259,11 +299,12 @@ async function executeConsultation() {
             if (version !== consultationVersion) return;
             acceptMetadata(data);
             text = data.response || '';
-            oracleStreamText.innerHTML = renderMarkdown(text);
+            renderReadingLayers(text);
             done = true;
         }
         if (!done || !text || !currentReadingData) throw new Error('Your reading was interrupted. You can try again for a new draw.');
         readingComplete = true;
+        renderReadingLayers(text);
         saveReadingToJournal(question || 'General guidance', currentReadingData, text, tradition);
         document.getElementById('reading-share-btn').disabled = false;
     } catch (error) {
@@ -278,6 +319,7 @@ async function executeConsultation() {
             consultationController = null;
             consultBtn.disabled = false;
             thinkingIndicator.style.display = 'none';
+            renderReadingLayers(text);
             thinkingIndicator.querySelector('span').textContent = 'Preparing your reading…';
             oracleStreamText.setAttribute('aria-busy', 'false');
             document.getElementById('resume-reading').hidden = !currentReadingData;
@@ -315,7 +357,7 @@ function renderHistoryDrawer() {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'journal-entry';
-        button.innerHTML = `<span class="journal-entry-emblem" aria-hidden="true">${getTraditionEmblemSvg(tradition)}</span><span class="journal-entry-copy"><span class="history-meta"><strong>${escapeText(TRADITION_INFO[tradition]?.name || 'Reading')}</strong><span>${escapeText(item.timestamp)}</span></span><span class="journal-question">${escapeText(item.question)}</span><span class="history-preview">${escapeText(item.text.replace(/[#*_]/g,'').slice(0,160))}</span></span><span aria-hidden="true">↗</span>`;
+        button.innerHTML = `<span class="journal-entry-emblem" aria-hidden="true">${getTraditionEmblemSvg(tradition)}</span><span class="journal-entry-copy"><span class="history-meta"><strong>${escapeText(TRADITION_INFO[tradition]?.name || 'Reading')}</strong><span>${escapeText(item.timestamp)}</span></span><span class="journal-question">${escapeText(item.question)}</span><span class="history-preview">${escapeText((ReadingLayers.parse(item.text).heart || ReadingLayers.parse(item.text).depth).replace(/[#*_]/g,'').slice(0,160))}</span></span><span aria-hidden="true">↗</span>`;
         button.onclick = () => loadHistoryItem(item);
         historyList.appendChild(button);
     });
@@ -330,7 +372,8 @@ function loadHistoryItem(item) {
     seekerInquiryDisplay.textContent = item.question;
     visualStageCard.hidden = false;
     renderVisualStage(item.readingData);
-    oracleStreamText.innerHTML = renderMarkdown(item.text);
+    resetReadingLayers();
+    renderReadingLayers(item.text);
     document.getElementById('reading-error').hidden = true;
     document.getElementById('reading-save-status').textContent = 'Saved to Journal';
     document.getElementById('reading-share-btn').disabled = false;

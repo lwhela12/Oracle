@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="/static/artwork.css?v=20260908a">
-    <link rel="stylesheet" href="/static/ui.css?v=20260910b">
+    <link rel="stylesheet" href="/static/ui.css?v=20260910d">
 </head>
 <body>
     <!-- The night sky: a Milky Way band, star fields, and a few bright stars that twinkle. Decorative only. -->
@@ -92,7 +92,9 @@
             <p class="seeker-inquiry-box" id="seeker-inquiry-display"></p>
             <div class="thinking" id="thinking-indicator" role="status"><div class="reading-pulse" aria-hidden="true"></div><span>Preparing your reading…</span></div>
             <div class="visual-stage-card" id="visual-stage-card"></div>
-            <div class="interpretation-card" id="interpretation-card"><div class="oracle-stream-text" id="oracle-stream-text" aria-busy="false"></div>
+            <div class="interpretation-card" id="interpretation-card">
+                <section id="reading-heart" hidden aria-labelledby="reading-heart-title"><h2 id="reading-heart-title">The heart of your reading</h2><div id="reading-heart-text" class="oracle-stream-text"></div></section>
+                <details id="reading-depth" class="reading-depth" open><summary>Go deeper</summary><div class="oracle-stream-text" id="oracle-stream-text" aria-busy="false"></div></details>
                 <div id="reading-error" class="reading-error" role="alert" hidden><p id="reading-error-message"></p><button type="button" class="tool-btn" onclick="retryConsultation()">Try again</button><button type="button" class="text-button" onclick="navigateOracle('read/' + currentTradition)">Edit question</button></div>
                 <div class="reading-footer-tools"><span id="reading-save-status" role="status"></span><button type="button" id="reading-share-btn" class="tool-btn primary-export-btn" onclick="openSocialExportModal()" disabled>Share reading <span aria-hidden="true">↗</span></button><button type="button" class="text-button" onclick="openTraditionLore(currentTradition)">About this tradition</button></div>
             </div>
@@ -147,6 +149,7 @@
                     <span class="zoom-counter" id="zoomCardCounter">1 of 3</span>
                 </div>
             </div>
+            <section id="card-personal-reading" class="symbol-reading" aria-label="Your interpretation"></section>
         </div>
     </dialog>
 
@@ -168,11 +171,13 @@
                 <div class="zoom-badge" id="zoomRunePosition">Position</div>
                 <h2 class="zoom-title" id="zoomRuneName">Fehu</h2>
                 <div style="font-size: 13px; font-weight: 700; color: var(--accent-gold); letter-spacing: 0.5px;" id="zoomRuneAett">Freyr's Aett &bull; Creation &amp; Wealth</div>
-                <div style="font-size: 13px; color: var(--text-secondary); max-width: 360px; line-height: 1.5; text-align: center;" id="zoomRuneMeaning">Meaning</div>
+
                 <div class="zoom-hint">
                     <span class="zoom-counter" id="zoomRuneCounter">Rune 1 of 3</span>
                 </div>
             </div>
+            <section id="rune-personal-reading" class="symbol-reading" aria-label="Your interpretation"></section>
+            <details class="rune-reference"><summary>Traditional symbolism</summary><div id="zoomRuneMeaning"></div></details>
         </div>
     </dialog>
 
@@ -260,9 +265,10 @@
         </div>
     </dialog>
 
-    <script defer src="/static/oracle.js?v=20260908a"></script>
+    <script defer src="/static/reading-layers.js?v=20260910d"></script>
+    <script defer src="/static/oracle.js?v=20260910d"></script>
     <script defer src="/static/learning.js?v=20260908a"></script>
-    <script defer src="/static/ui.js?v=20260910c"></script>
+    <script defer src="/static/ui.js?v=20260910d"></script>
 
 </body>
 </html>

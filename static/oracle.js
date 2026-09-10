@@ -332,6 +332,7 @@
         }
 
         function updateZoomDialogContent() {
+            renderSymbolReading('card',activeZoomIndex);
             if (!activeTarotSpread || !activeTarotSpread.cards) return;
             const card = activeTarotSpread.cards[activeZoomIndex];
             const position = (activeTarotSpread.positions && activeTarotSpread.positions[activeZoomIndex]) || `Card ${activeZoomIndex + 1}`;
@@ -501,6 +502,7 @@
         }
 
         function updateRuneZoomContent() {
+            renderSymbolReading('rune',activeRuneZoomIndex);
             if (!activeRuneSpread || !activeRuneSpread.runes) return;
             const rune = activeRuneSpread.runes[activeRuneZoomIndex];
             const position = (activeRuneSpread.positions && activeRuneSpread.positions[activeRuneZoomIndex]) || `Rune ${activeRuneZoomIndex + 1}`;
@@ -1775,7 +1777,12 @@
             if (frame) frame.classList.add('is-empty');
 
             // Quote candidates from the rendered reading
-            socialCandidateQuotes = extractCandidateQuotes(oracleStreamText);
+            socialCandidateQuotes = ReadingLayers.quotes(currentReadingLayers);
+            if (!socialCandidateQuotes.length) {
+                const fullReading=document.createElement('div');
+                fullReading.innerHTML=renderMarkdown(currentReadingLayers.depth || currentReadingLayers.heart);
+                socialCandidateQuotes=extractCandidateQuotes(fullReading);
+            }
             activeQuoteIndex = 0;
             renderQuoteOptions();
             const quoteInput = document.getElementById('socialQuoteInput');

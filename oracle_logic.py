@@ -1,4 +1,6 @@
 import os
+import json
+from pathlib import Path
 import time
 import random
 import threading
@@ -28,6 +30,36 @@ Crucial Presentation Guidelines:
 - Weave the drawn symbols and their positions organically into your prose, using elegant headers (e.g. `### ✦ The Well of Urðr: Roots of Becoming` or `### ✦ Asgard: The Divine Calling`) and bold highlights rather than a raw text listing of the cast.
 - Use clear markdown formatting (bolding, italics, section headers, bullet points for key takeaways) so the reading is beautiful, poetic, and empowering.
 - For synthesis, summaries, or verdicts, avoid raw markdown tables as narrative prose gets cramped in narrow grid columns; instead, present card-by-card takeaways and overarching syntheses using elegant headings, bullet points (such as ✦), bold titles, and flowing prose.
+"""
+
+
+def layered_prompt(prompt, symbols=None, positions=None):
+    """One plain-text response supplies all reading surfaces; positions bind by index."""
+    roster = "\n".join(f"{i + 1}: {symbol['name']} — {positions[i] if positions and i < len(positions) else 'Your omen'}" for i, symbol in enumerate(symbols or []))
+    return prompt + f"""
+
+OUTPUT CONTRACT (takes precedence over presentation/formatting instructions above):
+Write one coherent, personal reading in Markdown using the exact delimiter lines below.
+Do not wrap the response in a code fence. Delimiters are routing metadata, not headings.
+Start with [[HEART]] on its own line, followed by 2–3 vivid sentences (about 50–90 words)
+addressing the seeker and answering their question through the whole spread.
+Then [[DEPTH]] on its own line followed by the FULL, unabridged, in-depth interpretation.
+Preserve the usual rich narrative, symbolism, connections between positions, and practical
+reflection. This is not a summary; the short heart is additional to the full-length reading.
+After that, for EACH listed symbol in this exact index order, output:
+[[SYMBOL:1:BRIEF]]
+2–3 personal sentences about this symbol in THIS placement in relation to the question.
+[[SYMBOL:1:DEPTH]]
+1–3 substantive paragraphs exploring its imagery, placement, relevant orientation, and
+connection to the rest of this specific reading. Replace 1 with the listed symbol index.
+Do not give a generic dictionary definition or contradict the whole-spread interpretation.
+Symbol indices (no symbol sections when this list is empty):
+{roster}
+Finally [[QUOTE]] followed by the single strongest, most evocative shareable sentence
+copied VERBATIM from your heart, full reading, or symbol interpretations (25–280 characters).
+Favor direct personal recognition such as 'You are...' or 'Your...' over descriptions of cards.
+Do not force the example wording. Avoid fabricated facts about the seeker, promises, or
+certain predictions; frame possibilities and reflection with confidence and warmth.
 """
 
 
@@ -133,7 +165,7 @@ class GeminiOracle:
             'cards': card_data,
             'positions': positions,
             'spread_type': spread_type,
-            'prompt': prompt
+            'prompt': layered_prompt(prompt, card_data, positions)
         }
 
     def prepare_iching_reading(self, user_input):
@@ -192,7 +224,7 @@ Provide a profound classical I Ching divination. Explain the Judgment and the Im
 
         return {
             'hexagram': hexagram,
-            'prompt': prompt
+            'prompt': layered_prompt(prompt)
         }
 
     def prepare_runes_reading(self, user_input, spread_type='norns', allow_reversals=True, include_wyrd=False, **kwargs):
@@ -281,7 +313,7 @@ Divination Guidelines:
             'positions': positions,
             'spread_type': spread_key,
             'spread_name': spread_name,
-            'prompt': prompt
+            'prompt': layered_prompt(prompt, rune_spread, positions)
         }
 
     def prepare_number_reading(self, user_input):
@@ -290,21 +322,44 @@ Divination Guidelines:
         prompt = f"The cosmos presents this quantum number: {random_number}. Interpret this omen and answer the seeker's inquiry: '{user_input}'"
         return {
             'quantum_number': random_number,
-            'prompt': prompt
+            'prompt': layered_prompt(prompt)
         }
 
+    def _test_context(self, chat, prompt, invoked_at):
+        # Explicit test opt-in; never log on a deployed Vercel runtime.
+        if os.getenv('ORACLE_TEST_LLM_LOG') != '1' or os.getenv('VERCEL') or os.getenv('VERCEL_ENV'):
+            return None
+        return {'invoked_at': invoked_at, 'model': self.model_name,
+                'config': self.config.model_dump(mode='json'), 'prompt': prompt,
+                'history': [m.model_dump(mode='json') for m in chat.get_history()]}
+
+    def _log_test_output(self, context, chunks):
+        if context is None:
+            return
+        folder = Path(__file__).parent / 'scratch' / 'llm-tests'
+        folder.mkdir(parents=True, exist_ok=True)
+        with (folder / 'outputs.jsonl').open('a') as log:
+            log.write(json.dumps({**context, 'chunks': chunks, 'output': ''.join(chunks)}) + '\n')
+
     def stream_chat(self, prompt, session_id="default"):
-        """Streams response tokens from Gemini 3.8 Flash."""
+        """Streams one coherent reading; optional local test log includes exact context."""
         chat = self.get_chat(session_id)
-        response_stream = chat.send_message_stream(prompt)
-        for chunk in response_stream:
-            if chunk.text:
-                yield chunk.text
+        context = self._test_context(chat, prompt, 'GeminiOracle.stream_chat')
+        chunks = []
+        try:
+            for chunk in chat.send_message_stream(prompt):
+                if chunk.text:
+                    if context is not None:
+                        chunks.append(chunk.text)
+                    yield chunk.text
+        finally:
+            self._log_test_output(context, chunks)
 
     def send_chat(self, prompt, session_id="default"):
-        """Sends a message and returns the complete text response."""
         chat = self.get_chat(session_id)
+        context = self._test_context(chat, prompt, 'GeminiOracle.send_chat')
         response = chat.send_message(prompt)
+        self._log_test_output(context, [response.text or ''])
         return response.text
 
     # Backwards-compatible synchronous response methods
