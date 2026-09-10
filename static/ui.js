@@ -74,7 +74,12 @@ function updateSpreadOptions() {
     }
     consultBtn.innerHTML = `${info.action}<span aria-hidden="true">→</span>`;
 }
-function setInquiry(text) { userInquiry.value = text; userInquiry.focus(); }
+function setInquiry(text) {
+    userInquiry.value = text;
+    // A ready-made question should not summon the keyboard or shift the draw action.
+    // Also dismiss it when a suggestion is chosen after editing on touch devices.
+    userInquiry.blur();
+}
 function openTraditionLore(tradition = currentTradition) { navigateOracle('learn/' + tradition); }
 function openQuantumInfoModal() { navigateOracle('learn/how'); }
 function returnFromLearning() { navigateOracle(learningReturnRoute, {restore: true}); }

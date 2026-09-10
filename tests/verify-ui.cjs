@@ -171,6 +171,28 @@ function event(type,data) { return `event: ${type}\ndata: ${JSON.stringify(data)
         scenario='delayed';await navigate('read/runes');await page.locator('#consult-btn').click();await page.waitForFunction(()=>isConsulting);await page.locator('[data-nav="learn"]').click();await page.locator('[data-nav="read"]').click();assert.equal(new URL(page.url()).hash,'#reading');
         await page.getByRole('button',{name:'New reading',exact:true}).click();releaseDelayed();scenario='success';await page.waitForTimeout(200);assert.equal(new URL(page.url()).hash,'#read');assert(!await page.locator('#home-page').getAttribute('hidden'));
         await page.emulateMedia({reducedMotion:'reduce'});await navigate('read/number');await clickDraw();
+        // Inspiration is ready to submit without focusing the editor/keyboard.
+        await page.emulateMedia({reducedMotion:'no-preference'});
+        for (const tradition of ['tarot','runes']) {
+            for (const editing of [false,true]) {
+                await navigate('read/'+tradition);
+                await page.locator('.question-inspiration').evaluate(el=>{el.open=true;});
+                if (editing) await page.getByLabel('Your question').fill('A draft question');
+                else await page.getByLabel('Your question').blur();
+                const chip=page.getByRole('button',{name:'Love & relationships',exact:true});
+                await chip.tap();
+                assert.equal(await page.getByLabel('Your question').inputValue(),'What do I need to know regarding my love life and relationships?');
+                assert(await page.getByLabel('Your question').evaluate(el=>document.activeElement!==el),'Suggestion leaves keyboard focus out of editor');
+                assert(await page.locator('.primary-nav').isVisible(),'Navigation remains visible after suggestion');
+                const before=requests.length;
+                await page.locator('#consult-btn').tap();
+                await page.waitForFunction(()=>!isConsulting && readingComplete);
+                assert.equal(requests.length-before,1,'One tap produces one reading request');
+                assert.equal(requests.at(-1).body.message,'What do I need to know regarding my love life and relationships?');
+                assert.equal(new URL(page.url()).hash,'#reading');
+            }
+        }
+        console.log('PASS: inspiration submits Tarot and Runes with one touch, including after editing');
         assert.equal(errors.length,0,'No page errors: '+errors.join('\n'));
         console.log('PASS: navigation during loading, cancellation, reduced motion, no browser exceptions');
         fs.writeFileSync(path.join(output,'result.json'),JSON.stringify({passed:true,readingRequestsIntercepted:requests.length,liveModelCalls:0,pageErrors:errors},null,2));
