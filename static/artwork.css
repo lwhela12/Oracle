@@ -2327,3 +2327,7 @@ dialog.card-zoom-dialog[open]::backdrop {
     to { opacity: 1; transform: translateY(0); }
 }
 
+
+/* Keep the tarot viewer steady while its contents float into place. */
+#cardZoomDialog, #cardZoomDialog[open] { transform: none; }
+@starting-style { #cardZoomDialog[open] { transform: none; } }

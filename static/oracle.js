@@ -318,14 +318,69 @@
         let activeTarotSpread = null;
         let activeZoomIndex = 0;
 
+        let cardMotion = [];
+        let departingCard = null;
+
+        function clearCardMotion() {
+            cardMotion.forEach(animation => animation.cancel());
+            cardMotion = [];
+            departingCard?.remove();
+            departingCard = null;
+        }
+
+        function animateCardArrival(direction = 0) {
+            const dialog = document.getElementById('cardZoomDialog');
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const stage = dialog.querySelector('.card-zoom-stage');
+            const duration = reduced ? 100 : direction ? 480 : 650;
+            const elements = [stage, dialog.querySelector('.zoom-badge'),
+                dialog.querySelector('.zoom-title'), document.getElementById('card-personal-reading')];
+            elements.filter(Boolean).forEach(element => {
+                cardMotion.push(element.animate([
+                    { opacity: 0, transform: reduced ? 'none' : `translate(${direction * 22}px, ${direction ? 0 : 18}px) scale(.98)` },
+                    { opacity: 1, transform: 'none' }
+                ], { duration, delay: direction || reduced ? 0 : 100,
+                    easing: 'cubic-bezier(.22,.61,.36,1)', fill: 'backwards' }));
+            });
+        }
+
+        function navigateZoomCard(direction) {
+            if (!activeTarotSpread || activeTarotSpread.cards.length < 2) return;
+            clearCardMotion();
+            const stage = cardZoomDialog.querySelector('.card-zoom-stage');
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                departingCard = stage.cloneNode(true);
+                departingCard.removeAttribute('id');
+                departingCard.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
+                departingCard.setAttribute('aria-hidden', 'true');
+                departingCard.inert = true;
+                Object.assign(departingCard.style, { position: 'absolute', top: `${stage.offsetTop}px`,
+                    left: `${stage.offsetLeft}px`, width: `${stage.offsetWidth}px`,
+                    height: `${stage.offsetHeight}px`, pointerEvents: 'none' });
+                stage.parentElement.appendChild(departingCard);
+                const ghost = departingCard;
+                const exit = ghost.animate([{ opacity: 1, transform: 'none' },
+                    { opacity: 0, transform: `translateX(${-direction * 22}px) scale(.98)` }],
+                    { duration: 360, easing: 'ease-in-out', fill: 'forwards' });
+                exit.onfinish = () => ghost.remove();
+                cardMotion.push(exit);
+            }
+            activeZoomIndex = (activeZoomIndex + direction + activeTarotSpread.cards.length) % activeTarotSpread.cards.length;
+            updateZoomDialogContent();
+            animateCardArrival(direction);
+            sounds.cardFlip();
+        }
+
         function openCardZoom(index) {
             if (!activeTarotSpread || !activeTarotSpread.cards || !activeTarotSpread.cards[index]) return;
+            clearCardMotion();
             activeZoomIndex = index;
             updateZoomDialogContent();
             const dialog = document.getElementById('cardZoomDialog');
             if (dialog) {
                 if (!dialog.open) {
                     dialog.showModal();
+                    animateCardArrival();
                     sounds.cardFlip();
                 }
             }
@@ -389,6 +444,7 @@
         const zoomFlipBtn = document.getElementById('zoomFlipBtn');
 
         if (cardZoomDialog) {
+            cardZoomDialog.addEventListener('close', clearCardMotion);
             // Light-dismiss when clicking outside the dialog content box
             cardZoomDialog.addEventListener('click', (event) => {
                 const container = cardZoomDialog.querySelector('.card-zoom-container');
@@ -422,9 +478,7 @@
                 cardZoomPrev.addEventListener('click', (e) => {
                     e.stopPropagation();
                     if (activeTarotSpread && activeTarotSpread.cards && activeTarotSpread.cards.length > 1) {
-                        activeZoomIndex = (activeZoomIndex - 1 + activeTarotSpread.cards.length) % activeTarotSpread.cards.length;
-                        updateZoomDialogContent();
-                        sounds.cardFlip();
+                        navigateZoomCard(-1);
                     }
                 });
             }
@@ -433,9 +487,7 @@
                 cardZoomNext.addEventListener('click', (e) => {
                     e.stopPropagation();
                     if (activeTarotSpread && activeTarotSpread.cards && activeTarotSpread.cards.length > 1) {
-                        activeZoomIndex = (activeZoomIndex + 1) % activeTarotSpread.cards.length;
-                        updateZoomDialogContent();
-                        sounds.cardFlip();
+                        navigateZoomCard(1);
                     }
                 });
             }
