@@ -203,7 +203,7 @@ function openSettings() { document.getElementById('settings-dialog').showModal()
 function persistPreference(key, value) { try { localStorage.setItem(key, value); } catch (_) { /* Browsing remains usable without persistence. */ } }
 function toggleTheme() {
     const light = themeBtn.checked;
-    document.body.dataset.theme = light ? 'light' : 'dark';
+    document.documentElement.dataset.theme = light ? 'light' : 'dark';
     document.querySelector('meta[name="theme-color"]').content = light ? '#f7f4ed' : '#101017';
     persistPreference('theme', light ? 'light' : 'dark');
 }
@@ -454,7 +454,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     shareDialog.addEventListener('close', closeShareImagePreview);
     document.querySelectorAll('[data-emblem]').forEach(el => { el.innerHTML = getTraditionEmblemSvg(el.dataset.emblem); });
-    themeBtn.checked = localStorage.getItem('theme') === 'light';
+    themeBtn.checked = document.documentElement.dataset.theme === 'light';
     soundBtn.checked = soundEnabled;
     musicBtn.checked = musicEnabled;
     toggleTheme();

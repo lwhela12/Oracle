@@ -4,8 +4,8 @@
   "description": "Ancient Divination Powered by Quantum Entropy and Gemini AI",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0d0d12",
-  "theme_color": "#12111a",
+  "background_color": "#101017",
+  "theme_color": "#101017",
   "orientation": "portrait",
   "icons": [
     {
