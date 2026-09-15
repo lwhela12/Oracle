@@ -361,8 +361,8 @@ dialog.card-zoom-dialog[open] { display:block; }
 .quote-option::before { display:none; }
 .social-export-actions-panel { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:14px 20px; border-top:1px solid var(--border-color); background:var(--bg-primary); flex:0 0 auto; margin:0; }
 .social-secondary-btn { font-family:var(--ui-font); font-size:14px; letter-spacing:0; text-transform:none; min-height:48px; border:1px solid var(--border-color); border-radius:9px; background:none; color:var(--text-primary); }
-.social-share-feedback { grid-column:1/-1; padding:0; min-height:0; font-family:var(--ui-font); font-size:12px; line-height:1.5; color:var(--text-secondary); }
-.social-share-feedback:empty { display:none; }
+.social-share-feedback { grid-column:1/-1; padding:0; min-height:36px; line-height:18px; font-family:var(--ui-font); font-size:12px; line-height:1.5; color:var(--text-secondary); }
+.social-share-feedback:empty { visibility:hidden; }
 /* The keyboard may shrink only the visual viewport, leaving layout height unchanged. */
 .social-export-dialog,.settings-dialog,dialog.card-zoom-dialog { position:fixed; top:calc(var(--viewport-offset,0px) + var(--safe-top) + var(--safe-height) / 2); bottom:auto; left:0; right:0; margin:0 auto; }
 .social-export-dialog,.settings-dialog { transform:translateY(-50%); }
@@ -496,5 +496,11 @@ dialog.card-zoom-dialog { translate:0 -50%; }
 @keyframes reading-activity { 0%,70%,100% { opacity:.3; transform:translateY(0); } 35% { opacity:1; transform:translateY(-4px); } }
 @media (prefers-reduced-motion:reduce) { .reading-activity i { animation:none; opacity:.7; } }
 
-.full-reading-options { grid-column:1/-1; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:4px 12px; border-top:1px solid var(--border-color); padding-top:8px; }
-.full-reading-options label { display:flex; align-items:center; gap:6px; min-height:32px; font-family:var(--ui-font); font-size:12px; color:var(--text-secondary); }
+.full-reading-options { grid-column:1/-1; text-align:center; border-top:1px solid var(--border-color); padding-top:12px; }
+
+#downloadReadingPdfBtn { position:relative; transition:border-color .2s,color .2s; }
+#downloadReadingPdfBtn[aria-busy="true"] { opacity:1; color:var(--text-primary); border-color:var(--border-color); }
+.pdf-button-indicator { position:absolute; left:10px; width:12px; height:12px; border:1.5px solid var(--border-color); border-top-color:var(--accent-gold); border-radius:50%; opacity:0; }
+[aria-busy="true"] .pdf-button-indicator { opacity:1; animation:pdf-preparing 1s linear infinite; }
+@keyframes pdf-preparing { to { transform:rotate(360deg); } }
+@media (prefers-reduced-motion:reduce) { [aria-busy="true"] .pdf-button-indicator { animation:none; } }
