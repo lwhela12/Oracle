@@ -395,11 +395,17 @@ function clearAllHistory() {
 }
 function toggleHistory() { navigateOracle('journal'); }
 function toggleSharePreview() {
-    const wrapper = document.querySelector('.social-preview-wrapper');
-    const expanded = wrapper.classList.toggle('preview-expanded');
-    const button = document.getElementById('preview-size-btn');
-    button.setAttribute('aria-expanded', String(expanded));
-    button.textContent = expanded ? 'Reduce preview' : 'Enlarge preview';
+    const frame = document.getElementById('talismanPreviewFrame');
+    const source = document.getElementById('talismanPreviewImg');
+    if (frame.classList.contains('is-empty') || !source.getAttribute('src')) return;
+    const dialog = document.getElementById('shareImageDialog');
+    if (dialog.open) return closeShareImagePreview();
+    document.getElementById('shareImageFull').src = source.src;
+    dialog.showModal();
+    document.getElementById('preview-size-btn').setAttribute('aria-expanded', 'true');
+}
+function closeShareImagePreview() {
+    document.getElementById('shareImageDialog').close();
 }
 function enableSwipe(dialog, previous, next) {
     let start = null;
@@ -436,6 +442,17 @@ document.addEventListener('click', event => {
 });
 window.addEventListener('popstate', () => navigateOracle(location.hash.slice(1) || 'read', {replace:true,restore:true}));
 window.addEventListener('DOMContentLoaded', () => {
+    const shareDialog = document.getElementById('socialExportModal');
+    const imageDialog = document.getElementById('shareImageDialog');
+    imageDialog.addEventListener('click', event => {
+        if (event.target !== imageDialog) return;
+        const box = imageDialog.getBoundingClientRect();
+        if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) closeShareImagePreview();
+    });
+    imageDialog.addEventListener('close', () => {
+        document.getElementById('preview-size-btn').setAttribute('aria-expanded', 'false');
+    });
+    shareDialog.addEventListener('close', closeShareImagePreview);
     document.querySelectorAll('[data-emblem]').forEach(el => { el.innerHTML = getTraditionEmblemSvg(el.dataset.emblem); });
     themeBtn.checked = localStorage.getItem('theme') === 'light';
     soundBtn.checked = soundEnabled;
@@ -444,7 +461,7 @@ window.addEventListener('DOMContentLoaded', () => {
     enableSwipe(cardZoomDialog, cardZoomPrev, cardZoomNext);
     enableSwipe(runeZoomDialog, runeZoomPrev, runeZoomNext);
     document.querySelectorAll('dialog').forEach(dialog => {
-        dialog.addEventListener('close', () => { document.body.classList.remove('dialog-open'); });
+        dialog.addEventListener('close', () => { document.body.classList.toggle('dialog-open', Boolean(document.querySelector('dialog[open]'))); });
         new MutationObserver(() => { document.body.classList.toggle('dialog-open', Boolean(document.querySelector('dialog[open]'))); }).observe(dialog, {attributes:true,attributeFilter:['open']});
     });
     const demo = new URLSearchParams(location.search).get('demo');

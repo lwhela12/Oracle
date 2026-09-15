@@ -138,14 +138,25 @@ function event(type,data) { return `event: ${type}\ndata: ${JSON.stringify(data)
             for(const box of boxes) assert(box.top>=0&&box.bottom<=box.height+1&&box.left>=0&&box.right<=box.width+1,'Share controls reachable: '+JSON.stringify(box));
         }
         await page.setViewportSize({width:390,height:844});await page.screenshot({path:path.join(output,'share-mobile.png'),animations:'disabled'});
-        // Simulate a phone keyboard shrinking the visual viewport while layout stays tall.
-        await page.locator('#socialQuoteInput').focus();
-        await page.evaluate(()=>{document.documentElement.style.setProperty('--visible-height','400px');document.documentElement.style.setProperty('--viewport-offset','0px');});
-        const keyboardBox=await page.locator('#socialDownloadBtn').boundingBox();
-        assert(keyboardBox.y+keyboardBox.height<=400,'Download remains above the simulated keyboard');
-        const keyboardClose=await page.locator('#socialExportModal .lore-close-btn').boundingBox();
-        assert(keyboardClose.y>=0&&keyboardClose.y+keyboardClose.height<=400,'Close remains above the simulated keyboard');
-        await page.evaluate(()=>syncVisibleViewport());
+        await page.locator('#talismanPreviewFrame').click();
+        assert(await page.locator('#shareImageDialog').isVisible(),'Image tap opens a separate viewer');
+        assert(await page.locator('#shareImageFull').evaluate(img=>img.complete && img.naturalWidth>0),'Enlarged image is loaded');
+        await page.screenshot({path:path.join(output,'share-image-expanded.png'),animations:'disabled'});
+        await page.keyboard.press('Escape');
+        assert(await page.locator('#socialExportModal').isVisible(),'Closing image preserves share editor');
+        assert(await page.evaluate(()=>document.body.classList.contains('dialog-open')),'Parent dialog keeps page scroll locked');
+        await page.locator('#talismanPreviewFrame').focus();await page.keyboard.press('Enter');
+        await page.getByRole('button',{name:'Close image preview',exact:true}).click();
+        assert(await page.locator('#talismanPreviewFrame').evaluate(el=>document.activeElement===el),'Image close restores keyboard focus');
+        assert.equal(await page.locator('#socialExportModal textarea').count(),0,'Share has no editable text box');
+        const choices=page.locator('#quoteSelectorTabs .quote-option');
+        const choice=choices.nth((await choices.count())>1 ? 1 : 0);
+        const previousPreview=await page.locator('#talismanPreviewImg').getAttribute('src');
+        await choice.click();
+        assert.equal(await choice.getAttribute('aria-pressed'),'true','Selected quote stays active');
+        const selectedText=await choice.locator('.quote-option-text').textContent();
+        assert.equal(await page.evaluate(()=>getSocialQuoteText()),selectedText.replace(/^["“]+|["”]+$/g,'').replace(/\s+/g,' ').trim(),'Export uses the selected quote');
+        await page.waitForFunction(previous=>document.getElementById('talismanPreviewImg').src!==previous && !document.getElementById('talismanPreviewFrame').classList.contains('is-rendering'),previousPreview);
         await page.locator('#formatBtnPost').click();
         const downloadPromise=page.waitForEvent('download');await page.locator('#socialDownloadBtn').click();
         const download=await downloadPromise;await download.saveAs(path.join(output,'share-export.png'));assert(fs.statSync(path.join(output,'share-export.png')).size>10000);

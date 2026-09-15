@@ -1165,7 +1165,6 @@
         let activeQuoteIndex = 0;
         let talismanSnapshot = null;   // { canvas, content: {x, y, w, h} } — altar render + tight spread bounds (canvas px)
         let talismanRenderSeq = 0;
-        let talismanRenderTimer = null;
         let talismanPreviewUrl = null;
         let talismanFontsReady = null;
 
@@ -1680,8 +1679,7 @@
         }
 
         function getSocialQuoteText() {
-            const quoteInput = document.getElementById('socialQuoteInput');
-            const raw = (quoteInput && quoteInput.value.trim()) || 'The Oracle channels genuine quantum vacuum indeterminacy to illuminate your present horizon.';
+            const raw = socialCandidateQuotes[activeQuoteIndex] || 'The Oracle channels genuine quantum vacuum indeterminacy to illuminate your present horizon.';
             return raw.replace(/^["“]+|["”]+$/g, '').replace(/\s+/g, ' ').trim();
         }
 
@@ -1752,11 +1750,6 @@
         }
 
         // ---------- Preview & controls ----------
-        function scheduleTalismanRender(delay = 200) {
-            clearTimeout(talismanRenderTimer);
-            talismanRenderTimer = setTimeout(renderTalismanPreview, delay);
-        }
-
         async function renderTalismanPreview() {
             const frame = document.getElementById('talismanPreviewFrame');
             const img = document.getElementById('talismanPreviewImg');
@@ -1774,6 +1767,9 @@
                         talismanPreviewUrl = URL.createObjectURL(blob);
                         img.onload = () => {
                             frame.classList.remove('is-empty', 'is-rendering');
+                            if (document.getElementById('shareImageDialog').open) {
+                                document.getElementById('shareImageFull').src = img.src;
+                            }
                             resolve();
                         };
                         img.onerror = () => {
@@ -1842,33 +1838,10 @@
         }
 
         function selectQuotePill(index) {
+            if (socialCandidateQuotes[index] === undefined) return;
             activeQuoteIndex = index;
-            const quoteInput = document.getElementById('socialQuoteInput');
-            if (quoteInput && socialCandidateQuotes[index] !== undefined) {
-                quoteInput.value = socialCandidateQuotes[index];
-            }
             syncQuoteOptionState();
-            updateSocialQuoteCount();
             renderTalismanPreview();
-        }
-
-        function updateSocialQuoteCount() {
-            const quoteInput = document.getElementById('socialQuoteInput');
-            const counter = document.getElementById('socialQuoteCount');
-            if (!quoteInput || !counter) return;
-            const len = quoteInput.value.trim().length;
-            const max = parseInt(quoteInput.getAttribute('maxlength'), 10) || 320;
-            counter.textContent = `${len} / ${max}`;
-            counter.classList.toggle('is-long', len > 200);
-        }
-
-        function onSocialQuoteInput() {
-            const quoteInput = document.getElementById('socialQuoteInput');
-            const value = quoteInput ? quoteInput.value.trim() : '';
-            activeQuoteIndex = socialCandidateQuotes.indexOf(value);
-            syncQuoteOptionState();
-            updateSocialQuoteCount();
-            scheduleTalismanRender(220);
         }
 
         async function openSocialExportModal() {
@@ -1890,9 +1863,6 @@
             }
             activeQuoteIndex = 0;
             renderQuoteOptions();
-            const quoteInput = document.getElementById('socialQuoteInput');
-            if (quoteInput) quoteInput.value = socialCandidateQuotes[0] || '';
-            updateSocialQuoteCount();
             setSocialFormat('story', { render: false });
 
             talismanSnapshot = null;
@@ -1913,7 +1883,6 @@
 
         function closeSocialExportModal() {
             const dialog = document.getElementById('socialExportModal');
-            clearTimeout(talismanRenderTimer);
             if (dialog && dialog.open) dialog.close();
         }
 

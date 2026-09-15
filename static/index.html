@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="/static/artwork.css?v=20260915a">
-    <link rel="stylesheet" href="/static/ui.css?v=20260915h">
+    <link rel="stylesheet" href="/static/ui.css?v=20260915k">
 </head>
 <body>
     <!-- The night sky: a Milky Way band, star fields, and a few bright stars that twinkle. Decorative only. -->
@@ -221,16 +221,12 @@
                     </div>
 
                     <div class="social-control-section">
-                        <span class="social-control-label">Your words</span>
-                        <p class="social-control-hint">Choose a line from your reading, or write your own.</p>
+                        <span class="social-control-label">Choose a quote</span>
+                        <p class="social-control-hint">Choose a line from your reading for the image.</p>
                         <div class="quote-option-list" id="quoteSelectorTabs">
                             <!-- Populated with the Oracle's most quotable lines -->
                         </div>
-                        <textarea id="socialQuoteInput" class="social-quote-input" rows="3" maxlength="320" placeholder="Enter quote text..." oninput="onSocialQuoteInput()" aria-label="Quote text"></textarea>
-                        <div class="social-quote-meta">
-                            <span>Shorter reads bolder</span>
-                            <span id="socialQuoteCount">0 / 320</span>
-                        </div>
+
                     </div>
 
 
@@ -238,7 +234,7 @@
 
                 <!-- Right: Live Preview (exact export, scaled to fit) -->
                 <div class="social-preview-wrapper">
-                    <div class="talisman-preview-frame format-story is-empty" id="talismanPreviewFrame">
+                    <div class="talisman-preview-frame format-story is-empty" id="talismanPreviewFrame" role="button" tabindex="0" aria-label="Enlarge reading image" aria-haspopup="dialog" aria-controls="shareImageDialog" onclick="toggleSharePreview()" onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggleSharePreview(); }">
                         <img id="talismanPreviewImg" class="talisman-preview-img" alt="Preview of your shareable reading card" src="">
                         <div class="talisman-preview-status">
                             <div class="spin"></div>
@@ -260,16 +256,31 @@
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                             <span>Download image</span>
                         </button>
+                        <div class="full-reading-options">
+                            <span class="social-control-label">Full reading</span>
+                            <label><input type="checkbox" id="exportIncludeQuestion"> Include my question</label>
+                        </div>
+                        <button type="button" class="social-secondary-btn" id="copyReadingBtn" onclick="copyFullReading()">Copy reading</button>
+                        <button type="button" class="social-secondary-btn" id="downloadReadingPdfBtn" onclick="downloadReadingPdf()">Download PDF</button>
                         <div id="socialShareFeedback" class="social-share-feedback" role="status" aria-live="polite"></div>
                     </div>
         </div>
     </dialog>
 
+    <dialog id="shareImageDialog" class="share-image-dialog" aria-labelledby="shareImageTitle">
+        <div class="share-image-header">
+            <h2 id="shareImageTitle">Image preview</h2>
+            <button type="button" class="lore-close-btn" onclick="closeShareImagePreview()" aria-label="Close image preview" autofocus>&times;</button>
+        </div>
+        <img id="shareImageFull" alt="Enlarged preview of your shareable reading card">
+    </dialog>
+
     <script defer src="/static/analytics.js?v=20260915a"></script>
     <script defer src="/static/reading-layers.js?v=20260910d"></script>
-    <script defer src="/static/oracle.js?v=20260915c"></script>
+    <script defer src="/static/oracle.js?v=20260915e"></script>
     <script defer src="/static/learning.js?v=20260915analytics"></script>
-    <script defer src="/static/ui.js?v=20260915e"></script>
+    <script defer src="/static/ui.js?v=20260915g"></script>
+    <script defer src="/static/reading-export.js?v=20260915a"></script>
 
 </body>
 </html>

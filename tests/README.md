@@ -22,7 +22,7 @@ PLAYWRIGHT_MODULE=/absolute/path/to/node_modules/playwright node tests/verify-ui
 
 `ORACLE_TEST_URL` can override `http://127.0.0.1:8876`.
 
-The script covers all 11 reading configurations; rune flags; changing and unchanging I Ching; draft and navigation preservation; saving and reopening journal entries; card keyboard/swipe inspection; share controls at short viewport heights; a simulated software-keyboard viewport; PNG export; native-share cancellation; light appearance; request errors, retry, stream interruption, compatibility fallback, cancellation, and reduced motion.
+The script covers all 11 reading configurations; rune flags; changing and unchanging I Ching; draft and navigation preservation; saving and reopening journal entries; card keyboard/swipe inspection; share controls at short viewport heights; quote selection without a text editor; image preview opening and focus restoration; PNG export; native-share cancellation; light appearance; request errors, retry, stream interruption, compatibility fallback, cancellation, and reduced motion.
 
 Screenshots, a result file, and a clearly labeled mock API log are written to **gitignored** `scratch/ui-verification/`. This is a fixture log, not an LLM output log. If future tests make real model calls, the repository's development-only exact-context/output logging requirement applies separately. No test logging runs in production.
 
@@ -31,3 +31,7 @@ Viewport and synthetic-touch checks do not replace a physical iPhone/Safari chec
 ## Learning restoration checks
 
 Run `node tests/verify-learning.cjs` (with the same optional `PLAYWRIGHT_MODULE` and `ORACLE_TEST_URL` settings). This checks key restored topics in all five guides, expand/collapse and keyboard controls, topic navigation, widths from 320 to 1365 pixels, all 11 reading links, draft and chapter preservation, and both themes. It intercepts and rejects generation requests; no model calls are made. Evidence is saved as `scratch/ui-verification/learning-result.json` and `learn-*.png`.
+
+## Full reading exports
+
+Run `node tests/verify-reading-export.cjs` with the same `PLAYWRIGHT_MODULE` setting. Its default preview URL is `http://127.0.0.1:8877`; set `ORACLE_TEST_URL` for another server. It verifies complete layered and legacy text, individual symbol passages, the question inclusion toggle, clipboard success and refusal, PDF download, and mobile button visibility. All reading content is a local fixture; no model calls or external shares occur. The PDF and screenshot are saved under `scratch/ui-verification/` for text extraction and visual inspection.
