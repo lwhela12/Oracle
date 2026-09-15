@@ -710,8 +710,58 @@
             }
         }
 
+        // Animate the stone surface independently of its orientation and readable labels.
+        async function tossRuneStones(mat) {
+            if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            mat.querySelectorAll('.rune-stone-motion').forEach(stone => stone.getAnimations().forEach(animation => animation.cancel()));
+            mat.classList.add('is-casting');
+            mat.inert = true;
+            const images = [...mat.querySelectorAll('img')];
+            await Promise.all(images.map(img => img.decode().catch(() => {})));
+            await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+            if (!mat.isConnected) return;
+            const bounds = mat.getBoundingClientRect();
+            const motions = [...mat.querySelectorAll('.rune-stone-motion')];
+            const animations = motions.map((stone, i) => {
+                const rect = stone.getBoundingClientRect();
+                const x = bounds.left + bounds.width * .5 - rect.left - rect.width / 2;
+                const y = bounds.bottom - rect.top - rect.height / 2 - 20;
+                const direction = i % 2 ? 1 : -1;
+                const spin = direction * (12 + (i * 11 % 17));
+                const duration = 800 + (i * 37 % 95);
+                const flight = .72;
+                const lift = 56 + (i * 13 % 24);
+                // Sample one uninterrupted trajectory. Per-keyframe easing used to
+                // brake and accelerate the stones again as they fanned out.
+                const frames = Array.from({ length: 91 }, (_, frame) => {
+                    const progress = frame / 90;
+                    const t = Math.min(progress / flight, 1);
+                    const remaining = (1 - t) ** 3;
+                    const arc = 4 * t * (1 - t);
+                    const settle = Math.max(0, (progress - flight) / (1 - flight));
+                    // Heavy stones rock against the cloth instead of springing upward.
+                    const rock = direction * 3 * Math.sin(2 * Math.PI * settle) * (1 - settle) ** 2;
+                    return {
+                        offset: progress,
+                        opacity: Math.min(1, progress / .07),
+                        transform: `translate3d(${x * remaining}px, ${y * remaining - lift * arc}px, 0) scale(${1 - .025 * remaining}) rotate(${spin * remaining + rock}deg)`
+                    };
+                });
+                const animation = stone.animate(frames, {
+                    duration, delay: 140, fill: 'both', easing: 'linear'
+                });
+                const clack = setTimeout(() => {
+                    if (mat.isConnected) sounds.stoneClack();
+                }, 140 + duration * flight);
+                return animation.finished.catch(() => {}).finally(() => clearTimeout(clack));
+            });
+            await Promise.all(animations);
+            mat.classList.remove('is-casting');
+            mat.inert = false;
+        }
+
         // Renders properly centered visual cards (no bottom cutoff!)
-        function renderVisualStage(metadata) {
+        function renderVisualStage(metadata, { animateRunes = true } = {}) {
             visualStageCard.innerHTML = '';
             const themeTradition = metadata.type || currentTradition || 'tarot';
             visualStageCard.className = `visual-stage-card stage-theme-${themeTradition}`;
@@ -1036,12 +1086,14 @@
                     const meaningText = rune.active_meaning || rune.meaning;
 
                     wrap.innerHTML = `
+                        <div class="rune-stone-motion">
                         <img src="/static/runes/${runeKey}.webp" 
                              alt="${rune.name}" 
                              class="rune-artifact-img ${isRev ? 'is-reversed' : ''}"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="rune-stone-pebble" style="display: none;">
                             <div class="pebble-glyph ${aettClass}">${rune.symbol}</div>
+                        </div>
                         </div>
                         <div class="rune-stone-meta">
                             <div class="rune-pos-badge ${badgeClass}">${position} • ${orientationLabel}</div>
@@ -1081,9 +1133,10 @@
                     });
 
                     mat.appendChild(wrap);
-                    setTimeout(() => sounds.stoneClack(), i * 180);
+
                 });
                 visualStageCard.appendChild(mat);
+                if (animateRunes) tossRuneStones(mat);
 
                 const hint = document.createElement('div');
                 hint.className = 'altar-orientation-hint';

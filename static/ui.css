@@ -483,3 +483,11 @@ dialog.card-zoom-dialog { translate:0 -50%; }
 
 .rune-reference { color:var(--text-secondary); width:100%; font-size:14px; }
 .rune-reference summary { cursor:pointer; min-height:44px; padding:10px 0; }
+
+/* Visible activity beneath the cast, followed by a calm reading reveal. */
+.reading-activity { display:flex; align-items:center; gap:5px; height:24px; flex-shrink:0; }
+.reading-activity i { width:6px; height:6px; border-radius:50%; background:var(--accent-gold-bright); animation:reading-activity 1.4s ease-in-out infinite; }
+.reading-activity i:nth-child(2) { animation-delay:.16s; }
+.reading-activity i:nth-child(3) { animation-delay:.32s; }
+@keyframes reading-activity { 0%,70%,100% { opacity:.3; transform:translateY(0); } 35% { opacity:1; transform:translateY(-4px); } }
+@media (prefers-reduced-motion:reduce) { .reading-activity i { animation:none; opacity:.7; } }

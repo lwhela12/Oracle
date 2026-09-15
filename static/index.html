@@ -20,8 +20,8 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/static/artwork.css?v=20260908a">
-    <link rel="stylesheet" href="/static/ui.css?v=20260910d">
+    <link rel="stylesheet" href="/static/artwork.css?v=20260915a">
+    <link rel="stylesheet" href="/static/ui.css?v=20260915e">
 </head>
 <body>
     <!-- The night sky: a Milky Way band, star fields, and a few bright stars that twinkle. Decorative only. -->
@@ -90,8 +90,8 @@
         <section class="app-page active-reading-stage" id="reading-stage" aria-labelledby="active-reading-badge" hidden>
             <div class="reading-top-bar"><div><p class="eyebrow">Your reading</p><h1 class="reading-badge" id="active-reading-badge" tabindex="-1">Tarot</h1><p id="reading-spread-label" class="reading-spread-label"></p></div><button type="button" class="new-consult-btn" onclick="startNewConsultation()">New reading <span aria-hidden="true">↗</span></button></div>
             <p class="seeker-inquiry-box" id="seeker-inquiry-display"></p>
-            <div class="thinking" id="thinking-indicator" role="status"><div class="reading-pulse" aria-hidden="true"></div><span>Preparing your reading…</span></div>
             <div class="visual-stage-card" id="visual-stage-card"></div>
+            <div class="thinking" id="thinking-indicator" role="status"><div class="reading-activity" aria-hidden="true"><i></i><i></i><i></i></div><span>Preparing your reading…</span></div>
             <div class="interpretation-card" id="interpretation-card">
                 <section id="reading-heart" hidden aria-labelledby="reading-heart-title"><h2 id="reading-heart-title">The heart of your reading</h2><div id="reading-heart-text" class="oracle-stream-text"></div></section>
                 <details id="reading-depth" class="reading-depth" open><summary>Go deeper</summary><div class="oracle-stream-text" id="oracle-stream-text" aria-busy="false"></div></details>
@@ -266,9 +266,9 @@
     </dialog>
 
     <script defer src="/static/reading-layers.js?v=20260910d"></script>
-    <script defer src="/static/oracle.js?v=20260910d"></script>
+    <script defer src="/static/oracle.js?v=20260915c"></script>
     <script defer src="/static/learning.js?v=20260908a"></script>
-    <script defer src="/static/ui.js?v=20260910d"></script>
+    <script defer src="/static/ui.js?v=20260915e"></script>
 
 </body>
 </html>

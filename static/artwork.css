@@ -2331,3 +2331,13 @@ dialog.card-zoom-dialog[open]::backdrop {
 /* Keep the tarot viewer steady while its contents float into place. */
 #cardZoomDialog, #cardZoomDialog[open] { transform: none; }
 @starting-style { #cardZoomDialog[open] { transform: none; } }
+
+/* Keep the cloth empty before the shared toss; labels arrive after impact. */
+.rune-stone-motion { position: relative; }
+.rune-casting-mat.is-casting { overflow: hidden; }
+.rune-casting-mat.is-casting .rune-stone-motion { opacity: 0; will-change: transform, opacity; }
+.rune-stone-meta { transition: opacity .24s ease; }
+.rune-casting-mat.is-casting .rune-stone-meta { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+    .rune-stone-meta { transition: none; }
+}

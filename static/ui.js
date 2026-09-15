@@ -18,6 +18,7 @@ let readingComplete = false;
 let currentReadingLayers = ReadingLayers.parse('');
 function resetReadingLayers() {
     currentReadingLayers = ReadingLayers.parse('');
+    for (const id of ['reading-heart', 'reading-depth']) document.getElementById(id).getAnimations().forEach(animation => animation.cancel());
     document.getElementById('reading-heart').hidden = true;
     document.getElementById('reading-heart-text').innerHTML = '';
     const depth = document.getElementById('reading-depth');
@@ -28,6 +29,7 @@ function resetReadingLayers() {
     }
 }
 function renderReadingLayers(text) {
+    const arriving = ['reading-heart', 'reading-depth'].map(id => document.getElementById(id)).filter(el => el.hidden);
     currentReadingLayers = ReadingLayers.parse(text);
     const {heart,depth,layered}=currentReadingLayers;
     document.getElementById('reading-heart').hidden = !heart;
@@ -37,6 +39,12 @@ function renderReadingLayers(text) {
     disclosure.classList.toggle('legacy-reading',!layered || !heart);
     if (depth && (!layered || !heart)) disclosure.open=true;
     oracleStreamText.innerHTML=renderMarkdown(depth);
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        arriving.filter(el => !el.hidden).forEach((el, index) => el.animate([
+            { opacity: 0, transform: 'translateY(10px)' },
+            { opacity: 1, transform: 'translateY(0)' }
+        ], { duration: 560, delay: index * 80, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'backwards' }));
+    }
     if(document.getElementById('cardZoomDialog').open) renderSymbolReading('card',activeZoomIndex);
     if(document.getElementById('runeZoomDialog').open) renderSymbolReading('rune',activeRuneZoomIndex);
 }
@@ -263,7 +271,7 @@ async function executeConsultation() {
         if (!data) return;
         const parsed = JSON.parse(data);
         if (event === 'metadata') acceptMetadata(parsed);
-        else if (event === 'token') { text += parsed.token || ''; renderReadingLayers(text); }
+        else if (event === 'token') { text += parsed.token || ''; }
         else if (event === 'done') done = true;
         else if (event === 'error') throw new Error('The reading could not be completed. Please try again.');
     };
@@ -299,12 +307,10 @@ async function executeConsultation() {
             if (version !== consultationVersion) return;
             acceptMetadata(data);
             text = data.response || '';
-            renderReadingLayers(text);
             done = true;
         }
         if (!done || !text || !currentReadingData) throw new Error('Your reading was interrupted. You can try again for a new draw.');
         readingComplete = true;
-        renderReadingLayers(text);
         saveReadingToJournal(question || 'General guidance', currentReadingData, text, tradition);
         document.getElementById('reading-share-btn').disabled = false;
     } catch (error) {
@@ -371,7 +377,7 @@ function loadHistoryItem(item) {
     activeReadingBadge.textContent = TRADITION_SPREADS[currentTradition]?.badgeTitle || 'Your reading';
     seekerInquiryDisplay.textContent = item.question;
     visualStageCard.hidden = false;
-    renderVisualStage(item.readingData);
+    renderVisualStage(item.readingData, { animateRunes: false });
     resetReadingLayers();
     renderReadingLayers(item.text);
     document.getElementById('reading-error').hidden = true;
@@ -447,5 +453,31 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('reading-share-btn').disabled = false;
         visualStageCard.hidden = false;
         navigateOracle('reading', {replace:true,focus:false});
+        if (demo === 'runes') {
+            const replay = document.createElement('button');
+            replay.className = 'btn-primary';
+            replay.textContent = 'Replay toss · demo';
+            replay.style.margin = '16px auto';
+            replay.addEventListener('click', () => {
+                const mat = visualStageCard.querySelector('.rune-casting-mat');
+                if (mat && !mat.inert) tossRuneStones(mat);
+            });
+            visualStageCard.after(replay);
+            const arrival = document.createElement('button');
+            arrival.className = 'tool-btn';
+            arrival.textContent = 'Preview reading arrival · demo';
+            arrival.addEventListener('click', async () => {
+                arrival.disabled = true;
+                resetReadingLayers();
+                thinkingIndicator.style.display = 'flex';
+                thinkingIndicator.querySelector('span').textContent = 'Preparing your reading…';
+                await new Promise(resolve => setTimeout(resolve, 2600));
+                thinkingIndicator.style.display = 'none';
+                if (oracleRoute === 'reading') renderReadingLayers('[[HEART]]\nListen before you move. Let a moment of stillness show you which next step feels clear.\n\nThis is sample text for the animation preview.\n[[DEPTH]]\nAnsuz invites attention, Raidho suggests movement, and Algiz offers the image of a protective boundary. Take what is useful as a prompt for reflection.');
+                arrival.disabled = false;
+            });
+            replay.after(arrival);
+
+        }
     } else navigateOracle(location.hash.slice(1) || 'read', {replace:true,focus:false});
 });
