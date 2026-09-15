@@ -1,7 +1,4 @@
-import requests
-import random
-
-url = "https://qrandom.io/api/random/ints"
+from quantum_random import random_values
 
 TRIGRAMS = {
     '☰': {'symbol': '☰', 'name': 'Heaven', 'chinese': '乾 (Qián)', 'element': 'Creative Sky / Celestial Yang', 'nature': 'Strong, Initiating'},
@@ -86,18 +83,7 @@ class IChing:
 
     def quantum_coin_toss(self):
         """Use quantum random numbers with timeout and cryptographic fallback for coin tosses."""
-        params = {'n': 18, 'min': 0, 'max': 1}
-        try:
-            response = requests.get(url, params=params, timeout=2.5)
-            if response.status_code == 200:
-                tosses = response.json().get('numbers', [])
-                if len(tosses) == 18:
-                    return tosses
-        except Exception:
-            pass
-        # Fallback to cryptographically strong system random
-        rng = random.SystemRandom()
-        return [rng.randint(0, 1) for _ in range(18)]
+        return random_values(18, 0, 1)
 
     def calculate_hexagram(self):
         """Calculate hexagram using the ancient 3-coin toss method (3 coins, 6 throws from bottom to top)."""

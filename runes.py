@@ -1,7 +1,4 @@
-import requests
-import random
-
-url = "https://qrandom.io/api/random/ints"
+from quantum_random import random_indices
 
 class RuneCast:
     def __init__(self):
@@ -223,35 +220,13 @@ class RuneCast:
     def quantum_draw_with_reversals(self, num_runes=3, allow_reversals=True, include_wyrd=False):
         """Draw unique runes and optional Merkstave (reversed) states using quantum randomness."""
         candidates = [k for k in self.runes.keys() if include_wyrd or k != 'wyrd']
-        num_runes = min(num_runes, len(candidates))
-
-        # We request numbers for rune selection + reversal bits
-        needed_numbers = len(candidates) + num_runes
-        params = {'n': needed_numbers, 'min': 1, 'max': 10000}
-        
-        numbers = []
-        try:
-            response = requests.get(url, params=params, timeout=2.5)
-            if response.status_code == 200:
-                numbers = response.json().get('numbers', [])
-        except Exception:
-            pass
-
-        if len(numbers) >= needed_numbers:
-            # First slice orders candidate runes
-            sort_numbers = numbers[:len(candidates)]
-            paired = list(zip(sort_numbers, candidates))
-            paired.sort(key=lambda x: x[0])
-            chosen_keys = [rune_key for _, rune_key in paired[:num_runes]]
-            
-            # Second slice decides reversals
-            rev_numbers = numbers[len(candidates):len(candidates) + num_runes]
-            reversals = [(n % 2 == 1) for n in rev_numbers]
-        else:
-            # Fallback to cryptographically strong system randomness
-            sys_rnd = random.SystemRandom()
-            chosen_keys = sys_rnd.sample(candidates, num_runes)
-            reversals = [sys_rnd.choice([True, False]) for _ in range(num_runes)]
+        num_runes = max(0, min(num_runes, len(candidates)))
+        bounds = list(range(len(candidates), len(candidates) - num_runes, -1))
+        if allow_reversals:
+            bounds.extend([2] * num_runes)
+        values = random_indices(bounds)
+        chosen_keys = [candidates.pop(index) for index in values[:num_runes]]
+        reversals = values[num_runes:] if allow_reversals else [False] * num_runes
 
         results = []
         for i, key in enumerate(chosen_keys):

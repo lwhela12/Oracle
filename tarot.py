@@ -1,12 +1,5 @@
 import random
-import requests
-
-url="https://qrandom.io/api/random/ints"
-params={
-   "n": 78,
-   "min": 1,
-   "max": 78
-}
+from quantum_random import random_indices
 
 class TarotDeck:
     def __init__(self):
@@ -61,20 +54,9 @@ class TarotDeck:
         random.SystemRandom().shuffle(self.cards)
 
     def quantum_shuffle(self):
-        """Shuffles the deck using quantum random numbers, falling back gracefully to system random."""
-        try:
-            response = requests.get(url, params=params, timeout=2.5)
-            if response.status_code == 200:
-                quantum_numbers = response.json().get('numbers', [])
-                if len(quantum_numbers) >= len(self.cards):
-                    paired = list(zip(quantum_numbers, self.cards))
-                    paired.sort(key=lambda x: x[0])
-                    self.cards = [card for _, card in paired]
-                    return
-        except Exception:
-            pass
-        # Fallback to cryptographically strong system random
-        self.shuffle()
+        """Uniformly reorder the full deck when a caller explicitly needs it."""
+        indices = random_indices(range(len(self.cards), 0, -1))
+        self.cards = [self.cards.pop(index) for index in indices]
 
     def draw_card(self):
         """Draws a card from the top of the deck."""
@@ -83,11 +65,11 @@ class TarotDeck:
         return None
 
     def reading(self, num_cards):
-        """Resets the deck, shuffles, and pulls the requested number of cards."""
+        """Draw directly from the shrinking deck, one value per requested card."""
         self.reset_deck()
-        self.quantum_shuffle()
-        num = min(num_cards, len(self.cards))
-        return [self.draw_card() for _ in range(num)]
+        num = max(0, min(num_cards, len(self.cards)))
+        indices = random_indices(range(len(self.cards), len(self.cards) - num, -1))
+        return [self.cards.pop(index) for index in indices]
 
     def get_spread_positions(self, spread_type):
         """Returns position labels for different spread types."""

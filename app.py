@@ -4,6 +4,7 @@ import json
 from flask import Flask, request, jsonify, send_from_directory, Response, stream_with_context
 from flask_cors import CORS
 from oracle_logic import GeminiOracle
+from telemetry import begin, emit, enabled, flush, reading_details, track_reading
 
 app = Flask(__name__, static_folder='static')
 CORS(app)
@@ -61,6 +62,27 @@ def static_files(filename):
     return send_from_directory(app.static_folder, filename)
 
 
+@app.route('/analytics/config')
+def analytics_config():
+    response = jsonify({'enabled': enabled()})
+    response.headers['Cache-Control'] = 'no-store'
+    return response
+
+
+@app.route('/analytics/visit', methods=['POST'])
+def analytics_visit():
+    if request.content_length and request.content_length > 1024:
+        return '', 413
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return '', 400
+    state = begin(data)
+    if state['visitor_id']:
+        emit('app_opened')
+        flush(state)
+    return '', 204
+
+
 @app.route('/init', methods=['GET', 'POST'])
 def init():
     try:
@@ -96,6 +118,7 @@ def session_clear():
 
 
 @app.route('/chat', methods=['POST'])
+@track_reading
 def chat():
     try:
         oracle = get_oracle()
@@ -121,6 +144,7 @@ def chat():
     include_wyrd = data.get('include_wyrd', False)
 
     mode = determine_mode(user_message, explicit_mode)
+    reading_details(mode, spread_type)
 
     try:
         if mode == 'tarot':
@@ -176,12 +200,13 @@ def chat():
 
 
 @app.route('/chat/stream', methods=['POST'])
+@track_reading
 def chat_stream():
     try:
         oracle = get_oracle()
     except ValueError as e:
-        def error_gen():
-            yield f"event: error\ndata: {json.dumps({'error': str(e)})}\n\n"
+        def error_gen(error=str(e)):
+            yield f"event: error\ndata: {json.dumps({'error': error})}\n\n"
         return Response(error_gen(), mimetype='text/event-stream')
 
     data = request.get_json(silent=True) or {}
@@ -202,6 +227,7 @@ def chat_stream():
         return Response(exit_gen(), mimetype='text/event-stream')
 
     mode = determine_mode(user_message, explicit_mode)
+    reading_details(mode, spread_type)
 
     # Prepare reading symbols & prompt
     if mode == 'tarot':

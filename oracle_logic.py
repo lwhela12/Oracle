@@ -2,13 +2,13 @@ import os
 import json
 from pathlib import Path
 import time
-import random
 import threading
-import requests
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
+from quantum_random import random_values
+from telemetry import emit
 from tarot import TarotDeck
 from iching import IChing
 from runes import RuneCast
@@ -128,16 +128,8 @@ class GeminiOracle:
 
     def _get_quantum_number(self):
         """Fetch a quantum random integer with timeout and cryptosecure fallback."""
-        url = "https://qrandom.io/api/random/int"
-        try:
-            resp = requests.get(url, timeout=2.5)
-            if resp.status_code == 200:
-                data = resp.json()
-                if 'number' in data:
-                    return data['number']
-        except Exception:
-            pass
-        return random.SystemRandom().randint(1, 999)
+        # Preserve the existing provider and fallback ranges while adding telemetry.
+        return random_values(1, 0, 100, fallback_range=(1, 999))[0]
 
     def prepare_tarot_reading(self, user_input, spread_type='3-card'):
         """Draws cards and builds the prompt without calling Gemini yet."""
@@ -346,19 +338,39 @@ Divination Guidelines:
         chat = self.get_chat(session_id)
         context = self._test_context(chat, prompt, 'GeminiOracle.stream_chat')
         chunks = []
+        usage = None
         try:
             for chunk in chat.send_message_stream(prompt):
+                if getattr(chunk, 'usage_metadata', None) is not None:
+                    usage = chunk.usage_metadata
                 if chunk.text:
                     if context is not None:
                         chunks.append(chunk.text)
                     yield chunk.text
         finally:
+            self._log_usage(usage)
             self._log_test_output(context, chunks)
+
+    def _log_usage(self, usage):
+        if usage is None:
+            return
+        fields = {}
+        for output, attribute in [('input_tokens', 'prompt_token_count'),
+                                  ('output_tokens', 'candidates_token_count'),
+                                  ('thinking_tokens', 'thoughts_token_count'),
+                                  ('cached_tokens', 'cached_content_token_count'),
+                                  ('total_tokens', 'total_token_count')]:
+            value = getattr(usage, attribute, None)
+            if type(value) is int and value >= 0:
+                fields[output] = value
+        if fields:
+            emit('interpretation_usage', model=self.model_name, **fields)
 
     def send_chat(self, prompt, session_id="default"):
         chat = self.get_chat(session_id)
         context = self._test_context(chat, prompt, 'GeminiOracle.send_chat')
         response = chat.send_message(prompt)
+        self._log_usage(getattr(response, 'usage_metadata', None))
         self._log_test_output(context, [response.text or ''])
         return response.text
 

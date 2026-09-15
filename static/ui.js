@@ -231,6 +231,7 @@ async function executeConsultation() {
     const tradition = currentTradition;
     const question = userInquiry.value.trim();
     const body = { message: question || 'Provide sacred guidance and reveal the truth of my path.', mode: tradition, spread_type: currentSpreadType, allow_reversals: runeAllowReversals, include_wyrd: runeIncludeWyrd, session_id: sessionId };
+    Object.assign(body, window.OracleAnalytics?.readingContext() || {});
     const version = ++consultationVersion;
     const controller = new AbortController();
     consultationController = controller;
