@@ -1164,6 +1164,7 @@
         let socialCandidateQuotes = [];
         let activeQuoteIndex = 0;
         let talismanSnapshot = null;   // { canvas, content: {x, y, w, h} } — altar render + tight spread bounds (canvas px)
+        let talismanSnapshotPromise = null;
         let talismanRenderSeq = 0;
         let talismanPreviewUrl = null;
         let talismanFontsReady = null;
@@ -1871,7 +1872,8 @@
             document.getElementById('socialNativeShareBtn').disabled = true;
             document.getElementById('socialDownloadBtn').disabled = true;
             try {
-                talismanSnapshot = await captureAltarSnapshot();
+                talismanSnapshotPromise = captureAltarSnapshot();
+                talismanSnapshot = await talismanSnapshotPromise;
                 await renderTalismanPreview();
             } catch (error) {
                 if (feedback) feedback.textContent = 'The image could not be prepared. Close this view and try again.';

@@ -36,9 +36,11 @@ const output = path.resolve('scratch/ui-verification');
   }
   await page.setViewportSize({width:390,height:844});
   await page.waitForFunction(()=>!document.getElementById('socialDownloadBtn').disabled);
+  assert(await page.evaluate(()=>readingPdfSpread(talismanSnapshot).startsWith('data:image/jpeg;base64,')),'PDF includes the actual spread image');
   await page.screenshot({path:path.join(output,'share-full-reading.png')});
   const pending=page.waitForEvent('download');await page.locator('#downloadReadingPdfBtn').click();
   await (await pending).saveAs(path.join(output,'full-reading.pdf'));
+  assert(await page.evaluate(()=>Boolean(pdfMake.fonts.Cormorant && pdfMake.fonts.Roboto)),'PDF heading and body fonts stay available');
   await page.evaluate(()=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async()=>{throw new Error('blocked');}}}));
   await page.locator('#copyReadingBtn').click();assert((await page.locator('#socialShareFeedback').textContent()).includes('blocked'));
   await page.evaluate(()=>{currentReadingLayers=ReadingLayers.parse('## Legacy reading\n\nThe entire older reading remains available.');});
