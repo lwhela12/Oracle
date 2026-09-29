@@ -69,8 +69,8 @@ def _qrandom(count, timeout):
     return numbers
 
 
-def _anu_words(url, count, timeout, headers=None):
-    data = _json(requests.get(url, params={'length': count, 'type': 'hex16', 'size': 4},
+def _anu_words(url, count, timeout, headers=None, size=4):
+    data = _json(requests.get(url, params={'length': count, 'type': 'hex16', 'size': size},
                               headers=headers, timeout=timeout))
     if not isinstance(data, dict) or data.get('success') is not True:
         raise ProviderError('invalid_response', 200)
@@ -79,8 +79,10 @@ def _anu_words(url, count, timeout, headers=None):
 
 def _anu(count, timeout):
     # Paid ANU Quantum Numbers API (AWS-hosted); only used when a key is configured.
+    # Paid hex16 size counts 16-bit words; legacy size counts bytes.
+    # Two paid words and four legacy bytes both produce eight hex digits.
     return _anu_words('https://api.quantumnumbers.anu.edu.au', count, timeout,
-                      headers={'x-api-key': os.environ['ANU_QRNG_API_KEY']})
+                      headers={'x-api-key': os.environ['ANU_QRNG_API_KEY']}, size=2)
 
 
 def _anu_legacy(count, timeout):

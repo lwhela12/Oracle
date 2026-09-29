@@ -160,8 +160,9 @@ class ProviderFailoverTests(unittest.TestCase):
 
     def test_fails_over_in_order_and_logs_the_serving_provider(self):
         with self.route({'lfdr.de': Reply(503), 'qrandom.io': requests.Timeout(),
-                         'anu.edu.au': Reply(body={'success': True, 'data': ['00000002', '00000004']})}):
+                         'anu.edu.au': Reply(body={'success': True, 'data': ['00000002', '00000004']})}) as get:
             self.assertEqual(random_indices([10, 10]), [1, 2])
+            self.assertEqual(get.call_args.kwargs['params'], {'length': 2, 'type': 'hex16', 'size': 4})
         event = self.events[-1]
         self.assertEqual((event['provider'], event['source'], event['reason']), ('anu-legacy', 'quantum', 'none'))
         self.assertEqual(event['failovers'], 'lfdr.de:http_error,qrandom.io:timeout')
@@ -201,6 +202,19 @@ class ProviderFailoverTests(unittest.TestCase):
             with patch.dict(os.environ, {'ANU_QRNG_API_KEY': 'k'}), self.route({'quantumnumbers': Reply(body={'success': True, 'data': ['00000006']})}) as get:
                 self.assertEqual(quantum_random._fetch(1)[0], [3])
                 self.assertEqual(get.call_args.kwargs['headers'], {'x-api-key': 'k'})
+                self.assertEqual(get.call_args.kwargs['params'], {'length': 1, 'type': 'hex16', 'size': 2})
+
+    def test_paid_anu_block_width_matches_live_api(self):
+        # The paid service returns four hex digits per size unit, observed live.
+        # The old size=4 request returned 16 digits, which our 32-bit parser rejected.
+        def paid_reply(url, **kwargs):
+            width = 4 * kwargs['params']['size']
+            return Reply(body={'success': True, 'type': 'hex16', 'length': '1',
+                               'data': ['00000006'.zfill(width)]})
+        with patch.dict(os.environ, {'ANU_QRNG_API_KEY': 'k'}), \
+                patch('quantum_random.requests.get', side_effect=paid_reply) as get:
+            self.assertEqual(quantum_random._anu(1, 2.0), [3])
+            get.assert_called_once()
 
     def test_time_budget_caps_total_wait(self):
         now = [0.0]
