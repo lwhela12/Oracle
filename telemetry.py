@@ -17,7 +17,7 @@ FIELDS = {
     'reading_started': {'mode', 'spread', 'transport'},
     'reading_finished': {'mode', 'spread', 'transport', 'outcome', 'duration_ms'},
     'qrng_result': {'provider', 'source', 'reason', 'http_status', 'requested',
-                    'fallback_values', 'duration_ms'},
+                    'fallback_values', 'duration_ms', 'failovers'},
     'interpretation_usage': {'model', 'input_tokens', 'output_tokens', 'thinking_tokens',
                              'cached_tokens', 'total_tokens'},
 }

@@ -128,8 +128,8 @@ class GeminiOracle:
 
     def _get_quantum_number(self):
         """Fetch a quantum random integer with timeout and cryptosecure fallback."""
-        # Preserve the existing provider and fallback ranges while adding telemetry.
-        return random_values(1, 0, 100, fallback_range=(1, 999))[0]
+        # Same 0-100 range whether the value is quantum or a secure fallback.
+        return random_values(1, 0, 100)[0]
 
     def prepare_tarot_reading(self, user_input, spread_type='3-card'):
         """Draws cards and builds the prompt without calling Gemini yet."""
