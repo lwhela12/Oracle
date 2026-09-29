@@ -4,9 +4,11 @@
 
 Vercel: https://vercel.com/lwhela12s-projects/oracle/logs
 
-Search for `oracle.telemetry.v1`. `qrng_result` includes `source` (`quantum`,
+Search for `oracle.telemetry.v1`. `qrng_result` includes `provider` (the quantum
+source that served the draw, or the last one tried), `source` (`quantum`,
 `system`, `mixed`), `reason`, `http_status`, `requested`, `fallback_values`,
-and request latency. `rate_limited` means HTTP 429; other provider errors are
+`failovers` (e.g. `qrandom.io:http_error`, present only when a provider failed
+before one succeeded) and total request latency. `rate_limited` means HTTP 429; other provider errors are
 kept distinct. `range_rejection` is a local unbiased-mapping fallback, not a
 provider outage. All four traditions are instrumented.
 
@@ -21,6 +23,25 @@ reading IDs for popularity; count all attempts for infrastructure usage.
 thinking/cached tokens when supplied. Counters from streaming responses are taken
 from the last reported usage object, not added once per chunk. No token prices are
 hard-coded. Missing usage is unavailable, not zero.
+
+## Quantum providers and failover
+
+Each draw is one request to the first working provider, tried in order within a
+4-second total budget. A provider that fails is skipped on that warm serverless
+instance for 60 seconds. Only when every provider fails does the draw use secure
+system randomness (`source: system`, `reason` = last failure or `budget_exhausted`).
+
+| Name (`QRNG_PROVIDERS`) | Service | Notes |
+| --- | --- | --- |
+| `anu` | ANU Quantum Numbers API (paid, AWS) | Used only when `ANU_QRNG_API_KEY` is set. Recommended primary at scale. |
+| `lfdr` | lfdr.de, OTH Regensburg Laboratory for Digitalisation (ID Quantique QRNG PCIe) | Free; no published commercial terms or limits. |
+| `qrandom` | qrandom.io | Free; returned HTTP 503 intermittently to extended outage in Sept 2026. |
+| `anu_legacy` | qrng.anu.edu.au legacy endpoint | Free; rate-limits after a few rapid requests. Last resort. |
+
+Default order: `anu,lfdr,qrandom,anu_legacy`. Override with `QRNG_PROVIDERS`
+(comma-separated). Provider bytes are mapped to uniform 31-bit integers and then
+to each range by rejection, as before. The quantum-number reading keeps its 0–100
+range on fallback (it previously switched to 1–999).
 
 ## Anonymous user estimates
 
