@@ -1,52 +1,83 @@
 # Railway database deployment
 
-## Production preparation, September 29, 2026
+## Production release, September 29, 2026
 
-Production release was requested, but the public application has not yet been
-changed. Automatic approval review requires specific approval for the scoped
-credential transfers and the recovery rehearsal described below.
+The user approved production deployment, scoped credential installation, and a
+snapshot recovery rehearsal. The verified candidate was promoted to `qoracle.app`
+and `www.qoracle.app`: `dpl_4g8cmceyUXeXfMNZRvGSKypdQkE1`,
+https://oracle-nmdarpzlb-lwhela12s-projects.vercel.app (Vercel `iad1`).
+The owner dashboard is still planned, not implemented. Analytics contain usage
+metadata only; questions, draws, interpretations and journal text are excluded.
 
-- Separate production database: `oracle-production-db`, service
-  `8b235d76-45f8-49b0-84f3-ece1453481e0`, production environment
+### Database and recovery
+
+- Database service: `oracle-production-db`,
+  `8b235d76-45f8-49b0-84f3-ece1453481e0`, environment
   `16c6e792-aaaf-4ad2-9b2a-113b8190c563`.
-- PostgreSQL 18.6, Virginia, active deployment
-  `4bfb3f42-9ef7-4d24-a29f-e3eb9234fd6f`; deployed limits 1 vCPU / 500 MB.
-- Alembic head `20260929_0002`, protected identity `production`. Separate
-  writer, reader, and maintenance logins have limits 12/4/2. Role isolation,
-  insertion, deduplication, and readback passed using synthetic test events.
-  Administrative remote checks used a 3-second write budget; the application's
-  cumulative 500 ms budget is unchanged and requires production reconciliation.
-- TLS 1.3 verified; wrong hostname and wrong CA were rejected. Public CA:
+- PostgreSQL 18.6, Virginia, 1 vCPU / 500 MB caps. Alembic head
+  `20260929_0002`, protected identity `production`. Separate writer, reader and
+  maintenance logins have connection limits 12/4/2.
+- TLS 1.3 verified; wrong hostname and wrong CA rejected. Public CA:
   `certs/oracle-production-root.crt`, SHA-256
   `FD:77:AB:B0:EC:12:1F:0D:B4:EA:2A:29:72:6D:8A:EE:89:F0:5D:CC:BA:AA:FA:EB:76:24:58:8D:6A:F6:CB:3D`.
-  Host SAN `postgres--vkv.railway.internal`; public proxy
+  Host SAN `postgres--vkv.railway.internal`; external proxy
   `mainline.proxy.rlwy.net:28478`, resolved address `66.33.22.234`.
   Certificate expires December 28, 2028 at 03:36:18 UTC.
-- Daily backup scheduling was re-enabled on the current volume instance after
-  region migration: `f3047fb1-1e33-4cf3-a02b-2149d2e26550`. First manual backup
-  `d03ca465-0fc0-4768-b6c9-b6cd15dcd530` exists, named
-  `Production pre-release recovery check`, created 03:43:40 UTC September 30.
-  Volume snapshot restore remains untested: automatic approval review blocked
-  restoring the checkpoint without specific approval. The database contains
-  only three synthetic test events and is not connected to the public app.
-- Live retention test passed with the maintenance role: deleted a 91-day-old
-  synthetic event, preserved an 89-day-old event, respected a one-row batch cap.
-  The new job uses a fixed 90-day cutoff, bounded batches/time, and content-free
-  health output. `maintenance/railway.json` schedules it for 08:00 UTC daily.
-- Empty isolated service `oracle-analytics-retention`, ID
-  `85efb477-5b96-4a4d-8994-cc7ef1975b0e`, is created. Its image and scoped
-  maintenance credential are not deployed. Vercel's production writer credential
-  is also not configured; automatic approval review blocked both transfers.
-- Local validation: 81 Python tests discovered, 76 passed and 5 optional local
-  PostgreSQL tests skipped; JavaScript analytics and journal checks passed.
-  These are separate from the live database checks above.
+- Snapshot `d03ca465-0fc0-4768-b6c9-b6cd15dcd530`, created September 30
+  03:43:40 UTC, was restored before public collection. Schema revision,
+  production marker, existing logins and two pre-backup fixtures survived;
+  the post-backup fixture was absent. TLS trust remained valid.
+- Active restored volume: `eeb36906-3a29-4190-9cbb-190fae2bea40`, instance
+  `2873ea65-e01b-46e2-8821-e9710eb6a09b`. Daily backups were explicitly enabled
+  on this replacement volume. Active database deployment after restore:
+  `f1c7640e-a23d-42f0-8c87-fb96e6280eaf`.
+- Original detached volume `becda9aa-ec7c-40fc-a7f4-5840d1f17ff0` is retained
+  as a rollback copy with synthetic data only. It incurs storage cost until
+  deliberately removed. Point-in-time recovery is not enabled.
 
-Pending release steps: approve scoped secret installation and snapshot restore;
-verify restored schema, roles, and synthetic fixtures; deploy and verify the
-retention job; configure Vercel production with the insert-only writer; deploy
-a candidate, reconcile synthetic sync/stream readings and opt-out behavior,
-then promote the public domains. Record the final deployment and collection
-start here. The owner dashboard is still planned, not implemented.
+### Retention and credential separation
+
+- Isolated service `oracle-analytics-retention`,
+  `85efb477-5b96-4a4d-8994-cc7ef1975b0e`, deployment
+  `284b91d3-2fa5-4e03-83da-150605388f61`, Virginia.
+- Configured through the Railway API with `builder=RAILPACK` and
+  `dockerfilePath=maintenance/Dockerfile`; the resulting manifest reports
+  `DOCKERFILE`. Deprecated `railwayConfigFile` was rejected and removed from
+  the repository. See `maintenance/README.md` for the direct settings.
+- Runs daily at 08:00 UTC, restart policy `NEVER`. A manual deployed execution
+  at 03:51:41 UTC September 30 finished in two seconds, status `ok`, TLS 1.3,
+  database size 8,050,367 bytes, no expired backlog; job elapsed time 76 ms.
+- A separate live fixture test deleted a 91-day-old event, preserved an
+  89-day-old event, and respected the one-row batch cap. Default limits are
+  5,000 deleted rows and approximately 20 seconds per run, fixed 90-day cutoff.
+- Vercel holds only the insert-only writer secret. The maintenance service holds
+  only its scoped maintenance secret. Reader/admin secrets are not deployed to
+  either application. Vercel settings: production identity, public traffic class,
+  analytics enabled. CA paths are `/var/task/certs/oracle-production-root.crt`
+  for Vercel and `/app/certs/oracle-production-root.crt` for the job.
+- Monitor Railway failed cron runs and backlog output. External alerting and
+  larger capacity/load testing remain follow-up work.
+
+### Production candidate checks
+
+- Synchronous number reading: HTTP 200, 11.21 seconds, all four expected events;
+  ANU quantum source with zero fallback values. Canonical reading ID matched.
+- Streamed tarot reading with GPC: HTTP 200, 13.64 seconds, completed; all four
+  operational events persisted with null visitor IDs. Canonical ID matched.
+- GPC visit returned 204 and created no event. Four concurrent ordinary visits
+  returned 204 and each persisted one event (HTTP 0.25–0.38 seconds).
+- Event ingestion lag: cold first start 326 ms; subsequent reading events
+  33–43 ms. The application's cumulative database budget remains 500 ms.
+  Local Mac administrative role checks used a separate 3-second budget.
+- The 12 known synthetic candidate events were classified as `test` traffic so
+  they do not contribute to production business metrics. Role/deduplication and
+  recovery fixtures also use test traffic.
+- Regression suite: 81 Python tests discovered, 76 passed, 5 optional disposable
+  PostgreSQL tests skipped; JavaScript analytics/journal checks passed. Live
+  database, recovery and deployment checks above are additional evidence.
+- Analytics remain best effort; database failure does not prevent a reading and
+  can lose events. This release does not establish billing-grade completeness or
+  larger-scale capacity. Privacy changes use a fresh Gemini chat per generation.
 
 ## Staging release record
 

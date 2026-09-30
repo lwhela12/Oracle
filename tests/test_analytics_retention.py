@@ -104,18 +104,9 @@ class FakeConnection:
 
 
 class AnalyticsRetentionTests(unittest.TestCase):
-    def test_isolated_railway_cron_build_has_minimal_runtime(self):
+    def test_isolated_retention_image_has_minimal_runtime(self):
         root = Path(__file__).resolve().parents[1]
-        railway = json.loads((root / "maintenance" / "railway.json").read_text())
-        self.assertEqual(railway["build"], {
-            "builder": "DOCKERFILE",
-            "dockerfilePath": "maintenance/Dockerfile",
-        })
-        self.assertEqual(railway["deploy"], {
-            "startCommand": "python scripts/maintain_analytics.py",
-            "cronSchedule": "0 8 * * *",
-            "restartPolicyType": "NEVER",
-        })
+        self.assertFalse((root / "maintenance" / "railway.json").exists())
 
         dockerfile = (root / "maintenance" / "Dockerfile").read_text()
         self.assertIn("FROM python:3.12-slim", dockerfile)

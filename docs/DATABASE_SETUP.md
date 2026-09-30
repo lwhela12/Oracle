@@ -153,12 +153,26 @@ the dashboard, and cloud journal persistence remain later work.
 
 ## Production retention job
 
-Deploy the separate image in `maintenance/Dockerfile` with the configuration in
-`maintenance/railway.json`. It runs daily at 08:00 UTC and exits after each run.
-Give this service only `ORACLE_MAINTENANCE_DATABASE_URL` and set both
-`ORACLE_DATABASE_ENVIRONMENT` and `VERCEL_ENV` to `production`. The certificate
-path inside this image is `/app/certs/oracle-production-root.crt`. Keep this
-credential out of the public application. Apply migration `20260929_0002` first.
+Deploy the separate image in `maintenance/Dockerfile`. Railway's former Config
+as Code files are deprecated, so configure the isolated retention service
+directly through Railway's dashboard or service-instance API:
+
+- `builder=RAILPACK`, `dockerfilePath=maintenance/Dockerfile`, repository root
+  as the build context. `RAILPACK` is the service-instance API enum; with this
+  Dockerfile path, Railway reports the resulting deployment as `DOCKERFILE`.
+- `multiRegionConfig` set to Virginia region `us-east4-eqdc4a`
+- `cronSchedule=0 8 * * *` (08:00 UTC daily)
+- `startCommand=python scripts/maintain_analytics.py`
+- `restartPolicyType=NEVER`
+
+The complete service checklist is in `maintenance/README.md`. Give this service
+only the secret `ORACLE_MAINTENANCE_DATABASE_URL`, plus
+`ORACLE_DATABASE_ENVIRONMENT=production` and `VERCEL_ENV=production`. The
+connection must use the maintenance login, certificate verification, and the
+certificate path `/app/certs/oracle-production-root.crt`. Do not give the
+service a migration, writer, reader, or administrator credential. Keep the
+maintenance credential out of the public application. Apply migration
+`20260929_0002` before enabling the schedule. The job exits after each run.
 
 The job deletes events older than 90 days, at most 5,000 rows and approximately
 20 seconds per invocation by default, and reports bounded backlog counts,
