@@ -1,14 +1,12 @@
 import os
 import json
 from pathlib import Path
-import time
-import threading
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
 from quantum_random import random_values
-from telemetry import emit
+from telemetry import emit, reading_prepared
 from tarot import TarotDeck
 from iching import IChing
 from runes import RuneCast
@@ -63,34 +61,6 @@ certain predictions; frame possibilities and reflection with confidence and warm
 """
 
 
-class SessionManager:
-    """Manages separate conversation sessions with automatic TTL pruning."""
-    def __init__(self, ttl_seconds=7200):  # 2 hours
-        self.sessions = {}
-        self.ttl = ttl_seconds
-        self.lock = threading.Lock()
-
-    def get_chat(self, session_id, client, model_name, config):
-        now = time.time()
-        with self.lock:
-            # Clean up expired sessions
-            expired = [sid for sid, data in self.sessions.items() if now - data['last_active'] > self.ttl]
-            for sid in expired:
-                del self.sessions[sid]
-
-            if session_id not in self.sessions:
-                chat = client.chats.create(model=model_name, config=config)
-                self.sessions[session_id] = {'chat': chat, 'last_active': now}
-            else:
-                self.sessions[session_id]['last_active'] = now
-            return self.sessions[session_id]['chat']
-
-    def clear_session(self, session_id):
-        with self.lock:
-            if session_id in self.sessions:
-                del self.sessions[session_id]
-
-
 class GeminiOracle:
     def __init__(self):
         self.name = "The Oracle"
@@ -109,22 +79,17 @@ class GeminiOracle:
             temperature=0.85
         )
 
-        self.session_manager = SessionManager()
         self.deck = TarotDeck()
         self.iching = IChing()
         self.runes = RuneCast()
 
     def get_chat(self, session_id="default"):
-        return self.session_manager.get_chat(
-            session_id=session_id,
-            client=self.client,
-            model_name=self.model_name,
-            config=self.config
-        )
+        """Create a request-local chat; caller-supplied IDs never retrieve history."""
+        return self.client.chats.create(model=self.model_name, config=self.config)
 
     def clear_history(self, session_id="default"):
-        """Clears chat history for the given session."""
-        self.session_manager.clear_session(session_id)
+        """Compatibility hook: no conversation history is retained between readings."""
+        return None
 
     def _get_quantum_number(self):
         """Fetch a quantum random integer with timeout and cryptosecure fallback."""
@@ -377,6 +342,7 @@ Divination Guidelines:
     # Backwards-compatible synchronous response methods
     def tarot_response_structured(self, user_input, spread_type='3-card', session_id="default"):
         prep = self.prepare_tarot_reading(user_input, spread_type)
+        reading_prepared()
         text = self.send_chat(prep['prompt'], session_id)
         return {
             'text': text,
@@ -387,6 +353,7 @@ Divination Guidelines:
 
     def iching_response(self, user_input, session_id="default"):
         prep = self.prepare_iching_reading(user_input)
+        reading_prepared()
         text = self.send_chat(prep['prompt'], session_id)
         return {
             'text': text,
@@ -402,6 +369,7 @@ Divination Guidelines:
             include_wyrd=include_wyrd,
             **kwargs
         )
+        reading_prepared()
         text = self.send_chat(prep['prompt'], session_id)
         return {
             'text': text,
@@ -414,4 +382,5 @@ Divination Guidelines:
 
     def respond(self, user_input, session_id="default"):
         prep = self.prepare_number_reading(user_input)
+        reading_prepared()
         return self.send_chat(prep['prompt'], session_id)

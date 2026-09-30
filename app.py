@@ -4,7 +4,7 @@ import json
 from flask import Flask, request, jsonify, send_from_directory, Response, stream_with_context
 from flask_cors import CORS
 from oracle_logic import GeminiOracle
-from telemetry import begin, emit, enabled, flush, reading_details, track_reading
+from telemetry import begin, emit, enabled, flush, reading_details, reading_prepared, track_reading
 
 app = Flask(__name__, static_folder='static')
 CORS(app)
@@ -187,8 +187,12 @@ def chat():
             })
 
         else:
-            response = oracle.respond(user_message, session_id=session_id)
-            return jsonify({'response': response, 'type': 'oracle', 'terminate': False})
+            prep = oracle.prepare_number_reading(user_message)
+            metadata = reading_prepared()
+            response = oracle.send_chat(prep['prompt'], session_id=session_id)
+            return jsonify({'response': response, 'type': 'oracle',
+                            'quantum_number': prep['quantum_number'],
+                            'terminate': False, **metadata})
 
     except Exception as e:
         clean_err = format_api_error(e)
@@ -270,6 +274,8 @@ def chat_stream():
         }
         prompt = prep['prompt']
 
+    metadata.update(reading_prepared())
+
     def generate():
         try:
             # 1. Send metadata first so UI immediately updates visuals (cards/hexagram/runes)
@@ -295,7 +301,6 @@ def chat_stream():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5001))
     app.run(host='0.0.0.0', port=port)
-
 
 
 

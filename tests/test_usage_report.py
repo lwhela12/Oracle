@@ -31,3 +31,11 @@ class UsageReportTests(unittest.TestCase):
     def test_wrapped_ndjson_export(self):
         records = list(extract('{"text":"{\\"schema\\":\\"oracle.telemetry.v1\\",\\"event\\":\\"app_opened\\"}"}\ninvalid line'))
         self.assertEqual(len(records), 1)
+
+    def test_v2_export_and_completion_dedup_ignore_visitor_linkage(self):
+        first = event('reading_finished', 'finish-1', reading_id='same-request',
+                      outcome='completed', visitor_id='browser')
+        second = {**first, 'event_id': 'finish-2', 'visitor_id': None,
+                  'schema': 'oracle.telemetry.v2', 'canonical_reading_id': 'different-draw'}
+        self.assertEqual(list(extract(second)), [second])
+        self.assertEqual(summarize([first, second])['completed_readings'], 1)

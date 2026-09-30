@@ -13,7 +13,7 @@ def extract(value):
         for item in value:
             yield from extract(item)
     elif isinstance(value, dict):
-        if value.get('schema') == 'oracle.telemetry.v1':
+        if value.get('schema') in {'oracle.telemetry.v1', 'oracle.telemetry.v2'}:
             yield value
         else:
             for key in ('message', 'text', 'logs', 'events', 'data'):
@@ -65,7 +65,7 @@ def summarize(events, timezone='America/Los_Angeles', environment='production'):
             if event.get('visitor_id'):
                 readers.add(event['visitor_id'])
             if event['outcome'] == 'completed':
-                completed.setdefault((event.get('visitor_id'), event['reading_id']), event)
+                completed.setdefault(event['reading_id'], event)
         if event['event'] == 'qrng_result':
             qrng.append(event)
         if event['event'] == 'interpretation_usage':

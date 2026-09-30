@@ -348,9 +348,15 @@ function getHistory() {
 function saveReadingToJournal(question, readingData, responseText, tradition = currentTradition) {
     if (!readingData || !responseText) return;
     const entries = getHistory();
-    entries.unshift({id:'reading_' + Date.now(), timestamp:new Date().toLocaleDateString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}), question, tradition, type:readingData.type || tradition, readingData, text:responseText});
+    const canonicalId = readingData.canonical_reading_id;
+    const id = canonicalId || 'reading_' + Date.now();
+    // A repeated save of the same completed draw updates its local entry.
+    const retained = canonicalId ? entries.filter(entry => entry.id !== id) : entries;
+    retained.unshift({id, created_at:readingData.created_at || null,
+        content_format_version:readingData.content_format_version || null,
+        timestamp:new Date().toLocaleDateString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}), question, tradition, type:readingData.type || tradition, readingData, text:responseText});
     try {
-        localStorage.setItem('oracle_reading_history', JSON.stringify(entries.slice(0,25)));
+        localStorage.setItem('oracle_reading_history', JSON.stringify(retained.slice(0,25)));
         document.getElementById('reading-save-status').textContent = 'Saved to Journal';
     } catch (_) { document.getElementById('reading-save-status').textContent = 'Could not save on this device'; }
     if (oracleRoute === 'journal') renderHistoryDrawer();

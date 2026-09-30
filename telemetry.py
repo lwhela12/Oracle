@@ -1,4 +1,4 @@
-"""Content-free operational logs and optional anonymous PostHog events.
+"""Content-free operational logs, PostgreSQL events, and optional PostHog events.
 
 No prompts, response text, symbols, IPs, URLs, or session history are accepted.
 """
@@ -23,6 +23,54 @@ FIELDS = {
 }
 SPREADS = {'tarot': {'3-card', 'yes-no', '5-card', 'celtic'},
            'runes': {'norns', 'single', 'five-cross', 'thor-hammer', 'nine-worlds'}}
+DATABASE_BUDGET_SECONDS = 0.5
+MAX_DATABASE_BATCH = 50
+
+
+def write_database_events(records, *, timeout_seconds):
+    # No database driver or connection is needed when collection is unconfigured.
+    started = time.monotonic()
+    from analytics_store import write_events
+    remaining = timeout_seconds - (time.monotonic() - started)
+    if remaining <= 0:
+        raise TimeoutError()
+    return write_events(records, timeout_seconds=remaining)
+
+
+def flush_database(state):
+    """Spend one cumulative request budget, without threads or deferred retries."""
+    events, state['database_events'] = state['database_events'], []
+    if not events or state['database_failed']:
+        return
+    remaining = DATABASE_BUDGET_SECONDS - state['database_seconds']
+    started = time.monotonic()
+    try:
+        if remaining <= 0:
+            raise TimeoutError()
+        write_database_events(events, timeout_seconds=remaining)
+    except Exception:
+        state['database_failed'] = True
+        # Never include driver errors, DSNs, payloads, or provider response text.
+        operational_log({'schema': 'oracle.telemetry.v1',
+                         'event': 'telemetry_delivery_failed', 'sink': 'postgres',
+                         'reason': 'budget_exhausted' if remaining <= 0 else 'delivery_error',
+                         'event_count': len(events), 'attempt_id': state['attempt_id']})
+    finally:
+        state['database_seconds'] += time.monotonic() - started
+
+
+def reading_prepared():
+    """Identity for the actual draw, independent of optional audience analytics."""
+    state = getattr(g, 'oracle_telemetry', None) if has_request_context() else None
+    if state and state.get('reading_metadata'):
+        return dict(state['reading_metadata'])
+    metadata = {'canonical_reading_id': str(uuid.uuid4()),
+                'created_at': datetime.now(timezone.utc).isoformat(),
+                'content_format_version': 1}
+    if state:
+        state['reading_metadata'] = metadata
+        flush_database(state)  # QRNG evidence survives a later generation timeout.
+    return dict(metadata)
 
 
 def enabled():
@@ -60,13 +108,23 @@ def emit(event, **fields):
         record.update(state.get('details', {}))
         if state['visitor_id']:
             record['visitor_id'] = state['visitor_id']
+        if state.get('reading_metadata'):
+            record['schema'] = 'oracle.telemetry.v2'
+            record['canonical_reading_id'] = state['reading_metadata']['canonical_reading_id']
     operational_log(record)
     if state and state['visitor_id'] and enabled():
-        state['events'].append(record)
+        state['events'].append(dict(record))
+    if state and state['database_enabled'] and not state['database_failed']:
+        # Unlike the audience queue, operational storage does not require identity.
+        stored = dict(record, traffic_class=state['traffic_class'])
+        state['database_events'].append(stored)
+        if len(state['database_events']) >= MAX_DATABASE_BATCH:
+            flush_database(state)
 
 
 def flush(state):
     """One bounded synchronous batch; no serverless background thread to lose."""
+    flush_database(state)
     events, state['events'] = state['events'], []
     token = os.getenv('POSTHOG_PROJECT_TOKEN')
     if not events or not token or not enabled():
@@ -100,7 +158,10 @@ def begin(data):
     state = {'attempt_id': str(uuid.uuid4()),
              'reading_id': valid_id(data.get('reading_id')) or str(uuid.uuid4()),
              'visitor_id': valid_id(data.get('visitor_id')) if enabled() and not opted_out else None,
-             'events': []}
+             'events': [], 'database_events': [], 'database_seconds': 0.0,
+             'database_failed': False,
+             'database_enabled': bool(os.getenv('ORACLE_DATABASE_URL')),
+             'traffic_class': os.getenv('ORACLE_TRAFFIC_CLASS', 'public')}
     g.oracle_telemetry = state
     return state
 
@@ -139,6 +200,10 @@ def track_reading(function):
             finish('failed')
             raise
         if response.mimetype != 'text/event-stream':
+            payload = response.get_json(silent=True)
+            if response.status_code < 400 and isinstance(payload, dict) and not payload.get('error') and not payload.get('terminate'):
+                payload.update(reading_prepared())
+                response.set_data(json.dumps(payload))
             finish('completed' if response.status_code < 400 else 'failed')
             return response
         original = response.response
@@ -177,7 +242,10 @@ def reading_details(mode, spread):
     details = g.oracle_telemetry['details']
     details['mode'] = 'number' if mode == 'oracle' else mode if mode in {'tarot', 'runes', 'iching', 'number'} else 'unknown'
     details['spread'] = spread if isinstance(spread, str) and spread in SPREADS.get(mode, set()) else {'tarot': '3-card', 'runes': 'norns'}.get(mode, 'default')
-    # Update the pending analytics start event; stdout start is deliberately early.
-    for event in g.oracle_telemetry['events']:
-        if event['event'] == 'reading_started':
-            event.update(details)
+    # Stdout records the request immediately. Buffered sinks receive the actual
+    # inferred dimensions before the draw or any provider call begins.
+    for queue in ('events', 'database_events'):
+        for event in g.oracle_telemetry[queue]:
+            if event['event'] == 'reading_started':
+                event.update(details)
+    flush_database(g.oracle_telemetry)
