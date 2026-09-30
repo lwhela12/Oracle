@@ -8,9 +8,9 @@ Live production checks confirmed event SELECT access, denied INSERT access, and
 no product-schema access. All three reporting periods returned serializable
 aggregate results through the production reader with verified TLS.
 
-The dashboard source is locally verified but not deployed. Google OAuth setup and local
-owner enrollment passed. The production dashboard credentials are installed as
-sensitive Vercel variables; deployed authentication checks remain pending. See [DASHBOARD_SETUP.md](DASHBOARD_SETUP.md).
+The dashboard is deployed with verified Google owner sign-in and live aggregate
+reporting. The production dashboard credentials are installed as sensitive Vercel
+variables. See [DASHBOARD_SETUP.md](DASHBOARD_SETUP.md).
 The production release record below describes the earlier foundation release.
 
 ## Production release, September 29, 2026

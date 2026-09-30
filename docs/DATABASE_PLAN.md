@@ -2,8 +2,8 @@
 
 Prepared September 29, 2026; status updated September 30. The analytics foundation
 is live on Railway and Vercel, with scoped roles, verified TLS, tested snapshot
-recovery, and daily retention. The private owner dashboard is implemented and
-locally verified; Google OAuth setup and owner enrollment remain before release.
+recovery, and daily retention. The private owner dashboard is live with verified Google owner authentication
+and aggregate reporting.
 This document defines the
 database work order; [DASHBOARD_PLAN.md](DASHBOARD_PLAN.md) contains the fuller
 metric definitions, dashboard design, and product privacy contracts.

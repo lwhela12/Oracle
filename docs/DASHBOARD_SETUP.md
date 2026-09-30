@@ -1,6 +1,6 @@
 # Owner dashboard
 
-Implemented locally September 30, 2026; not yet deployed. The dashboard route is `/admin`; its only data
+Released September 30, 2026 at https://www.qoracle.app/admin. The dashboard route is `/admin`; its only data
 endpoint is `/admin/api/report?period=today|7d|30d`. It is a live aggregate view of
 Railway analytics, not a reading browser. Google login configuration and a
 verified owner subject are required before anyone can access it.
@@ -118,8 +118,27 @@ with its reporting role after promotion and record the deployment separately.
   recovery, logout, desktop layout, and a 390-pixel mobile viewport passed.
   This does not establish a real Google login or a deployed dashboard.
 - Real Google sign-in and owner enrollment passed locally, and production Vercel
-  credentials are installed. Deployed authentication checks remain pending. The chosen owner account is
+  credentials are installed. Production owner sign-in, logout, and unauthenticated denial passed. The chosen owner account is
   `lucas@whelanpartners.com`; its email alone grants no access.
 
 References: [Google OpenID Connect](https://developers.google.com/identity/openid-connect/openid-connect)
 and [Authlib Flask integration](https://docs.authlib.org/en/latest/oauth2/client/web/flask.html).
+
+## Production release record
+
+- Source implementation: `ccbef2d`. Candidate `dpl_4KxZdR7mZ1i9Rbbwkvc85xGYxxAr`
+  built in `iad1` and was promoted on September 30 after protected candidate checks.
+- Real Google sign-in at `www.qoracle.app` succeeded for the pinned owner account;
+  production reports rendered the expected three completed readings and one linked
+  browser. Today/7d/30d controls and logout were exercised in the live browser.
+- Anonymous `/admin` and `/admin/api/report` returned 401, with no-store, CSP,
+  no-referrer, and no cross-origin access. Candidate alternate-host admin requests
+  returned 400. The public reading home page returned 200.
+- No error-level logs were found in the candidate's first 20-minute window.
+  This is a release smoke check, not continuous alerting or a load test.
+- A second real Google account was not used. Wrong-account, invalid/expired-token,
+  CSRF, and session-expiry behavior are covered by the automated authentication
+  suite; only the designated owner's Google flow was verified live.
+- Rollback target before release: `dpl_F9cvbDTPpcpDMpMSRqgZZTiGT1mR`.
+  Preview retains its isolated database writer and has no dashboard auth or reader
+  secrets. Future preview dashboard testing requires separate configuration.
