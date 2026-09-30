@@ -3,11 +3,15 @@ import re
 import json
 from flask import Flask, request, jsonify, send_from_directory, Response, stream_with_context
 from flask_cors import CORS
+from admin_routes import init_admin
 from oracle_logic import GeminiOracle
 from telemetry import begin, emit, enabled, flush, reading_details, reading_prepared, track_reading
 
 app = Flask(__name__, static_folder='static')
-CORS(app)
+# Public reading APIs retain their existing cross-origin behavior. Admin routes
+# never participate in this policy, including errors and unknown routes.
+CORS(app, resources={r"^/(?:init|chat|session/clear|analytics/config|analytics/visit)(?:/.*)?$": {"origins": "*"}})
+init_admin(app)
 
 # Lazy initialization for serverless environments
 _oracle = None

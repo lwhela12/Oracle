@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#101017">
+  <title>Overview · Oracle</title>
+  <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/admin/assets/admin.css">
+  <script src="/admin/assets/admin.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to overview</a>
+<header class="masthead"><a class="brand" href="/">✦ <span>Quantum Oracle</span></a><div class="owner-tools"><span class="private-label">Owner workspace</span><form action="/admin/auth/logout" method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="quiet" type="submit">Sign out</button></form></div></header>
+<main id="main" class="dashboard">
+  <div class="page-heading"><div><p class="eyebrow">Private analytics</p><h1>Usage overview</h1><p class="intro">How Oracle is being used, and how well it’s delivering.</p></div><a class="return-link" href="/">Open Oracle <span aria-hidden="true">↗</span></a></div>
+  <div class="toolbar"><div class="period-controls" role="group" aria-label="Reporting period"><button type="button" data-period="today" aria-pressed="false">Today</button><button type="button" data-period="7d" aria-pressed="true">7 days</button><button type="button" data-period="30d" aria-pressed="false">30 days</button></div><div class="toolbar-meta"><span>Pacific time · Includes today</span><button type="button" class="refresh" id="refresh">↻ Refresh</button></div></div>
+  <p id="load-status" class="load-status" role="status" aria-live="polite">Loading usage…</p>
+  <div id="error" class="notice error" role="alert" hidden></div>
+  <div id="report" aria-busy="true" hidden>
+    <section class="metric-grid" aria-label="Key metrics">
+      <article class="metric featured"><p class="metric-label">Completed readings</p><p class="metric-value" id="completed">—</p><p class="metric-note">Distinct requests completed by the server</p></article>
+      <article class="metric"><p class="metric-label">Active browsers</p><p class="metric-value" id="browsers">—</p><p class="metric-note">Anonymous browsers with a completed reading</p></article>
+      <article class="metric"><p class="metric-label">Completion rate</p><p class="metric-value" id="completion-rate">—</p><p class="metric-note" id="completion-note"></p></article>
+      <article class="metric"><p class="metric-label">Typical reading time</p><p class="metric-value" id="median">—</p><p class="metric-note" id="latency-note"></p></article>
+    </section>
+    <div class="overview-grid">
+      <section class="panel trend-panel"><div class="panel-heading"><div><p class="eyebrow">Activity</p><h2>Readings over time</h2></div><span class="legend"><i></i> Completed</span></div><p class="panel-subtitle" id="chart-range"></p><div id="daily-chart" class="chart"></div><details class="chart-table"><summary>View daily counts</summary><div class="table-scroll"><table><thead><tr><th scope="col">Day</th><th scope="col">Readings</th><th scope="col">Active browsers</th></tr></thead><tbody id="daily-table"></tbody></table></div></details></section>
+      <section class="panel"><div class="panel-heading"><div><p class="eyebrow">Traditions</p><h2>Where readers turn</h2></div></div><div id="mode-bars" class="mode-bars"></div><details class="spread-detail"><summary>Explore spread usage</summary><div class="table-scroll"><table><thead><tr><th scope="col">Spread</th><th scope="col">Readings</th></tr></thead><tbody id="spread-table"></tbody></table></div></details></section>
+    </div>
+    <div class="diagnostic-grid">
+      <section class="panel"><div class="panel-heading"><div><p class="eyebrow">Delivery</p><h2>Attempt outcomes</h2></div><span id="attempt-total" class="count-pill"></span></div><div id="outcomes" class="outcomes"></div><p class="fine-print">Retries count as separate attempts. An unfinished attempt is pending for 15 minutes, then unresolved; a missing finish is not proof of failure.</p></section>
+      <section class="panel"><div class="panel-heading"><div><p class="eyebrow">Randomness</p><h2>Quantum fallback</h2></div></div><p class="secondary-value" id="fallback">—</p><p id="fallback-note" class="support-text"></p><div class="key-value"><span>Fallback values used</span><strong id="fallback-values">—</strong></div><p class="fine-print">Counts describe recorded draw batches, not billed provider requests. Fallback uses system randomness when quantum delivery is unavailable.</p></section>
+    </div>
+    <section class="panel usage-panel"><div class="panel-heading"><div><p class="eyebrow">Model usage</p><h2>Reported tokens</h2></div><span id="usage-coverage" class="support-text"></span></div><div class="table-scroll"><table><thead><tr><th scope="col">Model</th><th scope="col">Usage records</th><th scope="col">Input</th><th scope="col">Output</th><th scope="col">Thinking</th><th scope="col">Cached</th><th scope="col">Total</th></tr></thead><tbody id="token-table"></tbody></table></div><p class="fine-print" id="tokens-note"></p><div class="cost-note"><div><strong>Provider cost</strong><p>Verified pricing and billing data are not connected yet.</p></div><span class="unavailable">Unavailable</span></div></section>
+    <section class="coverage" aria-labelledby="coverage-heading"><div><h2 id="coverage-heading">About this data</h2><p id="coverage-text"></p><p id="anonymous-note"></p></div><div class="privacy-note"><span aria-hidden="true">◇</span><p>Aggregate usage only.<br>Questions, readings, and journal entries stay out of analytics.</p></div></section>
+    <details class="definitions"><summary>Metric definitions & limitations</summary><ul><li>Completed readings count distinct request IDs with a completed server generation. Retries with the same request ID count once. This does not prove the result appeared on screen or was read.</li><li>Completion rate uses requests started in the selected period at least 15 minutes before its end. Recent starts are excluded to allow time to finish.</li><li>Active browsers are anonymous browser identifiers with a completed reading. Devices, cleared storage, bots, and privacy opt-outs affect these counts; they are not a count of people.</li><li>Median and 95th-percentile duration use completed attempts with reported timing. Daily totals use America/Los_Angeles calendar days, including the incomplete current day.</li><li>Only public traffic from the configured environment is included. Test and internal traffic are excluded. Events are retained for 90 days; collection is best effort and may have gaps.</li><li>Token counts include only reported values. Missing usage is unknown, not zero cost. Retention cohorts and revenue metrics are not available in this release.</li></ul></details>
+  </div>
+  <footer class="footer"><span>Quantum Oracle · Owner overview</span><span>Private by default</span></footer>
+</main>
+</body>
+</html>

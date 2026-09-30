@@ -1,8 +1,10 @@
 # Oracle owner dashboard plan
 
-Prepared September 29, 2026; architecture reviewed against the current application.
-Dashboard planning only. The database foundation is implemented in staging;
-see DATABASE_PLAN.md and RAILWAY_DEPLOYMENT.md for current implementation status.
+Prepared September 29, 2026; implementation status updated September 30.
+The analytics foundation is live in production. The private dashboard is built
+and locally verified; Google OAuth setup and owner enrollment remain before its
+release. See [DASHBOARD_SETUP.md](DASHBOARD_SETUP.md) for the implemented scope
+and deployment checks. The sections below retain the original product plan.
 
 For the concrete database schema, budget target, and implementation work order,
 start with [DATABASE_PLAN.md](DATABASE_PLAN.md). This document retains the detailed

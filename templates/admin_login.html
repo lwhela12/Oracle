@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Owner sign-in · Oracle</title>
+  <link rel="stylesheet" href="/admin/assets/admin.css">
+</head>
+<body class="admin-login">
+  <main class="login-card">
+    <a class="brand" href="/">Oracle</a>
+    <p class="eyebrow">Private owner dashboard</p>
+    <h1>Owner sign-in</h1>
+    {% if message %}<p role="status">{{ message }}</p>{% endif %}
+    {% if configured %}
+      <p>Sign in with the Google account authorized to view Oracle’s aggregate usage and health.</p>
+      <a class="button primary" href="/admin/auth/login">Continue with Google</a>
+    {% else %}
+      <p>Owner sign-in is not available yet. Complete the server’s Google sign-in setup to enable access.</p>
+    {% endif %}
+    {% if verified_subject %}
+      <details><summary>Account enrollment details</summary>
+        <p>Your verified Google account ID is <code>{{ verified_subject }}</code>.</p>
+        <p>The operator must explicitly add this ID to the owner allowlist. Signing in does not grant access.</p>
+      </details>
+    {% endif %}
+    <p class="muted">Readings and journal contents are never shown in this dashboard.</p>
+    <a href="/">Return to Oracle</a>
+  </main>
+</body>
+</html>

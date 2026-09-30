@@ -1,9 +1,10 @@
 # Oracle database implementation plan
 
-Prepared September 29, 2026. Status: local foundation implemented; isolated Railway
-staging migrated, with TLS, scoped roles, deduplication, and a logical restore
-verified. Protected Vercel Preview readings, opt-out behavior, a small concurrency
-check, and blocked-write resilience are verified. This document defines the
+Prepared September 29, 2026; status updated September 30. The analytics foundation
+is live on Railway and Vercel, with scoped roles, verified TLS, tested snapshot
+recovery, and daily retention. The private owner dashboard is implemented and
+locally verified; Google OAuth setup and owner enrollment remain before release.
+This document defines the
 database work order; [DASHBOARD_PLAN.md](DASHBOARD_PLAN.md) contains the fuller
 metric definitions, dashboard design, and product privacy contracts.
 
@@ -12,9 +13,9 @@ roles, the optional database sink, milestone writes, and canonical reading
 metadata preserved by the local journal. See [DATABASE_SETUP.md](DATABASE_SETUP.md)
 for setup, validation, and rollout prerequisites. It collects the five existing
 event types; provider-dispatch, interpretation-outcome, and browser-display
-events remain follow-up instrumentation. Broader operational validation, production deployment,
-retention scheduling, reporting, owner authentication, and cloud journals remain
-outstanding. Provisioning details and remaining acceptance checks are tracked in
+events remain follow-up instrumentation. Cloud journals remain a future opt-in
+feature. Dashboard release instructions are in [DASHBOARD_SETUP.md](DASHBOARD_SETUP.md).
+Provisioning details and remaining operational follow-ups are tracked in
 [RAILWAY_DEPLOYMENT.md](RAILWAY_DEPLOYMENT.md).
 
 ## Decision
