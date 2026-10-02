@@ -911,9 +911,8 @@ body {
     width: max-content;
     max-width: calc(100% - 10px);
     box-sizing: border-box;
-    background: rgba(13, 12, 20, 0.84);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    /* Near-opaque on purpose: a backdrop blur here cost a live compositing layer per card for no visible difference. */
+    background: rgba(13, 12, 20, 0.88);
     border: 1px solid rgba(229, 193, 88, 0.45);
     border-radius: 12px;
     padding: 3px 8px;
