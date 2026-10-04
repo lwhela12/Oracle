@@ -27,6 +27,8 @@ def interpretation_facts(chart: dict) -> dict:
             **_position(planet),
             "retrograde": bool(planet["retrograde"]),
         }
+        if planet.get("station_uncertain"):
+            item["station_uncertain"] = True
         if "whole_sign_house" in planet:
             item["whole_sign_house"] = int(planet["whole_sign_house"])
         if chart.get("tradition") == "vedic":
@@ -87,7 +89,7 @@ moon_sign_house counts signs inclusively from that natal Moon sign, not natal As
 houses. There are no natal angles or house cusps here. Reflect on broad present themes
 for this Moon sign without reconstructing natal placements or promising events."""
     elif chart["chart_kind"] == "natal":
-        scope = """This is a Vedic natal chart using the Lahiri sidereal zodiac, nine grahas,
+        scope = f"""This is a Vedic natal chart using the {chart['ayanamsa']['name']} sidereal zodiac, nine grahas,
 and Whole Sign houses from the sidereal Ascendant. Interpret supplied signs, houses,
 nakshatras and padas as traditional symbolic themes and possibilities."""
     else:
@@ -109,7 +111,8 @@ Nakshatra lords are traditional symbolic rulers, not calculated dasha periods.
 Do not invent dashas, vargas, yogas, strengths, dignities, remedies, event timing, station
 dates or applying/separating motion. Do not infer medical conditions, lifespan, death,
 caste, gender roles, marriage certainty, doom or other fatalistic judgments. Retrograde
-means currently retrograde, not turning retrograde today.
+means currently retrograde, not turning retrograde today. If station_uncertain is true,
+do not assert direct or retrograde motion for that body; its direction is uncertain.
 Do not infer or request raw birthday, time, timezone, coordinates, place name or identifier.
 Synthesize the strongest supplied patterns in cohesive prose rather than listing fields.
 Describe symbolic possibilities, not inherent personality facts. Avoid claims that the
@@ -161,6 +164,7 @@ proof, certainty, professional advice, or a guaranteed account of events.
 Use only the CALCULATED CHART FACTS below for astrological claims. Do not infer or request
 the raw date, time, timezone, coordinates, place name, or place identifier used to calculate
 them. Explain the strongest patterns in cohesive prose rather than reciting every field.
+If station_uncertain is true, do not assert direct or retrograde motion for that body.
 
 CALCULATED CHART FACTS (trusted structured data):
 {json.dumps(facts, sort_keys=True, separators=(',', ':'))}

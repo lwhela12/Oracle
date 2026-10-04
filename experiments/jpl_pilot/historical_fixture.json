@@ -1,0 +1,150 @@
+{
+  "source": "NASA JPL Horizons, geocentric apparent ecliptic longitude of date, quantity 31",
+  "time_note": "Horizons UT means UT1 before 1962, UTC thereafter; the pilot uses USNO historical UTC starting 1961. The 1961 sample is therefore a convention-difference diagnostic.",
+  "rows": [
+    {
+      "body": "Sun",
+      "utc": "1850-01-15T12:00:00+00:00",
+      "longitude": 295.0646967,
+      "target": "10"
+    },
+    {
+      "body": "Sun",
+      "utc": "1900-04-15T12:00:00+00:00",
+      "longitude": 25.0582358,
+      "target": "10"
+    },
+    {
+      "body": "Sun",
+      "utc": "1950-07-15T12:00:00+00:00",
+      "longitude": 112.4233467,
+      "target": "10"
+    },
+    {
+      "body": "Sun",
+      "utc": "1961-03-01T00:00:00+00:00",
+      "longitude": 340.1742648,
+      "target": "10"
+    },
+    {
+      "body": "Sun",
+      "utc": "1962-03-01T00:00:00+00:00",
+      "longitude": 339.9234356,
+      "target": "10"
+    },
+    {
+      "body": "Sun",
+      "utc": "1965-08-15T12:00:00+00:00",
+      "longitude": 142.4323396,
+      "target": "10"
+    },
+    {
+      "body": "Sun",
+      "utc": "1968-02-01T00:00:00+00:00",
+      "longitude": 311.1890895,
+      "target": "10"
+    },
+    {
+      "body": "Sun",
+      "utc": "1971-12-31T23:59:59+00:00",
+      "longitude": 279.6626849,
+      "target": "10"
+    },
+    {
+      "body": "Sun",
+      "utc": "1972-01-01T00:00:00+00:00",
+      "longitude": 279.6626968,
+      "target": "10"
+    },
+    {
+      "body": "Sun",
+      "utc": "2016-12-31T23:59:59+00:00",
+      "longitude": 280.755253,
+      "target": "10"
+    },
+    {
+      "body": "Sun",
+      "utc": "2017-01-01T00:00:00+00:00",
+      "longitude": 280.7552648,
+      "target": "10"
+    },
+    {
+      "body": "Sun",
+      "utc": "2026-10-04T12:00:00+00:00",
+      "longitude": 191.2820481,
+      "target": "10"
+    },
+    {
+      "body": "Moon",
+      "utc": "1850-01-15T12:00:00+00:00",
+      "longitude": 317.1087276,
+      "target": "301"
+    },
+    {
+      "body": "Moon",
+      "utc": "1900-04-15T12:00:00+00:00",
+      "longitude": 210.1853535,
+      "target": "301"
+    },
+    {
+      "body": "Moon",
+      "utc": "1950-07-15T12:00:00+00:00",
+      "longitude": 115.8086113,
+      "target": "301"
+    },
+    {
+      "body": "Moon",
+      "utc": "1961-03-01T00:00:00+00:00",
+      "longitude": 142.9263992,
+      "target": "301"
+    },
+    {
+      "body": "Moon",
+      "utc": "1962-03-01T00:00:00+00:00",
+      "longitude": 266.2617992,
+      "target": "301"
+    },
+    {
+      "body": "Moon",
+      "utc": "1965-08-15T12:00:00+00:00",
+      "longitude": 357.4682703,
+      "target": "301"
+    },
+    {
+      "body": "Moon",
+      "utc": "1968-02-01T00:00:00+00:00",
+      "longitude": 339.6408533,
+      "target": "301"
+    },
+    {
+      "body": "Moon",
+      "utc": "1971-12-31T23:59:59+00:00",
+      "longitude": 101.630119,
+      "target": "301"
+    },
+    {
+      "body": "Moon",
+      "utc": "1972-01-01T00:00:00+00:00",
+      "longitude": 101.6302805,
+      "target": "301"
+    },
+    {
+      "body": "Moon",
+      "utc": "2016-12-31T23:59:59+00:00",
+      "longitude": 311.8432444,
+      "target": "301"
+    },
+    {
+      "body": "Moon",
+      "utc": "2017-01-01T00:00:00+00:00",
+      "longitude": 311.8433914,
+      "target": "301"
+    },
+    {
+      "body": "Moon",
+      "utc": "2026-10-04T12:00:00+00:00",
+      "longitude": 113.6280035,
+      "target": "301"
+    }
+  ]
+}

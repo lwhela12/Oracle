@@ -1,0 +1,17 @@
+Copyright (c) 2026 Quantum Oracle contributors. All rights reserved.
+
+This notice applies only to the original Quantum Oracle Python implementation
+in this directory. No public license to copy, modify or redistribute that
+original code is granted by this release. Separate permission from the rights
+holder is required. Running the owner's hosted application does not transfer
+ownership of its source code.
+
+This notice does NOT apply to the unmodified JPL kernel in data/, Skyfield,
+jplephem, NumPy, sgp4, certifi, GeoNames data/code, published mathematical facts,
+or other third-party materials. Those retain their own terms, copyright and
+attribution. See static/astrology/THIRD_PARTY_NOTICES.txt at the repository root.
+
+The original code is provided AS IS, without warranties of accuracy, fitness
+for a particular purpose or uninterrupted availability, to the extent permitted
+by applicable law. Astronomical calculations are distinct from symbolic
+astrological interpretations.

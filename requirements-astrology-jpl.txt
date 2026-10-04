@@ -1,0 +1,2 @@
+# Production dependencies are owned by the base application requirements.
+-r requirements.txt

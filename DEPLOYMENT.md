@@ -1,5 +1,9 @@
 # Vercel Deployment Guide
 
+Astrology release setup and rollback/maintenance instructions are in
+[JPL Ephemeris Release](docs/JPL_EPHEMERIS_RELEASE.md). Production uses the
+independent bundled JPL engine, not the optional Swiss comparison dependency.
+
 This guide will help you deploy the Oracle application to Vercel.
 
 ## Prerequisites

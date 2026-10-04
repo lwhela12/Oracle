@@ -45,6 +45,9 @@ def validate_tradition(payload):
     tradition = payload.get('tradition', 'western')
     if tradition not in ('western', 'vedic'):
         _fail('invalid_tradition', 'Choose tradition western or vedic.')
+    from astrology.backend import supported_traditions
+    if tradition not in supported_traditions():
+        _fail('unsupported_tradition', 'The selected calculation backend does not support this tradition.')
     return tradition
 
 
@@ -110,7 +113,8 @@ def prepare_chart(payload, *, now=None):
         location = {'latitude': place['latitude'], 'longitude': place['longitude']}
         zone = place['timezone']
 
-    from astrology.engine import calculate_chart, calculate_sky, resolve_local_datetime
+    from astrology.backend import calculate_chart, calculate_sky
+    from astrology.timezones import resolve_local_datetime
     if kind == 'natal':
         try:
             instant = resolve_local_datetime(local_text, zone, fold)

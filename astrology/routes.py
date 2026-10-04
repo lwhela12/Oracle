@@ -34,8 +34,24 @@ def private_response(response):
 def capabilities():
     active = enabled()
     configured = bool(os.environ.get('GEMINI_API_KEY'))
+    if active:
+        try:
+            from astrology.backend import date_bounds, supported_traditions, sidereal_convention
+            traditions = list(supported_traditions())
+            bounds = date_bounds()
+            sidereal = sidereal_convention()
+        except ImportError:
+            traditions = []
+            bounds = None
+            sidereal = None
+    else:
+        traditions = []
+        bounds = None
+        sidereal = None
     return jsonify(enabled=active, chart_kinds=['natal', 'current', 'transit', 'horoscope'] if active else [],
-                   traditions=['western', 'vedic'] if active else [],
+                   traditions=traditions,
+                   date_bounds=bounds,
+                   sidereal_convention=sidereal,
                    configured=configured,
                    interpretation_available=active and configured, schema_version=1)
 
@@ -47,6 +63,23 @@ def _unique_object(pairs):
             raise ValueError('Duplicate field')
         obj[key] = value
     return obj
+
+
+@blueprint.get('/health')
+def health():
+    """Content-free deployment probe: verifies real kernel loading and time data."""
+    if not enabled():
+        return _error('astrology_disabled', 'Astrology is not enabled.', 404)
+    try:
+        from astrology.backend import selected_backend, calculate_sky
+        from astrology.time_health import time_health
+        if selected_backend() != 'jpl':
+            return _error('astrology_unavailable', 'The release calculation backend is unavailable.', 503)
+        status = time_health()
+        chart = calculate_sky(datetime.now(timezone.utc))
+        return jsonify(status=status['status'], engine=chart['engine'], time_data=status), (503 if status['status']=='expired' else 200)
+    except Exception:
+        return _error('astrology_unavailable', 'The astrology calculation dependency is unavailable.', 503)
 
 
 def _reject_constant(value):

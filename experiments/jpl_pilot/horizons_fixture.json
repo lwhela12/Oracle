@@ -1,0 +1,186 @@
+{
+  "source": "NASA JPL Horizons, observer quantity 31, apparent geocentric ecliptic longitude of date",
+  "provenance": "Extracted from the existing locally cached public reference responses; retrieved during the earlier prototype checks. No personal birth inputs.",
+  "rows": [
+    {
+      "body": "Jupiter",
+      "utc_horizons": "2000-Jan-01 12:00:00.000",
+      "longitude": 25.2530685,
+      "target": "599"
+    },
+    {
+      "body": "Jupiter",
+      "utc_horizons": "2024-Apr-15 12:00:00.000",
+      "longitude": 50.5538292,
+      "target": "599"
+    },
+    {
+      "body": "Jupiter",
+      "utc_horizons": "2026-Oct-04 12:00:00.000",
+      "longitude": 140.2094347,
+      "target": "599"
+    },
+    {
+      "body": "Mars",
+      "utc_horizons": "2000-Jan-01 12:00:00.000",
+      "longitude": 327.9632921,
+      "target": "499"
+    },
+    {
+      "body": "Mars",
+      "utc_horizons": "2024-Apr-15 12:00:00.000",
+      "longitude": 348.2832214,
+      "target": "499"
+    },
+    {
+      "body": "Mars",
+      "utc_horizons": "2026-Oct-04 12:00:00.000",
+      "longitude": 123.7160268,
+      "target": "499"
+    },
+    {
+      "body": "Mercury",
+      "utc_horizons": "2000-Jan-01 12:00:00.000",
+      "longitude": 271.8892699,
+      "target": "199"
+    },
+    {
+      "body": "Mercury",
+      "utc_horizons": "2024-Apr-15 12:00:00.000",
+      "longitude": 19.9107627,
+      "target": "199"
+    },
+    {
+      "body": "Mercury",
+      "utc_horizons": "2026-Oct-04 12:00:00.000",
+      "longitude": 215.181231,
+      "target": "199"
+    },
+    {
+      "body": "Moon",
+      "utc_horizons": "2000-Jan-01 12:00:00.000",
+      "longitude": 223.323786,
+      "target": "301"
+    },
+    {
+      "body": "Moon",
+      "utc_horizons": "2024-Apr-15 12:00:00.000",
+      "longitude": 112.5582957,
+      "target": "301"
+    },
+    {
+      "body": "Moon",
+      "utc_horizons": "2026-Oct-04 12:00:00.000",
+      "longitude": 113.6280035,
+      "target": "301"
+    },
+    {
+      "body": "Neptune",
+      "utc_horizons": "2000-Jan-01 12:00:00.000",
+      "longitude": 303.1930007,
+      "target": "899"
+    },
+    {
+      "body": "Neptune",
+      "utc_horizons": "2024-Apr-15 12:00:00.000",
+      "longitude": 358.4275287,
+      "target": "899"
+    },
+    {
+      "body": "Neptune",
+      "utc_horizons": "2026-Oct-04 12:00:00.000",
+      "longitude": 2.7658775,
+      "target": "899"
+    },
+    {
+      "body": "Pluto",
+      "utc_horizons": "2000-Jan-01 12:00:00.000",
+      "longitude": 251.4547644,
+      "target": "999"
+    },
+    {
+      "body": "Pluto",
+      "utc_horizons": "2024-Apr-15 12:00:00.000",
+      "longitude": 302.0333926,
+      "target": "999"
+    },
+    {
+      "body": "Pluto",
+      "utc_horizons": "2026-Oct-04 12:00:00.000",
+      "longitude": 303.1007336,
+      "target": "999"
+    },
+    {
+      "body": "Saturn",
+      "utc_horizons": "2000-Jan-01 12:00:00.000",
+      "longitude": 40.3956366,
+      "target": "699"
+    },
+    {
+      "body": "Saturn",
+      "utc_horizons": "2024-Apr-15 12:00:00.000",
+      "longitude": 345.1628408,
+      "target": "699"
+    },
+    {
+      "body": "Saturn",
+      "utc_horizons": "2026-Oct-04 12:00:00.000",
+      "longitude": 11.3036174,
+      "target": "699"
+    },
+    {
+      "body": "Sun",
+      "utc_horizons": "2000-Jan-01 12:00:00.000",
+      "longitude": 280.3689092,
+      "target": "10"
+    },
+    {
+      "body": "Sun",
+      "utc_horizons": "2024-Apr-15 12:00:00.000",
+      "longitude": 26.008055,
+      "target": "10"
+    },
+    {
+      "body": "Sun",
+      "utc_horizons": "2026-Oct-04 12:00:00.000",
+      "longitude": 191.2820481,
+      "target": "10"
+    },
+    {
+      "body": "Uranus",
+      "utc_horizons": "2000-Jan-01 12:00:00.000",
+      "longitude": 314.809168,
+      "target": "799"
+    },
+    {
+      "body": "Uranus",
+      "utc_horizons": "2024-Apr-15 12:00:00.000",
+      "longitude": 51.5250043,
+      "target": "799"
+    },
+    {
+      "body": "Uranus",
+      "utc_horizons": "2026-Oct-04 12:00:00.000",
+      "longitude": 65.4628685,
+      "target": "799"
+    },
+    {
+      "body": "Venus",
+      "utc_horizons": "2000-Jan-01 12:00:00.000",
+      "longitude": 241.5657794,
+      "target": "299"
+    },
+    {
+      "body": "Venus",
+      "utc_horizons": "2024-Apr-15 12:00:00.000",
+      "longitude": 12.7619594,
+      "target": "299"
+    },
+    {
+      "body": "Venus",
+      "utc_horizons": "2026-Oct-04 12:00:00.000",
+      "longitude": 218.463237,
+      "target": "299"
+    }
+  ]
+}

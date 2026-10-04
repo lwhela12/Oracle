@@ -1,0 +1,26 @@
+name: Ephemeris data and release checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 9 * * 1'
+permissions:
+  contents: read
+jobs:
+  ephemeris:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - run: python scripts/check_ephemeris_release.py
+      - run: python -m unittest discover -s tests -p 'test_jpl_release*.py'
+        env:
+          ORACLE_ASTROLOGY_ENABLED: '1'
+          ORACLE_ASTROLOGY_BACKEND: jpl
+          ORACLE_ANALYTICS_ENABLED: '0'

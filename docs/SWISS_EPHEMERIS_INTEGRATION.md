@@ -1,5 +1,9 @@
 # Swiss Ephemeris integration plan
 
+Historical Swiss integration record. The public release uses the independent
+[JPL engine](JPL_EPHEMERIS_RELEASE.md); instructions below describe the optional
+local comparison backend, not the production dependency or current license choice.
+
 Status: local astrology experience implemented, October 4, 2026. Birth charts and global/local
 Sky Now use the shared engine, a celestial particle reveal, and one streamed Gemini
 interpretation. The feature remains disabled by default. A genuine Gemini global Sky Now reading completed locally on October 4, 2026 after

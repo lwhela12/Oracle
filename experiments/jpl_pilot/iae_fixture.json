@@ -1,0 +1,2965 @@
+{
+  "convention": "iae-2021",
+  "extracted_on": "2026-10-04",
+  "units": "arcseconds",
+  "test_time_scale": "TT",
+  "test_time": "00:00:00",
+  "printed_time": "True ayanamsa for 5h29m; interpreted as rounded IST equivalent of 0h TT. IAE states geocentric ephemerides use TT; table heading alone omits zone.",
+  "tolerance_arcseconds": 0.06,
+  "reference_scope": "Published values rounded to 0.1 arcsecond; numeric agreement does not establish named Lahiri equivalence or accuracy outside reference dates.",
+  "sources": {
+    "2024": {
+      "url": "https://packolkata.imd.gov.in/download/IAE2024.zip",
+      "pdf_page": 424,
+      "printed_page": 417,
+      "pdf_sha256": "3b1a0e9610db95811f5ea9ea0326fb77283b8119fa8f936ff775ab462702e73b"
+    },
+    "2026": {
+      "url": "https://packolkata.imd.gov.in/download/IAE2026.zip",
+      "pdf_page": 425,
+      "printed_page": 419,
+      "pdf_sha256": "58a16722e98f3e9dd23e8e188c39b577e24135306f20674b52fbbb172db2e25a"
+    },
+    "2027": {
+      "url": "https://packolkata.imd.gov.in/download/IAE2027.zip",
+      "pdf_page": 430,
+      "printed_page": 423,
+      "pdf_sha256": "8a95f5e08c6fb88b5a33b4c74b66a3f01b877b2c24e8ef5142bbca2ec3bad9f9"
+    }
+  },
+  "qualified_rows": [
+    {
+      "source_year": 2024,
+      "date": "2024-01-01",
+      "true_ayanamsa_arcseconds": 87087.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-01-04",
+      "true_ayanamsa_arcseconds": 87087.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-01-07",
+      "true_ayanamsa_arcseconds": 87087.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-01-10",
+      "true_ayanamsa_arcseconds": 87088.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-01-13",
+      "true_ayanamsa_arcseconds": 87089.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-01-16",
+      "true_ayanamsa_arcseconds": 87089.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-01-19",
+      "true_ayanamsa_arcseconds": 87090.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-01-22",
+      "true_ayanamsa_arcseconds": 87090.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-01-25",
+      "true_ayanamsa_arcseconds": 87091.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-01-28",
+      "true_ayanamsa_arcseconds": 87092.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-01-31",
+      "true_ayanamsa_arcseconds": 87092.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-02-03",
+      "true_ayanamsa_arcseconds": 87092.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-02-06",
+      "true_ayanamsa_arcseconds": 87093.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-02-09",
+      "true_ayanamsa_arcseconds": 87094.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-02-12",
+      "true_ayanamsa_arcseconds": 87094.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-02-15",
+      "true_ayanamsa_arcseconds": 87094.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-02-18",
+      "true_ayanamsa_arcseconds": 87095.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-02-21",
+      "true_ayanamsa_arcseconds": 87095.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-02-24",
+      "true_ayanamsa_arcseconds": 87096.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-02-27",
+      "true_ayanamsa_arcseconds": 87096.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-03-01",
+      "true_ayanamsa_arcseconds": 87096.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-03-04",
+      "true_ayanamsa_arcseconds": 87096.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-03-07",
+      "true_ayanamsa_arcseconds": 87097.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-03-10",
+      "true_ayanamsa_arcseconds": 87097.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-03-13",
+      "true_ayanamsa_arcseconds": 87097.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-03-16",
+      "true_ayanamsa_arcseconds": 87098.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-03-19",
+      "true_ayanamsa_arcseconds": 87098.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-03-22",
+      "true_ayanamsa_arcseconds": 87099.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-03-25",
+      "true_ayanamsa_arcseconds": 87099.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-03-28",
+      "true_ayanamsa_arcseconds": 87099.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-03-31",
+      "true_ayanamsa_arcseconds": 87099.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-04-03",
+      "true_ayanamsa_arcseconds": 87100.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-04-06",
+      "true_ayanamsa_arcseconds": 87100.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-04-09",
+      "true_ayanamsa_arcseconds": 87100.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-04-12",
+      "true_ayanamsa_arcseconds": 87101.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-04-15",
+      "true_ayanamsa_arcseconds": 87101.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-04-18",
+      "true_ayanamsa_arcseconds": 87102.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-04-21",
+      "true_ayanamsa_arcseconds": 87102.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-04-24",
+      "true_ayanamsa_arcseconds": 87102.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-04-27",
+      "true_ayanamsa_arcseconds": 87103.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-04-30",
+      "true_ayanamsa_arcseconds": 87103.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-05-03",
+      "true_ayanamsa_arcseconds": 87104.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-05-06",
+      "true_ayanamsa_arcseconds": 87104.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-05-09",
+      "true_ayanamsa_arcseconds": 87104.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-05-12",
+      "true_ayanamsa_arcseconds": 87105.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-05-15",
+      "true_ayanamsa_arcseconds": 87106.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-05-18",
+      "true_ayanamsa_arcseconds": 87106.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-05-21",
+      "true_ayanamsa_arcseconds": 87106.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-05-24",
+      "true_ayanamsa_arcseconds": 87107.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-05-27",
+      "true_ayanamsa_arcseconds": 87108.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-05-30",
+      "true_ayanamsa_arcseconds": 87108.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-06-02",
+      "true_ayanamsa_arcseconds": 87109.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-06-05",
+      "true_ayanamsa_arcseconds": 87109.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-06-08",
+      "true_ayanamsa_arcseconds": 87110.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-06-11",
+      "true_ayanamsa_arcseconds": 87111.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-06-14",
+      "true_ayanamsa_arcseconds": 87111.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-06-17",
+      "true_ayanamsa_arcseconds": 87111.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-06-20",
+      "true_ayanamsa_arcseconds": 87112.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-06-23",
+      "true_ayanamsa_arcseconds": 87113.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-06-26",
+      "true_ayanamsa_arcseconds": 87113.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-06-29",
+      "true_ayanamsa_arcseconds": 87114.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-07-02",
+      "true_ayanamsa_arcseconds": 87114.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-07-05",
+      "true_ayanamsa_arcseconds": 87115.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-07-08",
+      "true_ayanamsa_arcseconds": 87116.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-07-11",
+      "true_ayanamsa_arcseconds": 87116.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-07-14",
+      "true_ayanamsa_arcseconds": 87116.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-07-17",
+      "true_ayanamsa_arcseconds": 87117.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-07-20",
+      "true_ayanamsa_arcseconds": 87118.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-07-23",
+      "true_ayanamsa_arcseconds": 87118.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-07-26",
+      "true_ayanamsa_arcseconds": 87119.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-07-29",
+      "true_ayanamsa_arcseconds": 87119.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-08-01",
+      "true_ayanamsa_arcseconds": 87120.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-08-04",
+      "true_ayanamsa_arcseconds": 87120.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-08-07",
+      "true_ayanamsa_arcseconds": 87121.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-08-10",
+      "true_ayanamsa_arcseconds": 87121.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-08-13",
+      "true_ayanamsa_arcseconds": 87121.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-08-16",
+      "true_ayanamsa_arcseconds": 87122.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-08-19",
+      "true_ayanamsa_arcseconds": 87123.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-08-22",
+      "true_ayanamsa_arcseconds": 87123.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-08-25",
+      "true_ayanamsa_arcseconds": 87123.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-08-28",
+      "true_ayanamsa_arcseconds": 87124.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-08-31",
+      "true_ayanamsa_arcseconds": 87124.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-09-03",
+      "true_ayanamsa_arcseconds": 87124.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-09-06",
+      "true_ayanamsa_arcseconds": 87124.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-09-09",
+      "true_ayanamsa_arcseconds": 87125.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-09-12",
+      "true_ayanamsa_arcseconds": 87125.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-09-15",
+      "true_ayanamsa_arcseconds": 87126.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-09-18",
+      "true_ayanamsa_arcseconds": 87126.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-09-21",
+      "true_ayanamsa_arcseconds": 87126.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-09-24",
+      "true_ayanamsa_arcseconds": 87127.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-09-27",
+      "true_ayanamsa_arcseconds": 87127.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-09-30",
+      "true_ayanamsa_arcseconds": 87127.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-10-03",
+      "true_ayanamsa_arcseconds": 87127.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-10-06",
+      "true_ayanamsa_arcseconds": 87128.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-10-09",
+      "true_ayanamsa_arcseconds": 87128.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-10-12",
+      "true_ayanamsa_arcseconds": 87129.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-10-15",
+      "true_ayanamsa_arcseconds": 87129.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-10-18",
+      "true_ayanamsa_arcseconds": 87129.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-10-21",
+      "true_ayanamsa_arcseconds": 87130.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-10-24",
+      "true_ayanamsa_arcseconds": 87130.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-10-27",
+      "true_ayanamsa_arcseconds": 87131.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-10-30",
+      "true_ayanamsa_arcseconds": 87131.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-11-02",
+      "true_ayanamsa_arcseconds": 87131.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-11-05",
+      "true_ayanamsa_arcseconds": 87132.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-11-08",
+      "true_ayanamsa_arcseconds": 87132.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-11-11",
+      "true_ayanamsa_arcseconds": 87133.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-11-14",
+      "true_ayanamsa_arcseconds": 87133.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-11-17",
+      "true_ayanamsa_arcseconds": 87134.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-11-20",
+      "true_ayanamsa_arcseconds": 87135.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-11-23",
+      "true_ayanamsa_arcseconds": 87135.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-11-26",
+      "true_ayanamsa_arcseconds": 87135.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-11-29",
+      "true_ayanamsa_arcseconds": 87136.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-12-02",
+      "true_ayanamsa_arcseconds": 87136.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-12-05",
+      "true_ayanamsa_arcseconds": 87137.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-12-08",
+      "true_ayanamsa_arcseconds": 87138.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-12-11",
+      "true_ayanamsa_arcseconds": 87138.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-12-14",
+      "true_ayanamsa_arcseconds": 87139.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-12-17",
+      "true_ayanamsa_arcseconds": 87140.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-12-20",
+      "true_ayanamsa_arcseconds": 87140.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-12-23",
+      "true_ayanamsa_arcseconds": 87141.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-12-26",
+      "true_ayanamsa_arcseconds": 87141.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2024-12-29",
+      "true_ayanamsa_arcseconds": 87142.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-01-01",
+      "true_ayanamsa_arcseconds": 87143.0,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-01-04",
+      "true_ayanamsa_arcseconds": 87143.7,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-01-07",
+      "true_ayanamsa_arcseconds": 87143.9,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-01-10",
+      "true_ayanamsa_arcseconds": 87144.4,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-01-13",
+      "true_ayanamsa_arcseconds": 87145.4,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-01-16",
+      "true_ayanamsa_arcseconds": 87146.1,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-01-19",
+      "true_ayanamsa_arcseconds": 87146.4,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-01-22",
+      "true_ayanamsa_arcseconds": 87146.6,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-01-25",
+      "true_ayanamsa_arcseconds": 87147.2,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-01-28",
+      "true_ayanamsa_arcseconds": 87148.0,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-01-31",
+      "true_ayanamsa_arcseconds": 87148.6,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-02-03",
+      "true_ayanamsa_arcseconds": 87148.7,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-02-06",
+      "true_ayanamsa_arcseconds": 87149.1,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-02-09",
+      "true_ayanamsa_arcseconds": 87149.9,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-02-12",
+      "true_ayanamsa_arcseconds": 87150.5,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-02-15",
+      "true_ayanamsa_arcseconds": 87150.7,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-02-18",
+      "true_ayanamsa_arcseconds": 87150.8,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-02-21",
+      "true_ayanamsa_arcseconds": 87151.2,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-02-24",
+      "true_ayanamsa_arcseconds": 87151.8,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-02-27",
+      "true_ayanamsa_arcseconds": 87152.4,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-03-02",
+      "true_ayanamsa_arcseconds": 87152.4,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-03-05",
+      "true_ayanamsa_arcseconds": 87152.6,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-03-08",
+      "true_ayanamsa_arcseconds": 87153.3,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-03-11",
+      "true_ayanamsa_arcseconds": 87153.9,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-03-14",
+      "true_ayanamsa_arcseconds": 87154.0,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-03-17",
+      "true_ayanamsa_arcseconds": 87154.0,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-03-20",
+      "true_ayanamsa_arcseconds": 87154.3,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-03-23",
+      "true_ayanamsa_arcseconds": 87154.8,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-03-26",
+      "true_ayanamsa_arcseconds": 87155.4,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-03-29",
+      "true_ayanamsa_arcseconds": 87155.4,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-04-01",
+      "true_ayanamsa_arcseconds": 87155.6,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-04-04",
+      "true_ayanamsa_arcseconds": 87156.3,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-04-07",
+      "true_ayanamsa_arcseconds": 87156.9,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-04-10",
+      "true_ayanamsa_arcseconds": 87157.0,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-04-13",
+      "true_ayanamsa_arcseconds": 87157.1,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-04-16",
+      "true_ayanamsa_arcseconds": 87157.3,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-04-19",
+      "true_ayanamsa_arcseconds": 87158.0,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-04-22",
+      "true_ayanamsa_arcseconds": 87158.6,
+      "primary_year": false
+    },
+    {
+      "source_year": 2024,
+      "date": "2025-04-25",
+      "true_ayanamsa_arcseconds": 87158.8,
+      "primary_year": false
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-01-01",
+      "true_ayanamsa_arcseconds": 87198.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-01-04",
+      "true_ayanamsa_arcseconds": 87199.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-01-07",
+      "true_ayanamsa_arcseconds": 87200.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-01-10",
+      "true_ayanamsa_arcseconds": 87200.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-01-13",
+      "true_ayanamsa_arcseconds": 87200.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-01-16",
+      "true_ayanamsa_arcseconds": 87201.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-01-19",
+      "true_ayanamsa_arcseconds": 87202.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-01-22",
+      "true_ayanamsa_arcseconds": 87202.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-01-25",
+      "true_ayanamsa_arcseconds": 87203.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-01-28",
+      "true_ayanamsa_arcseconds": 87203.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-01-31",
+      "true_ayanamsa_arcseconds": 87204.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-02-03",
+      "true_ayanamsa_arcseconds": 87205.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-02-06",
+      "true_ayanamsa_arcseconds": 87205.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-02-09",
+      "true_ayanamsa_arcseconds": 87205.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-02-12",
+      "true_ayanamsa_arcseconds": 87205.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-02-15",
+      "true_ayanamsa_arcseconds": 87206.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-02-18",
+      "true_ayanamsa_arcseconds": 87207.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-02-21",
+      "true_ayanamsa_arcseconds": 87207.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-02-24",
+      "true_ayanamsa_arcseconds": 87207.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-02-27",
+      "true_ayanamsa_arcseconds": 87208.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-03-02",
+      "true_ayanamsa_arcseconds": 87208.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-03-05",
+      "true_ayanamsa_arcseconds": 87208.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-03-08",
+      "true_ayanamsa_arcseconds": 87208.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-03-11",
+      "true_ayanamsa_arcseconds": 87209.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-03-14",
+      "true_ayanamsa_arcseconds": 87209.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-03-17",
+      "true_ayanamsa_arcseconds": 87210.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-03-20",
+      "true_ayanamsa_arcseconds": 87210.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-03-23",
+      "true_ayanamsa_arcseconds": 87210.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-03-26",
+      "true_ayanamsa_arcseconds": 87211.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-03-29",
+      "true_ayanamsa_arcseconds": 87211.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-04-01",
+      "true_ayanamsa_arcseconds": 87211.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-04-04",
+      "true_ayanamsa_arcseconds": 87211.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-04-07",
+      "true_ayanamsa_arcseconds": 87212.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-04-10",
+      "true_ayanamsa_arcseconds": 87212.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-04-13",
+      "true_ayanamsa_arcseconds": 87213.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-04-16",
+      "true_ayanamsa_arcseconds": 87213.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-04-19",
+      "true_ayanamsa_arcseconds": 87213.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-04-22",
+      "true_ayanamsa_arcseconds": 87214.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-04-25",
+      "true_ayanamsa_arcseconds": 87214.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-04-28",
+      "true_ayanamsa_arcseconds": 87215.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-05-01",
+      "true_ayanamsa_arcseconds": 87215.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-05-04",
+      "true_ayanamsa_arcseconds": 87215.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-05-07",
+      "true_ayanamsa_arcseconds": 87216.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-05-10",
+      "true_ayanamsa_arcseconds": 87216.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-05-13",
+      "true_ayanamsa_arcseconds": 87217.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-05-16",
+      "true_ayanamsa_arcseconds": 87217.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-05-19",
+      "true_ayanamsa_arcseconds": 87218.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-05-22",
+      "true_ayanamsa_arcseconds": 87219.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-05-25",
+      "true_ayanamsa_arcseconds": 87219.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-05-28",
+      "true_ayanamsa_arcseconds": 87219.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-05-31",
+      "true_ayanamsa_arcseconds": 87220.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-06-03",
+      "true_ayanamsa_arcseconds": 87220.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-06-06",
+      "true_ayanamsa_arcseconds": 87221.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-06-09",
+      "true_ayanamsa_arcseconds": 87221.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-06-12",
+      "true_ayanamsa_arcseconds": 87222.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-06-15",
+      "true_ayanamsa_arcseconds": 87223.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-06-18",
+      "true_ayanamsa_arcseconds": 87224.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-06-21",
+      "true_ayanamsa_arcseconds": 87224.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-06-24",
+      "true_ayanamsa_arcseconds": 87224.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-06-27",
+      "true_ayanamsa_arcseconds": 87225.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-06-30",
+      "true_ayanamsa_arcseconds": 87226.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-07-03",
+      "true_ayanamsa_arcseconds": 87226.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-07-06",
+      "true_ayanamsa_arcseconds": 87227.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-07-09",
+      "true_ayanamsa_arcseconds": 87227.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-07-12",
+      "true_ayanamsa_arcseconds": 87228.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-07-15",
+      "true_ayanamsa_arcseconds": 87229.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-07-18",
+      "true_ayanamsa_arcseconds": 87229.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-07-21",
+      "true_ayanamsa_arcseconds": 87229.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-07-24",
+      "true_ayanamsa_arcseconds": 87230.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-07-27",
+      "true_ayanamsa_arcseconds": 87230.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-07-30",
+      "true_ayanamsa_arcseconds": 87231.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-08-02",
+      "true_ayanamsa_arcseconds": 87231.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-08-05",
+      "true_ayanamsa_arcseconds": 87232.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-08-08",
+      "true_ayanamsa_arcseconds": 87232.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-08-11",
+      "true_ayanamsa_arcseconds": 87233.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-08-14",
+      "true_ayanamsa_arcseconds": 87233.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-08-17",
+      "true_ayanamsa_arcseconds": 87233.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-08-20",
+      "true_ayanamsa_arcseconds": 87234.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-08-23",
+      "true_ayanamsa_arcseconds": 87234.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-08-26",
+      "true_ayanamsa_arcseconds": 87235.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-08-29",
+      "true_ayanamsa_arcseconds": 87235.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-09-01",
+      "true_ayanamsa_arcseconds": 87235.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-09-04",
+      "true_ayanamsa_arcseconds": 87236.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-09-07",
+      "true_ayanamsa_arcseconds": 87236.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-09-10",
+      "true_ayanamsa_arcseconds": 87237.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-09-13",
+      "true_ayanamsa_arcseconds": 87237.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-09-16",
+      "true_ayanamsa_arcseconds": 87237.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-09-19",
+      "true_ayanamsa_arcseconds": 87237.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-09-22",
+      "true_ayanamsa_arcseconds": 87238.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-09-25",
+      "true_ayanamsa_arcseconds": 87238.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-09-28",
+      "true_ayanamsa_arcseconds": 87238.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-10-01",
+      "true_ayanamsa_arcseconds": 87239.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-10-04",
+      "true_ayanamsa_arcseconds": 87239.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-10-07",
+      "true_ayanamsa_arcseconds": 87240.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-10-10",
+      "true_ayanamsa_arcseconds": 87240.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-10-13",
+      "true_ayanamsa_arcseconds": 87240.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-10-16",
+      "true_ayanamsa_arcseconds": 87240.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-10-19",
+      "true_ayanamsa_arcseconds": 87241.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-10-22",
+      "true_ayanamsa_arcseconds": 87241.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-10-25",
+      "true_ayanamsa_arcseconds": 87241.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-10-28",
+      "true_ayanamsa_arcseconds": 87242.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-10-31",
+      "true_ayanamsa_arcseconds": 87243.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-11-03",
+      "true_ayanamsa_arcseconds": 87243.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-11-06",
+      "true_ayanamsa_arcseconds": 87243.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-11-09",
+      "true_ayanamsa_arcseconds": 87243.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-11-12",
+      "true_ayanamsa_arcseconds": 87244.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-11-15",
+      "true_ayanamsa_arcseconds": 87245.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-11-18",
+      "true_ayanamsa_arcseconds": 87245.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-11-21",
+      "true_ayanamsa_arcseconds": 87245.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-11-24",
+      "true_ayanamsa_arcseconds": 87246.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-11-27",
+      "true_ayanamsa_arcseconds": 87247.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-11-30",
+      "true_ayanamsa_arcseconds": 87248.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-12-03",
+      "true_ayanamsa_arcseconds": 87248.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-12-06",
+      "true_ayanamsa_arcseconds": 87248.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-12-09",
+      "true_ayanamsa_arcseconds": 87249.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-12-12",
+      "true_ayanamsa_arcseconds": 87250.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-12-15",
+      "true_ayanamsa_arcseconds": 87250.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-12-18",
+      "true_ayanamsa_arcseconds": 87251.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-12-21",
+      "true_ayanamsa_arcseconds": 87251.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-12-24",
+      "true_ayanamsa_arcseconds": 87252.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-12-27",
+      "true_ayanamsa_arcseconds": 87253.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2026-12-30",
+      "true_ayanamsa_arcseconds": 87253.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-01-02",
+      "true_ayanamsa_arcseconds": 87254.1,
+      "primary_year": false
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-01-05",
+      "true_ayanamsa_arcseconds": 87254.7,
+      "primary_year": false
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-01-08",
+      "true_ayanamsa_arcseconds": 87255.5,
+      "primary_year": false
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-01-11",
+      "true_ayanamsa_arcseconds": 87256.1,
+      "primary_year": false
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-01-14",
+      "true_ayanamsa_arcseconds": 87256.4,
+      "primary_year": false
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-01-17",
+      "true_ayanamsa_arcseconds": 87256.7,
+      "primary_year": false
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-01-20",
+      "true_ayanamsa_arcseconds": 87257.5,
+      "primary_year": false
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-01-23",
+      "true_ayanamsa_arcseconds": 87258.4,
+      "primary_year": false
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-01-26",
+      "true_ayanamsa_arcseconds": 87258.8,
+      "primary_year": false
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-01-29",
+      "true_ayanamsa_arcseconds": 87259.0,
+      "primary_year": false
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-02-01",
+      "true_ayanamsa_arcseconds": 87259.5,
+      "primary_year": false
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-02-04",
+      "true_ayanamsa_arcseconds": 87260.2,
+      "primary_year": false
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-02-07",
+      "true_ayanamsa_arcseconds": 87260.7,
+      "primary_year": false
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-02-10",
+      "true_ayanamsa_arcseconds": 87260.9,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-01-01",
+      "true_ayanamsa_arcseconds": 87253.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-01-04",
+      "true_ayanamsa_arcseconds": 87254.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-01-07",
+      "true_ayanamsa_arcseconds": 87255.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-01-10",
+      "true_ayanamsa_arcseconds": 87256.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-01-13",
+      "true_ayanamsa_arcseconds": 87256.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-01-16",
+      "true_ayanamsa_arcseconds": 87256.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-01-19",
+      "true_ayanamsa_arcseconds": 87257.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-01-22",
+      "true_ayanamsa_arcseconds": 87258.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-01-25",
+      "true_ayanamsa_arcseconds": 87258.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-01-28",
+      "true_ayanamsa_arcseconds": 87258.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-01-31",
+      "true_ayanamsa_arcseconds": 87259.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-02-03",
+      "true_ayanamsa_arcseconds": 87260.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-02-06",
+      "true_ayanamsa_arcseconds": 87260.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-02-09",
+      "true_ayanamsa_arcseconds": 87260.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-02-12",
+      "true_ayanamsa_arcseconds": 87260.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-02-15",
+      "true_ayanamsa_arcseconds": 87261.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-02-18",
+      "true_ayanamsa_arcseconds": 87262.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-02-21",
+      "true_ayanamsa_arcseconds": 87262.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-02-24",
+      "true_ayanamsa_arcseconds": 87262.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-02-27",
+      "true_ayanamsa_arcseconds": 87263.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-03-02",
+      "true_ayanamsa_arcseconds": 87263.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-03-05",
+      "true_ayanamsa_arcseconds": 87264.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-03-08",
+      "true_ayanamsa_arcseconds": 87264.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-03-11",
+      "true_ayanamsa_arcseconds": 87264.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-03-14",
+      "true_ayanamsa_arcseconds": 87264.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-03-17",
+      "true_ayanamsa_arcseconds": 87265.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-03-20",
+      "true_ayanamsa_arcseconds": 87265.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-03-23",
+      "true_ayanamsa_arcseconds": 87265.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-03-26",
+      "true_ayanamsa_arcseconds": 87265.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-03-29",
+      "true_ayanamsa_arcseconds": 87266.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-04-01",
+      "true_ayanamsa_arcseconds": 87266.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-04-04",
+      "true_ayanamsa_arcseconds": 87267.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-04-07",
+      "true_ayanamsa_arcseconds": 87267.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-04-10",
+      "true_ayanamsa_arcseconds": 87267.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-04-13",
+      "true_ayanamsa_arcseconds": 87268.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-04-16",
+      "true_ayanamsa_arcseconds": 87268.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-04-19",
+      "true_ayanamsa_arcseconds": 87268.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-04-22",
+      "true_ayanamsa_arcseconds": 87269.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-04-25",
+      "true_ayanamsa_arcseconds": 87269.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-04-28",
+      "true_ayanamsa_arcseconds": 87270.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-05-01",
+      "true_ayanamsa_arcseconds": 87270.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-05-04",
+      "true_ayanamsa_arcseconds": 87270.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-05-07",
+      "true_ayanamsa_arcseconds": 87270.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-05-10",
+      "true_ayanamsa_arcseconds": 87271.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-05-13",
+      "true_ayanamsa_arcseconds": 87272.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-05-16",
+      "true_ayanamsa_arcseconds": 87272.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-05-19",
+      "true_ayanamsa_arcseconds": 87272.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-05-22",
+      "true_ayanamsa_arcseconds": 87273.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-05-25",
+      "true_ayanamsa_arcseconds": 87274.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-05-28",
+      "true_ayanamsa_arcseconds": 87274.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-05-31",
+      "true_ayanamsa_arcseconds": 87275.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-06-03",
+      "true_ayanamsa_arcseconds": 87275.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-06-06",
+      "true_ayanamsa_arcseconds": 87276.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-06-09",
+      "true_ayanamsa_arcseconds": 87277.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-06-12",
+      "true_ayanamsa_arcseconds": 87277.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-06-15",
+      "true_ayanamsa_arcseconds": 87277.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-06-18",
+      "true_ayanamsa_arcseconds": 87278.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-06-21",
+      "true_ayanamsa_arcseconds": 87279.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-06-24",
+      "true_ayanamsa_arcseconds": 87279.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-06-27",
+      "true_ayanamsa_arcseconds": 87280.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-06-30",
+      "true_ayanamsa_arcseconds": 87280.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-07-03",
+      "true_ayanamsa_arcseconds": 87281.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-07-06",
+      "true_ayanamsa_arcseconds": 87282.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-07-09",
+      "true_ayanamsa_arcseconds": 87282.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-07-12",
+      "true_ayanamsa_arcseconds": 87282.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-07-15",
+      "true_ayanamsa_arcseconds": 87283.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-07-18",
+      "true_ayanamsa_arcseconds": 87284.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-07-21",
+      "true_ayanamsa_arcseconds": 87284.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-07-24",
+      "true_ayanamsa_arcseconds": 87285.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-07-27",
+      "true_ayanamsa_arcseconds": 87285.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-07-30",
+      "true_ayanamsa_arcseconds": 87285.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-08-02",
+      "true_ayanamsa_arcseconds": 87286.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-08-05",
+      "true_ayanamsa_arcseconds": 87287.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-08-08",
+      "true_ayanamsa_arcseconds": 87287.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-08-11",
+      "true_ayanamsa_arcseconds": 87287.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-08-14",
+      "true_ayanamsa_arcseconds": 87288.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-08-17",
+      "true_ayanamsa_arcseconds": 87288.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-08-20",
+      "true_ayanamsa_arcseconds": 87289.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-08-23",
+      "true_ayanamsa_arcseconds": 87289.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-08-26",
+      "true_ayanamsa_arcseconds": 87289.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-08-29",
+      "true_ayanamsa_arcseconds": 87290.4,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-09-01",
+      "true_ayanamsa_arcseconds": 87290.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-09-04",
+      "true_ayanamsa_arcseconds": 87290.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-09-07",
+      "true_ayanamsa_arcseconds": 87291.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-09-10",
+      "true_ayanamsa_arcseconds": 87291.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-09-13",
+      "true_ayanamsa_arcseconds": 87292.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-09-16",
+      "true_ayanamsa_arcseconds": 87292.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-09-19",
+      "true_ayanamsa_arcseconds": 87292.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-09-22",
+      "true_ayanamsa_arcseconds": 87292.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-09-25",
+      "true_ayanamsa_arcseconds": 87293.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-09-28",
+      "true_ayanamsa_arcseconds": 87293.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-10-01",
+      "true_ayanamsa_arcseconds": 87293.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-10-04",
+      "true_ayanamsa_arcseconds": 87293.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-10-07",
+      "true_ayanamsa_arcseconds": 87294.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-10-10",
+      "true_ayanamsa_arcseconds": 87294.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-10-13",
+      "true_ayanamsa_arcseconds": 87295.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-10-16",
+      "true_ayanamsa_arcseconds": 87295.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-10-19",
+      "true_ayanamsa_arcseconds": 87295.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-10-22",
+      "true_ayanamsa_arcseconds": 87296.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-10-25",
+      "true_ayanamsa_arcseconds": 87296.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-10-28",
+      "true_ayanamsa_arcseconds": 87296.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-10-31",
+      "true_ayanamsa_arcseconds": 87297.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-11-03",
+      "true_ayanamsa_arcseconds": 87297.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-11-06",
+      "true_ayanamsa_arcseconds": 87298.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-11-09",
+      "true_ayanamsa_arcseconds": 87298.6,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-11-12",
+      "true_ayanamsa_arcseconds": 87298.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-11-15",
+      "true_ayanamsa_arcseconds": 87299.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-11-18",
+      "true_ayanamsa_arcseconds": 87300.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-11-21",
+      "true_ayanamsa_arcseconds": 87300.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-11-24",
+      "true_ayanamsa_arcseconds": 87300.9,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-11-27",
+      "true_ayanamsa_arcseconds": 87301.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-11-30",
+      "true_ayanamsa_arcseconds": 87302.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-12-03",
+      "true_ayanamsa_arcseconds": 87302.8,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-12-06",
+      "true_ayanamsa_arcseconds": 87303.2,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-12-09",
+      "true_ayanamsa_arcseconds": 87303.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-12-12",
+      "true_ayanamsa_arcseconds": 87304.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-12-15",
+      "true_ayanamsa_arcseconds": 87305.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-12-18",
+      "true_ayanamsa_arcseconds": 87305.7,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-12-21",
+      "true_ayanamsa_arcseconds": 87306.0,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-12-24",
+      "true_ayanamsa_arcseconds": 87306.5,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-12-27",
+      "true_ayanamsa_arcseconds": 87307.3,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2027-12-30",
+      "true_ayanamsa_arcseconds": 87308.1,
+      "primary_year": true
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-01-02",
+      "true_ayanamsa_arcseconds": 87308.5,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-01-05",
+      "true_ayanamsa_arcseconds": 87308.8,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-01-08",
+      "true_ayanamsa_arcseconds": 87309.2,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-01-11",
+      "true_ayanamsa_arcseconds": 87310.1,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-01-14",
+      "true_ayanamsa_arcseconds": 87310.9,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-01-17",
+      "true_ayanamsa_arcseconds": 87311.2,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-01-20",
+      "true_ayanamsa_arcseconds": 87311.6,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-01-23",
+      "true_ayanamsa_arcseconds": 87312.3,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-01-26",
+      "true_ayanamsa_arcseconds": 87313.0,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-01-29",
+      "true_ayanamsa_arcseconds": 87313.4,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-02-01",
+      "true_ayanamsa_arcseconds": 87313.5,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-02-04",
+      "true_ayanamsa_arcseconds": 87313.8,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-02-07",
+      "true_ayanamsa_arcseconds": 87314.5,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-02-10",
+      "true_ayanamsa_arcseconds": 87315.3,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-02-13",
+      "true_ayanamsa_arcseconds": 87315.5,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-02-16",
+      "true_ayanamsa_arcseconds": 87315.7,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-02-19",
+      "true_ayanamsa_arcseconds": 87316.2,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-02-22",
+      "true_ayanamsa_arcseconds": 87316.8,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-02-25",
+      "true_ayanamsa_arcseconds": 87317.1,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-02-28",
+      "true_ayanamsa_arcseconds": 87317.2,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-03-02",
+      "true_ayanamsa_arcseconds": 87317.3,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-03-05",
+      "true_ayanamsa_arcseconds": 87317.8,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-03-08",
+      "true_ayanamsa_arcseconds": 87318.5,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-03-11",
+      "true_ayanamsa_arcseconds": 87318.7,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-03-14",
+      "true_ayanamsa_arcseconds": 87318.7,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-03-17",
+      "true_ayanamsa_arcseconds": 87319.2,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-03-20",
+      "true_ayanamsa_arcseconds": 87319.7,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-03-23",
+      "true_ayanamsa_arcseconds": 87320.0,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-03-26",
+      "true_ayanamsa_arcseconds": 87320.0,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-03-29",
+      "true_ayanamsa_arcseconds": 87320.1,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-04-01",
+      "true_ayanamsa_arcseconds": 87320.6,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-04-04",
+      "true_ayanamsa_arcseconds": 87321.2,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-04-07",
+      "true_ayanamsa_arcseconds": 87321.5,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-04-10",
+      "true_ayanamsa_arcseconds": 87321.5,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-04-13",
+      "true_ayanamsa_arcseconds": 87322.0,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-04-16",
+      "true_ayanamsa_arcseconds": 87322.6,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-04-19",
+      "true_ayanamsa_arcseconds": 87323.0,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-04-22",
+      "true_ayanamsa_arcseconds": 87323.0,
+      "primary_year": false
+    },
+    {
+      "source_year": 2027,
+      "date": "2028-04-25",
+      "true_ayanamsa_arcseconds": 87323.2,
+      "primary_year": false
+    }
+  ],
+  "excluded_diagnostics": [
+    {
+      "source_year": 2026,
+      "date": "2027-02-13",
+      "true_ayanamsa_arcseconds": 87256.4,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-02-16",
+      "true_ayanamsa_arcseconds": 87257.0,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-02-19",
+      "true_ayanamsa_arcseconds": 87257.3,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-02-22",
+      "true_ayanamsa_arcseconds": 87257.3,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-02-25",
+      "true_ayanamsa_arcseconds": 87257.8,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-02-28",
+      "true_ayanamsa_arcseconds": 87258.6,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-03-03",
+      "true_ayanamsa_arcseconds": 87259.0,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-03-06",
+      "true_ayanamsa_arcseconds": 87259.0,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-03-09",
+      "true_ayanamsa_arcseconds": 87259.2,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-03-12",
+      "true_ayanamsa_arcseconds": 87259.7,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-03-15",
+      "true_ayanamsa_arcseconds": 87260.2,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-03-18",
+      "true_ayanamsa_arcseconds": 87260.4,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-03-21",
+      "true_ayanamsa_arcseconds": 87260.4,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-03-24",
+      "true_ayanamsa_arcseconds": 87260.8,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-03-27",
+      "true_ayanamsa_arcseconds": 87261.6,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-03-30",
+      "true_ayanamsa_arcseconds": 87261.9,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-04-02",
+      "true_ayanamsa_arcseconds": 87261.9,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-04-05",
+      "true_ayanamsa_arcseconds": 87262.1,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-04-08",
+      "true_ayanamsa_arcseconds": 87262.6,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-04-11",
+      "true_ayanamsa_arcseconds": 87263.2,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-04-14",
+      "true_ayanamsa_arcseconds": 87263.5,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-04-17",
+      "true_ayanamsa_arcseconds": 87263.5,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-04-20",
+      "true_ayanamsa_arcseconds": 87263.9,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-04-23",
+      "true_ayanamsa_arcseconds": 87264.8,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    },
+    {
+      "source_year": 2026,
+      "date": "2027-04-26",
+      "true_ayanamsa_arcseconds": 87265.2,
+      "primary_year": false,
+      "reason": "IAE2026 continuation differs from its published formula by 4.3-5.4 arcseconds. IAE2027 primary-year table supports the formula. Retained as an unresolved publication inconsistency, not a calibration target."
+    }
+  ],
+  "mean_node_diagnostic": {
+    "source_url": "https://packolkata.imd.gov.in/panchang/en/bija_corrections",
+    "utc": "2026-03-22T00:00:00Z",
+    "published_mean_ayanamsa_arcseconds": 87204,
+    "published_mean_rahu_degrees": 313.70703055555555,
+    "status": "Diagnostic only: IERS mean node is not established identical to PAC mean node; do not tune the node polynomial to this row."
+  },
+  "date_extraction": "Dates follow the declared 3-day grid starting Jan1; duplicate column endpoints deduplicated. Obvious printed month label errors such as Sept31 in2024 resolved by that grid; numeric cells unchanged."
+}

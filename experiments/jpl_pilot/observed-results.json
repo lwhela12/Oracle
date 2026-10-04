@@ -1,0 +1,61 @@
+{
+  "engine": {
+    "library": "Quantum Oracle JPL pilot",
+    "skyfield_version": "1.55",
+    "jplephem_version": "2.24",
+    "ephemeris_model": "JPL DE440s",
+    "kernel_sha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2",
+    "kernel_source": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440s.bsp",
+    "range_utc": "[1850-01-01, 2150-01-01)"
+  },
+  "baseline": "existing Swiss/Moshier engine, black-box output only",
+  "all_cases": {
+    "charts": 86,
+    "max_longitude_arcsec": 32.137393534071634,
+    "max_ascendant_arcsec": 1060.1760481298015,
+    "max_midheaven_arcsec": 1256.9128688041815,
+    "max_speed_deg_day": 0.0002651317958441979,
+    "matched_tt_max_longitude_arcsec": 2.9419845078109574,
+    "matched_ut1_max_angle_arcsec": 2.6882127095859687,
+    "sign_mismatches": 0,
+    "house_mismatches": 0,
+    "retrograde_mismatches": 0,
+    "aspect_membership_differences": 0,
+    "max_experimental_sidereal_arcsec": 48.10780837619859,
+    "nakshatra_pada_mismatches": 1
+  },
+  "modern_nonpolar": {
+    "charts": 56,
+    "max_longitude_arcsec": 1.3711356441149292,
+    "max_ascendant_arcsec": 6.586032515156148,
+    "max_midheaven_arcsec": 4.546236988505825,
+    "max_speed_deg_day": 0.0002651317958441979,
+    "matched_tt_max_longitude_arcsec": 1.3711388666251878,
+    "matched_ut1_max_angle_arcsec": 0.002300683752309851,
+    "sign_mismatches": 0,
+    "house_mismatches": 0,
+    "retrograde_mismatches": 0,
+    "aspect_membership_differences": 0,
+    "max_experimental_sidereal_arcsec": 17.304441843555196,
+    "nakshatra_pada_mismatches": 1
+  },
+  "horizons": {
+    "count": 30,
+    "max_arcsec": 0.09532663037816747,
+    "note": "Previously cached JPL Horizons apparent geocentric longitudes, three public epochs; planetary centers differ from DE440s barycenters."
+  },
+  "latency_ms": {
+    "median": 18.36470849999983,
+    "max": 25.52995899999999
+  },
+  "pac_reference": {
+    "utc": "2026-03-22T00:00:00Z",
+    "mean_ayanamsa_reference": 24.223333333333333,
+    "mean_ayanamsa_pilot": 24.227802577388445,
+    "ayanamsa_difference_arcsec": 16.089278598404633,
+    "mean_rahu_reference": 313.70703055555555,
+    "mean_rahu_pilot": 313.7051234515635,
+    "rahu_difference_arcsec": -6.865574371340699,
+    "verdict": "Measurement only; no exact Lahiri compliance claim."
+  }
+}

@@ -1,4 +1,5 @@
-# Optional local/private astrology runtime. Public activation requires a license decision.
+# Optional Swiss comparison runtime only; excluded from the public JPL deployment.
+# Set ORACLE_ASTROLOGY_BACKEND=swiss explicitly. Swiss licensing applies separately.
 -r requirements.txt
 pysweph==2.10.3.6
 geonamescache==3.0.2

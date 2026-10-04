@@ -1,0 +1,6 @@
+# Isolated pilot: deliberately no Swiss Ephemeris or production app imports.
+skyfield==1.55
+jplephem==2.24
+numpy==2.0.2
+sgp4==2.25
+certifi==2026.7.22

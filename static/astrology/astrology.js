@@ -13,6 +13,9 @@
   const entryKinds = ['natal','horoscope'];
   const journalKey = 'oracle_astrology_journal_v1';
   let kind = 'natal', place = null, field, selected = null, activeAspect = null, paused = false;
+  let siderealLabel = 'Lahiri';
+  const ayanamsaLabel = chart => chart.ayanamsa?.convention_id==='iae-2021' ? 'IAE 2021' : 'Lahiri';
+  let dateBounds = {min:'0001-01-01',max:'3000-12-31'};
   let record = null, controller = null, revision = 0, searchController = null, searchRevision = 0;
   let pdfWorker = null, searchTimer = null;
   const phaseLabels = {drifting:'A field of possibility', gathering:'Gathering around the planets', resolved:'The moment takes shape'};
@@ -46,7 +49,7 @@
     updateBirthRequirements();
     const vedic=$('tradition').value==='vedic';
     $('horoscope-fields').hidden=next!=='horoscope' || vedic; $('horoscope-fields').disabled=next!=='horoscope' || vedic;
-    text('tradition-help',vedic ? 'Sidereal zodiac · Lahiri' : 'Tropical zodiac');
+    text('tradition-help',vedic ? 'Sidereal zodiac · '+siderealLabel : 'Tropical zodiac');
     text('horoscope-tagline',vedic ? 'Today for your Moon sign' : 'Today for your Sun sign');
     $('place-fields').hidden=false;
     text('privacy-copy',next==='horoscope' ? `Save keeps your birth details and reading in this browser. Gemini receives your ${vedic ? 'Moon sign, birth nakshatra' : 'Sun sign'} and today’s chart.` : 'Save stores your chart inputs and reading in this browser. Interpretation sends chart placements to Gemini.');
@@ -59,7 +62,8 @@
     const required=kind==='natal' || $('tradition').value==='vedic';
     $('birth-time').required=required;
     $('place-query').required=required;
-    $('birth-date').max=kind==='horoscope' ? new Date().toISOString().slice(0,10) : '3000-12-31';
+    $('birth-date').min=dateBounds.min;
+    $('birth-date').max=kind==='horoscope' ? [new Date().toISOString().slice(0,10),dateBounds.max].sort()[0] : dateBounds.max;
     text('birth-time-label','Local birth time'+(required ? '' : ' (optional)'));
     text('place-label','Birthplace'+(required ? '' : ' (optional)'));
     text('birth-details-help',required
@@ -67,6 +71,21 @@
       : 'Add both time and birthplace to calculate your Sun sign from your birth moment. Without both, we use approximate birthday ranges. This remains a general daily horoscope.');
   }
   $('tradition').addEventListener('change',()=>setKind(kind));
+  async function applyCapabilities() {
+    try {
+      const response=await fetch('/astrology/capabilities',{cache:'no-store'});
+      const data=await response.json();
+      if(!response.ok || !Array.isArray(data.traditions)) return;
+      if(typeof data.sidereal_convention?.label==='string') siderealLabel=data.sidereal_convention.label;
+      if(typeof data.date_bounds?.min==='string' && typeof data.date_bounds?.max==='string') dateBounds={min:data.date_bounds.min,max:data.date_bounds.max};
+      for(const option of $('tradition').options) {
+        const supported=data.traditions.includes(option.value);
+        option.disabled=!supported; option.hidden=!supported;
+      }
+      if(!data.traditions.includes($('tradition').value)) $('tradition').value=data.traditions.includes('western') ? 'western' : '';
+      setKind(kind);
+    } catch(_) {}
+  }
   function populateBirth(request,chart,localInputs) {
     place=localInputs?.place || chart.place || null; $('place-query').value=place?.name || ''; $('selected-place').hidden=!place;
     text('place-name',place?.label || ''); text('place-status',place ? 'City centre · '+place.timezone : '');
@@ -298,7 +317,7 @@
       && (isVedic(chart) ? vedicBodies : westernBodies).every(name => chart.planets?.[name] && Number.isFinite(chart.planets[name].longitude) && typeof chart.planets[name].sign === 'string')
       && Array.isArray(chart.major_aspects)
       && (chart.chart_kind!=='transit' || (chart.natal_chart?.chart_kind==='natal' && validChart(chart.natal_chart) && Array.isArray(chart.transit_aspects)))
-      && (!isVedic(chart) || (chart.zodiac==='sidereal' && chart.ayanamsa?.name==='Lahiri' && Array.isArray(chart.vedic_aspects) && vedicBodies.every(name=>typeof chart.planets[name].nakshatra?.name==='string' && Number.isInteger(chart.planets[name].nakshatra.pada) && chart.planets[name].nakshatra.pada>=1 && chart.planets[name].nakshatra.pada<=4)))
+      && (!isVedic(chart) || (chart.zodiac==='sidereal' && (chart.ayanamsa?.name==='Lahiri' || (chart.ayanamsa?.convention_id==='iae-2021' && chart.ayanamsa?.name==='Indian Astronomical Ephemeris (2021 convention)')) && Array.isArray(chart.vedic_aspects) && vedicBodies.every(name=>typeof chart.planets[name].nakshatra?.name==='string' && Number.isInteger(chart.planets[name].nakshatra.pada) && chart.planets[name].nakshatra.pada>=1 && chart.planets[name].nakshatra.pada<=4)))
       && (chart.chart_kind!=='horoscope' || (isVedic(chart) ? typeof chart.horoscope?.moon_sign==='string' && chart.horoscope.scope==='general_moon_sign' && typeof chart.horoscope.nakshatra?.name==='string' : typeof chart.horoscope?.sun_sign==='string' && chart.horoscope.scope==='general_sun_sign'));
   }
   function aspectLabel(a,vedic,kind) {
@@ -379,7 +398,7 @@
   function renderDetails(chart) {
     const root = $('chart-details'); root.replaceChildren();
     const paragraph = document.createElement('p');
-    paragraph.textContent = `${chart.engine.library} ${chart.engine.library_version} · ${chart.engine.ephemeris_model}. ${isVedic(chart) ? 'Sidereal, Lahiri ayanamsa '+Number(chart.ayanamsa.degrees).toFixed(4)+'°, mean lunar nodes' : 'Tropical'}, apparent geocentric positions. ${chart.place ? 'City-centre coordinates from GeoNames; timezone '+chart.place.timezone+'. ' : ''}Star particles and radial distances are illustrative.`;
+    paragraph.textContent = `${chart.engine.library} ${chart.engine.library_version} · ${chart.engine.ephemeris_model}. ${isVedic(chart) ? 'Sidereal, '+ayanamsaLabel(chart)+' ayanamsa '+Number(chart.ayanamsa.degrees).toFixed(4)+'°, mean lunar nodes' : 'Tropical'}, apparent geocentric positions. ${chart.place ? 'City-centre coordinates from GeoNames; timezone '+chart.place.timezone+'. ' : ''}Star particles and radial distances are illustrative.`;
     root.append(paragraph);
     if (chart.chart_kind === 'natal') {
       const birth = document.createElement('p'); birth.textContent = `Recorded local time: ${record.request.chart_request.birth.local_datetime.replace('T',' ')} · Resolved UTC: ${chart.inputs.utc}`; root.append(birth);
@@ -456,7 +475,7 @@
     const plain = value => value.replace(/^#{1,6}\s+/gm,'').replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1').replace(/`([^`]+)`/g,'$1').trim();
     if (layers.heart) sections.push({title:'Heart of the reading',text:plain(layers.heart)});
     if (layers.depth) sections.push({title:record.complete ? 'Full reading' : 'Partial interpretation',text:plain(layers.depth)});
-    sections.push({title:'About this chart',text:`${chart.engine.library} ${chart.engine.library_version}, ${chart.engine.ephemeris_model}. ${isVedic(chart) ? 'Vedic sidereal (Lahiri), mean Rahu/Ketu' : 'Western tropical'} geocentric chart${chart.chart_kind==='transit' ? ', current planets mapped to natal Whole Sign houses' : chart.ascendant ? ', Whole Sign houses' : ', no local houses'}. Astrological interpretation is symbolic reflection. Decorative particles and radial distances are illustrative. Birth inputs and the question are omitted. ${record.fixture ? 'TEST INTERPRETATION: this prose is a development fixture.' : ''}`});
+    sections.push({title:'About this chart',text:`${chart.engine.library} ${chart.engine.library_version}, ${chart.engine.ephemeris_model}. ${isVedic(chart) ? 'Vedic sidereal ('+ayanamsaLabel(chart)+'), mean Rahu/Ketu' : 'Western tropical'} geocentric chart${chart.chart_kind==='transit' ? ', current planets mapped to natal Whole Sign houses' : chart.ascendant ? ', Whole Sign houses' : ', no local houses'}. Astrological interpretation is symbolic reflection. Decorative particles and radial distances are illustrative. Birth inputs and the question are omitted. ${record.fixture ? 'TEST INTERPRETATION: this prose is a development fixture.' : ''}`});
     if(chart.chart_kind==='horoscope') sections.unshift({title:isVedic(chart) ? 'General Moon-sign horoscope' : 'General Sun-sign horoscope',text:horoscopeSign(chart)+' · '+chart.horoscope.date_utc+' · '+(isVedic(chart) ? nakshatraLabel(chart.horoscope.nakshatra) : horoscopeSignSource(chart.horoscope.sign_source))});
     if(chart.chart_kind==='transit') sections.unshift({title:'Natal placements used for comparison',text:Object.entries(chart.natal_chart.planets).map(([name,p])=>name+': '+position(p)).join('\n')});
     return {title:chartTitle(chart),sections};
@@ -513,5 +532,5 @@
   let theme='dark'; try { theme=localStorage.getItem('theme') === 'light' ? 'light' : 'dark'; } catch(_) {} applyTheme(theme);
   $('theme-toggle').addEventListener('click',() => { theme=theme==='dark'?'light':'dark'; applyTheme(theme); try { localStorage.setItem('theme',theme); } catch(_) {} });
   window.addEventListener('pagehide',() => { controller?.abort(); searchController?.abort(); field?.destroy(); pdfWorker?.terminate(); },{once:true});
-  setKind('natal'); createField();
+  setKind('natal'); createField(); applyCapabilities();
 })();
