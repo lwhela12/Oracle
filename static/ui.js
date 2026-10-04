@@ -430,13 +430,25 @@ function enableSwipe(dialog, previous, next) {
         }
     }, {passive:true});
 }
+// Pinch-zoom fires visualViewport events every frame. Rewriting root custom properties then restyles the whole page,
+// and WebKit re-rasterises every composited sky layer at the zoomed scale until iOS kills the tab (a white flash, then
+// a reload to home). So while zoomed: flag the root so CSS can drop the sky layers, and leave the viewport vars alone.
+const rootStyle = document.documentElement.style;
+let viewportFrame = 0;
 function syncVisibleViewport() {
-    document.documentElement.style.setProperty('--visible-height', `${window.visualViewport?.height || window.innerHeight}px`);
-    document.documentElement.style.setProperty('--viewport-offset', `${window.visualViewport?.offsetTop || 0}px`);
+    viewportFrame = 0;
+    const zoomed = (window.visualViewport?.scale || 1) > 1.01;
+    document.documentElement.classList.toggle('is-pinch-zoomed', zoomed);
+    if (zoomed) return;
+    const height = `${window.visualViewport?.height || window.innerHeight}px`;
+    const offset = `${window.visualViewport?.offsetTop || 0}px`;
+    if (rootStyle.getPropertyValue('--visible-height') !== height) rootStyle.setProperty('--visible-height', height);
+    if (rootStyle.getPropertyValue('--viewport-offset') !== offset) rootStyle.setProperty('--viewport-offset', offset);
 }
-window.visualViewport?.addEventListener('resize', syncVisibleViewport);
-window.visualViewport?.addEventListener('scroll', syncVisibleViewport);
-window.addEventListener('resize', syncVisibleViewport);
+function scheduleVisibleViewport() { viewportFrame ||= requestAnimationFrame(syncVisibleViewport); }
+window.visualViewport?.addEventListener('resize', scheduleVisibleViewport);
+window.visualViewport?.addEventListener('scroll', scheduleVisibleViewport);
+window.addEventListener('resize', scheduleVisibleViewport);
 syncVisibleViewport();
 document.addEventListener('click', event => {
     const link = event.target.closest('a[href^="#"]');
