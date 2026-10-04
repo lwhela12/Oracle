@@ -511,7 +511,7 @@
     ctx.drawImage(source,(1200-source.width*scale)/2,80+(1120-source.height*scale)/2,source.width*scale,source.height*scale);
     field.selectPlanet(selected); field.selectAspect?.(activeAspect); field.setPaused(wasPaused);
     ctx.fillStyle='#e2eaf4'; ctx.textAlign='center'; ctx.font='36px Georgia'; ctx.fillText(chartTitle(record.metadata.chart),600,60);
-    ctx.font='17px sans-serif'; ctx.fillStyle='#98abc1'; ctx.fillText(isVedic(record.metadata.chart) ? 'QUANTUM ORACLE · VEDIC · LAHIRI SIDEREAL' : 'QUANTUM ORACLE · TROPICAL ZODIAC',600,1220); ctx.fillText('Planetary positions · Expressive starlight',600,1255);
+    ctx.font='17px sans-serif'; ctx.fillStyle='#98abc1'; ctx.fillText(isVedic(record.metadata.chart) ? 'QUANTUM ORACLE · VEDIC · '+ayanamsaLabel(record.metadata.chart).toUpperCase()+' SIDEREAL' : 'QUANTUM ORACLE · TROPICAL ZODIAC',600,1220); ctx.fillText('Planetary positions · Expressive starlight',600,1255);
     return canvas.toDataURL('image/png');
   }
   $('export-image').addEventListener('click',() => { if(!record)return; const a=document.createElement('a'); a.href=chartImage(); a.download='oracle-chart.png'; a.click(); });

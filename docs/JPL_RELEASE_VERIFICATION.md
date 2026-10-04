@@ -48,7 +48,26 @@ Prior production rollback baseline: `dpl_5d51zJsvahAwnYX1NnN8iwf1CwAi`,
 `oracle-glw9xhrd7-lwhela12s-projects.vercel.app`, commit
 `63bd563080f7ccdb9f601e2bcaaf7256a3cbdde6`. Its astrology feature is disabled.
 
-Browser verification and final production identity are pending the protected
-candidate access step. No live-domain change is claimed by this checkpoint.
-Final deployment/test evidence will be recorded in the release conversation
-and `scratch/jpl-release/` after the candidate browser checks.
+## Public release checks
+
+The user authorized temporary candidate browser access. The candidate completed
+Western and Vedic birth charts, including generated interpretations, saved
+readings and a sharing preview. The UI identifies JPL DE440s and IAE 2021.
+
+Commit `10f8dd2` passed GitHub's Ubuntu/Python 3.12 release workflow (11 tests)
+and was deployed as `dpl_G415hTTVXMhiBsdh7thhEZ15wRCn`, then promoted to
+`https://www.qoracle.app`. Production now explicitly configures
+`ORACLE_ASTROLOGY_ENABLED=1` and `ORACLE_ASTROLOGY_BACKEND=jpl`.
+
+On the public domain, the homepage exposes Astrology. A birthday-only Western
+horoscope, Vedic birth chart and Vedic Moon-sign horoscope completed with real
+generated interpretations. Synthetic inputs were used throughout. A Vedic PDF
+download completed. The planet detail view works at a 390 x 844 viewport, with
+document width and scroll width both 390 pixels. Saved reading controls and the
+existing Tarot entry were also checked. No browser errors were observed; the
+deployment's error/fatal runtime-log query returned no entries during the test.
+
+Export review found one remaining hardcoded Lahiri label in chart images; the
+follow-up correction uses the chart's actual ayanamsa convention for both image
+and embedded PDF graphics. Final deployment identity and screenshots are recorded
+in the release conversation and `scratch/jpl-release/`.
