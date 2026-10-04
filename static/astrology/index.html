@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light"><meta name="theme-color" content="#101017">
+  <style>html{background:#101017}html[data-theme=light]{background:#f7f4ed}</style>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('theme')==='light'?'light':'dark';}catch(_){}</script>
+  <title>Astrology · Quantum Oracle</title>
+  <link rel="icon" type="image/svg+xml" href="/static/icon.svg">
+  <link rel="apple-touch-icon" href="/static/icon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/sky.css?v=20261004">
+  <link rel="stylesheet" href="/static/astrology/astrology.css?v=20261004-reading-actions">
+  <script defer src="/static/reading-layers.js"></script>
+  <link rel="stylesheet" href="/static/astrology/share.css?v=20261004">
+  <script defer src="/static/share-card.js?v=20261004"></script>
+  <script defer src="/static/astrology/share.js?v=20261004"></script>
+  <script defer src="/static/astrology/starfield.js?v=20261004-brighter-reveal"></script>
+  <script defer src="/static/astrology/aspects-sun-moon.js?v=20261004-library1"></script>
+  <script defer src="/static/astrology/aspects-mercury-venus.js?v=20261004-library1"></script>
+  <script defer src="/static/astrology/aspects-outer.js?v=20261004-library1"></script>
+  <script defer src="/static/astrology/aspects-self.js?v=20261004-library1"></script>
+  <script defer src="/static/astrology/meanings.js?v=20261004-library1"></script>
+  <script defer src="/static/astrology/vedic-meanings.js?v=20261004-vedic1"></script>
+  <script defer src="/static/astrology/astrology.js?v=20261004-sharing"></script>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"><span class="sky-wide"></span><span class="sky-band"></span><span class="sky-nebula"></span><span class="sky-dust"></span><span class="sky-dense"></span><span class="sky-twinkle"></span><span class="sky-twinkle sky-twinkle-b"></span></div>
+  <div class="reading-backdrop" aria-hidden="true"></div>
+  <a class="skip-link" href="#chart-form">Skip to chart inputs</a>
+  <header>
+    <a href="/#read" class="wordmark" aria-label="Quantum Oracle home"><img class="logo-dark" src="/static/icon.svg" width="36" height="36" alt=""><img class="logo-light" src="/static/icon-light.svg" width="36" height="36" alt=""><span class="brand-name">Quantum Oracle</span><span class="divider" aria-hidden="true">/</span><span class="subbrand">ASTROLOGY</span></a>
+    <nav aria-label="Astrology navigation"><button id="saved-toggle" class="quiet">Saved charts</button><button id="theme-toggle" class="quiet" aria-label="Switch to light theme">Light</button></nav>
+  </header>
+  <main>
+    <section id="saved-panel" class="saved-panel" aria-labelledby="saved-title" hidden>
+      <div class="placements-header"><h2 id="saved-title" tabindex="-1">Your saved skies</h2><button id="saved-close" class="quiet">Close</button></div>
+      <p class="help">Saved only in this browser, when you choose to save. Saved charts include their inputs and any interpretation.</p><div id="saved-list"></div>
+    </section>
+    <section class="experience" aria-labelledby="title">
+      <div class="intro">
+        <a class="back-link" href="/#read">← <span>Change tradition</span></a>
+        <div class="setup-heading">
+          <span class="page-emblem" aria-hidden="true">
+            <svg viewBox="0 0 48 48" width="54" height="54" fill="none" focusable="false">
+              <defs><linearGradient id="astrology-gold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f6d365"/><stop offset="50%" stop-color="#e5c158"/><stop offset="100%" stop-color="#b3820a"/></linearGradient></defs>
+              <circle cx="24" cy="24" r="22" stroke="url(#astrology-gold)" stroke-width="1.2"/>
+              <circle cx="24" cy="24" r="17" stroke="url(#astrology-gold)" stroke-width="1" opacity="0.55"/>
+              <path d="M24 2v5 M35 5l-2.5 4.3 M43 13l-4.3 2.5 M46 24h-5 M43 35l-4.3-2.5 M35 43l-2.5-4.3 M24 46v-5 M13 43l2.5-4.3 M5 35l4.3-2.5 M2 24h5 M5 13l4.3 2.5 M13 5l2.5 4.3" stroke="url(#astrology-gold)" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M24 12l3.3 8.7L36 24l-8.7 3.3L24 36l-3.3-8.7L12 24l8.7-3.3Z" stroke="url(#astrology-gold)" stroke-width="1.4" stroke-linejoin="round" fill="rgba(212,175,55,0.12)"/>
+              <circle cx="24" cy="24" r="2.3" fill="url(#astrology-gold)"/>
+            </svg>
+          </span>
+          <h1 id="title">Astrology</h1>
+        </div>
+        <p class="description" id="kind-description">Your birth date, recorded time and birthplace reveal your personal chart.</p>
+        <form id="chart-form">
+          <div class="kind-options" role="group" aria-label="Chart type">
+            <button type="button" id="kind-natal" aria-label="Birth chart" aria-pressed="true">Birth chart<small>The sky at your birth</small></button>
+            <button type="button" id="kind-horoscope" aria-label="Horoscope" aria-pressed="false">Horoscope<small id="horoscope-tagline">Today for your Sun sign</small></button>
+          </div>
+          <label for="tradition">Tradition</label><select id="tradition" aria-describedby="tradition-help"><option value="western">Western</option><option value="vedic">Vedic</option></select>
+          <p class="help" id="tradition-help">Tropical zodiac</p>
+          <fieldset id="birth-fields">
+            <legend class="sr-only">Birth date and time</legend>
+            <div class="field-pair"><label>Date of birth<input id="birth-date" type="date" required min="0001-01-01" max="3000-12-31"></label><label><span id="birth-time-label">Local birth time</span><input id="birth-time" type="time" step="1" required></label></div>
+            <p class="help" id="birth-details-help">Use the recorded local time. An unknown birth time cannot give reliable houses or a rising sign.</p>
+          </fieldset>
+          <div id="place-fields"><label for="place-query" id="place-label">Birthplace</label>
+          <div class="place-search"><input id="place-query" type="search" placeholder="Start typing a city…" autocomplete="off" maxlength="100" aria-describedby="place-help" aria-controls="place-results"><button type="button" id="place-search">Find</button></div>
+          <div id="place-results" role="group" aria-label="Matching cities"></div>
+          <p id="place-help" class="help">Choose your birthplace from the suggestions. Add a state or country to narrow the results.</p>
+          <div id="selected-place" class="selected-place" hidden><span id="place-name"></span><button type="button" id="place-clear" aria-label="Clear selected city">×</button></div>
+          <p id="place-status" class="help" role="status"></p></div>
+          <label id="fold-field" hidden>This time occurred twice<select id="birth-fold"><option value="">Choose the recorded occurrence</option><option value="0">First occurrence (before clocks moved back)</option><option value="1">Second occurrence (after clocks moved back)</option></select></label>
+          <fieldset id="horoscope-fields" hidden disabled>
+            <details><summary class="help">Use a known Sun sign</summary><label for="horoscope-sign">Sun sign</label><select id="horoscope-sign" aria-label="Sun sign"><option value="">Use my birth details</option><option>Aries</option><option>Taurus</option><option>Gemini</option><option>Cancer</option><option>Leo</option><option>Virgo</option><option>Libra</option><option>Scorpio</option><option>Sagittarius</option><option>Capricorn</option><option>Aquarius</option><option>Pisces</option></select><p class="help">Optional: choose a known Sun sign instead of the calculated or estimated sign.</p></details>
+          </fieldset>
+          <p class="help privacy" id="privacy-copy">Save stores your birth details and reading in this browser. Interpretation sends calculated chart placements to Gemini.</p>
+          <p id="form-error" class="error" role="alert" hidden></p>
+          <div class="actions"><button class="primary" id="generate" type="submit">Reveal your birth chart <span aria-hidden="true">↗</span></button><button type="button" id="cancel" class="quiet" hidden>Cancel</button></div>
+          <button type="button" id="return-chart" class="quiet" hidden>Return to your chart</button>
+        </form>
+      </div>
+      <div class="observatory" id="observatory" hidden>
+        <div class="chart-toolbar"><div><h2 id="chart-heading" tabindex="-1">Your sky</h2><p class="help" id="chart-guide">Choose a symbol to explore its meaning.</p></div><div class="chart-tools"><button type="button" id="edit-inputs" class="quiet">Edit details</button></div></div>
+        <div class="coordinates"><span id="chart-kind-label">SKY NOW</span><span id="chart-time-label">A MOMENT AWAITS</span></div>
+        <div class="sky-wrap"><canvas id="sky" aria-hidden="true"></canvas><div id="planet-nodes" class="planet-nodes" role="group" aria-label="Planets in your chart"></div><div class="center-caption" aria-hidden="true"><span>THE CELESTIAL</span><strong>moment</strong></div></div>
+        <div class="stage-status"><span class="signal" aria-hidden="true"></span><span id="phase" role="status">A field of possibility</span><button type="button" id="pause" class="quiet" aria-pressed="false">Pause motion</button><button type="button" id="replay" class="quiet" hidden>Replay reveal</button></div>
+        <section class="selection" id="selection" aria-label="Planet interpretation" hidden><button type="button" id="close-selection" class="quiet">Close details ×</button><p class="eyebrow" id="selection-label"></p><h2 id="selection-title" tabindex="-1"></h2><p id="selection-copy"></p><div id="placement-meaning"></div><div id="aspect-meanings"></div><p class="help">Traditional astrological meanings, offered for reflection.</p></section>
+      </div>
+    </section>
+    <div id="chart-content" hidden>
+      <section class="placements" aria-label="Chart details"><p id="angles" class="help"></p>
+        <details class="chart-details"><summary>All placements and calculation details</summary><div id="planet-list" class="planet-list"></div><div id="chart-details"></div></details>
+      </section>
+      <section class="reading" aria-labelledby="reading-title">
+        <p class="eyebrow">YOUR READING</p><h2 id="reading-title" tabindex="-1">What the sky suggests</h2>
+        <p class="help">Astrological interpretation is a symbolic reflection, not a prediction of facts or events.</p>
+        <p id="reading-status" role="status"></p><button id="stop-reading" type="button" class="quiet" hidden>Stop interpretation</button><p id="reading-error" class="error" role="alert" hidden></p>
+        <div id="heart" class="heart" hidden></div><details id="depth" class="depth" hidden><summary>Go deeper</summary><div id="depth-text" class="prose"></div></details>
+        <div class="actions reading-actions"><button id="retry" class="secondary" hidden>Retry interpretation</button><button id="save" class="secondary">Save chart</button><button id="share-reading" type="button" disabled>Share reading ↗</button><button id="export-text" class="quiet">Download text</button><button id="export-image" class="quiet">Download chart image</button><button id="export-pdf" class="quiet">Download PDF</button></div>
+        <p id="save-status" class="help" role="status"></p><p class="help">Exports exclude the input fields. Chart placements and prose may still reveal personal information.</p>
+      </section>
+    </div>
+  </main>
+  <footer><span>CALCULATED POSITIONS · EXPRESSIVE STARLIGHT</span><p>Star particles and radial distances are illustrative.<br>City data: <a href="https://www.geonames.org/" target="_blank" rel="noopener noreferrer">GeoNames</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a></p><a href="/#read">Explore other traditions ↗</a></footer>
+</body>
+</html>

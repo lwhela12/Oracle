@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+.venv/
+scratch/
+experiments/
+__pycache__/
+**/__pycache__/
+*.pyc
+**/*.pyc
+.DS_Store
+**/.DS_Store

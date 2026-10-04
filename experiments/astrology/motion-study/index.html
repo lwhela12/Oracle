@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Oracle · A moment in the stars</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="study.css">
+  <script defer src="chart.js"></script>
+  <script defer src="starfield.js"></script>
+  <script defer src="study.js"></script>
+</head>
+<body>
+  <header>
+    <div class="wordmark"><span aria-hidden="true">✧</span> ORACLE <span class="divider">/</span> <span class="subbrand">ASTROLOGY</span></div>
+    <span class="study-tag">MOTION STUDY <span>01</span></span>
+  </header>
+  <main>
+    <section class="experience" aria-labelledby="title">
+      <div class="intro">
+        <p class="eyebrow">A CELESTIAL PORTRAIT</p>
+        <h1 id="title">A moment,<br>written in<br><em>stars.</em></h1>
+        <p class="description">Every sky holds a pattern.<br>Watch the scattered light gather<br>into the shape of a single moment.</p>
+        <div class="actions">
+          <button id="form-chart" class="primary">Form the chart <span aria-hidden="true">↗</span></button>
+          <button id="pause" class="quiet" aria-pressed="false">Pause motion</button>
+        </div>
+        <div class="selection" aria-live="polite" aria-atomic="true">
+          <p class="eyebrow" id="selection-label">THE SKY AT A GLANCE</p>
+          <h2 id="selection-title">Waning crescent</h2>
+          <p id="selection-copy">Ten celestial bodies, one shared sky. Form the chart, then choose a planet to explore its position.</p>
+        </div>
+      </div>
+      <div class="observatory">
+        <div class="coordinates"><span>REFERENCE SKY</span><span>01 JAN 2000 · 12:00 UTC</span></div>
+        <div class="sky-wrap">
+          <canvas id="sky" aria-hidden="true"></canvas>
+          <div class="center-caption" aria-hidden="true"><span>THE CELESTIAL</span><strong>moment</strong></div>
+        </div>
+        <div class="stage-status"><span class="signal" aria-hidden="true"></span><span id="phase" role="status">A field of possibility</span><span class="stage-count">10 CELESTIAL BODIES</span></div>
+      </div>
+    </section>
+    <section class="placements" aria-labelledby="placements-title">
+      <div class="placements-header"><h2 id="placements-title">Explore the sky</h2><span>SELECT A PLANET</span></div>
+      <div id="planet-list" class="planet-list"></div>
+    </section>
+  </main>
+  <footer><span>PLANETARY LONGITUDES · TROPICAL ZODIAC</span><p>Calculated positions. Expressive starlight.<br>Star particles and radial distances are illustrative.</p><details><summary>About this study</summary><p>A local visual prototype using Swiss Ephemeris calculations for a fixed reference sky. No personal birth data or AI interpretation. Select a planet to illuminate its major aspects; the surrounding stars are decorative.</p></details></footer>
+</body>
+</html>

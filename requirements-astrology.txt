@@ -1,0 +1,4 @@
+# Optional local/private astrology runtime. Public activation requires a license decision.
+-r requirements.txt
+pysweph==2.10.3.6
+geonamescache==3.0.2

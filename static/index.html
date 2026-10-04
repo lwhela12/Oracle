@@ -65,7 +65,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="/static/artwork.css?v=20260915a">
-    <link rel="stylesheet" href="/static/ui.css?v=20260915m">
+    <link rel="stylesheet" href="/static/sky.css?v=20261004">
+    <link rel="stylesheet" href="/static/ui.css?v=20261004-heading-alignment">
 </head>
 <body>
     <!-- The night sky: a Milky Way band, star fields, and a few bright stars that twinkle. Decorative only. -->
@@ -114,7 +115,7 @@
 
         <section id="consultation-portal" class="app-page consultation-portal" aria-labelledby="setup-title" hidden>
             <a href="#read" class="back-link"><span aria-hidden="true">←</span> Change tradition</a>
-            <div class="page-heading setup-heading"><span id="setup-emblem" class="page-emblem" aria-hidden="true"></span><div><p class="eyebrow">Your reading</p><h1 id="setup-title" tabindex="-1">Tarot</h1></div></div>
+            <div class="page-heading setup-heading"><span id="setup-emblem" class="page-emblem" aria-hidden="true"></span><h1 id="setup-title" tabindex="-1">Tarot</h1></div>
             <details class="about-reading"><summary>About this reading</summary><p id="setup-description"></p><button type="button" class="text-button" onclick="openTraditionLore(currentTradition)">Explore this tradition <span aria-hidden="true">→</span></button></details>
             <form id="reading-form" onsubmit="event.preventDefault(); executeConsultation()">
                 <fieldset class="step-section" id="spread-step"><legend id="spread-step-title">Choose your spread</legend><div id="spread-options" class="spread-grid"></div></fieldset>
@@ -320,10 +321,12 @@
 
     <script defer src="/static/analytics.js?v=20260915a"></script>
     <script defer src="/static/reading-layers.js?v=20260910d"></script>
-    <script defer src="/static/oracle.js?v=20260915f"></script>
+    <script defer src="/static/share-card.js?v=20261004"></script>
+    <script defer src="/static/oracle.js?v=20261004-share-card"></script>
     <script defer src="/static/learning.js?v=20260915analytics"></script>
     <script defer src="/static/ui.js?v=20260915h"></script>
     <script defer src="/static/reading-export.js?v=20260915d"></script>
+    <script defer src="/static/astrology/entry.js?v=20261004-emblem"></script>
 
 </body>
 </html>

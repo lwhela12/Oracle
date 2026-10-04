@@ -4,6 +4,8 @@ import json
 from flask import Flask, request, jsonify, send_from_directory, Response, stream_with_context
 from flask_cors import CORS
 from admin_routes import init_admin
+from astrology.routes import blueprint as astrology_blueprint, reject_astrology_chat
+from astrology.place_routes import blueprint as astrology_places_blueprint
 from oracle_logic import GeminiOracle
 from telemetry import begin, emit, enabled, flush, reading_details, reading_prepared, track_reading
 
@@ -12,6 +14,8 @@ app = Flask(__name__, static_folder='static')
 # never participate in this policy, including errors and unknown routes.
 CORS(app, resources={r"^/(?:init|chat|session/clear|analytics/config|analytics/visit)(?:/.*)?$": {"origins": "*"}})
 init_admin(app)
+app.register_blueprint(astrology_blueprint)
+app.register_blueprint(astrology_places_blueprint)
 
 # Lazy initialization for serverless environments
 _oracle = None
@@ -59,6 +63,15 @@ def determine_mode(message, explicit_mode=None):
 @app.route('/')
 def index():
     return send_from_directory(app.static_folder, 'index.html')
+
+
+@app.get('/astrology/')
+def astrology_page():
+    if os.getenv('ORACLE_ASTROLOGY_ENABLED') != '1':
+        return '', 404
+    response = send_from_directory(app.static_folder, 'astrology/index.html')
+    response.headers['Cache-Control'] = 'no-store'
+    return response
 
 
 @app.route('/static/<path:filename>')
@@ -124,6 +137,9 @@ def session_clear():
 @app.route('/chat', methods=['POST'])
 @track_reading
 def chat():
+    rejected = reject_astrology_chat()
+    if rejected is not None:
+        return rejected
     try:
         oracle = get_oracle()
     except ValueError as e:
@@ -210,6 +226,9 @@ def chat():
 @app.route('/chat/stream', methods=['POST'])
 @track_reading
 def chat_stream():
+    rejected = reject_astrology_chat()
+    if rejected is not None:
+        return rejected
     try:
         oracle = get_oracle()
     except ValueError as e:
@@ -305,7 +324,5 @@ def chat_stream():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5001))
     app.run(host='0.0.0.0', port=port)
-
-
 
 
