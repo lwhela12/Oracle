@@ -123,7 +123,7 @@
   $('return-chart').addEventListener('click',() => { if(record) { showChart(true); $('chart-heading').focus(); } });
   $('close-selection').addEventListener('click',() => {
     const previous=selected; selectPlanet(null);
-    if(previous) $('planet-nodes').querySelector('[data-planet="'+previous+'"]').focus();
+    if(previous) $('planet-nodes').querySelector('[data-planet="'+previous+'"]')?.focus({preventScroll:true});
   });
   $('selection').addEventListener('keydown',event => { if(event.key === 'Escape') $('close-selection').click(); });
   function resetFold() { $('fold-field').hidden = true; $('birth-fold').value = ''; }
@@ -329,6 +329,7 @@
   function chartTitle(chart) { return chart.chart_kind==='horoscope' ? horoscopeSign(chart)+(isVedic(chart) ? ' Moon today' : ' today') : ({natal:isVedic(chart) ? 'Your Vedic birth chart' : 'Your birth chart',current:'The sky now',transit:'Your personal transits'}[chart.chart_kind]); }
   function chartAspects(chart) { return isVedic(chart) ? chart.vedic_aspects : chart.chart_kind==='transit' ? chart.transit_aspects.map(a=>({...a,body_1:a.transit_body,body_2:'Natal '+a.natal_body})) : chart.major_aspects; }
   function renderChart(chart) {
+    $('chart-disclosure').open = false;
     showChart(true); $('replay').hidden = false; text('save','Save chart');
     text('chart-heading',chartTitle(chart));
     text('chart-guide',chart.chart_kind==='transit' ? 'Glowing symbols: today. Small outer markers: your birth chart.' : chart.chart_kind==='horoscope' ? 'A general '+horoscopeSign(chart)+(isVedic(chart) ? ' Moon-sign' : ' Sun-sign')+' reading. Symbols show today’s sky.' : 'Choose a symbol to explore its meaning.');
@@ -393,6 +394,12 @@
           activeAspect=aspect; field.selectAspect?.(aspect);
         } else if(!aspects.querySelector('details[open]')) { activeAspect=null; field.selectAspect?.(null); }
       });
+    }
+    if (window.matchMedia('(max-width:700px)').matches) {
+      $('selection-title').focus({preventScroll:true});
+      // A selection from the expanded chart below the reading should reveal the card.
+      const bounds=$('selection').getBoundingClientRect();
+      if(bounds.bottom<0 || bounds.top>window.innerHeight) $('selection').scrollIntoView({block:'center'});
     }
   }
   function renderDetails(chart) {

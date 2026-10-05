@@ -108,3 +108,15 @@ body::after,.sky{z-index:-2}
 .reading-actions~.help{font:400 12px/1.6 'DM Sans',sans-serif}
 @media(max-width:700px){.reading .reading-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.reading .reading-actions>button{width:100%;padding:12px 10px}}
 @media(prefers-reduced-motion:reduce){.reading .reading-actions>button{transition:none}}
+/* The reading follows the stars; detailed chart facts are opt-in below it. */
+#chart-content>.placements{max-width:780px;margin:0 auto 36px}
+#chart-disclosure{margin-top:0}
+#chart-disclosure>summary{padding:8px 0;color:var(--ink);font-size:15px}
+#chart-disclosure>#angles{margin:18px 0 12px}
+@media(max-width:700px){
+  /* Overlay the existing sky grid cell without changing its size or document flow. */
+  .observatory>.selection{position:absolute;grid-column:1/2;grid-row:3/4;inset:10px 4px;z-index:5;margin:0;padding:0 18px 18px;max-height:none;min-height:0;border:1px solid rgba(212,183,124,.4);border-radius:18px;background:rgba(9,13,20,.96);box-shadow:0 12px 38px rgba(0,0,0,.55);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scroll-padding-top:58px;--ink:#edf0f3;--muted:#b1bdcb}
+  .selection #close-selection{position:sticky;top:0;z-index:1;width:100%;min-height:48px;padding:12px 0;text-align:right;background:#090d14;color:#e1c995}
+  .selection #selection-title:focus{outline:none}
+  .selection #close-selection:focus-visible{outline:2px solid #e1c995;outline-offset:-3px}
+}

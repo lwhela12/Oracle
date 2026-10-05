@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="/static/icon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/sky.css?v=20261004">
-  <link rel="stylesheet" href="/static/astrology/astrology.css?v=20261004-reading-actions">
+  <link rel="stylesheet" href="/static/astrology/astrology.css?v=20261004-overlay-reading">
   <script defer src="/static/reading-layers.js"></script>
   <link rel="stylesheet" href="/static/astrology/share.css?v=20261004">
   <script defer src="/static/share-card.js?v=20261004"></script>
@@ -22,7 +22,7 @@
   <script defer src="/static/astrology/aspects-self.js?v=20261004-library1"></script>
   <script defer src="/static/astrology/meanings.js?v=20261004-library1"></script>
   <script defer src="/static/astrology/vedic-meanings.js?v=20261004-vedic1"></script>
-  <script defer src="/static/astrology/astrology.js?v=20261004-jpl-exports"></script>
+  <script defer src="/static/astrology/astrology.js?v=20261004-overlay-reading"></script>
 </head>
 <body>
   <div class="sky" aria-hidden="true"><span class="sky-wide"></span><span class="sky-band"></span><span class="sky-nebula"></span><span class="sky-dust"></span><span class="sky-dense"></span><span class="sky-twinkle"></span><span class="sky-twinkle sky-twinkle-b"></span></div>
@@ -87,13 +87,10 @@
         <div class="coordinates"><span id="chart-kind-label">SKY NOW</span><span id="chart-time-label">A MOMENT AWAITS</span></div>
         <div class="sky-wrap"><canvas id="sky" aria-hidden="true"></canvas><div id="planet-nodes" class="planet-nodes" role="group" aria-label="Planets in your chart"></div><div class="center-caption" aria-hidden="true"><span>THE CELESTIAL</span><strong>moment</strong></div></div>
         <div class="stage-status"><span class="signal" aria-hidden="true"></span><span id="phase" role="status">A field of possibility</span><button type="button" id="pause" class="quiet" aria-pressed="false">Pause motion</button><button type="button" id="replay" class="quiet" hidden>Replay reveal</button></div>
-        <section class="selection" id="selection" aria-label="Planet interpretation" hidden><button type="button" id="close-selection" class="quiet">Close details ×</button><p class="eyebrow" id="selection-label"></p><h2 id="selection-title" tabindex="-1"></h2><p id="selection-copy"></p><div id="placement-meaning"></div><div id="aspect-meanings"></div><p class="help">Traditional astrological meanings, offered for reflection.</p></section>
+        <section class="selection" id="selection" aria-labelledby="selection-title" hidden><button type="button" id="close-selection" class="quiet">Close details ×</button><p class="eyebrow" id="selection-label"></p><h2 id="selection-title" tabindex="-1"></h2><p id="selection-copy"></p><div id="placement-meaning"></div><div id="aspect-meanings"></div><p class="help">Traditional astrological meanings, offered for reflection.</p></section>
       </div>
     </section>
     <div id="chart-content" hidden>
-      <section class="placements" aria-label="Chart details"><p id="angles" class="help"></p>
-        <details class="chart-details"><summary>All placements and calculation details</summary><div id="planet-list" class="planet-list"></div><div id="chart-details"></div></details>
-      </section>
       <section class="reading" aria-labelledby="reading-title">
         <p class="eyebrow">YOUR READING</p><h2 id="reading-title" tabindex="-1">What the sky suggests</h2>
         <p class="help">Astrological interpretation is a symbolic reflection, not a prediction of facts or events.</p>
@@ -101,6 +98,9 @@
         <div id="heart" class="heart" hidden></div><details id="depth" class="depth" hidden><summary>Go deeper</summary><div id="depth-text" class="prose"></div></details>
         <div class="actions reading-actions"><button id="retry" class="secondary" hidden>Retry interpretation</button><button id="save" class="secondary">Save chart</button><button id="share-reading" type="button" disabled>Share reading ↗</button><button id="export-text" class="quiet">Download text</button><button id="export-image" class="quiet">Download chart image</button><button id="export-pdf" class="quiet">Download PDF</button></div>
         <p id="save-status" class="help" role="status"></p><p class="help">Exports exclude the input fields. Chart placements and prose may still reveal personal information.</p>
+      </section>
+      <section class="placements" aria-label="Chart details">
+        <details id="chart-disclosure" class="chart-details"><summary>Explore your chart</summary><p id="angles" class="help"></p><div id="planet-list" class="planet-list"></div><div id="chart-details"></div></details>
       </section>
     </div>
   </main>
