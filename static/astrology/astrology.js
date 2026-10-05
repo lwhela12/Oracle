@@ -330,6 +330,7 @@
   function chartAspects(chart) { return isVedic(chart) ? chart.vedic_aspects : chart.chart_kind==='transit' ? chart.transit_aspects.map(a=>({...a,body_1:a.transit_body,body_2:'Natal '+a.natal_body})) : chart.major_aspects; }
   function renderChart(chart) {
     $('chart-disclosure').open = false;
+    $('chart-placements').hidden = chart.chart_kind === 'horoscope';
     showChart(true); $('replay').hidden = false; text('save','Save chart');
     text('chart-heading',chartTitle(chart));
     text('chart-guide',chart.chart_kind==='transit' ? 'Glowing symbols: today. Small outer markers: your birth chart.' : chart.chart_kind==='horoscope' ? 'A general '+horoscopeSign(chart)+(isVedic(chart) ? ' Moon-sign' : ' Sun-sign')+' reading. Symbols show today’s sky.' : 'Choose a symbol to explore its meaning.');

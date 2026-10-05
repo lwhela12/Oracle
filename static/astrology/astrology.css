@@ -108,8 +108,8 @@ body::after,.sky{z-index:-2}
 .reading-actions~.help{font:400 12px/1.6 'DM Sans',sans-serif}
 @media(max-width:700px){.reading .reading-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.reading .reading-actions>button{width:100%;padding:12px 10px}}
 @media(prefers-reduced-motion:reduce){.reading .reading-actions>button{transition:none}}
-/* The reading follows the stars; detailed chart facts are opt-in below it. */
-#chart-content>.placements{max-width:780px;margin:0 auto 36px}
+/* Explore chart facts after the reading, before saving or sharing it. */
+.reading>.placements{margin-top:24px}
 #chart-disclosure{margin-top:0}
 #chart-disclosure>summary{padding:8px 0;color:var(--ink);font-size:15px}
 #chart-disclosure>#angles{margin:18px 0 12px}
