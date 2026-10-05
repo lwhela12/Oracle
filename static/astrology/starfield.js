@@ -679,13 +679,15 @@
 
     drawParticles(now, chartOpacity) {
       const ctx = this.ctx;
+      const baseAlpha = ctx.globalAlpha;
       const settledGlow = smoothstep((chartOpacity - 0.55) / 0.45);
+      const focused = Boolean(this.selectedAspect || this.selected);
+      const ambientBoost = 1 + (1 - chartOpacity) * 0.3;
       for (let index = 0; index < this.particles.length; index += 1) {
         const particle = this.particles[index];
         const point = this.positionFor(particle, index, now);
         const isChartStar = chartOpacity > 0.5 && !particle.decorative;
         const relevant = particle.planet && this.relevant.has(particle.planet);
-        const focused = Boolean(this.selectedAspect || this.selected);
         const selectedFade = focused && particle.planet && !relevant;
         const twinkle = isChartStar
           ? 0.9 + Math.sin(this.time * particle.twinkleSpeed + particle.twinkle) * 0.1
@@ -699,24 +701,27 @@
         if (chartOpacity > 0 && particle.decorative) alpha *= 0.42;
         if (selectedFade) alpha *= 0.28;
         if (relevant) alpha = Math.min(1, alpha * 1.3);
-        const ambientBoost = 1 + (1 - chartOpacity) * 0.3;
         alpha = Math.min(1, alpha * ambientBoost * (particle.decorative ? 1 : 1 + settledGlow * 0.3));
 
-        const color = particle.tint < 0.28 ? "177, 215, 242"
-          : particle.tint < 0.7 ? "224, 232, 241" : "255, 255, 255";
+        // Reuse three opaque colors; avoid parsing a new rgba string for every star.
+        // Match rgba's 8-bit alpha rounding to preserve the rendered brightness.
+        const color = particle.tint < 0.28 ? "rgb(177, 215, 242)"
+          : particle.tint < 0.7 ? "rgb(224, 232, 241)" : "rgb(255, 255, 255)";
         const size = particle.size * (0.72 + particle.depth * 0.36) * ambientBoost;
+        ctx.fillStyle = color;
 
         if (particle.bright && alpha > 0.2) {
-          ctx.fillStyle = `rgba(${color}, ${alpha * (0.12 + (particle.decorative ? 0 : settledGlow * 0.04))})`;
+          ctx.globalAlpha = baseAlpha * Math.round(alpha * (0.12 + (particle.decorative ? 0 : settledGlow * 0.04)) * 255) / 255;
           ctx.beginPath();
           ctx.arc(point.x, point.y, size * 3.2, 0, TAU);
           ctx.fill();
         }
-        ctx.fillStyle = `rgba(${color}, ${alpha})`;
+        ctx.globalAlpha = baseAlpha * Math.round(alpha * 255) / 255;
         ctx.beginPath();
         ctx.arc(point.x, point.y, size, 0, TAU);
         ctx.fill();
       }
+      ctx.globalAlpha = baseAlpha;
     }
 
     drawAnchors(opacity) {

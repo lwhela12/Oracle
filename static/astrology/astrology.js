@@ -19,6 +19,23 @@
   let record = null, controller = null, revision = 0, searchController = null, searchRevision = 0;
   let pdfWorker = null, searchTimer = null;
   const phaseLabels = {drifting:'A field of possibility', gathering:'Gathering around the planets', resolved:'The moment takes shape'};
+  const readingBackdrop = document.querySelector('.reading-backdrop');
+  const chartGlow = document.querySelector('.sky-wrap');
+  let revealProgress = null;
+  function updateRevealProgress(progress) {
+    // Finish the backdrop ahead of the symbols, using the same pausable clock.
+    const fade = Math.min(1,progress / 0.65);
+    const value = String(fade * fade * (3 - 2 * fade));
+    if (value === revealProgress) return;
+    revealProgress = value;
+    // Keep the animated value on its consumers, so the shared SVG sky does not
+    // inherit a value that changes on every reveal frame.
+    readingBackdrop.style.setProperty('--reveal-progress',value);
+    chartGlow.style.setProperty('--reveal-progress',value);
+    if (document.documentElement.dataset.theme === 'light') {
+      document.body.style.setProperty('--reveal-progress',value);
+    }
+  }
   const clone = value => JSON.parse(JSON.stringify(value));
   const position = value => {
     const minute = Math.floor(Number(value.degrees_in_sign) * 60);
@@ -34,11 +51,7 @@
     },onPhase(phase) {
       document.body.classList.toggle('resolved',phase === 'resolved');
       text('phase',phaseLabels[phase]);
-    },onRevealProgress(progress) {
-      // Finish the backdrop ahead of the symbols, using the same pausable clock.
-      const fade = Math.min(1,progress / 0.65);
-      document.body.style.setProperty('--reveal-progress',String(fade * fade * (3 - 2 * fade)));
-    }});
+    },onRevealProgress:updateRevealProgress});
     field.setPaused(paused);
   }
   function setKind(next) {
@@ -536,7 +549,15 @@
       pdfWorker.postMessage({reading:exportData(),spreadImage:chartImage()});
     } catch(_) { finish(); text('save-status','PDF export is unavailable in this browser.'); }
   });
-  function applyTheme(theme) { document.documentElement.dataset.theme=theme; text('theme-toggle',theme === 'light' ? 'Dark' : 'Light'); $('theme-toggle').setAttribute('aria-label',theme==='light' ? 'Switch to dark theme' : 'Switch to light theme'); }
+  function applyTheme(theme) {
+    document.documentElement.dataset.theme=theme;
+    // Light mode also fades the page's text colors. Synchronize when changing
+    // themes mid-reveal, and remove the inherited value again in dark mode.
+    if (theme === 'light') document.body.style.setProperty('--reveal-progress',revealProgress ?? '0');
+    else document.body.style.removeProperty('--reveal-progress');
+    text('theme-toggle',theme === 'light' ? 'Dark' : 'Light');
+    $('theme-toggle').setAttribute('aria-label',theme==='light' ? 'Switch to dark theme' : 'Switch to light theme');
+  }
   let theme='dark'; try { theme=localStorage.getItem('theme') === 'light' ? 'light' : 'dark'; } catch(_) {} applyTheme(theme);
   $('theme-toggle').addEventListener('click',() => { theme=theme==='dark'?'light':'dark'; applyTheme(theme); try { localStorage.setItem('theme',theme); } catch(_) {} });
   window.addEventListener('pagehide',() => { controller?.abort(); searchController?.abort(); field?.destroy(); pdfWorker?.terminate(); },{once:true});
