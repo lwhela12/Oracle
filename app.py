@@ -7,6 +7,7 @@ from admin_routes import init_admin
 from astrology.routes import blueprint as astrology_blueprint, reject_astrology_chat
 from astrology.place_routes import blueprint as astrology_places_blueprint
 from oracle_logic import GeminiOracle
+from quantum_random import random_values
 from telemetry import begin, emit, enabled, flush, reading_details, reading_prepared, track_reading
 
 app = Flask(__name__, static_folder='static')
@@ -70,6 +71,26 @@ def astrology_page():
     if os.getenv('ORACLE_ASTROLOGY_ENABLED') != '1':
         return '', 404
     response = send_from_directory(app.static_folder, 'astrology/index.html')
+    response.headers['Cache-Control'] = 'no-store'
+    return response
+
+
+SANCTUM_TRADITIONS = ('tarot', 'iching', 'number', 'runes')
+
+
+@app.get('/sanctum/')
+def sanctum_page():
+    """Prototype 3D entry; hands off to the existing reading flow."""
+    response = send_from_directory(app.static_folder, 'sanctum/index.html')
+    response.headers['Cache-Control'] = 'no-store'
+    return response
+
+
+@app.post('/sanctum/choose')
+def sanctum_choose():
+    """The singularity: the same QRNG path as draws, with its secure fallback."""
+    tradition = SANCTUM_TRADITIONS[random_values(1, 0, len(SANCTUM_TRADITIONS) - 1)[0]]
+    response = jsonify({'tradition': tradition})
     response.headers['Cache-Control'] = 'no-store'
     return response
 

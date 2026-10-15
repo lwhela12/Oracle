@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>The Sanctum — Quantum Oracle</title>
+    <meta name="theme-color" content="#07060c">
+    <link rel="icon" type="image/svg+xml" href="/static/icon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/sanctum/sanctum.css?v=20261015a">
+</head>
+<body>
+    <canvas id="scene" aria-hidden="true"></canvas>
+
+    <header class="sanctum-header">
+        <a href="/" class="brand" aria-label="Quantum Oracle classic view"><img src="/static/icon.svg" alt=""></a>
+        <span class="eyebrow">The Sanctum</span>
+        <a href="/#learn" class="header-link">Learn</a>
+    </header>
+
+    <nav id="altar-labels" class="altar-labels" aria-label="Altars">
+        <button type="button" class="altar-label" data-altar="tarot">Tarot</button>
+        <button type="button" class="altar-label" data-altar="iching">I Ching</button>
+        <button type="button" class="altar-label" data-altar="number">Numbers</button>
+        <button type="button" class="altar-label" data-altar="runes">Runes</button>
+        <button type="button" class="altar-label singularity-label" data-altar="oracle">Let the Oracle choose</button>
+    </nav>
+
+    <p id="hint" class="hint">Drag to turn · tap an altar</p>
+    <p id="toast" class="toast" role="status" aria-live="polite"></p>
+
+    <section id="approach" class="approach" aria-labelledby="approach-title" hidden>
+        <p class="approach-eyebrow" id="approach-eyebrow">You approach</p>
+        <h1 id="approach-title" tabindex="-1">Tarot</h1>
+        <p id="approach-tagline" class="tagline"></p>
+        <button type="button" id="hold-button" class="hold-button">
+            <svg viewBox="0 0 52 52" aria-hidden="true"><circle class="hold-track" cx="26" cy="26" r="23"></circle><circle id="hold-progress" class="hold-progress" cx="26" cy="26" r="23"></circle></svg>
+            <span id="hold-text">Hold to begin</span>
+        </button>
+        <button type="button" id="back-button" class="back-button">Back to the chamber</button>
+    </section>
+
+    <section id="fallback" class="fallback" hidden>
+        <h1>The Sanctum</h1>
+        <p>Your browser can’t show the 3D chamber. Choose a tradition:</p>
+        <ul>
+            <li><a href="/#read/tarot">Tarot</a></li>
+            <li><a href="/#read/runes">Runes</a></li>
+            <li><a href="/#read/iching">I Ching</a></li>
+            <li><a href="/#read/number">Numbers</a></li>
+        </ul>
+    </section>
+
+    <script type="module" src="/static/sanctum/sanctum.js?v=20261015b"></script>
+</body>
+</html>
