@@ -16,7 +16,7 @@ const HOLD_MS = 1100;
 const ALTARS = {
     tarot: { name: 'Tarot', tagline: 'Find perspective in the cards', angle: 0, verb: 'Hold to draw', labelY: 2.0, lookY: .6 },
     iching: { name: 'I Ching', tagline: 'Navigate the nature of change', angle: Math.PI / 2, verb: 'Hold to cast', labelY: 2.7, lookY: .7 },
-    number: { name: 'Numbers', tagline: 'Discover meaning in a number', angle: Math.PI, verb: 'Hold to draw', labelY: 4.45, lookY: 2.85, lift: 2.15 },
+    number: { name: 'Numbers', tagline: 'Discover meaning in a number', angle: Math.PI, verb: 'Hold to draw', labelY: 2.6, lookY: .85 },
     runes: { name: 'Runes', tagline: 'Listen to the wisdom of symbols', angle: -Math.PI / 2, verb: 'Hold to cast', labelY: 2.85, lookY: .7 },
 };
 
@@ -627,7 +627,7 @@ function start() {
     tarot.add(mesh(new THREE.BoxGeometry(CLOTH_W, .014, CLOTH_D), drape, 0, TAROT_TOP + .007, 0));
     for (const [w, d, x, z] of [[CLOTH_W, .014, 0, CLOTH_D / 2], [CLOTH_W, .014, 0, -CLOTH_D / 2], [.014, CLOTH_D, CLOTH_W / 2, 0], [.014, CLOTH_D, -CLOTH_W / 2, 0]]) {
         tarot.add(mesh(new THREE.BoxGeometry(w, FALL, d), drape, x, TAROT_TOP - FALL / 2 + .01, z));
-        tarot.add(mesh(new THREE.BoxGeometry(w + (d > w ? .006 : .006), .03, d + .006), material.gold, x, TAROT_TOP - FALL + .02, z));
+        tarot.add(mesh(new THREE.BoxGeometry(w + .03, .03, d + .03), material.gold, x, TAROT_TOP - FALL + .02, z));
     }
     const slice = new THREE.Mesh(new THREE.CylinderGeometry(.4, .42, .06, 48), [
         new THREE.MeshStandardMaterial({ color: 0x4a3020, roughness: 1 }),
@@ -833,28 +833,33 @@ function start() {
     candle(iching, .78, .36, ICHING_TOP, .04, .16, material.wax, .08);
     place('iching', iching);
 
-    // Numbers: a glowing zodiac wheel around an armillary sphere, numerals and star flares in orbit.
+    // Numbers: a dial table at the same height as the other altars. Its top is the glowing zodiac wheel,
+    // tilted toward the viewer like a lectern; a small armillary sphere floats above, numerals circle the rim.
     const number = new THREE.Group();
+    const DIAL_Y = 1.05;
     number.add(mesh(new THREE.CylinderGeometry(.5, .56, .16, 32), material.darkStone, 0, .08, 0));
-    number.add(mesh(new THREE.CylinderGeometry(.1, .2, 1.9, 24), material.gold, 0, 1.1, 0));
-    contactShadow(number, 1.8, 1.8);
-    const wheelCenter = 3.05; // high enough to read above the singularity from across the chamber
-    const wheel = mesh(new THREE.CircleGeometry(1.15, 96), new THREE.MeshBasicMaterial({
+    number.add(mesh(new THREE.CylinderGeometry(.09, .18, .9, 24), material.gold, 0, .6, 0));
+    contactShadow(number, 2.4, 2.4);
+    const dial = new THREE.Group();
+    dial.position.set(0, DIAL_Y, 0);
+    dial.rotation.x = -Math.PI / 2 + .5; // face up, tipped toward the viewer
+    dial.add(mesh(new THREE.CylinderGeometry(1.15, 1.15, .05, 96).rotateX(Math.PI / 2), new THREE.MeshPhysicalMaterial({ color: 0x0b0918, roughness: .55, clearcoat: .25, clearcoatRoughness: .5 }), 0, 0, -.03));
+    dial.add(mesh(new THREE.TorusGeometry(1.16, .028, 10, 120), material.gold, 0, 0, 0));
+    const wheel = mesh(new THREE.CircleGeometry(1.12, 96), new THREE.MeshBasicMaterial({
         map: zodiacTexture(), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-        color: new THREE.Color(.75, .85, 1.7), side: THREE.DoubleSide,
-    }), 0, wheelCenter, -.05);
-    number.add(wheel);
-    // Dark glass behind the wheel, one-sided: it hides the singularity in the close-up but is culled from the chamber side.
-    number.add(mesh(new THREE.CircleGeometry(1.14, 96), new THREE.MeshBasicMaterial({ color: 0x0a0818, transparent: true, opacity: .82 }), 0, wheelCenter, -.13));
+        color: new THREE.Color(.75, .85, 1.7),
+    }), 0, 0, .004);
+    dial.add(wheel);
+    number.add(dial);
     const armillary = new THREE.Group();
-    const ringGeometry = new THREE.TorusGeometry(.42, .014, 10, 96);
+    const ringGeometry = new THREE.TorusGeometry(.26, .01, 10, 72);
     for (const [rx, ry, rz] of [[Math.PI / 2, 0, 0], [0, 0, 0], [0, Math.PI / 2, 0], [Math.PI / 2, 0, .41]]) {
         const ring = new THREE.Mesh(ringGeometry, material.gold);
         ring.rotation.set(rx, ry, rz);
         armillary.add(ring);
     }
-    armillary.add(mesh(new THREE.SphereGeometry(.07, 24, 12), new THREE.MeshBasicMaterial({ color: new THREE.Color(2, 1.9, 2.6) })));
-    armillary.position.set(0, wheelCenter, .15);
+    armillary.add(mesh(new THREE.SphereGeometry(.05, 24, 12), new THREE.MeshBasicMaterial({ color: new THREE.Color(2, 1.9, 2.6) })));
+    armillary.position.set(0, DIAL_Y + .55, .15);
     number.add(armillary);
     const numerals = [];
     const numeralValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 2, 7, 8, 5, 6, 11];
@@ -871,9 +876,9 @@ function start() {
                 }));
             }
             const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: textures.get(n), transparent: true, depthWrite: false, color: new THREE.Color(1.5, 1.4, 1.9) }));
-            const size = .22 + (i % 4) * .08;
+            const size = .18 + (i % 4) * .06;
             sprite.scale.set(size, size, 1);
-            sprite.userData = { phase: i / numeralValues.length * TAU, radius: 1.28 + (i % 3) * .14, tilt: (i % 5 - 2) * .2 };
+            sprite.userData = { phase: i / numeralValues.length * TAU, radius: 1.32 + (i % 3) * .12, tilt: (i % 5 - 2) * .6 };
             number.add(sprite);
             numerals.push(sprite);
         });
@@ -881,16 +886,16 @@ function start() {
     Promise.race([document.fonts.load('400 74px "Cormorant Garamond"'), new Promise(resolve => setTimeout(resolve, 1200))]).catch(() => {}).then(makeNumerals);
     const altarFlares = [];
     const flareRand = seeded(88);
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 6; i++) {
         const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: flare, color: new THREE.Color(1.4, 1.2, 2.2), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }));
-        sprite.position.set((flareRand() - .5) * 3, 2.1 + flareRand() * 2.1, (flareRand() - .5) * 1.2);
-        const size = .35 + flareRand() * .45;
+        sprite.position.set((flareRand() - .5) * 2.8, DIAL_Y + .3 + flareRand() * 1.2, (flareRand() - .5) * 1.4);
+        const size = .3 + flareRand() * .35;
         sprite.userData = { size, phase: flareRand() * TAU };
         number.add(sprite);
         altarFlares.push(sprite);
     }
-    pointLight(number, 0x3a5bff, 6, -.8, 2.5, .6);
-    pointLight(number, 0xd04fd0, 4, .8, 3.3, .5);
+    pointLight(number, 0x3a5bff, 5, -1.5, DIAL_Y + 1.1, 1.0);
+    pointLight(number, 0xd04fd0, 3.5, 1.5, DIAL_Y + 1.3, .8);
     animated.push((time, dt) => {
         if (!REDUCED) {
             wheel.rotation.z -= dt * .05;
@@ -900,7 +905,7 @@ function start() {
         for (const sprite of numerals) {
             const { phase, radius, tilt } = sprite.userData;
             const a = phase + (REDUCED ? 0 : time * .12);
-            sprite.position.set(Math.cos(a) * radius, wheelCenter + Math.sin(a) * radius * .42 + tilt * .3, Math.sin(a * 2) * .2);
+            sprite.position.set(Math.cos(a) * radius, DIAL_Y + .35 + Math.sin(a * 2 + tilt) * .12, Math.sin(a) * radius * .55);
         }
         for (const sprite of altarFlares) {
             const s = sprite.userData.size * (REDUCED ? 1 : .6 + .4 * Math.sin(time * 1.7 + sprite.userData.phase));
@@ -1103,7 +1108,7 @@ function start() {
         thetaTarget = explicitTheta ?? nearestAngle(altar.angle, theta);
         const portrait = camera.aspect < 1;
         radiusTarget = RING + (portrait ? 4.2 : 3.4);
-        heightTarget = (portrait ? 3.4 : 2.9) + (altar.lift || 0); // raised displays are framed like the tables
+        heightTarget = portrait ? 3.4 : 2.9;
         lookTarget.copy(altarGroups[id].position).setY(altar.lookY);
         document.getElementById('approach-title').textContent = altar.name;
         document.getElementById('approach-tagline').textContent = altar.tagline;
