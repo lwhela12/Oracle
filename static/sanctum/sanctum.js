@@ -16,7 +16,7 @@ const HOLD_MS = 1100;
 const ALTARS = {
     tarot: { name: 'Tarot', tagline: 'Find perspective in the cards', angle: 0, verb: 'Hold to draw', labelY: 2.0, lookY: .6 },
     iching: { name: 'I Ching', tagline: 'Navigate the nature of change', angle: Math.PI / 2, verb: 'Hold to cast', labelY: 2.7, lookY: .7 },
-    number: { name: 'Numbers', tagline: 'Discover meaning in a number', angle: Math.PI, verb: 'Hold to draw', labelY: 4.45, lookY: 2.3 },
+    number: { name: 'Numbers', tagline: 'Discover meaning in a number', angle: Math.PI, verb: 'Hold to draw', labelY: 4.45, lookY: 2.85, lift: 2.15 },
     runes: { name: 'Runes', tagline: 'Listen to the wisdom of symbols', angle: -Math.PI / 2, verb: 'Hold to cast', labelY: 2.85, lookY: .7 },
 };
 
@@ -622,7 +622,13 @@ function start() {
     const tarot = new THREE.Group();
     const TAROT_TOP = 1.0;
     table(tarot, material.darkWood, 2.3, 1.3, TAROT_TOP, .05);
-    tarot.add(mesh(new THREE.BoxGeometry(1.95, .01, 1.05), material.velvet, 0, TAROT_TOP + .005, 0));
+    const drape = new THREE.MeshPhysicalMaterial({ color: 0x3a1a4c, roughness: .85, sheen: 1, sheenColor: new THREE.Color(0xc08ae0), sheenRoughness: .4, emissive: 0x12061c, emissiveIntensity: .6 });
+    const CLOTH_W = 2.38, CLOTH_D = 1.38, FALL = .36;
+    tarot.add(mesh(new THREE.BoxGeometry(CLOTH_W, .014, CLOTH_D), drape, 0, TAROT_TOP + .007, 0));
+    for (const [w, d, x, z] of [[CLOTH_W, .014, 0, CLOTH_D / 2], [CLOTH_W, .014, 0, -CLOTH_D / 2], [.014, CLOTH_D, CLOTH_W / 2, 0], [.014, CLOTH_D, -CLOTH_W / 2, 0]]) {
+        tarot.add(mesh(new THREE.BoxGeometry(w, FALL, d), drape, x, TAROT_TOP - FALL / 2 + .01, z));
+        tarot.add(mesh(new THREE.BoxGeometry(w + (d > w ? .006 : .006), .03, d + .006), material.gold, x, TAROT_TOP - FALL + .02, z));
+    }
     const slice = new THREE.Mesh(new THREE.CylinderGeometry(.4, .42, .06, 48), [
         new THREE.MeshStandardMaterial({ color: 0x4a3020, roughness: 1 }),
         new THREE.MeshStandardMaterial({ map: sliceTexture(), roughness: .8 }),
@@ -644,9 +650,19 @@ function start() {
     point.rotation.y = .6;
     tarot.add(point);
     for (const [x, z] of [[-.95, .42], [.95, .42], [-.92, -.42], [.9, -.4]]) teaLight(tarot, x, z, TAROT_TOP + .01);
-    const cardNames = ['the-hanged-man', 'the-high-priestess', 'the-sun'];
+    const majorArcana = ['the-fool', 'the-magician', 'the-high-priestess', 'the-empress', 'the-emperor', 'the-hierophant', 'the-lovers',
+        'the-chariot', 'strength', 'the-hermit', 'wheel-of-fortune', 'justice', 'the-hanged-man', 'death', 'temperance', 'the-devil',
+        'the-tower', 'the-star', 'the-moon', 'the-sun', 'judgement', 'the-world'];
+    const cardNames = [];
+    const pick = new Uint32Array(1);
+    while (cardNames.length < 3) {
+        crypto.getRandomValues(pick);
+        const name = majorArcana[pick[0] % majorArcana.length];
+        if (!cardNames.includes(name)) cardNames.push(name);
+    }
     const cards = cardNames.map((name, i) => {
-        const card = mesh(new THREE.PlaneGeometry(.3, .5), new THREE.MeshStandardMaterial({ map: load(`/static/cards/tarot/${name}.webp`), roughness: .55 }), (i - 1) * .4, TAROT_TOP + .014, .3);
+        const face = load(`/static/cards/tarot/${name}.webp`);
+        const card = mesh(new THREE.PlaneGeometry(.35, .58), new THREE.MeshStandardMaterial({ map: face, emissiveMap: face, emissive: 0xffffff, emissiveIntensity: .22, roughness: .55 }), (i - 1) * .44, TAROT_TOP + .02, .27);
         card.rotation.set(-Math.PI / 2, 0, (i - 1) * -.1);
         card.userData.rest = card.position.clone();
         tarot.add(card);
@@ -660,6 +676,7 @@ function start() {
     tarot.add(deck);
     pointLight(tarot, 0xff7a36, 2.6, -.05, TAROT_TOP + .7, -.2, 1);
     pointLight(tarot, 0xffa860, 1.6, 0, TAROT_TOP + .3, .45, 2);
+    pointLight(tarot, 0xff9a5a, 1.2, 0, TAROT_TOP - .2, 1.1); // spills onto the hanging cloth
     place('tarot', tarot);
 
     // Runes: a rustic table, a black printed runner, amethyst rune stones on linen, a lantern, tea lights.
@@ -827,6 +844,8 @@ function start() {
         color: new THREE.Color(.75, .85, 1.7), side: THREE.DoubleSide,
     }), 0, wheelCenter, -.05);
     number.add(wheel);
+    // Dark glass behind the wheel, one-sided: it hides the singularity in the close-up but is culled from the chamber side.
+    number.add(mesh(new THREE.CircleGeometry(1.14, 96), new THREE.MeshBasicMaterial({ color: 0x0a0818, transparent: true, opacity: .82 }), 0, wheelCenter, -.13));
     const armillary = new THREE.Group();
     const ringGeometry = new THREE.TorusGeometry(.42, .014, 10, 96);
     for (const [rx, ry, rz] of [[Math.PI / 2, 0, 0], [0, 0, 0], [0, Math.PI / 2, 0], [Math.PI / 2, 0, .41]]) {
@@ -1084,7 +1103,7 @@ function start() {
         thetaTarget = explicitTheta ?? nearestAngle(altar.angle, theta);
         const portrait = camera.aspect < 1;
         radiusTarget = RING + (portrait ? 4.2 : 3.4);
-        heightTarget = portrait ? 3.4 : 2.9;
+        heightTarget = (portrait ? 3.4 : 2.9) + (altar.lift || 0); // raised displays are framed like the tables
         lookTarget.copy(altarGroups[id].position).setY(altar.lookY);
         document.getElementById('approach-title').textContent = altar.name;
         document.getElementById('approach-tagline').textContent = altar.tagline;
