@@ -53,6 +53,14 @@
         </ul>
     </section>
 
-    <script type="module" src="/static/sanctum/sanctum.js?v=20261015b"></script>
+    <script type="importmap">{"imports": {"three": "/static/vendor/three/three.module.min.js", "three/addons/": "/static/vendor/three/addons/"}}</script>
+    <script>
+        // Browsers without import maps (iOS before 16.4) would show an empty page; give them the list.
+        if (!(window.HTMLScriptElement && HTMLScriptElement.supports && HTMLScriptElement.supports('importmap'))) {
+            document.getElementById('fallback').hidden = false;
+            for (const id of ['scene', 'altar-labels', 'hint']) document.getElementById(id).hidden = true;
+        }
+    </script>
+    <script type="module" src="/static/sanctum/sanctum.js?v=20261016a"></script>
 </body>
 </html>
