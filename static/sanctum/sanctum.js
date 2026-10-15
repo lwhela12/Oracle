@@ -16,7 +16,7 @@ const HOLD_MS = 1100;
 const ALTARS = {
     tarot: { name: 'Tarot', tagline: 'Find perspective in the cards', angle: 0, verb: 'Hold to draw', labelY: 2.0, lookY: .6 },
     iching: { name: 'I Ching', tagline: 'Navigate the nature of change', angle: Math.PI / 2, verb: 'Hold to cast', labelY: 2.7, lookY: .7 },
-    number: { name: 'Numbers', tagline: 'Discover meaning in a number', angle: Math.PI, verb: 'Hold to draw', labelY: 3.65, lookY: 1.5 },
+    number: { name: 'Numbers', tagline: 'Discover meaning in a number', angle: Math.PI, verb: 'Hold to draw', labelY: 4.45, lookY: 2.3 },
     runes: { name: 'Runes', tagline: 'Listen to the wisdom of symbols', angle: -Math.PI / 2, verb: 'Hold to cast', labelY: 2.85, lookY: .7 },
 };
 
@@ -342,14 +342,6 @@ function flareTexture() {
             lg.addColorStop(0, 'rgba(255,255,255,0)'); lg.addColorStop(.5, 'rgba(255,255,255,1)'); lg.addColorStop(1, 'rgba(255,255,255,0)');
             ctx.fillStyle = lg; ctx.fillRect(c - w / 2, c - hgt / 2, w, hgt);
         }
-    });
-}
-
-function runeDecalTexture(name) {
-    return canvasTexture(128, 128, (ctx, s) => {
-        ctx.strokeStyle = '#f3cf7a';
-        ctx.shadowColor = 'rgba(255,200,110,.9)'; ctx.shadowBlur = 6;
-        drawRune(ctx, RUNES[name], 22, 18, 92, 9);
     });
 }
 
@@ -680,19 +672,25 @@ function start() {
     const linen = mesh(new THREE.PlaneGeometry(.78, .64), new THREE.MeshStandardMaterial({ map: linenTexture('#9a8a70', '#5e5242'), roughness: 1 }), .38, RUNE_TOP + .004, .08);
     linen.rotation.set(-Math.PI / 2, 0, .12);
     runes.add(linen);
+    // The app's own rune stone art, laid flat on the linen; a dark body underneath gives each one thickness.
     const stoneRand = seeded(31);
-    const stoneGeometry = new THREE.SphereGeometry(.07, 20, 12);
-    for (let i = 0; i < 9; i++) {
-        const sx = .38 + (i % 3 - 1) * .21 + (stoneRand() - .5) * .05, sz = .08 + (Math.floor(i / 3) - 1) * .17 + (stoneRand() - .5) * .04;
-        const stone = mesh(stoneGeometry, material.amethyst, sx, RUNE_TOP + .022, sz);
-        stone.scale.set(1, .42, .74);
-        stone.rotation.y = stoneRand() * TAU;
+    const stoneBody = new THREE.MeshStandardMaterial({ color: 0x1c1a1e, roughness: .9 });
+    const bodyGeometry = new THREE.SphereGeometry(.062, 20, 12);
+    // Scattered as if cast onto the cloth, not laid out on a grid.
+    const cast = [['ansuz', .2, -.12], ['raidho', .42, -.16], ['algiz', .63, -.06], ['sowilo', .27, .1], ['othala', .5, .07], ['berkano', .7, .18], ['jera', .38, .27]];
+    for (const [name, sx, sz] of cast) {
+        const turn = (stoneRand() - .5) * 1.1;
+        const body = mesh(bodyGeometry, stoneBody, sx, RUNE_TOP + .016, sz);
+        body.scale.set(1.25, .36, 1.6);
+        body.rotation.y = -turn;
+        runes.add(body);
+        const art = load(`/static/runes/${name}.webp`);
+        const stone = mesh(new THREE.PlaneGeometry(.21, .21), new THREE.MeshStandardMaterial({
+            map: art, emissiveMap: art, emissive: 0xffffff, emissiveIntensity: .55, // glyphs glow in their own colours
+            transparent: true, alphaTest: .2, roughness: .85,
+        }), sx, RUNE_TOP + .04, sz);
+        stone.rotation.set(-Math.PI / 2, 0, turn);
         runes.add(stone);
-        const glyph = mesh(new THREE.PlaneGeometry(.085, .085), new THREE.MeshBasicMaterial({
-            map: runeDecalTexture(RUNE_NAMES[(i * 5) % 24]), transparent: true, depthWrite: false, color: new THREE.Color(1.6, 1.4, 1.1),
-        }), sx, RUNE_TOP + .052, sz);
-        glyph.rotation.set(-Math.PI / 2, 0, stone.rotation.y * .2);
-        runes.add(glyph);
     }
     // Lantern.
     const lantern = new THREE.Group();
@@ -821,9 +819,9 @@ function start() {
     // Numbers: a glowing zodiac wheel around an armillary sphere, numerals and star flares in orbit.
     const number = new THREE.Group();
     number.add(mesh(new THREE.CylinderGeometry(.5, .56, .16, 32), material.darkStone, 0, .08, 0));
-    number.add(mesh(new THREE.CylinderGeometry(.12, .2, 1.05, 24), material.gold, 0, .68, 0));
+    number.add(mesh(new THREE.CylinderGeometry(.1, .2, 1.9, 24), material.gold, 0, 1.1, 0));
     contactShadow(number, 1.8, 1.8);
-    const wheelCenter = 2.15;
+    const wheelCenter = 3.05; // high enough to read above the singularity from across the chamber
     const wheel = mesh(new THREE.CircleGeometry(1.15, 96), new THREE.MeshBasicMaterial({
         map: zodiacTexture(), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
         color: new THREE.Color(.75, .85, 1.7), side: THREE.DoubleSide,
@@ -856,7 +854,7 @@ function start() {
             const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: textures.get(n), transparent: true, depthWrite: false, color: new THREE.Color(1.5, 1.4, 1.9) }));
             const size = .22 + (i % 4) * .08;
             sprite.scale.set(size, size, 1);
-            sprite.userData = { phase: i / numeralValues.length * TAU, radius: 1.35 + (i % 3) * .25, tilt: (i % 5 - 2) * .25 };
+            sprite.userData = { phase: i / numeralValues.length * TAU, radius: 1.28 + (i % 3) * .14, tilt: (i % 5 - 2) * .2 };
             number.add(sprite);
             numerals.push(sprite);
         });
@@ -866,14 +864,14 @@ function start() {
     const flareRand = seeded(88);
     for (let i = 0; i < 7; i++) {
         const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: flare, color: new THREE.Color(1.4, 1.2, 2.2), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }));
-        sprite.position.set((flareRand() - .5) * 3, 1.2 + flareRand() * 2.4, (flareRand() - .5) * 1.2);
+        sprite.position.set((flareRand() - .5) * 3, 2.1 + flareRand() * 2.1, (flareRand() - .5) * 1.2);
         const size = .35 + flareRand() * .45;
         sprite.userData = { size, phase: flareRand() * TAU };
         number.add(sprite);
         altarFlares.push(sprite);
     }
-    pointLight(number, 0x3a5bff, 6, -.8, 1.6, .6);
-    pointLight(number, 0xd04fd0, 4, .8, 2.4, .5);
+    pointLight(number, 0x3a5bff, 6, -.8, 2.5, .6);
+    pointLight(number, 0xd04fd0, 4, .8, 3.3, .5);
     animated.push((time, dt) => {
         if (!REDUCED) {
             wheel.rotation.z -= dt * .05;
@@ -883,7 +881,7 @@ function start() {
         for (const sprite of numerals) {
             const { phase, radius, tilt } = sprite.userData;
             const a = phase + (REDUCED ? 0 : time * .12);
-            sprite.position.set(Math.cos(a) * radius, wheelCenter + Math.sin(a) * radius * .55 + tilt * .4, Math.sin(a * 2) * .35);
+            sprite.position.set(Math.cos(a) * radius, wheelCenter + Math.sin(a) * radius * .42 + tilt * .3, Math.sin(a * 2) * .2);
         }
         for (const sprite of altarFlares) {
             const s = sprite.userData.size * (REDUCED ? 1 : .6 + .4 * Math.sin(time * 1.7 + sprite.userData.phase));
