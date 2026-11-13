@@ -222,12 +222,15 @@ class PlaceServiceCalculationTests(unittest.TestCase):
         self.assertIn('ascendant', chart)
 
 
-@unittest.skipUnless(importlib.util.find_spec('geonamescache'), 'Optional GeoNames catalogue is not installed')
 class RealGeoNamesTests(unittest.TestCase):
     def test_sierra_vista_and_diacritics_from_packaged_catalogue(self):
         # Remove the synthetic cache only if another test/process populated it.
         from astrology import places
         places._catalogue.cache_clear()
+        catalogue = places._catalogue()
+        self.assertEqual(len(catalogue.cities), 170391)
+        self.assertEqual(len(catalogue.countries), 252)
+        self.assertEqual(len(catalogue.us_states), 51)
         sierra_vista = search_places('Sierra Vista, AZ')[0]
         self.assertEqual(sierra_vista['id'], 'geonames:5314328')
         self.assertEqual(sierra_vista['timezone'], 'America/Phoenix')

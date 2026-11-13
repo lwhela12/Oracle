@@ -152,7 +152,7 @@ class VedicEngineTests(unittest.TestCase):
             native.assert_not_called()
 
 
-@unittest.skipUnless(importlib.util.find_spec('swisseph') and importlib.util.find_spec('geonamescache'), 'optional astrology dependencies missing')
+@unittest.skipUnless(importlib.util.find_spec('swisseph'), 'optional Swiss Ephemeris dependency missing')
 class VedicIntegrationTests(unittest.TestCase):
     def test_horoscope_privacy_moon_sign_and_deterministic_replay(self):
         natal = prepare_chart(NATAL)

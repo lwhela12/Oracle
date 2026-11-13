@@ -105,8 +105,7 @@ class AstrologyModeGateTests(ModeRouteBase):
 
 
 @unittest.skipUnless(
-    importlib.util.find_spec("swisseph")
-    and importlib.util.find_spec("geonamescache"),
+    importlib.util.find_spec("swisseph"),
     "Optional astrology calculation dependencies are not installed",
 )
 class AstrologyModeRouteTests(ModeRouteBase):

@@ -1,13 +1,14 @@
 """Offline GeoNames city lookup for astrology location inputs.
 
-The catalogue comes from the installed ``geonamescache`` package.  Loading is
-lazy, process-local, and performs no network requests.  Coordinates describe a
-city centre; they are not an exact birthplace.
+The catalogue is bundled from the pinned GeoNamesCache cities1000 dataset.
+Loading is lazy, process-local, and performs no network requests. Coordinates
+describe a city centre; they are not an exact birthplace.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
 from functools import lru_cache
+import gzip
 import json
 from pathlib import Path
 import re
@@ -15,7 +16,6 @@ import unicodedata
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 
-MIN_CITY_POPULATION = 1000
 MAX_RESULTS = 8
 ATTRIBUTION = {'name': 'GeoNames', 'url': 'https://www.geonames.org/'}
 _PLACE_ID = re.compile(r'geonames:([1-9]\d{0,11})\Z')
@@ -58,18 +58,17 @@ class _Catalogue:
 
 @lru_cache(maxsize=1)
 def _catalogue() -> _Catalogue:
-    # Import only when a place search/resolution is actually requested.  This
-    # keeps the large packaged city dataset out of ordinary application startup.
-    import geonamescache
-
-    cache = geonamescache.GeonamesCache(min_city_population=MIN_CITY_POPULATION)
-    cities = cache.get_cities()
-    with (Path(__file__).with_name('data') / 'admin1.json').open(encoding='utf-8') as source:
+    # Decompress only when a place search or resolution is requested.
+    data_path = Path(__file__).with_name('data')
+    with gzip.open(data_path / 'geonames-cities1000.json.gz', 'rt', encoding='utf-8') as source:
+        data = json.load(source)
+    cities = data['cities']
+    with (data_path / 'admin1.json').open(encoding='utf-8') as source:
         admin1_names = json.load(source)
     return _Catalogue(
         cities=cities,
-        countries=cache.get_countries(),
-        us_states=cache.get_us_states(),
+        countries=data['countries'],
+        us_states=data['us_states'],
         admin1_names=admin1_names,
         canonical_names=tuple((_normalise(city.get('name', '')), city) for city in cities.values()),
     )

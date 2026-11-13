@@ -13,4 +13,3 @@ jplephem==2.24
 numpy==2.0.2
 sgp4==2.25
 certifi==2026.7.22
-geonamescache==3.0.2

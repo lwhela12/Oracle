@@ -1,12 +1,29 @@
 {
   "version": 2,
+  "build": {
+    "env": {
+      "VERCEL_PYTHON_DISABLE_RUNTIME_INSTALL": "1"
+    }
+  },
   "builds": [
+    {
+      "src": "static/**/*.{css,html,js,json,md,png,svg,txt,webp}",
+      "use": "@vercel/static"
+    },
     {
       "src": "app.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
+    {
+      "src": "/$",
+      "dest": "/static/index.html",
+      "methods": ["GET", "HEAD"]
+    },
+    {
+      "handle": "filesystem"
+    },
     {
       "src": "/(.*)",
       "dest": "app.py"
