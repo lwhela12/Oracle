@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /analytics/
+Disallow: /chat
+Disallow: /init
+Disallow: /session/
+Disallow: /static/astrology/
+
+Sitemap: https://www.qoracle.app/sitemap.xml

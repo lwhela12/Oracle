@@ -7,7 +7,7 @@
   },
   "builds": [
     {
-      "src": "static/**/*.{css,html,js,json,md,png,svg,txt,webp}",
+      "src": "static/**/*.{css,html,js,json,md,png,svg,txt,webp,xml}",
       "use": "@vercel/static"
     },
     {
@@ -16,6 +16,16 @@
     }
   ],
   "routes": [
+    {
+      "src": "/robots.txt",
+      "dest": "/static/robots.txt",
+      "methods": ["GET", "HEAD"]
+    },
+    {
+      "src": "/sitemap.xml",
+      "dest": "/static/sitemap.xml",
+      "methods": ["GET", "HEAD"]
+    },
     {
       "src": "/$",
       "dest": "/static/index.html",
